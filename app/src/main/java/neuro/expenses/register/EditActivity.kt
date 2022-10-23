@@ -1,14 +1,14 @@
 package neuro.expenses.register
 
 import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import neuro.expenses.register.databinding.ActivityEditBinding
-import neuro.expenses.register.databinding.ActivityMainBinding
 
 class EditActivity : AppCompatActivity() {
 
@@ -32,5 +32,16 @@ class EditActivity : AppCompatActivity() {
     )
     setupActionBarWithNavController(navController, appBarConfiguration)
     navView.setupWithNavController(navController)
+
+    overrideBackBehavior()
+  }
+
+  private fun overrideBackBehavior() {
+    onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+      override fun handleOnBackPressed() {
+        // We use this to avoid the standard behavior of bottom navigation.
+        finish()
+      }
+    })
   }
 }
