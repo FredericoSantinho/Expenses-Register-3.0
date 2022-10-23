@@ -1,8 +1,8 @@
 <resources>
   <string name="app_name">Expenses Register 3.0</string>
   <string name="title_home">Home</string>
-  <string name="title_dashboard">Dashboard</string>
-  <string name="title_notifications">Notifications</string>
+  <string name="title_detailed">Detailed</string>
+  <string name="title_edit">Edit</string>
 
   <string name="title_edit_product">Product</string>
   <string name="title_edit_category">Category</string>
