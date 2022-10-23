@@ -13,9 +13,9 @@
 
   <fragment
       android:id="@+id/navigation_detailed"
-      android:name="neuro.expenses.register.ui.dashboard.DashboardFragment"
+      android:name="neuro.expenses.register.ui.detailed.DetailedFragment"
       android:label="@string/title_detailed"
-      tools:layout="@layout/fragment_dashboard" />
+      tools:layout="@layout/fragment_detailed" />
 
   <activity
       android:id="@+id/navigation_edit"
