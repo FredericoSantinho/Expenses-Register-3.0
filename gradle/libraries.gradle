@@ -7,7 +7,7 @@ ext {
 lib.kotlin = "org.jetbrains.kotlin:kotlin-stdlib:$ver.kotlin"
 
 lib.koin_core = "io.insert-koin:koin-core:$ver.koin"
-lib.koin_android = "io.insert-koin:koin-android:$ver.koin"
+lib.koin_android = "io.insert-koin:koin-android:$ver.koin_android"
 lib.koin_test = "io.insert-koin:koin-test-junit4:$ver.koin_test"
 
 lib.junit = "junit:junit:$ver.junit"
