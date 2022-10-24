@@ -19,3 +19,6 @@ ver.lifecycle = "2.5.1"
 ver.navigation = "2.5.2"
 ver.android_junit = "1.1.2"
 ver.expresso = "3.4.0"
+ver.google_maps = "17.0.0"
+
+ver.glide = "4.14.2"

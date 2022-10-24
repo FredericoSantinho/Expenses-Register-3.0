@@ -3,9 +3,14 @@ apply from: file("$rootDir/gradle/libraries.gradle")
 dependencies {
   implementation fileTree(dir: "libs", include: ["*.jar"])
 
+  api project(path: ':domain')
+  api project(path: ':data')
+
   implementation lib.google
+  implementation lib.google_maps
 
   implementation lib.koin_android
+  implementation lib.glide
 
   testImplementation lib.koin_test
   testImplementation lib.junit

@@ -1,13 +1,25 @@
 package neuro.expenses.register.ui.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import neuro.expenses.register.domain.Product
 
 class HomeViewModel : ViewModel() {
-
-  private val _text = MutableLiveData<String>().apply {
-    value = "This is home Fragment"
+  fun getPlaceProducts(): List<Product> {
+    val list = mutableListOf<Product>()
+    for (n in 1..5) {
+      list.add(
+        Product(
+          "Bolacha Oreo Coberta Chocolate Branco 246g",
+          "Alimentação",
+          2.09,
+          "https://s3.minipreco.pt/medias/hc0/hf7/8915812384798.jpg"
+        )
+      )
+    }
+    return list
   }
-  val text: LiveData<String> = _text
+
+  fun getPlacesNames(): List<String> {
+    return listOf("Bitoque")
+  }
 }
