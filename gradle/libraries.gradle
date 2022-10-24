@@ -1,0 +1,30 @@
+apply from: file("$rootDir/gradle/versions.gradle")
+
+ext {
+  lib = [:]
+}
+
+lib.kotlin = "org.jetbrains.kotlin:kotlin-stdlib:$ver.kotlin"
+
+lib.koin_core = "io.insert-koin:koin-core:$ver.koin"
+lib.koin_android = "io.insert-koin:koin-android:$ver.koin"
+lib.koin_test = "io.insert-koin:koin-test-junit4:$ver.koin_test"
+
+lib.junit = "junit:junit:$ver.junit"
+
+lib.timber = "com.jakewharton.timber:timber:$ver.timber"
+
+lib.rxAndroid = "io.reactivex.rxjava3:rxandroid:$ver.rxAndroid"
+lib.rxKotlin = "io.reactivex.rxjava3:rxkotlin:$ver.rxKotlin"
+
+lib.google = ["androidx.core:core-ktx:$ver.ktx",
+              "androidx.appcompat:appcompat:$ver.androidX",
+              "com.google.android.material:material:$ver.material",
+              "androidx.constraintlayout:constraintlayout:$ver.constraintLayout",
+              "androidx.lifecycle:lifecycle-livedata-ktx:$ver.lifecycle",
+              "androidx.lifecycle:lifecycle-viewmodel-ktx:$ver.lifecycle",
+              "androidx.navigation:navigation-fragment-ktx:$ver.navigation",
+              "androidx.navigation:navigation-ui-ktx:$ver.navigation",]
+
+lib.google_test = ["androidx.test.ext:junit:$ver.androidXJunit",
+                   "androidx.test.espresso:espresso-core:$ver.expresso"]

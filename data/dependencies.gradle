@@ -1,0 +1,14 @@
+apply from: file("$rootDir/gradle/libraries.gradle")
+
+dependencies {
+  implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+  implementation project(':domain')
+  implementation lib.kotlin
+
+  implementation lib.koin_core
+
+  implementation lib.rxAndroid
+  implementation lib.rxKotlin
+  implementation lib.timber
+}

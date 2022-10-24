@@ -1,0 +1,13 @@
+apply from: file("$rootDir/gradle/libraries.gradle")
+
+dependencies {
+  implementation fileTree(dir: "libs", include: ["*.jar"])
+
+  implementation lib.google
+
+  implementation lib.koin_android
+
+  testImplementation lib.koin_test
+  testImplementation lib.junit
+  androidTestImplementation lib.google_test
+}

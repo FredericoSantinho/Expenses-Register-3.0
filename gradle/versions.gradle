@@ -1,0 +1,19 @@
+ext {
+  ver = [:]
+}
+
+ver.kotlin = "1.7.20"
+ver.junit = "4.13"
+ver.koin = "3.1.0"
+ver.koin_test = "3.2.2"
+ver.rxKotlin = "3.0.0"
+ver.rxAndroid = "3.0.0"
+ver.timber = "5.0.1"
+
+ver.ktx = "1.9.0"
+ver.androidX = "1.5.1"
+ver.material = "1.7.0"
+ver.constraintLayout = "2.1.4"
+ver.lifecycle = "2.5.1"
+ver.navigation = "2.5.2"
+ver.expresso = "3.4.0"
