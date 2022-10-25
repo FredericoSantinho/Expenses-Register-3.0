@@ -21,10 +21,14 @@ lib.google = ["androidx.core:core-ktx:$ver.ktx",
               "androidx.appcompat:appcompat:$ver.androidX",
               "com.google.android.material:material:$ver.material",
               "androidx.constraintlayout:constraintlayout:$ver.constraintLayout",
+              "androidx.constraintlayout:constraintlayout-compose:$ver.constraintLayoutCompose",
               "androidx.lifecycle:lifecycle-livedata-ktx:$ver.lifecycle",
               "androidx.lifecycle:lifecycle-viewmodel-ktx:$ver.lifecycle",
               "androidx.navigation:navigation-fragment-ktx:$ver.navigation",
-              "androidx.navigation:navigation-ui-ktx:$ver.navigation",]
+              "androidx.navigation:navigation-ui-ktx:$ver.navigation",
+              "androidx.compose.ui:ui:$ver.compose",
+              "androidx.compose.material:material:$ver.compose",
+              "androidx.compose.ui:ui-tooling:$ver.compose",]
 
 lib.google_test = ["androidx.test.ext:junit:$ver.androidXJunit",
                    "androidx.test.espresso:espresso-core:$ver.expresso"]

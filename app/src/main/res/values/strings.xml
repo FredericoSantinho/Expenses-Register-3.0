@@ -1,10 +1,19 @@
 <resources>
   <string name="app_name">Expenses Register 3.0</string>
   <string name="title_home">Home</string>
-  <string name="title_detailed">Detailed</string>
+  <string name="title_manual_register">Manual Register</string>
   <string name="title_edit">Edit</string>
 
   <string name="title_edit_product">Product</string>
   <string name="title_edit_category">Category</string>
   <string name="title_edit_place">Place</string>
+
+  <!-- Manual Register Screen -->
+  <string name="manual_register_description">Description</string>
+  <string name="manual_register_category">Category</string>
+  <string name="manual_register_place">Place</string>
+  <string name="manual_register_price">Price</string>
+  <string name="manual_register_amount">Amount</string>
+  <string name="manual_register_total">Total</string>
+  <string name="manual_register_register">Register</string>
 </resources>

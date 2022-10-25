@@ -1,4 +1,4 @@
-package neuro.expenses.register.ui.composables
+package neuro.expenses.register.ui.composables.text
 
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Text
@@ -11,24 +11,23 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 
 @Composable
-fun CurrencyTextField(
+fun TextField(
   label: String,
   modifier: Modifier,
   keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-  symbol: String = "€"
-): GetText {
+  textStyle: TextStyle = TextStyle.Default,
+  onValueChange: (String) -> Unit = { }
+): SetText {
   var text by rememberSaveable { mutableStateOf("") }
 
   TextField(
     value = text,
     onValueChange = {
-      if (it.endsWith(" $symbol")) {
-        text = it
-      } else {
-        text = it + " $symbol"
-      }
+      text = it
+      onValueChange.invoke(it)
     },
     label = { Text(label) },
     modifier = modifier,
@@ -36,10 +35,15 @@ fun CurrencyTextField(
     colors = TextFieldDefaults.textFieldColors(
       backgroundColor = Color.Transparent,
     ),
-    keyboardOptions = keyboardOptions
+    keyboardOptions = keyboardOptions,
+    textStyle = textStyle
   )
 
-  return object : GetText {
+  return object : SetText {
+    override fun setText(s: String) {
+      text = s
+    }
+
     override fun getText(): String {
       return text
     }

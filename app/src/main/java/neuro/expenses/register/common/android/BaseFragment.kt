@@ -5,11 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
-import androidx.fragment.app.Fragment
-import androidx.navigation.NavDirections
-import androidx.navigation.fragment.NavHostFragment
 
-abstract class BaseFragment : Fragment() {
+abstract class BaseFragment : BaseNavFragment() {
 
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -23,12 +20,4 @@ abstract class BaseFragment : Fragment() {
   @LayoutRes
   protected abstract fun getLayout(): Int
   protected abstract fun setupViewModel()
-
-  protected fun navigateTo(directions: NavDirections) {
-    NavHostFragment.findNavController(this).navigate(directions)
-  }
-
-  protected fun navigateUp() {
-    NavHostFragment.findNavController(this).navigateUp()
-  }
 }

@@ -18,6 +18,19 @@ android {
 
     testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
+    kotlinOptions {
+      jvmTarget = '1.8'
+    }
+    buildFeatures {
+      viewBinding = true
+      compose true
+    }
+
+    composeOptions {
+      kotlinCompilerExtensionVersion "$ver.compose"
+      kotlinCompilerVersion "$ver.kotlin"
+    }
+
     resValue "string", "google_maps_key", (project.findProperty("GOOGLE_MAPS_API_KEY") ?: "")
   }
 

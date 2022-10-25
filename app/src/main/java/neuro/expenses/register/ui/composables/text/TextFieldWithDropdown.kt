@@ -1,7 +1,8 @@
-package neuro.expenses.register.ui.composables
+package neuro.expenses.register.ui.composables.text
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -13,7 +14,13 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.window.PopupProperties
 
 @Composable
-fun TextFieldWithDropdown(dataIn: List<String>, label: String = "", take: Int = 3) {
+fun TextFieldWithDropdown(
+  dataIn: List<String>,
+  label: String = "",
+  take: Int = 3,
+  modifier: Modifier,
+  keyboardOptions: KeyboardOptions = KeyboardOptions.Default
+): GetText {
 
   val dropDownOptions = remember { mutableStateOf(listOf<String>()) }
   val textFieldValue = remember { mutableStateOf(TextFieldValue()) }
@@ -32,14 +39,20 @@ fun TextFieldWithDropdown(dataIn: List<String>, label: String = "", take: Int = 
   }
 
   TextFieldWithDropdown(
-    modifier = Modifier.fillMaxWidth(),
+    modifier = modifier,
     value = textFieldValue.value,
     setValue = ::onValueChanged,
     onDismissRequest = ::onDropdownDismissRequest,
     dropDownExpanded = dropDownExpanded.value,
     list = dropDownOptions.value,
-    label = label
+    label = label,
+    keyboardOptions
   )
+  return object : GetText {
+    override fun getText(): String {
+      return textFieldValue.value.text
+    }
+  }
 }
 
 @Composable
@@ -50,7 +63,8 @@ fun TextFieldWithDropdown(
   onDismissRequest: () -> Unit,
   dropDownExpanded: Boolean,
   list: List<String>,
-  label: String = ""
+  label: String = "",
+  keyboardOptions: KeyboardOptions
 ) {
   Box(modifier) {
     TextField(
@@ -60,6 +74,7 @@ fun TextFieldWithDropdown(
           if (!focusState.isFocused)
             onDismissRequest()
         },
+      keyboardOptions = keyboardOptions,
       value = value,
       onValueChange = setValue,
       label = { Text(label) },

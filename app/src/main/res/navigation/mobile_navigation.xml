@@ -12,10 +12,9 @@
       tools:layout="@layout/fragment_home" />
 
   <fragment
-      android:id="@+id/navigation_detailed"
-      android:name="neuro.expenses.register.ui.detailed.DetailedFragment"
-      android:label="@string/title_detailed"
-      tools:layout="@layout/fragment_detailed" />
+      android:id="@+id/navigation_manual_register"
+      android:name="neuro.expenses.register.ui.manual.register.ManualRegisterFragment"
+      android:label="@string/title_manual_register" />
 
   <activity
       android:id="@+id/navigation_edit"

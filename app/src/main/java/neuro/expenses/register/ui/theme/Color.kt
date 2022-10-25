@@ -1,0 +1,13 @@
+package com.exchangebot.ui.theme
+
+import androidx.compose.ui.graphics.Color
+
+val primaryColor = Color(android.graphics.Color.parseColor("#00796b"))
+val primaryLightColor = Color(android.graphics.Color.parseColor("#48a999"))
+val primaryDarkColor = Color(android.graphics.Color.parseColor("#004c40"))
+val secondaryColor = Color(android.graphics.Color.parseColor("#00796b"))
+val secondaryLightColor = Color(android.graphics.Color.parseColor("#67daff"))
+val secondaryDarkColor = Color(android.graphics.Color.parseColor("#007ac1"))
+val primaryTextColor = Color(android.graphics.Color.parseColor("#ffffff"))
+val secondaryTextColor = Color(android.graphics.Color.parseColor("#000000"))
+val surface = Color(android.graphics.Color.parseColor("#E5E5E5"))
