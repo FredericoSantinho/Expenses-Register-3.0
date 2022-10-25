@@ -12,6 +12,11 @@
       android:title="@string/title_manual_register" />
 
   <item
+      android:id="@+id/navigation_report"
+      android:icon="@drawable/ic_report_24"
+      android:title="@string/title_report" />
+
+  <item
       android:id="@+id/navigation_edit"
       android:icon="@drawable/ic_edit_24"
       android:title="@string/title_edit" />

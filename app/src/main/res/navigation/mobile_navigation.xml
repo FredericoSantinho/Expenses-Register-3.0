@@ -16,6 +16,11 @@
       android:name="neuro.expenses.register.ui.manual.register.ManualRegisterFragment"
       android:label="@string/title_manual_register" />
 
+  <fragment
+      android:id="@+id/navigation_report"
+      android:name="neuro.expenses.register.ui.report.ReportFragment"
+      android:label="@string/title_report" />
+
   <activity
       android:id="@+id/navigation_edit"
       android:name="neuro.expenses.register.EditActivity" />
