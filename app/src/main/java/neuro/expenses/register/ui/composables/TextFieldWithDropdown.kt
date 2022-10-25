@@ -63,7 +63,8 @@ fun TextFieldWithDropdown(
       value = value,
       onValueChange = setValue,
       label = { Text(label) },
-      colors = TextFieldDefaults.outlinedTextFieldColors()
+      colors = TextFieldDefaults.outlinedTextFieldColors(),
+      singleLine = true
     )
     DropdownMenu(
       expanded = dropDownExpanded,
