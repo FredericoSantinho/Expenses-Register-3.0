@@ -120,6 +120,7 @@ fun TextFieldWithDropdown(
     }
 
     override fun setText(s: String) {
+      state.value = s
       value.value = TextFieldValue(s)
     }
   }

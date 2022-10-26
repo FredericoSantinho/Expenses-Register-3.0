@@ -26,15 +26,13 @@ fun TextFieldWithError(
   onValueChange: (String) -> Unit = { },
   state: MutableState<String> = mutableStateOf("")
 ): SetErrorMessage {
-  var text by rememberSaveable { mutableStateOf("") }
   var isErrorVar by rememberSaveable { mutableStateOf(false) }
   var errorMessageVar by rememberSaveable { mutableStateOf("") }
 
   Column(modifier = modifier) {
     TextField(
-      value = text,
+      value = state.value,
       onValueChange = {
-        text = it
         state.value = it
         onValueChange.invoke(it)
         isErrorVar = false
@@ -69,7 +67,7 @@ fun TextFieldWithError(
     }
 
     override fun setText(s: String) {
-      text = s
+      state.value = s
     }
   }
 }
