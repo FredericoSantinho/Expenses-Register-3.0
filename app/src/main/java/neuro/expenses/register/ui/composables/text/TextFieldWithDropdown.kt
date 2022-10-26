@@ -8,16 +8,20 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.window.PopupProperties
+import com.exchangebot.ui.theme.ExpensesRegisterTheme
+import neuro.expenses.register.R
 
 @Composable
 fun TextFieldWithDropdown(
   dataIn: List<String>,
   label: String = "",
   take: Int = 3,
-  modifier: Modifier,
+  modifier: Modifier = Modifier,
   keyboardOptions: KeyboardOptions = KeyboardOptions.Default
 ): SetError {
 
@@ -116,5 +120,16 @@ fun TextFieldWithDropdown(
     override fun getText(): String {
       return value.value.text
     }
+  }
+}
+
+@Preview
+@Composable
+fun PreviewTextFieldWithDropdown() {
+  ExpensesRegisterTheme {
+    TextFieldWithDropdown(
+      dataIn = listOf("aaa", "abb", "abc"),
+      label = stringResource(R.string.manual_register_category)
+    )
   }
 }

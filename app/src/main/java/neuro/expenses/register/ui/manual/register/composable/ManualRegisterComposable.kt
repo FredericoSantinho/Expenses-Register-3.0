@@ -174,7 +174,7 @@ private val keyboardOptionsText = KeyboardOptions.Default.copy(
 
 @Preview
 @Composable
-fun PreviewMessageCard() {
+fun PreviewManualRegisterComposable() {
   ExpensesRegisterTheme {
     ManualRegisterComposable(
       ManualRegisterViewModel(), AppCompatActivity()

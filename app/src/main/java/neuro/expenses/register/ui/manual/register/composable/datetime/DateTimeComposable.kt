@@ -9,7 +9,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.fragment.app.FragmentActivity
+import com.exchangebot.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.R
 import neuro.expenses.register.common.picker.date.OnSetDate
 import neuro.expenses.register.common.picker.date.ShowDatePicker
@@ -79,5 +81,13 @@ fun DateTimeComposable(
   }
   return object : DateTimeGetter {
     override fun getDateTime(): DateTime = DateTime(hourVar, minuteVar, dayVar, monthVar, yearVar)
+  }
+}
+
+@Preview
+@Composable
+fun PreviewDateTimeComposable() {
+  ExpensesRegisterTheme {
+    DateTimeComposable(FragmentActivity())
   }
 }

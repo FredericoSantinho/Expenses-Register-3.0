@@ -13,11 +13,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import com.exchangebot.ui.theme.ExpensesRegisterTheme
 
 @Composable
 fun CurrencyTextField(
   label: String,
-  modifier: Modifier,
+  modifier: Modifier = Modifier,
   keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
   symbol: String = "€",
   onValueChange: (String) -> Unit = { }
@@ -49,5 +51,13 @@ fun CurrencyTextField(
     override fun getText(): String {
       return text
     }
+  }
+}
+
+@Preview
+@Composable
+fun PreviewCurrencyTextField() {
+  ExpensesRegisterTheme {
+    CurrencyTextField("price")
   }
 }
