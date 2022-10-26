@@ -12,6 +12,8 @@ dependencies {
   implementation lib.koin_android
   implementation lib.glide
 
+  implementation lib.timber
+
   testImplementation lib.koin_test
   testImplementation lib.junit
   androidTestImplementation lib.google_test

@@ -17,4 +17,7 @@
   <string name="manual_register_amount">Amount</string>
   <string name="manual_register_total">Total</string>
   <string name="manual_register_register">Register</string>
+
+  <string name="manual_register_empty_description">Empty description!</string>
+  <string name="manual_register_empty_place">Empty place!</string>
 </resources>

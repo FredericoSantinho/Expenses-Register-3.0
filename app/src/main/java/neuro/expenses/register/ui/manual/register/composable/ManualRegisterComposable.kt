@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -29,11 +30,15 @@ import neuro.expenses.register.ui.composables.text.CurrencyTextField
 import neuro.expenses.register.ui.composables.text.TextFieldWithDropdown
 import neuro.expenses.register.ui.composables.text.TextFieldWithError
 import neuro.expenses.register.ui.manual.register.ManualRegisterViewModel
+import neuro.expenses.register.ui.manual.register.UiState
+import neuro.expenses.register.ui.manual.register.UiStateError
 import neuro.expenses.register.ui.manual.register.composable.datetime.DateTimeComposable
 import neuro.expenses.register.ui.manual.register.composable.mapper.DateTextMapper
 import neuro.expenses.register.ui.manual.register.composable.mapper.DateTextMapperImpl
 import neuro.expenses.register.ui.manual.register.composable.mapper.TimeTextMapper
 import neuro.expenses.register.ui.manual.register.composable.mapper.TimeTextMapperImpl
+import neuro.expenses.register.ui.manual.register.mapper.ManualRegisterMessageMapper
+import neuro.expenses.register.ui.manual.register.mapper.ManualRegisterMessageMapperImpl
 
 @Composable
 fun ManualRegisterComposable(
@@ -43,8 +48,31 @@ fun ManualRegisterComposable(
   showDatePicker: ShowDatePicker = ShowMaterialDatePicker(),
   timeTextMapper: TimeTextMapper = TimeTextMapperImpl(),
   dateTextMapper: DateTextMapper = DateTextMapperImpl(),
+  messageMapper: ManualRegisterMessageMapper = ManualRegisterMessageMapperImpl(),
   currency: String = "€"
 ) {
+  val descriptionIsError = remember { mutableStateOf(false) }
+  val descriptionErrorMessage = remember { mutableStateOf("") }
+  val categoryIsError = remember { mutableStateOf(false) }
+  val placeIsError = remember { mutableStateOf(false) }
+  val placeErrorMessage = remember { mutableStateOf("") }
+
+  descriptionIsError.value = false
+  descriptionErrorMessage.value = ""
+  categoryIsError.value = false
+  placeIsError.value = false
+  placeErrorMessage.value = ""
+
+  onUiState(
+    manualRegisterViewModel.uiState.value,
+    descriptionIsError,
+    descriptionErrorMessage,
+    categoryIsError,
+    placeIsError,
+    placeErrorMessage,
+    messageMapper
+  )
+
   Column(
     Modifier.fillMaxHeight(),
     verticalArrangement = Arrangement.Bottom
@@ -66,19 +94,24 @@ fun ManualRegisterComposable(
       label = stringResource(R.string.manual_register_description),
       keyboardOptions = keyboardOptionsText,
       modifier = Modifier.padding(start = 8.dp, end = 8.dp),
-      value = manualRegisterViewModel.description
+      value = manualRegisterViewModel.description,
+      isError = descriptionIsError,
+      errorMessage = descriptionErrorMessage,
+      onValueChange = { manualRegisterViewModel.onDescriptionChange() }
     )
     TextFieldWithDropdown(
       modifier = Modifier.padding(start = 8.dp, end = 8.dp),
-      dataIn = manualRegisterViewModel.getCategories(),
+      dataIn = manualRegisterViewModel.categories.value,
       label = stringResource(R.string.manual_register_category),
       keyboardOptions = keyboardOptionsText,
-      value = manualRegisterViewModel.category
+      value = manualRegisterViewModel.category,
+      isError = categoryIsError,
+      onValueChange = { manualRegisterViewModel.onCategoryChange() }
     )
     ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
       val (place, placeAuto) = createRefs()
 
-      val placeTF = TextFieldWithError(
+      TextFieldWithError(
         label = stringResource(R.string.manual_register_place),
         modifier = Modifier.constrainAs(place) {
           start.linkTo(parent.start, margin = 8.dp)
@@ -86,7 +119,12 @@ fun ManualRegisterComposable(
           width = Dimension.fillToConstraints
         },
         keyboardOptions = keyboardOptionsText,
-        value = manualRegisterViewModel.place
+        value = manualRegisterViewModel.place,
+        isError = placeIsError,
+        errorMessage = placeErrorMessage,
+        onValueChange = {
+          manualRegisterViewModel.onPlaceChange()
+        }
       )
       IconButton(onClick = {
         manualRegisterViewModel.onNearestPlaceButton()
@@ -159,6 +197,80 @@ fun ManualRegisterComposable(
       }
     }
   }
+}
+
+@Composable
+private fun onUiState(
+  uiState: UiState,
+  descriptionIsError: MutableState<Boolean>,
+  descriptionErrorMessage: MutableState<String>,
+  categoryIsError: MutableState<Boolean>,
+  placeIsError: MutableState<Boolean>,
+  placeErrorMessage: MutableState<String>,
+  messageMapper: ManualRegisterMessageMapper
+) {
+  when (uiState) {
+    UiState.Ready -> {}
+    is UiState.Error -> onUiError(
+      uiState.errors, descriptionIsError,
+      descriptionErrorMessage,
+      categoryIsError,
+      placeIsError,
+      placeErrorMessage,
+      messageMapper
+    )
+  }
+}
+
+@Composable
+fun onUiError(
+  errors: List<UiStateError>,
+  descriptionIsError: MutableState<Boolean>,
+  descriptionErrorMessage: MutableState<String>,
+  categoryIsError: MutableState<Boolean>,
+  placeIsError: MutableState<Boolean>,
+  placeErrorMessage: MutableState<String>,
+  messageMapper: ManualRegisterMessageMapper
+) {
+  errors.forEach { error ->
+    when (error) {
+      is UiStateError.ShowPlaceError -> showPlaceError(
+        stringResource(messageMapper.map(error.message)),
+        placeIsError,
+        placeErrorMessage
+      )
+      is UiStateError.ShowCategoryError -> showCategoryError(categoryIsError)
+      is UiStateError.ShowDescriptionError -> showDescriptionError(
+        stringResource(
+          messageMapper.map(
+            error.message
+          )
+        ), descriptionIsError, descriptionErrorMessage
+      )
+    }
+  }
+}
+
+private fun showPlaceError(
+  message: String,
+  placeIsError: MutableState<Boolean>,
+  placeErrorMessage: MutableState<String>
+) {
+  placeErrorMessage.value = message
+  placeIsError.value = true
+}
+
+private fun showCategoryError(categoryIsError: MutableState<Boolean>) {
+  categoryIsError.value = true
+}
+
+private fun showDescriptionError(
+  message: String,
+  descriptionIsError: MutableState<Boolean>,
+  descriptionErrorMessage: MutableState<String>
+) {
+  descriptionErrorMessage.value = message
+  descriptionIsError.value = true
 }
 
 private fun getTotalStr(amount: Double, price: Double, currency: String): String {
