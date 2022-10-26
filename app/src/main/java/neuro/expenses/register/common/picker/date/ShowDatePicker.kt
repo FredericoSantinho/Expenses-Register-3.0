@@ -7,5 +7,5 @@ interface ShowDatePicker {
 }
 
 interface OnSetDate {
-  fun onSetDate(timestamp: Long)
+  fun onSetDate(day: Int, month: Int, year: Int)
 }
