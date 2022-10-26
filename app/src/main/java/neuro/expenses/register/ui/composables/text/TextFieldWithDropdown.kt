@@ -23,7 +23,8 @@ fun TextFieldWithDropdown(
   take: Int = 3,
   modifier: Modifier = Modifier,
   keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-  onValueChange: (String) -> Unit = { }
+  onValueChange: (String) -> Unit = { },
+  state: MutableState<String> = mutableStateOf("")
 ): SetError {
 
   val dropDownOptions = remember { mutableStateOf(listOf<String>()) }
@@ -51,7 +52,8 @@ fun TextFieldWithDropdown(
     dropDownExpanded = dropDownExpanded.value,
     list = dropDownOptions.value,
     label = label,
-    keyboardOptions
+    keyboardOptions,
+    state
   )
 }
 
@@ -64,7 +66,8 @@ fun TextFieldWithDropdown(
   dropDownExpanded: Boolean,
   list: List<String>,
   label: String = "",
-  keyboardOptions: KeyboardOptions
+  keyboardOptions: KeyboardOptions,
+  state: MutableState<String>
 ): SetError {
   var isErrorVar by rememberSaveable { mutableStateOf(false) }
 
@@ -80,6 +83,7 @@ fun TextFieldWithDropdown(
       value = value.value,
       onValueChange = {
         isErrorVar = false
+        state.value = it.text
         setValue.invoke(it)
       },
       label = { Text(label) },

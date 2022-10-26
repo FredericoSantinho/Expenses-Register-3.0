@@ -9,8 +9,8 @@ class ManualRegisterViewModel : ViewModel() {
     description: String,
     category: String,
     place: String,
-    price: Double,
-    amount: Double,
+    price: String,
+    amount: String,
     time: Time,
     date: Date
   ) {

@@ -36,11 +36,11 @@ import neuro.expenses.register.ui.manual.register.composable.mapper.TimeTextMapp
 import neuro.expenses.register.ui.manual.register.composable.mapper.TimeTextMapperImpl
 
 class FormState {
-  var description: String = ""
-  var category: String = ""
-  var place: String = ""
-  var price: Double = 0.0
-  var amount: Double = 0.0
+  var description = mutableStateOf("")
+  var category = mutableStateOf("")
+  var place = mutableStateOf("")
+  var price = mutableStateOf("")
+  var amount = mutableStateOf("")
 }
 
 @Composable
@@ -74,15 +74,15 @@ fun ManualRegisterComposable(
     TextFieldWithError(
       label = stringResource(R.string.manual_register_description),
       keyboardOptions = keyboardOptionsText,
-      onValueChange = { formState.description = it },
-      modifier = Modifier.padding(start = 8.dp, end = 8.dp)
+      modifier = Modifier.padding(start = 8.dp, end = 8.dp),
+      state = formState.description
     )
     TextFieldWithDropdown(
       dataIn = manualRegisterViewModel.getCategories(),
       label = stringResource(R.string.manual_register_category),
       keyboardOptions = keyboardOptionsText,
-      onValueChange = { formState.category = it },
-      modifier = Modifier.padding(start = 8.dp, end = 8.dp)
+      modifier = Modifier.padding(start = 8.dp, end = 8.dp),
+      state = formState.category
     )
     ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
       val (place, placeAuto) = createRefs()
@@ -95,7 +95,7 @@ fun ManualRegisterComposable(
           width = Dimension.fillToConstraints
         },
         keyboardOptions = keyboardOptionsText,
-        onValueChange = { formState.place = it }
+        state = formState.place
       )
       IconButton(onClick = {
         placeTF.setText(manualRegisterViewModel.getNearestPlace())
@@ -116,7 +116,8 @@ fun ManualRegisterComposable(
 
       val totalVar =
         remember { mutableStateOf(getTotalStr(amountVar.value, priceVar.value, currency)) }
-      CurrencyTextField(label = stringResource(R.string.manual_register_price),
+      CurrencyTextField(
+        label = stringResource(R.string.manual_register_price),
         modifier = Modifier.constrainAs(price) {
           start.linkTo(parent.start, margin = 8.dp)
           width = Dimension.value(96.dp)
@@ -125,8 +126,9 @@ fun ManualRegisterComposable(
         onValueChange = {
           priceVar.value = if (it.isNotEmpty()) it.toDouble() else 0.0
           totalVar.value = getTotalStr(amountVar.value, priceVar.value, currency)
-          formState.price = priceVar.value
-        })
+        },
+        state = formState.price
+      )
       TextFieldWithError(
         label = stringResource(R.string.manual_register_amount),
         modifier = Modifier.constrainAs(amount) {
@@ -138,8 +140,9 @@ fun ManualRegisterComposable(
         onValueChange = {
           amountVar.value = if (it.isNotEmpty()) it.toDouble() else 0.0
           totalVar.value = getTotalStr(amountVar.value, priceVar.value, currency)
-          formState.amount = amountVar.value
-        })
+        },
+        state = formState.amount
+      )
       Text(
         text = stringResource(R.string.manual_register_total) + ':',
         modifier = Modifier.constrainAs(totalLabel) {
@@ -161,11 +164,11 @@ fun ManualRegisterComposable(
         val time = dateTimeComposable.getDateTime().time
 
         manualRegisterViewModel.register(
-          formState.description,
-          formState.category,
-          formState.place,
-          formState.price,
-          formState.amount,
+          formState.description.value,
+          formState.category.value,
+          formState.place.value,
+          formState.price.value,
+          formState.amount.value,
           time,
           date
         )

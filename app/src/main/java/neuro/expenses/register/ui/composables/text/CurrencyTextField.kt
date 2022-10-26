@@ -5,11 +5,8 @@ import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
@@ -22,7 +19,8 @@ fun CurrencyTextField(
   modifier: Modifier = Modifier,
   keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
   symbol: String = "€",
-  onValueChange: (String) -> Unit = { }
+  onValueChange: (String) -> Unit = { },
+  state: MutableState<String> = mutableStateOf("")
 ) {
   var text by rememberSaveable { mutableStateOf("") }
 
@@ -31,9 +29,12 @@ fun CurrencyTextField(
     onValueChange = {
       if (it.endsWith(" $symbol")) {
         text = it
-        onValueChange.invoke(it.substring(0, it.length - 2))
+        val number = it.substring(0, it.length - 2)
+        state.value = number
+        onValueChange.invoke(number)
       } else {
         text = it + " $symbol"
+        state.value = it
         onValueChange.invoke(it)
       }
     },
