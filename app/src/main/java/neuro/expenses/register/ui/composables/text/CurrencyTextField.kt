@@ -23,7 +23,7 @@ fun CurrencyTextField(
   keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
   symbol: String = "€",
   onValueChange: (String) -> Unit = { }
-): GetText {
+) {
   var text by rememberSaveable { mutableStateOf("") }
 
   TextField(
@@ -46,12 +46,6 @@ fun CurrencyTextField(
     keyboardOptions = keyboardOptions,
     textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.End)
   )
-
-  return object : GetText {
-    override fun getText(): String {
-      return text
-    }
-  }
 }
 
 @Preview
