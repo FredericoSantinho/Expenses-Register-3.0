@@ -1,6 +1,5 @@
 package neuro.expenses.register.ui.composables.text
 
-interface SetText {
+interface SetText : GetText {
   fun setText(s: String)
-  fun getText(): String
 }

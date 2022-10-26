@@ -25,8 +25,8 @@ import neuro.expenses.register.common.picker.date.ShowMaterialDatePicker
 import neuro.expenses.register.common.picker.time.DefaultShowTimePicker
 import neuro.expenses.register.common.picker.time.ShowTimePicker
 import neuro.expenses.register.ui.composables.text.CurrencyTextField
-import neuro.expenses.register.ui.composables.text.TextFieldSettable
 import neuro.expenses.register.ui.composables.text.TextFieldWithDropdown
+import neuro.expenses.register.ui.composables.text.TextFieldWithError
 import neuro.expenses.register.ui.manual.register.ManualRegisterViewModel
 import neuro.expenses.register.ui.manual.register.composable.datetime.DateTimeComposable
 import neuro.expenses.register.ui.manual.register.composable.mapper.DateTextMapper
@@ -57,7 +57,7 @@ fun ManualRegisterComposable(
         start.linkTo(parent.start, margin = 8.dp)
         end.linkTo(parent.end, margin = 8.dp)
       })
-    val descriptionTF = TextFieldSettable(
+    val descriptionTF = TextFieldWithError(
       label = stringResource(R.string.manual_register_description),
       modifier = Modifier.constrainAs(description) {
         bottom.linkTo(category.top)
@@ -78,7 +78,7 @@ fun ManualRegisterComposable(
       },
       keyboardOptions = keyboardOptionsText
     )
-    val placeTF = TextFieldSettable(
+    val placeTF = TextFieldWithError(
       label = stringResource(R.string.manual_register_place),
       modifier = Modifier.constrainAs(place) {
         bottom.linkTo(price.top)
@@ -115,7 +115,7 @@ fun ManualRegisterComposable(
         priceVar.value = if (it.isNotEmpty()) it.toDouble() else 0.0
         totalVar.value = getTotalStr(amountVar.value, priceVar.value, currency)
       })
-    val amountTF = TextFieldSettable(
+    val amountTF = TextFieldWithError(
       label = stringResource(R.string.manual_register_amount),
       modifier = Modifier.constrainAs(amount) {
         bottom.linkTo(button.top, margin = 8.dp)
