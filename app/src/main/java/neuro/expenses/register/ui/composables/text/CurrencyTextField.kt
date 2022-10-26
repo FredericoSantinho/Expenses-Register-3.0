@@ -20,7 +20,7 @@ fun CurrencyTextField(
   keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
   symbol: String = "€",
   onValueChange: (String) -> Unit = { },
-  state: MutableState<String> = mutableStateOf("")
+  value: MutableState<String> = mutableStateOf("")
 ) {
   var text by rememberSaveable { mutableStateOf("") }
 
@@ -30,11 +30,11 @@ fun CurrencyTextField(
       if (it.endsWith(" $symbol")) {
         text = it
         val number = it.substring(0, it.length - 2)
-        state.value = number
+        value.value = number
         onValueChange.invoke(number)
       } else {
         text = it + " $symbol"
-        state.value = it
+        value.value = it
         onValueChange.invoke(it)
       }
     },

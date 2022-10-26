@@ -66,14 +66,14 @@ fun ManualRegisterComposable(
       label = stringResource(R.string.manual_register_description),
       keyboardOptions = keyboardOptionsText,
       modifier = Modifier.padding(start = 8.dp, end = 8.dp),
-      state = manualRegisterViewModel.description
+      value = manualRegisterViewModel.description
     )
     TextFieldWithDropdown(
+      modifier = Modifier.padding(start = 8.dp, end = 8.dp),
       dataIn = manualRegisterViewModel.getCategories(),
       label = stringResource(R.string.manual_register_category),
       keyboardOptions = keyboardOptionsText,
-      modifier = Modifier.padding(start = 8.dp, end = 8.dp),
-      state = manualRegisterViewModel.category
+      value = manualRegisterViewModel.category
     )
     ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
       val (place, placeAuto) = createRefs()
@@ -86,10 +86,10 @@ fun ManualRegisterComposable(
           width = Dimension.fillToConstraints
         },
         keyboardOptions = keyboardOptionsText,
-        state = manualRegisterViewModel.place
+        value = manualRegisterViewModel.place
       )
       IconButton(onClick = {
-        placeTF.setText(manualRegisterViewModel.getNearestPlace())
+        manualRegisterViewModel.onNearestPlaceButton()
       }, modifier = Modifier.constrainAs(placeAuto) {
         end.linkTo(parent.end, margin = 8.dp)
         top.linkTo(place.top, margin = 8.dp)
@@ -118,7 +118,7 @@ fun ManualRegisterComposable(
           priceVar.value = if (it.isNotEmpty()) it.toDouble() else 0.0
           totalVar.value = getTotalStr(amountVar.value, priceVar.value, currency)
         },
-        state = manualRegisterViewModel.price
+        value = manualRegisterViewModel.price
       )
       TextFieldWithError(
         label = stringResource(R.string.manual_register_amount),
@@ -132,7 +132,7 @@ fun ManualRegisterComposable(
           amountVar.value = if (it.isNotEmpty()) it.toDouble() else 0.0
           totalVar.value = getTotalStr(amountVar.value, priceVar.value, currency)
         },
-        state = manualRegisterViewModel.amount
+        value = manualRegisterViewModel.amount
       )
       Text(
         text = stringResource(R.string.manual_register_total) + ':',
@@ -153,8 +153,7 @@ fun ManualRegisterComposable(
       Button(onClick = {
         val date = dateTimeComposable.getDateTime().date
         val time = dateTimeComposable.getDateTime().time
-
-        manualRegisterViewModel.register(time, date)
+        manualRegisterViewModel.onRegisterButton(time, date)
       }, modifier = Modifier.padding(top = 8.dp, bottom = 16.dp)) {
         Text(text = stringResource(R.string.manual_register_register))
       }

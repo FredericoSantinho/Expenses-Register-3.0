@@ -18,14 +18,15 @@ import neuro.expenses.register.R
 
 @Composable
 fun TextFieldWithDropdown(
+  modifier: Modifier = Modifier,
   dataIn: List<String>,
   label: String = "",
   take: Int = 3,
-  modifier: Modifier = Modifier,
   keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
   onValueChange: (String) -> Unit = { },
-  state: MutableState<String> = mutableStateOf("")
-): SetError {
+  value: MutableState<String> = mutableStateOf(""),
+  isError: MutableState<Boolean> = mutableStateOf(false)
+) {
 
   val dropDownOptions = remember { mutableStateOf(listOf<String>()) }
   val textFieldValue = remember { mutableStateOf(TextFieldValue()) }
@@ -44,7 +45,7 @@ fun TextFieldWithDropdown(
     onValueChange.invoke(value.text)
   }
 
-  return TextFieldWithDropdown(
+  TextFieldWithDropdown(
     modifier = modifier,
     textFieldValue,
     setValue = ::onValueChanged,
@@ -53,23 +54,25 @@ fun TextFieldWithDropdown(
     list = dropDownOptions.value,
     label = label,
     keyboardOptions,
-    state
+    value,
+    isError
   )
 }
 
 @Composable
 fun TextFieldWithDropdown(
   modifier: Modifier = Modifier,
-  value: MutableState<TextFieldValue>,
+  textFieldValue: MutableState<TextFieldValue>,
   setValue: (TextFieldValue) -> Unit,
   onDismissRequest: () -> Unit,
   dropDownExpanded: Boolean,
   list: List<String>,
   label: String = "",
   keyboardOptions: KeyboardOptions,
-  state: MutableState<String>
-): SetError {
-  var isErrorVar by rememberSaveable { mutableStateOf(false) }
+  value: MutableState<String>,
+  isError: MutableState<Boolean>
+) {
+  var isErrorVar by rememberSaveable { isError }
 
   Box(modifier) {
     TextField(
@@ -80,10 +83,10 @@ fun TextFieldWithDropdown(
             onDismissRequest()
         },
       keyboardOptions = keyboardOptions,
-      value = value.value,
+      value = textFieldValue.value,
       onValueChange = {
         isErrorVar = false
-        state.value = it.text
+        value.value = it.text
         setValue.invoke(it)
       },
       label = { Text(label) },
@@ -112,16 +115,6 @@ fun TextFieldWithDropdown(
           Text(text = text)
         }
       }
-    }
-  }
-  return object : SetError {
-    override fun setError(isError: Boolean) {
-      isErrorVar = isError
-    }
-
-    override fun setText(s: String) {
-      state.value = s
-      value.value = TextFieldValue(s)
     }
   }
 }

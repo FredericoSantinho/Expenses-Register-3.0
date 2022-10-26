@@ -13,13 +13,6 @@ class ManualRegisterViewModel : ViewModel() {
   var price = mutableStateOf("")
   var amount = mutableStateOf("")
 
-  fun register(
-    time: Time,
-    date: Date
-  ) {
-
-  }
-
   fun getCategories(): List<String> {
     return listOf(
       "aaa",
@@ -28,7 +21,22 @@ class ManualRegisterViewModel : ViewModel() {
     )
   }
 
-  fun getNearestPlace(): String {
+  fun onNearestPlaceButton() {
+    place.value = getNearestPlace()
+  }
+
+  fun onRegisterButton(time: Time, date: Date) {
+    register(time, date)
+  }
+
+  private fun register(
+    time: Time,
+    date: Date
+  ) {
+
+  }
+
+  private fun getNearestPlace(): String {
     return "teste"
   }
 }

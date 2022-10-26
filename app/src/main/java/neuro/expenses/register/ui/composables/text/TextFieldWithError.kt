@@ -8,8 +8,9 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
-import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -24,18 +25,17 @@ fun TextFieldWithError(
   keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
   textStyle: TextStyle = TextStyle.Default,
   onValueChange: (String) -> Unit = { },
-  state: MutableState<String> = mutableStateOf("")
-): SetErrorMessage {
-  var isErrorVar by rememberSaveable { mutableStateOf(false) }
-  var errorMessageVar by rememberSaveable { mutableStateOf("") }
-
+  value: MutableState<String> = mutableStateOf(""),
+  isError: MutableState<Boolean> = mutableStateOf(false),
+  errorMessage: MutableState<String> = mutableStateOf("")
+) {
   Column(modifier = modifier) {
     TextField(
-      value = state.value,
+      value = value.value,
       onValueChange = {
-        state.value = it
+        value.value = it
         onValueChange.invoke(it)
-        isErrorVar = false
+        isError.value = false
       },
       label = { Text(label) },
       singleLine = true,
@@ -45,30 +45,15 @@ fun TextFieldWithError(
       keyboardOptions = keyboardOptions,
       textStyle = textStyle,
       modifier = Modifier.fillMaxWidth(),
-      isError = isErrorVar
+      isError = isError.value
     )
-    if (isErrorVar)
+    if (isError.value && errorMessage.value.isNotEmpty())
       Text(
-        text = if (isErrorVar) errorMessageVar else "",
+        text = errorMessage.value,
         color = MaterialTheme.colors.error,
         style = MaterialTheme.typography.caption,
         modifier = Modifier.padding(start = 16.dp)
       )
-  }
-
-  return object : SetErrorMessage {
-    override fun setError(isError: Boolean) {
-      isErrorVar = isError
-    }
-
-    override fun setError(errorMessage: String) {
-      errorMessageVar = errorMessage
-      setError(true)
-    }
-
-    override fun setText(s: String) {
-      state.value = s
-    }
   }
 }
 
