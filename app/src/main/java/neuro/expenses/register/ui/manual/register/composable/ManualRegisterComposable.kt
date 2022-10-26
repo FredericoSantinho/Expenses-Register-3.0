@@ -33,10 +33,10 @@ import neuro.expenses.register.ui.manual.register.ManualRegisterViewModel
 import neuro.expenses.register.ui.manual.register.UiState
 import neuro.expenses.register.ui.manual.register.UiStateError
 import neuro.expenses.register.ui.manual.register.composable.datetime.DateTimeComposable
-import neuro.expenses.register.ui.manual.register.composable.mapper.DateTextMapper
-import neuro.expenses.register.ui.manual.register.composable.mapper.DateTextMapperImpl
-import neuro.expenses.register.ui.manual.register.composable.mapper.TimeTextMapper
-import neuro.expenses.register.ui.manual.register.composable.mapper.TimeTextMapperImpl
+import neuro.expenses.register.ui.manual.register.composable.datetime.mapper.DateTextMapper
+import neuro.expenses.register.ui.manual.register.composable.datetime.mapper.DateTextMapperImpl
+import neuro.expenses.register.ui.manual.register.composable.datetime.mapper.TimeTextMapper
+import neuro.expenses.register.ui.manual.register.composable.datetime.mapper.TimeTextMapperImpl
 import neuro.expenses.register.ui.manual.register.mapper.ManualRegisterMessageMapper
 import neuro.expenses.register.ui.manual.register.mapper.ManualRegisterMessageMapperImpl
 
@@ -80,12 +80,13 @@ fun ManualRegisterComposable(
     val amountVar = remember { mutableStateOf(0.0) }
     val priceVar = remember { mutableStateOf(0.0) }
 
-    val dateTimeComposable = DateTimeComposable(
+    DateTimeComposable(
       appCompatActivity,
       showTimePicker,
       showDatePicker,
       timeTextMapper,
       dateTextMapper,
+      calendar = manualRegisterViewModel.calendar,
       modifier = Modifier
         .fillMaxWidth()
         .padding(bottom = 8.dp)
@@ -189,9 +190,7 @@ fun ManualRegisterComposable(
     }
     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
       Button(onClick = {
-        val date = dateTimeComposable.getDateTime().date
-        val time = dateTimeComposable.getDateTime().time
-        manualRegisterViewModel.onRegisterButton(time, date)
+        manualRegisterViewModel.onRegisterButton()
       }, modifier = Modifier.padding(top = 8.dp, bottom = 16.dp)) {
         Text(text = stringResource(R.string.manual_register_register))
       }

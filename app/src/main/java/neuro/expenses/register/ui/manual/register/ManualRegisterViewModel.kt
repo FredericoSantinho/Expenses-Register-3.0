@@ -1,12 +1,11 @@
 package neuro.expenses.register.ui.manual.register
 
-import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import neuro.expenses.register.common.live.data.SingleLiveEvent
-import neuro.expenses.register.ui.manual.register.composable.datetime.Date
-import neuro.expenses.register.ui.manual.register.composable.datetime.Time
+import neuro.expenses.register.common.view.model.asLiveData
+import neuro.expenses.register.common.view.model.asState
+import java.util.*
 
 class ManualRegisterViewModel : ViewModel() {
 
@@ -15,12 +14,13 @@ class ManualRegisterViewModel : ViewModel() {
   var place = mutableStateOf("")
   var price = mutableStateOf("")
   var amount = mutableStateOf("")
+  var calendar = mutableStateOf(Calendar.getInstance())
   var categories = mutableStateOf(getCategories())
 
   private val _uiState = mutableStateOf<UiState>(UiState.Ready)
-  val uiState: State<UiState> = _uiState
+  val uiState = _uiState.asState()
   private val _uiEvent = SingleLiveEvent<UiEvent>()
-  val uiEvent: LiveData<UiEvent> = _uiEvent
+  val uiEvent = _uiEvent.asLiveData()
 
   private fun getCategories(): List<String> {
     return listOf(
@@ -35,14 +35,12 @@ class ManualRegisterViewModel : ViewModel() {
     onPlaceChange()
   }
 
-  fun onRegisterButton(time: Time, date: Date) {
-    register(time, date)
+  fun onRegisterButton() {
+    register()
   }
 
-  private fun register(
-    time: Time,
-    date: Date
-  ) {
+  private fun register() {
+
   }
 
   private fun getNearestPlace(): String {
