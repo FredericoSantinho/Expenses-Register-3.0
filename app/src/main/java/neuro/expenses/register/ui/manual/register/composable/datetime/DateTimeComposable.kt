@@ -1,5 +1,6 @@
 package neuro.expenses.register.ui.manual.register.composable.datetime
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -44,7 +45,11 @@ fun DateTimeComposable(
   var timeText by remember { mutableStateOf(timeTextMapper.map(hourVar, minuteVar)) }
   var dateText by remember { mutableStateOf(dateTextMapper.map(dayVar, monthVar, yearVar)) }
 
-  Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
+  Row(
+    modifier = modifier,
+    verticalAlignment = Alignment.CenterVertically,
+    horizontalArrangement = Arrangement.Center
+  ) {
     Text(text = timeText)
     IconButton(onClick = {
       showTimePicker.showTimePicker(appCompatActivity, object : OnSetTime {

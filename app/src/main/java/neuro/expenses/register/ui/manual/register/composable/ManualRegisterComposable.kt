@@ -1,6 +1,7 @@
 package neuro.expenses.register.ui.manual.register.composable
 
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -34,6 +35,14 @@ import neuro.expenses.register.ui.manual.register.composable.mapper.DateTextMapp
 import neuro.expenses.register.ui.manual.register.composable.mapper.TimeTextMapper
 import neuro.expenses.register.ui.manual.register.composable.mapper.TimeTextMapperImpl
 
+class FormState {
+  var description: String = ""
+  var category: String = ""
+  var place: String = ""
+  var price: Double = 0.0
+  var amount: Double = 0.0
+}
+
 @Composable
 fun ManualRegisterComposable(
   manualRegisterViewModel: ManualRegisterViewModel,
@@ -44,118 +53,120 @@ fun ManualRegisterComposable(
   dateTextMapper: DateTextMapper = DateTextMapperImpl(),
   currency: String = "€"
 ) {
-  ConstraintLayout {
-    val (dateTimeHolder, description, category, place, placeAuto, price, amount, totalLabel, total, button) = createRefs()
-
+  val formState = remember { FormState() }
+  Column(
+    Modifier.fillMaxHeight(),
+    verticalArrangement = Arrangement.Bottom
+  ) {
     val amountVar = remember { mutableStateOf(0.0) }
     val priceVar = remember { mutableStateOf(0.0) }
 
     val dateTimeComposable = DateTimeComposable(
-      appCompatActivity, showTimePicker, showDatePicker, timeTextMapper, dateTextMapper,
-      modifier = Modifier.constrainAs(dateTimeHolder) {
-        bottom.linkTo(description.top, margin = 8.dp)
-        start.linkTo(parent.start, margin = 8.dp)
-        end.linkTo(parent.end, margin = 8.dp)
-      })
-    val descriptionTF = TextFieldWithError(
-      label = stringResource(R.string.manual_register_description),
-      modifier = Modifier.constrainAs(description) {
-        bottom.linkTo(category.top)
-        start.linkTo(parent.start, margin = 8.dp)
-        end.linkTo(parent.end, margin = 8.dp)
-        width = Dimension.matchParent
-      },
-      keyboardOptions = keyboardOptionsText
+      appCompatActivity,
+      showTimePicker,
+      showDatePicker,
+      timeTextMapper,
+      dateTextMapper,
+      modifier = Modifier
+        .fillMaxWidth()
+        .padding(bottom = 8.dp)
     )
-    val categoryTF = TextFieldWithDropdown(
+    TextFieldWithError(
+      label = stringResource(R.string.manual_register_description),
+      keyboardOptions = keyboardOptionsText,
+      onValueChange = { formState.description = it },
+      modifier = Modifier.padding(start = 8.dp, end = 8.dp)
+    )
+    TextFieldWithDropdown(
       dataIn = manualRegisterViewModel.getCategories(),
       label = stringResource(R.string.manual_register_category),
-      modifier = Modifier.constrainAs(category) {
-        bottom.linkTo(place.top)
-        start.linkTo(parent.start, margin = 8.dp)
-        end.linkTo(parent.end, margin = 8.dp)
-        width = Dimension.matchParent
-      },
-      keyboardOptions = keyboardOptionsText
+      keyboardOptions = keyboardOptionsText,
+      onValueChange = { formState.category = it },
+      modifier = Modifier.padding(start = 8.dp, end = 8.dp)
     )
-    val placeTF = TextFieldWithError(
-      label = stringResource(R.string.manual_register_place),
-      modifier = Modifier.constrainAs(place) {
-        bottom.linkTo(price.top)
-        start.linkTo(parent.start, margin = 8.dp)
-        end.linkTo(placeAuto.start, margin = 8.dp)
-        width = Dimension.fillToConstraints
-      },
-      keyboardOptions = keyboardOptionsText
-    )
-    IconButton(onClick = {
-      placeTF.setText(manualRegisterViewModel.getNearestPlace())
-    }, modifier = Modifier.constrainAs(placeAuto) {
-      bottom.linkTo(price.top)
-      end.linkTo(parent.end, margin = 8.dp)
-      top.linkTo(place.top, margin = 8.dp)
-      bottom.linkTo(place.bottom)
-    }) {
-      Icon(
-        painter = painterResource(id = R.drawable.ic_edit_place_24),
-        contentDescription = null,
-        tint = MaterialTheme.colors.primary
+    ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
+      val (place, placeAuto) = createRefs()
+
+      val placeTF = TextFieldWithError(
+        label = stringResource(R.string.manual_register_place),
+        modifier = Modifier.constrainAs(place) {
+          start.linkTo(parent.start, margin = 8.dp)
+          end.linkTo(placeAuto.start, margin = 8.dp)
+          width = Dimension.fillToConstraints
+        },
+        keyboardOptions = keyboardOptionsText,
+        onValueChange = { formState.place = it }
       )
+      IconButton(onClick = {
+        placeTF.setText(manualRegisterViewModel.getNearestPlace())
+      }, modifier = Modifier.constrainAs(placeAuto) {
+        end.linkTo(parent.end, margin = 8.dp)
+        top.linkTo(place.top, margin = 8.dp)
+        bottom.linkTo(place.bottom)
+      }) {
+        Icon(
+          painter = painterResource(id = R.drawable.ic_edit_place_24),
+          contentDescription = null,
+          tint = MaterialTheme.colors.primary
+        )
+      }
     }
-    val totalVar =
-      remember { mutableStateOf(getTotalStr(amountVar.value, priceVar.value, currency)) }
-    val priceTF = CurrencyTextField(label = stringResource(R.string.manual_register_price),
-      modifier = Modifier.constrainAs(price) {
-        bottom.linkTo(button.top, margin = 8.dp)
-        start.linkTo(parent.start, margin = 8.dp)
-        width = Dimension.value(96.dp)
-      },
-      keyboardOptions = keyboardOptionsNumeric,
-      onValueChange = {
-        priceVar.value = if (it.isNotEmpty()) it.toDouble() else 0.0
-        totalVar.value = getTotalStr(amountVar.value, priceVar.value, currency)
-      })
-    val amountTF = TextFieldWithError(
-      label = stringResource(R.string.manual_register_amount),
-      modifier = Modifier.constrainAs(amount) {
-        bottom.linkTo(button.top, margin = 8.dp)
-        start.linkTo(price.end, margin = 8.dp)
-        width = Dimension.value(96.dp)
-      },
-      keyboardOptions = keyboardOptionsNumeric,
-      textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.End),
-      onValueChange = {
-        amountVar.value = if (it.isNotEmpty()) it.toDouble() else 0.0
-        totalVar.value = getTotalStr(amountVar.value, priceVar.value, currency)
-      })
-    Text(
-      text = stringResource(R.string.manual_register_total) + ':',
-      modifier = Modifier.constrainAs(totalLabel) {
-        end.linkTo(total.start, margin = 8.dp)
+    ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
+      val (price, amount, totalLabel, total) = createRefs()
+
+      val totalVar =
+        remember { mutableStateOf(getTotalStr(amountVar.value, priceVar.value, currency)) }
+      CurrencyTextField(label = stringResource(R.string.manual_register_price),
+        modifier = Modifier.constrainAs(price) {
+          start.linkTo(parent.start, margin = 8.dp)
+          width = Dimension.value(96.dp)
+        },
+        keyboardOptions = keyboardOptionsNumeric,
+        onValueChange = {
+          priceVar.value = if (it.isNotEmpty()) it.toDouble() else 0.0
+          totalVar.value = getTotalStr(amountVar.value, priceVar.value, currency)
+          formState.price = priceVar.value
+        })
+      TextFieldWithError(
+        label = stringResource(R.string.manual_register_amount),
+        modifier = Modifier.constrainAs(amount) {
+          start.linkTo(price.end, margin = 8.dp)
+          width = Dimension.value(96.dp)
+        },
+        keyboardOptions = keyboardOptionsNumeric,
+        textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.End),
+        onValueChange = {
+          amountVar.value = if (it.isNotEmpty()) it.toDouble() else 0.0
+          totalVar.value = getTotalStr(amountVar.value, priceVar.value, currency)
+          formState.amount = amountVar.value
+        })
+      Text(
+        text = stringResource(R.string.manual_register_total) + ':',
+        modifier = Modifier.constrainAs(totalLabel) {
+          end.linkTo(total.start, margin = 8.dp)
+          top.linkTo(amount.top, margin = 8.dp)
+          bottom.linkTo(amount.bottom)
+        },
+        fontSize = 16.sp
+      )
+      Text(text = totalVar.value, modifier = Modifier.constrainAs(total) {
+        end.linkTo(parent.end, margin = 16.dp)
         top.linkTo(amount.top, margin = 8.dp)
         bottom.linkTo(amount.bottom)
-      },
-      fontSize = 16.sp
-    )
-    Text(text = totalVar.value, modifier = Modifier.constrainAs(total) {
-      end.linkTo(parent.end, margin = 16.dp)
-      top.linkTo(amount.top, margin = 8.dp)
-      bottom.linkTo(amount.bottom)
-    }, fontSize = 16.sp)
-    Button(onClick = {
-      manualRegisterViewModel.register(
-        descriptionTF.getText(),
-        categoryTF.getText(),
-        placeTF.getText(),
-        priceTF.getText(),
-        amountTF.getText()
-      )
-    }, modifier = Modifier.constrainAs(button) {
-      start.linkTo(parent.start)
-      end.linkTo(parent.end)
-      bottom.linkTo(parent.bottom, margin = 16.dp)
-    }) {
-      Text(text = stringResource(R.string.manual_register_register))
+      }, fontSize = 16.sp)
+    }
+    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+      Button(onClick = {
+        manualRegisterViewModel.register(
+          formState.description,
+          formState.category,
+          formState.place,
+          formState.price,
+          formState.amount
+        )
+      }, modifier = Modifier.padding(top = 8.dp, bottom = 16.dp)) {
+        Text(text = stringResource(R.string.manual_register_register))
+      }
     }
   }
 }

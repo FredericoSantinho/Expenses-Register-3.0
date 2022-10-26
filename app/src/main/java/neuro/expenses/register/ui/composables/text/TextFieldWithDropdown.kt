@@ -22,7 +22,8 @@ fun TextFieldWithDropdown(
   label: String = "",
   take: Int = 3,
   modifier: Modifier = Modifier,
-  keyboardOptions: KeyboardOptions = KeyboardOptions.Default
+  keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+  onValueChange: (String) -> Unit = { }
 ): SetError {
 
   val dropDownOptions = remember { mutableStateOf(listOf<String>()) }
@@ -39,6 +40,7 @@ fun TextFieldWithDropdown(
     dropDownOptions.value = dataIn.filter {
       it.startsWith(value.text) && it != value.text
     }.take(take)
+    onValueChange.invoke(value.text)
   }
 
   return TextFieldWithDropdown(
