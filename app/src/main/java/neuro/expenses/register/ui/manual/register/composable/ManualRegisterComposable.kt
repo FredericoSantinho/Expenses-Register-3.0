@@ -157,12 +157,17 @@ fun ManualRegisterComposable(
     }
     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
       Button(onClick = {
+        val date = dateTimeComposable.getDateTime().date
+        val time = dateTimeComposable.getDateTime().time
+
         manualRegisterViewModel.register(
           formState.description,
           formState.category,
           formState.place,
           formState.price,
-          formState.amount
+          formState.amount,
+          time,
+          date
         )
       }, modifier = Modifier.padding(top = 8.dp, bottom = 16.dp)) {
         Text(text = stringResource(R.string.manual_register_register))

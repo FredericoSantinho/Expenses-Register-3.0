@@ -1,6 +1,8 @@
 package neuro.expenses.register.ui.manual.register
 
 import androidx.lifecycle.ViewModel
+import neuro.expenses.register.ui.manual.register.composable.datetime.Date
+import neuro.expenses.register.ui.manual.register.composable.datetime.Time
 
 class ManualRegisterViewModel : ViewModel() {
   fun register(
@@ -8,7 +10,9 @@ class ManualRegisterViewModel : ViewModel() {
     category: String,
     place: String,
     price: Double,
-    amount: Double
+    amount: Double,
+    time: Time,
+    date: Date
   ) {
 
   }

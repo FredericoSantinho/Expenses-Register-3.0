@@ -1,3 +1,3 @@
 package neuro.expenses.register.ui.manual.register.composable.datetime
 
-data class DateTime(val date: Date, val time: Time)
+data class Date(val day: Int, val month: Int, val year: Int)

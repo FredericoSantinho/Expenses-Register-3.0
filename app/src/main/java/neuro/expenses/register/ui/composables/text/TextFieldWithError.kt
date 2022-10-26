@@ -72,10 +72,6 @@ fun TextFieldWithError(
     override fun setText(s: String) {
       text = s
     }
-
-    override fun getText(): String {
-      return text
-    }
   }
 }
 

@@ -118,10 +118,6 @@ fun TextFieldWithDropdown(
     override fun setText(s: String) {
       value.value = TextFieldValue(s)
     }
-
-    override fun getText(): String {
-      return value.value.text
-    }
   }
 }
 

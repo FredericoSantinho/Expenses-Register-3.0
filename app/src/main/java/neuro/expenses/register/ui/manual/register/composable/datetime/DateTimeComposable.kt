@@ -85,7 +85,8 @@ fun DateTimeComposable(
     }
   }
   return object : DateTimeGetter {
-    override fun getDateTime(): DateTime = DateTime(hourVar, minuteVar, dayVar, monthVar, yearVar)
+    override fun getDateTime(): DateTime =
+      DateTime(Date(dayVar, monthVar, yearVar), Time(hourVar, minuteVar))
   }
 }
 
