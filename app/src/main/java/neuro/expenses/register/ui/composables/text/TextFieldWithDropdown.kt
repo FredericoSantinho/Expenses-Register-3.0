@@ -4,9 +4,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.text.TextRange
@@ -20,7 +19,7 @@ fun TextFieldWithDropdown(
   take: Int = 3,
   modifier: Modifier,
   keyboardOptions: KeyboardOptions = KeyboardOptions.Default
-): GetText {
+): SetError {
 
   val dropDownOptions = remember { mutableStateOf(listOf<String>()) }
   val textFieldValue = remember { mutableStateOf(TextFieldValue()) }
@@ -38,9 +37,9 @@ fun TextFieldWithDropdown(
     }.take(take)
   }
 
-  TextFieldWithDropdown(
+  return TextFieldWithDropdown(
     modifier = modifier,
-    value = textFieldValue.value,
+    textFieldValue,
     setValue = ::onValueChanged,
     onDismissRequest = ::onDropdownDismissRequest,
     dropDownExpanded = dropDownExpanded.value,
@@ -48,24 +47,21 @@ fun TextFieldWithDropdown(
     label = label,
     keyboardOptions
   )
-  return object : GetText {
-    override fun getText(): String {
-      return textFieldValue.value.text
-    }
-  }
 }
 
 @Composable
 fun TextFieldWithDropdown(
   modifier: Modifier = Modifier,
-  value: TextFieldValue,
+  value: MutableState<TextFieldValue>,
   setValue: (TextFieldValue) -> Unit,
   onDismissRequest: () -> Unit,
   dropDownExpanded: Boolean,
   list: List<String>,
   label: String = "",
   keyboardOptions: KeyboardOptions
-) {
+): SetError {
+  var isErrorVar by rememberSaveable { mutableStateOf(false) }
+
   Box(modifier) {
     TextField(
       modifier = Modifier
@@ -75,11 +71,15 @@ fun TextFieldWithDropdown(
             onDismissRequest()
         },
       keyboardOptions = keyboardOptions,
-      value = value,
-      onValueChange = setValue,
+      value = value.value,
+      onValueChange = {
+        isErrorVar = false
+        setValue.invoke(it)
+      },
       label = { Text(label) },
       colors = TextFieldDefaults.outlinedTextFieldColors(),
-      singleLine = true
+      singleLine = true,
+      isError = isErrorVar
     )
     DropdownMenu(
       expanded = dropDownExpanded,
@@ -102,6 +102,19 @@ fun TextFieldWithDropdown(
           Text(text = text)
         }
       }
+    }
+  }
+  return object : SetError {
+    override fun setError(isError: Boolean) {
+      isErrorVar = isError
+    }
+
+    override fun setText(s: String) {
+      value.value = TextFieldValue(s)
+    }
+
+    override fun getText(): String {
+      return value.value.text
     }
   }
 }

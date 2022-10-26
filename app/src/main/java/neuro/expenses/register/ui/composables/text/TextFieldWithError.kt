@@ -25,7 +25,7 @@ fun TextFieldWithError(
   keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
   textStyle: TextStyle = TextStyle.Default,
   onValueChange: (String) -> Unit = { }
-): SetError {
+): SetErrorMessage {
   var text by rememberSaveable { mutableStateOf("") }
   var isErrorVar by rememberSaveable { mutableStateOf(false) }
   var errorMessageVar by rememberSaveable { mutableStateOf("") }
@@ -57,7 +57,7 @@ fun TextFieldWithError(
       )
   }
 
-  return object : SetError {
+  return object : SetErrorMessage {
     override fun setError(isError: Boolean) {
       isErrorVar = isError
     }
