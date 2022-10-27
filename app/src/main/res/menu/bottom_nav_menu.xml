@@ -12,9 +12,9 @@
       android:title="@string/title_manual_register" />
 
   <item
-      android:id="@+id/navigation_report"
-      android:icon="@drawable/ic_report_24"
-      android:title="@string/title_report" />
+      android:id="@+id/navigation_bills"
+      android:icon="@drawable/ic_bill_black_24dp"
+      android:title="@string/title_bills" />
 
   <item
       android:id="@+id/navigation_edit_product"

@@ -17,9 +17,9 @@
       android:label="@string/title_manual_register" />
 
   <fragment
-      android:id="@+id/navigation_report"
-      android:name="neuro.expenses.register.ui.report.ReportFragment"
-      android:label="@string/title_report" />
+      android:id="@+id/navigation_bills"
+      android:name="neuro.expenses.register.ui.bills.BillsFragment"
+      android:label="@string/title_bills" />
 
   <fragment
       android:id="@+id/navigation_edit_product"
