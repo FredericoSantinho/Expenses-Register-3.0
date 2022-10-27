@@ -11,4 +11,8 @@ dependencies {
   implementation lib.rxAndroid
   implementation lib.rxKotlin
   implementation lib.timber
+
+  implementation lib.room
+  api lib.room_rx3
+  kapt lib.room_compiler
 }

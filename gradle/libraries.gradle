@@ -40,3 +40,7 @@ lib.google_test = ["androidx.test.ext:junit:$ver.androidXJunit",
 lib.google_maps = "com.google.android.gms:play-services-maps:$ver.google_maps"
 
 lib.glide = "com.github.bumptech.glide:glide:$ver.glide"
+
+lib.room = "androidx.room:room-runtime:$ver.room"
+lib.room_rx3 = "androidx.room:room-rxjava3:$ver.room"
+lib.room_compiler = "androidx.room:room-compiler:$ver.room"

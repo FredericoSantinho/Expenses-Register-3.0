@@ -53,7 +53,7 @@ fun ManualRegisterComposable(
   messageMapper: ManualRegisterMessageMapper = ManualRegisterMessageMapperImpl(),
   currency: String = "€"
 ) {
-  val uiEvent by manualRegisterViewModel.uiEvent.observeAsState()
+  val uiEvent by manualRegisterViewModel.uiEvent.observeAsState(null)
   val uiState by manualRegisterViewModel.uiState
 
   val descriptionIsError = remember { mutableStateOf(false) }

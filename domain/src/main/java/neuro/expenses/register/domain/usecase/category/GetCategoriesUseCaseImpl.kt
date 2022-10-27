@@ -1,20 +1,12 @@
 package neuro.expenses.register.domain.usecase.category
 
-import com.jakewharton.rxrelay3.BehaviorRelay
 import io.reactivex.rxjava3.core.Observable
+import neuro.expenses.register.domain.repository.GetCategoriesRepository
 
-class GetCategoriesUseCaseImpl : GetCategoriesUseCase {
-
-  private val behaviorRelay: BehaviorRelay<List<String>> = BehaviorRelay.create()
+class GetCategoriesUseCaseImpl(private val getCategoriesRepository: GetCategoriesRepository) :
+  GetCategoriesUseCase {
 
   override fun getCategories(): Observable<List<String>> {
-    behaviorRelay.accept(
-      listOf(
-        "aaa",
-        "abb",
-        "abc"
-      )
-    )
-    return behaviorRelay
+    return getCategoriesRepository.getCategories()
   }
 }

@@ -16,7 +16,7 @@ import org.koin.dsl.module
 
 val useCaseModule = module {
   single<GetCalendarUseCase> { GetCalendarUseCaseImpl() }
-  single<GetCategoriesUseCase> { GetCategoriesUseCaseImpl() }
+  single<GetCategoriesUseCase> { GetCategoriesUseCaseImpl(get()) }
   single<RegisterExpenseUseCase> { RegisterExpenseUseCaseImpl() }
   single<BillItemMapper> { BillItemMapperImpl() }
   single<RegisterExpenseErrorMapper> { RegisterExpenseErrorMapperImpl() }
