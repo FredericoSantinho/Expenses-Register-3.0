@@ -4,10 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -26,10 +24,12 @@ import neuro.expenses.register.common.picker.date.ShowDatePicker
 import neuro.expenses.register.common.picker.date.ShowMaterialDatePicker
 import neuro.expenses.register.common.picker.time.DefaultShowTimePicker
 import neuro.expenses.register.common.picker.time.ShowTimePicker
+import neuro.expenses.register.ui.composables.snackbar.showSnackbar
 import neuro.expenses.register.ui.composables.text.CurrencyTextField
 import neuro.expenses.register.ui.composables.text.TextFieldWithDropdown
 import neuro.expenses.register.ui.composables.text.TextFieldWithError
 import neuro.expenses.register.ui.manual.register.ManualRegisterViewModel
+import neuro.expenses.register.ui.manual.register.UiEvent
 import neuro.expenses.register.ui.manual.register.UiState
 import neuro.expenses.register.ui.manual.register.UiStateError
 import neuro.expenses.register.ui.manual.register.composable.datetime.DateTimeComposable
@@ -51,6 +51,9 @@ fun ManualRegisterComposable(
   messageMapper: ManualRegisterMessageMapper = ManualRegisterMessageMapperImpl(),
   currency: String = "€"
 ) {
+  val uiEvent by manualRegisterViewModel.uiEvent.observeAsState()
+  val uiState by manualRegisterViewModel.uiState
+
   val descriptionIsError = remember { mutableStateOf(false) }
   val descriptionErrorMessage = remember { mutableStateOf("") }
   val categoryIsError = remember { mutableStateOf(false) }
@@ -64,7 +67,7 @@ fun ManualRegisterComposable(
   placeErrorMessage.value = ""
 
   onUiState(
-    manualRegisterViewModel.uiState.value,
+    uiState,
     descriptionIsError,
     descriptionErrorMessage,
     categoryIsError,
@@ -72,6 +75,7 @@ fun ManualRegisterComposable(
     placeErrorMessage,
     messageMapper
   )
+  onUiEvent(uiEvent)
 
   Column(
     Modifier.fillMaxHeight(),
@@ -196,6 +200,21 @@ fun ManualRegisterComposable(
       }
     }
   }
+}
+
+@Composable
+fun onUiEvent(uiEvent: UiEvent?) {
+  when (uiEvent) {
+    is UiEvent.ShowRegisterSuccess -> {
+      showSuccessSnackbar(uiEvent)
+    }
+    null -> {}
+  }
+}
+
+@Composable
+fun showSuccessSnackbar(uiEvent: UiEvent.ShowRegisterSuccess) {
+  showSnackbar(text = uiEvent.productName, key = uiEvent)
 }
 
 @Composable

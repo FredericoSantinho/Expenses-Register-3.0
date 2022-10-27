@@ -18,6 +18,8 @@
   <string name="manual_register_total">Total</string>
   <string name="manual_register_register">Register</string>
 
+  <string name="manual_register_register_success">Registered %1$s</string>
+
   <string name="manual_register_empty_description">Empty description!</string>
   <string name="manual_register_empty_place">Empty place!</string>
 </resources>

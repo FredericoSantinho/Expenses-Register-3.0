@@ -40,7 +40,6 @@ class ManualRegisterViewModel : ViewModel() {
   }
 
   private fun register() {
-
   }
 
   private fun getNearestPlace(): String {
@@ -88,7 +87,9 @@ class ManualRegisterViewModel : ViewModel() {
   }
 }
 
-sealed class UiEvent
+sealed class UiEvent {
+  class ShowRegisterSuccess(val productName: String) : UiEvent()
+}
 
 sealed class UiState {
   object Ready : UiState()
