@@ -17,8 +17,8 @@
       android:title="@string/title_report" />
 
   <item
-      android:id="@+id/navigation_edit"
+      android:id="@+id/navigation_edit_product"
       android:icon="@drawable/ic_edit_24"
-      android:title="@string/title_edit" />
+      android:title="@string/title_edit_product" />
 
 </menu>

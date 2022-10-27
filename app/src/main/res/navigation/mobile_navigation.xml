@@ -21,7 +21,8 @@
       android:name="neuro.expenses.register.ui.report.ReportFragment"
       android:label="@string/title_report" />
 
-  <activity
-      android:id="@+id/navigation_edit"
-      android:name="neuro.expenses.register.EditActivity" />
+  <fragment
+      android:id="@+id/navigation_edit_product"
+      android:name="neuro.expenses.register.ui.home.EditProductFragment"
+      android:label="@string/title_edit_product" />
 </navigation>
