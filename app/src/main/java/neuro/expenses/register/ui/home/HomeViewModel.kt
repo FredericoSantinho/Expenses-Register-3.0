@@ -1,7 +1,7 @@
 package neuro.expenses.register.ui.home
 
 import androidx.lifecycle.ViewModel
-import neuro.expenses.register.domain.Product
+import neuro.expenses.register.domain.entity.Product
 
 class HomeViewModel : ViewModel() {
   fun getPlaceProducts(): List<Product> {

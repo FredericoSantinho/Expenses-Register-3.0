@@ -5,9 +5,10 @@ ext {
 ver.kotlin = "1.7.20"
 ver.junit = "4.13.2"
 ver.koin = "3.2.2"
-ver.koin_android = "3.2.3"
+ver.koin_android = "3.3.0"
 ver.koin_test = "3.2.2"
 ver.rxKotlin = "3.0.1"
+ver.rxRelay3 = "3.0.1"
 ver.rxAndroid = "3.0.0"
 ver.timber = "5.0.1"
 

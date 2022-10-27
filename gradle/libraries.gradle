@@ -8,6 +8,7 @@ lib.kotlin = "org.jetbrains.kotlin:kotlin-stdlib:$ver.kotlin"
 
 lib.koin_core = "io.insert-koin:koin-core:$ver.koin"
 lib.koin_android = "io.insert-koin:koin-android:$ver.koin_android"
+lib.koin_compose = "io.insert-koin:koin-androidx-compose:$ver.koin_android"
 lib.koin_test = "io.insert-koin:koin-test-junit4:$ver.koin_test"
 
 lib.junit = "junit:junit:$ver.junit"
@@ -15,7 +16,8 @@ lib.junit = "junit:junit:$ver.junit"
 lib.timber = "com.jakewharton.timber:timber:$ver.timber"
 
 lib.rxAndroid = "io.reactivex.rxjava3:rxandroid:$ver.rxAndroid"
-lib.rxKotlin = "io.reactivex.rxjava3:rxkotlin:$ver.rxKotlin"
+lib.rxKotlin = ["io.reactivex.rxjava3:rxkotlin:$ver.rxKotlin",
+                "com.jakewharton.rxrelay3:rxrelay:$ver.rxRelay3"]
 
 lib.google = ["androidx.core:core-ktx:$ver.ktx",
               "androidx.appcompat:appcompat:$ver.androidX",
@@ -27,6 +29,7 @@ lib.google = ["androidx.core:core-ktx:$ver.ktx",
               "androidx.navigation:navigation-fragment-ktx:$ver.navigation",
               "androidx.navigation:navigation-ui-ktx:$ver.navigation",
               "androidx.compose.runtime:runtime-livedata:$ver.compose",
+              "androidx.compose.runtime:runtime-rxjava3:$ver.compose",
               "androidx.compose.ui:ui:$ver.compose",
               "androidx.compose.material:material:$ver.compose",
               "androidx.compose.ui:ui-tooling:$ver.compose",]

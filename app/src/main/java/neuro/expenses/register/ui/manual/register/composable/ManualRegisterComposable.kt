@@ -6,6 +6,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.rxjava3.subscribeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -39,10 +40,11 @@ import neuro.expenses.register.ui.manual.register.composable.datetime.mapper.Tim
 import neuro.expenses.register.ui.manual.register.composable.datetime.mapper.TimeTextMapperImpl
 import neuro.expenses.register.ui.manual.register.mapper.ManualRegisterMessageMapper
 import neuro.expenses.register.ui.manual.register.mapper.ManualRegisterMessageMapperImpl
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun ManualRegisterComposable(
-  manualRegisterViewModel: ManualRegisterViewModel,
+  manualRegisterViewModel: ManualRegisterViewModel = getViewModel(),
   appCompatActivity: FragmentActivity,
   showTimePicker: ShowTimePicker = DefaultShowTimePicker(),
   showDatePicker: ShowDatePicker = ShowMaterialDatePicker(),
@@ -106,7 +108,7 @@ fun ManualRegisterComposable(
     )
     TextFieldWithDropdown(
       modifier = Modifier.padding(start = 8.dp, end = 8.dp),
-      dataIn = manualRegisterViewModel.categories.value,
+      dataIn = manualRegisterViewModel.categories.subscribeAsState(initial = emptyList()),
       label = stringResource(R.string.manual_register_category),
       keyboardOptions = keyboardOptionsText,
       value = manualRegisterViewModel.category,
@@ -307,8 +309,6 @@ private val keyboardOptionsText = KeyboardOptions.Default.copy(
 @Composable
 fun PreviewManualRegisterComposable() {
   ExpensesRegisterTheme {
-    ManualRegisterComposable(
-      ManualRegisterViewModel(), AppCompatActivity()
-    )
+    ManualRegisterComposable(appCompatActivity = AppCompatActivity())
   }
 }

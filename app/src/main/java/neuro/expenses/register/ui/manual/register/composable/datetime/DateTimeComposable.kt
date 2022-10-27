@@ -42,6 +42,8 @@ fun DateTimeComposable(
   var monthVar = calendar.value.get(Calendar.MONTH) + 1
   var yearVar = calendar.value.get(Calendar.YEAR)
 
+  calendar.value.set(yearVar, monthVar - 1, dayVar, hourVar, minuteVar, 0)
+
   var timeText by remember { mutableStateOf(timeTextMapper.map(hourVar, minuteVar)) }
   var dateText by remember { mutableStateOf(dateTextMapper.map(dayVar, monthVar, yearVar)) }
 
@@ -93,14 +95,14 @@ private fun setCalendar(calendar: MutableState<Calendar>, hour: Int, minute: Int
   val year = value.get(Calendar.YEAR)
   val month = value.get(Calendar.MONTH)
   val day = value.get(Calendar.DAY_OF_MONTH)
-  calendar.value.set(year, month, day, hour, minute)
+  calendar.value.set(year, month, day, hour, minute, 0)
 }
 
 private fun setCalendar(calendar: MutableState<Calendar>, day: Int, month: Int, year: Int) {
   val value = calendar.value
   val hour = value.get(Calendar.HOUR_OF_DAY)
   val minute = value.get(Calendar.MINUTE)
-  calendar.value.set(year, month - 1, day, hour, minute)
+  calendar.value.set(year, month - 1, day, hour, minute, 0)
 }
 
 @Preview

@@ -19,7 +19,7 @@ import neuro.expenses.register.R
 @Composable
 fun TextFieldWithDropdown(
   modifier: Modifier = Modifier,
-  dataIn: List<String>,
+  dataIn: State<List<String>>,
   label: String = "",
   take: Int = 3,
   keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
@@ -39,7 +39,7 @@ fun TextFieldWithDropdown(
   fun onValueChanged(value: TextFieldValue) {
     dropDownExpanded.value = true
     textFieldValue.value = value
-    dropDownOptions.value = dataIn.filter {
+    dropDownOptions.value = dataIn.value.filter {
       it.startsWith(value.text) && it != value.text
     }.take(take)
     onValueChange.invoke(value.text)
@@ -122,9 +122,11 @@ fun TextFieldWithDropdown(
 @Preview
 @Composable
 fun PreviewTextFieldWithDropdown() {
+  val dataIn = remember { mutableStateOf(listOf("aaa", "abb", "abc")) }
+
   ExpensesRegisterTheme {
     TextFieldWithDropdown(
-      dataIn = listOf("aaa", "abb", "abc"),
+      dataIn = dataIn,
       label = stringResource(R.string.manual_register_category)
     )
   }

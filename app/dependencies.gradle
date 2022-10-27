@@ -10,7 +10,9 @@ dependencies {
   implementation lib.google_maps
 
   implementation lib.koin_android
+  implementation lib.koin_compose
   implementation lib.glide
+  implementation lib.rxKotlin
 
   implementation lib.timber
 
