@@ -1,9 +1,10 @@
 package neuro.expenses.register.ui.manual.register.mapper
 
-import neuro.expenses.register.domain.entity.BillItem
-import neuro.expenses.register.domain.entity.Product
+import neuro.expenses.register.domain.dto.BillItemDto
+import neuro.expenses.register.domain.dto.ProductDto
 
-class BillItemMapperImpl : BillItemMapper {
+
+class BillItemVMMapperImpl : BillItemVMMapper {
 
   override fun map(
     description: String,
@@ -11,12 +12,12 @@ class BillItemMapperImpl : BillItemMapper {
     place: String,
     price: String,
     amount: String
-  ): BillItem {
+  ): BillItemDto {
     val priceDouble: Double = if (price.isNotEmpty()) price.toDouble() else 0.0
     val amountDouble: Double = if (amount.isNotEmpty()) amount.toDouble() else 0.0
 
-    val product = Product(description, category, priceDouble)
-    val billItem = BillItem(product, place, amountDouble)
+    val product = ProductDto(description, category, priceDouble)
+    val billItem = BillItemDto(product, place, amountDouble)
     return billItem
   }
 }

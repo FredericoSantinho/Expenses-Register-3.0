@@ -11,9 +11,9 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import neuro.expenses.register.R
-import neuro.expenses.register.domain.entity.Product
+import neuro.expenses.register.domain.dto.ProductDto
 
-class ProductsAdapter(val myDataset: List<Product>) :
+class ProductsAdapter(val myDataset: List<ProductDto>) :
     RecyclerView.Adapter<ProductsAdapter.SuggestedExpenseViewHolder>() {
 
     class SuggestedExpenseViewHolder(button: ConstraintLayout) : RecyclerView.ViewHolder(button)

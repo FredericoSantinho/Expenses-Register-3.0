@@ -9,14 +9,14 @@ import neuro.expenses.register.domain.usecase.calendar.GetCalendarUseCase
 import neuro.expenses.register.domain.usecase.category.GetCategoriesUseCase
 import neuro.expenses.register.domain.usecase.near.GetNearestPlaceUseCase
 import neuro.expenses.register.domain.usecase.register.RegisterExpenseUseCase
-import neuro.expenses.register.ui.manual.register.mapper.BillItemMapper
+import neuro.expenses.register.ui.manual.register.mapper.BillItemVMMapper
 import neuro.expenses.register.ui.manual.register.mapper.RegisterExpenseErrorMapper
 
 class ManualRegisterViewModel(
   private val getCalendarUseCase: GetCalendarUseCase,
   private val getCategoriesUseCase: GetCategoriesUseCase,
   private val registerExpenseUseCase: RegisterExpenseUseCase,
-  private val billItemMapper: BillItemMapper,
+  private val billItemVMMapper: BillItemVMMapper,
   private val registerExpenseErrorMapper: RegisterExpenseErrorMapper,
   private val getNearestPlaceUseCase: GetNearestPlaceUseCase
 ) : ViewModel() {
@@ -40,10 +40,16 @@ class ManualRegisterViewModel(
   }
 
   fun onRegisterButton() {
-    val billItem =
-      billItemMapper.map(description.value, category.value, place.value, price.value, amount.value)
+    val billItemDto =
+      billItemVMMapper.map(
+        description.value,
+        category.value,
+        place.value,
+        price.value,
+        amount.value
+      )
 
-    val registerExpenseErrors = registerExpenseUseCase.registerExpense(billItem, calendar.value)
+    val registerExpenseErrors = registerExpenseUseCase.registerExpense(billItemDto, calendar.value)
 
     if (registerExpenseErrors.isEmpty()) {
       publishAndReset()

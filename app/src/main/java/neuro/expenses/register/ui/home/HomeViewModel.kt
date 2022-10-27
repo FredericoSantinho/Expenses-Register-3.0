@@ -1,14 +1,14 @@
 package neuro.expenses.register.ui.home
 
 import androidx.lifecycle.ViewModel
-import neuro.expenses.register.domain.entity.Product
+import neuro.expenses.register.domain.dto.ProductDto
 
 class HomeViewModel : ViewModel() {
-  fun getPlaceProducts(): List<Product> {
-    val list = mutableListOf<Product>()
+  fun getPlaceProducts(): List<ProductDto> {
+    val list = mutableListOf<ProductDto>()
     for (n in 1..5) {
       list.add(
-        Product(
+        ProductDto(
           "Bolacha Oreo Coberta Chocolate Branco 246g",
           "Alimentação",
           2.09,
