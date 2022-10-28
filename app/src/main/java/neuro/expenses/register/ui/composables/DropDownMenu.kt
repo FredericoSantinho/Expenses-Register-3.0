@@ -1,11 +1,9 @@
 package neuro.expenses.register.ui.composable
 
-import android.widget.Toast
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -15,8 +13,6 @@ fun DropDownMenu(
   label: String = "",
   listItems: State<List<String>>
 ) {
-  val contextForToast = LocalContext.current.applicationContext
-
   var selectedItem by remember {
     mutableStateOf(listItems.value[0])
   }
@@ -44,6 +40,9 @@ fun DropDownMenu(
       },
       colors = TextFieldDefaults.textFieldColors(
         backgroundColor = color,
+        focusedIndicatorColor = Color.Transparent,
+        unfocusedIndicatorColor = Color.Transparent,
+        disabledIndicatorColor = Color.Transparent
       )
     )
 
@@ -54,7 +53,6 @@ fun DropDownMenu(
       listItems.value.forEach { selectedOption ->
         DropdownMenuItem(onClick = {
           selectedItem = selectedOption
-          Toast.makeText(contextForToast, selectedOption, Toast.LENGTH_SHORT).show()
           expanded = false
         }) {
           Text(text = selectedOption)

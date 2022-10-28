@@ -21,13 +21,13 @@ class ManualRegisterViewModel(
   private val getNearestPlaceUseCase: GetNearestPlaceUseCase
 ) : ViewModel() {
 
-  var description = mutableStateOf("")
-  var category = mutableStateOf("")
-  var place = mutableStateOf("")
-  var price = mutableStateOf("")
-  var amount = mutableStateOf("")
-  var calendar = mutableStateOf(getCalendarUseCase.getCalendar())
-  var categories = getCategoriesUseCase.getCategories()
+  val description = mutableStateOf("")
+  val category = mutableStateOf("")
+  val place = mutableStateOf("")
+  val price = mutableStateOf("")
+  val amount = mutableStateOf("")
+  val calendar = mutableStateOf(getCalendarUseCase.getCalendar())
+  val categories = getCategoriesUseCase.getCategories()
 
   private val _uiState = mutableStateOf<UiState>(UiState.Ready)
   val uiState = _uiState.asState()
