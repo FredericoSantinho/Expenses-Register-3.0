@@ -8,6 +8,9 @@
   <string name="title_edit_category">Category</string>
   <string name="title_edit_place">Place</string>
 
+  <!-- home -->
+  <string name="home_place">Place</string>
+
   <!-- Manual Register Screen -->
   <string name="manual_register_description">Description</string>
   <string name="manual_register_category">Category</string>
