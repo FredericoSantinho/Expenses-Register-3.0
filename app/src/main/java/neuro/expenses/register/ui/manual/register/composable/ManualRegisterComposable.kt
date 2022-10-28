@@ -25,6 +25,11 @@ import neuro.expenses.register.common.picker.date.ShowDatePicker
 import neuro.expenses.register.common.picker.date.ShowMaterialDatePicker
 import neuro.expenses.register.common.picker.time.DefaultShowTimePicker
 import neuro.expenses.register.common.picker.time.ShowTimePicker
+import neuro.expenses.register.ui.composables.datetime.DateTimeComposable
+import neuro.expenses.register.ui.composables.datetime.mapper.DateTextMapper
+import neuro.expenses.register.ui.composables.datetime.mapper.DateTextMapperImpl
+import neuro.expenses.register.ui.composables.datetime.mapper.TimeTextMapper
+import neuro.expenses.register.ui.composables.datetime.mapper.TimeTextMapperImpl
 import neuro.expenses.register.ui.composables.snackbar.showSnackbar
 import neuro.expenses.register.ui.composables.text.CurrencyTextField
 import neuro.expenses.register.ui.composables.text.TextFieldWithDropdown
@@ -33,11 +38,6 @@ import neuro.expenses.register.ui.manual.register.ManualRegisterViewModel
 import neuro.expenses.register.ui.manual.register.UiEvent
 import neuro.expenses.register.ui.manual.register.UiState
 import neuro.expenses.register.ui.manual.register.UiStateError
-import neuro.expenses.register.ui.manual.register.composable.datetime.DateTimeComposable
-import neuro.expenses.register.ui.manual.register.composable.datetime.mapper.DateTextMapper
-import neuro.expenses.register.ui.manual.register.composable.datetime.mapper.DateTextMapperImpl
-import neuro.expenses.register.ui.manual.register.composable.datetime.mapper.TimeTextMapper
-import neuro.expenses.register.ui.manual.register.composable.datetime.mapper.TimeTextMapperImpl
 import neuro.expenses.register.ui.manual.register.mapper.ManualRegisterMessageMapper
 import neuro.expenses.register.ui.manual.register.mapper.ManualRegisterMessageMapperImpl
 import org.koin.androidx.compose.getViewModel
@@ -80,7 +80,7 @@ fun ManualRegisterComposable(
   onUiEvent(uiEvent)
 
   Column(
-    Modifier.fillMaxHeight(),
+    Modifier.fillMaxSize(),
     verticalArrangement = Arrangement.Bottom
   ) {
     val amountVar = remember { mutableStateOf(0.0) }

@@ -1,4 +1,4 @@
-package neuro.expenses.register.ui.manual.register.composable.datetime
+package neuro.expenses.register.ui.composables.datetime
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -20,10 +20,10 @@ import neuro.expenses.register.common.picker.date.ShowMaterialDatePicker
 import neuro.expenses.register.common.picker.time.DefaultShowTimePicker
 import neuro.expenses.register.common.picker.time.OnSetTime
 import neuro.expenses.register.common.picker.time.ShowTimePicker
-import neuro.expenses.register.ui.manual.register.composable.datetime.mapper.DateTextMapper
-import neuro.expenses.register.ui.manual.register.composable.datetime.mapper.DateTextMapperImpl
-import neuro.expenses.register.ui.manual.register.composable.datetime.mapper.TimeTextMapper
-import neuro.expenses.register.ui.manual.register.composable.datetime.mapper.TimeTextMapperImpl
+import neuro.expenses.register.ui.composables.datetime.mapper.DateTextMapper
+import neuro.expenses.register.ui.composables.datetime.mapper.DateTextMapperImpl
+import neuro.expenses.register.ui.composables.datetime.mapper.TimeTextMapper
+import neuro.expenses.register.ui.composables.datetime.mapper.TimeTextMapperImpl
 import java.util.*
 
 @Composable
