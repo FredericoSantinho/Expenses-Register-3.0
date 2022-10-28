@@ -43,6 +43,7 @@ lib.google_maps = ["com.google.android.gms:play-services-maps:$ver.google_maps",
                    "com.google.maps.android:android-maps-utils:$ver.google_maps_utils"]
 
 lib.glide = "com.github.bumptech.glide:glide:$ver.glide"
+lib.coil = "io.coil-kt:coil-compose:$ver.coil"
 
 lib.room = "androidx.room:room-runtime:$ver.room"
 lib.room_rx3 = "androidx.room:room-rxjava3:$ver.room"

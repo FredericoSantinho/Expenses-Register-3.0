@@ -12,6 +12,8 @@ import androidx.fragment.app.FragmentActivity
 import com.exchangebot.ui.theme.ExpensesRegisterTheme
 import com.google.android.gms.maps.model.LatLng
 import neuro.expenses.register.R
+import neuro.expenses.register.ui.composable.DropDownMenu
+import neuro.expenses.register.ui.composable.MapsComposable
 import neuro.expenses.register.ui.composables.datetime.DateTimeComposable
 
 @Composable

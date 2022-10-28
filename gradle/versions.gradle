@@ -29,5 +29,6 @@ ver.google_maps_compose = "2.7.2"
 ver.google_maps_utils = "2.4.0"
 
 ver.glide = "4.14.2"
+ver.coil = "2.2.2"
 
 ver.room = "2.4.3"

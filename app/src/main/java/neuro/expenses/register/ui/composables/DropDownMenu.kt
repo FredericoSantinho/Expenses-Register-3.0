@@ -1,4 +1,4 @@
-package neuro.expenses.register.ui.home.composable
+package neuro.expenses.register.ui.composable
 
 import android.widget.Toast
 import androidx.compose.material.*
