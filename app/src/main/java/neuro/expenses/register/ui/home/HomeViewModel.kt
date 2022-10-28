@@ -1,25 +1,22 @@
 package neuro.expenses.register.ui.home
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import neuro.expenses.register.domain.dto.ProductDto
+import neuro.expenses.register.common.live.data.SingleLiveEvent
+import neuro.expenses.register.common.view.model.asLiveData
+import neuro.expenses.register.common.view.model.asState
 
 class HomeViewModel : ViewModel() {
-  fun getPlaceProducts(): List<ProductDto> {
-    val list = mutableListOf<ProductDto>()
-    for (n in 1..5) {
-      list.add(
-        ProductDto(
-          "Bolacha Oreo Coberta Chocolate Branco 246g",
-          "Alimentação",
-          2.09,
-          "https://s3.minipreco.pt/medias/hc0/hf7/8915812384798.jpg"
-        )
-      )
-    }
-    return list
+  private val _uiState = mutableStateOf<UiState>(UiState.Ready)
+  val uiState = _uiState.asState()
+  private val _uiEvent = SingleLiveEvent<UiEvent>()
+  val uiEvent = _uiEvent.asLiveData()
+
+  sealed class UiEvent {
+    class ShowRegisterSuccess(val productName: String) : UiEvent()
   }
 
-  fun getPlacesNames(): List<String> {
-    return listOf("Bitoque")
+  sealed class UiState {
+    object Ready : UiState()
   }
 }
