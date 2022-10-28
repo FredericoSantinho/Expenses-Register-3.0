@@ -14,7 +14,7 @@ class HomeFragment : BaseComposeFragment() {
 
   @Composable
   override fun getComposable() {
-    return HomeComposable()
+    return HomeComposable(requireActivity())
   }
 
 }

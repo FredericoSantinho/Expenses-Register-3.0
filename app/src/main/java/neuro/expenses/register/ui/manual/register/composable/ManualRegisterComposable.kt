@@ -1,6 +1,5 @@
 package neuro.expenses.register.ui.manual.register.composable
 
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -45,7 +44,7 @@ import org.koin.androidx.compose.getViewModel
 @Composable
 fun ManualRegisterComposable(
   manualRegisterViewModel: ManualRegisterViewModel = getViewModel(),
-  appCompatActivity: FragmentActivity,
+  fragmentActivity: FragmentActivity,
   showTimePicker: ShowTimePicker = DefaultShowTimePicker(),
   showDatePicker: ShowDatePicker = ShowMaterialDatePicker(),
   timeTextMapper: TimeTextMapper = TimeTextMapperImpl(),
@@ -87,7 +86,7 @@ fun ManualRegisterComposable(
     val priceVar = remember { mutableStateOf(0.0) }
 
     DateTimeComposable(
-      appCompatActivity,
+      fragmentActivity,
       showTimePicker,
       showDatePicker,
       timeTextMapper,
@@ -309,6 +308,6 @@ private val keyboardOptionsText = KeyboardOptions.Default.copy(
 @Composable
 fun PreviewManualRegisterComposable() {
   ExpensesRegisterTheme {
-    ManualRegisterComposable(appCompatActivity = AppCompatActivity())
+    ManualRegisterComposable(fragmentActivity = FragmentActivity())
   }
 }

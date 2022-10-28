@@ -28,7 +28,7 @@ import java.util.*
 
 @Composable
 fun DateTimeComposable(
-  appCompatActivity: FragmentActivity,
+  fragmentActivity: FragmentActivity,
   showTimePicker: ShowTimePicker = DefaultShowTimePicker(),
   showDatePicker: ShowDatePicker = ShowMaterialDatePicker(),
   timeTextMapper: TimeTextMapper = TimeTextMapperImpl(),
@@ -54,7 +54,7 @@ fun DateTimeComposable(
   ) {
     Text(text = timeText)
     IconButton(onClick = {
-      showTimePicker.showTimePicker(appCompatActivity, object : OnSetTime {
+      showTimePicker.showTimePicker(fragmentActivity, object : OnSetTime {
         override fun onSetTime(hour: Int, minute: Int) {
           hourVar = hour
           minuteVar = minute
@@ -71,7 +71,7 @@ fun DateTimeComposable(
     }
     Text(text = dateText)
     IconButton(onClick = {
-      showDatePicker.showDatePicker(appCompatActivity, object : OnSetDate {
+      showDatePicker.showDatePicker(fragmentActivity, object : OnSetDate {
         override fun onSetDate(day: Int, month: Int, year: Int) {
           dayVar = day
           monthVar = month
