@@ -1,5 +1,7 @@
 package neuro.expenses.register.ui.report.composable
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -18,17 +20,21 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import com.exchangebot.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.R
 import neuro.expenses.register.ui.home.BillViewModel
-import org.koin.androidx.compose.getViewModel
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BillComposable(
-  modifier: Modifier = Modifier,
-  billViewModel: BillViewModel = getViewModel()
+  billViewModel: BillViewModel,
+  modifier: Modifier = Modifier
 ) {
   Card(
     modifier = modifier
       .requiredHeight(80.dp)
-      .fillMaxWidth(),
+      .fillMaxWidth()
+      .combinedClickable(
+        onClick = { billViewModel.onClick() },
+        onLongClick = { billViewModel.onLongClick() },
+      ),
     elevation = 2.dp,
     backgroundColor = Color.White,
     shape = RoundedCornerShape(corner = CornerSize(8.dp))
@@ -50,7 +56,7 @@ fun BillComposable(
           }
           .size(64.dp)
           .clip(RoundedCornerShape(corner = CornerSize(8.dp))),
-        url = billViewModel.imageUrl.value
+        url = billViewModel.iconUrl.value
       )
       Text(
         modifier = Modifier
@@ -87,34 +93,63 @@ fun BillComposable(
         fontWeight = FontWeight.Bold,
         color = MaterialTheme.colors.primary
       )
-      if (billViewModel.isBillOpen.value) {
-        IconButton(
-          onClick = {
-
-          }, modifier = Modifier
-            .constrainAs(closeBillC) {
-              end.linkTo(parent.end)
-              top.linkTo(parent.top)
-              bottom.linkTo(parent.bottom)
-            }
-            .padding(start = 8.dp)
-        ) {
-          Icon(
-            painter = painterResource(id = R.drawable.ic_close_bill_24),
-            contentDescription = null,
-            tint = Color.Black
-          )
+      val iconConstraintModifier = Modifier
+        .constrainAs(closeBillC) {
+          end.linkTo(parent.end)
+          top.linkTo(parent.top)
+          bottom.linkTo(parent.bottom)
         }
+      if (billViewModel.isEdit.value) {
+        editBillIcon(iconConstraintModifier, billViewModel)
       } else {
-        Divider(modifier = Modifier
-          .constrainAs(closeBillC) {
-            end.linkTo(parent.end)
-          }
-          .fillMaxHeight()
-          .width(0.dp)
-        )
+        if (billViewModel.isBillOpen.value) {
+          closeBillIcon(iconConstraintModifier)
+        } else {
+          guideDivider(iconConstraintModifier)
+        }
       }
     }
+  }
+}
+
+@Composable
+private fun guideDivider(iconConstraintModifier: Modifier) {
+  Divider(
+    modifier = iconConstraintModifier
+      .fillMaxHeight()
+      .width(0.dp)
+  )
+}
+
+@Composable
+private fun closeBillIcon(imageConstraintModifier: Modifier) {
+  IconButton(
+    onClick = {
+
+    }, modifier = imageConstraintModifier
+      .padding(start = 8.dp)
+  ) {
+    Icon(
+      painter = painterResource(id = R.drawable.ic_close_bill_24),
+      contentDescription = null,
+      tint = Color.Black
+    )
+  }
+}
+
+@Composable
+private fun editBillIcon(imageConstraintModifier: Modifier, billViewModel: BillViewModel) {
+  IconButton(
+    onClick = {
+      billViewModel.onEditClick()
+    }, modifier = imageConstraintModifier
+      .padding(start = 8.dp)
+  ) {
+    Icon(
+      painter = painterResource(id = R.drawable.ic_edit_24),
+      contentDescription = null,
+      tint = Color.Black
+    )
   }
 }
 
@@ -122,6 +157,6 @@ fun BillComposable(
 @Composable
 fun PreviewDateTimeComposable() {
   ExpensesRegisterTheme {
-    BillComposable()
+    BillComposable(BillViewModel(1))
   }
 }

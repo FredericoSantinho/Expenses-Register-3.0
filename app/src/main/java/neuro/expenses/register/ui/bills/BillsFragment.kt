@@ -1,19 +1,16 @@
 package neuro.expenses.register.ui.bills
 
-import neuro.expenses.register.R
-import neuro.expenses.register.common.android.BaseFragment
-import neuro.expenses.register.common.viewBinding
-import neuro.expenses.register.databinding.FragmentEditPlaceBinding
+import androidx.compose.runtime.Composable
+import neuro.expenses.register.common.android.BaseComposeFragment
+import neuro.expenses.register.ui.bills.composable.BillsComposable
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class BillsFragment : BaseFragment() {
+class BillsFragment : BaseComposeFragment() {
 
-  val binding by viewBinding(FragmentEditPlaceBinding::bind)
   val billsViewModel: BillsViewModel by viewModel()
 
-  override fun getLayout(): Int = R.layout.fragment_edit_place
-
-  override fun setupViewModel() {
-
+  @Composable
+  override fun getComposable() {
+    return BillsComposable(fragmentActivity = requireActivity())
   }
 }

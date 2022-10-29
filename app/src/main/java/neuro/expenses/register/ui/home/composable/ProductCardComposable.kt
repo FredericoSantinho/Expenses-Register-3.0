@@ -20,10 +20,9 @@ import com.exchangebot.ui.theme.ExpensesRegisterTheme
 import com.exchangebot.ui.theme.ExpensesRegisterTypography
 import neuro.expenses.register.ui.home.ProductCardViewModel
 import neuro.expenses.register.ui.report.composable.AsyncImage
-import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun ProductCardComposable(productCardViewModel: ProductCardViewModel = getViewModel()) {
+fun ProductCardComposable(productCardViewModel: ProductCardViewModel) {
   Row {
     Card(
       modifier = Modifier
@@ -63,7 +62,7 @@ fun ProductCardComposable(productCardViewModel: ProductCardViewModel = getViewMo
           }
           .size(48.dp)
           .clip(RoundedCornerShape(corner = CornerSize(8.dp))),
-          productCardViewModel.imageUrl.value)
+          productCardViewModel.iconUrl.value)
         Text(
           text = productCardViewModel.category.value,
           modifier = Modifier
@@ -96,7 +95,19 @@ fun ProductCardComposable(productCardViewModel: ProductCardViewModel = getViewMo
 @Preview
 @Composable
 fun PreviewDateTimeComposable() {
+  val description = "Tosta de Atúm"
+  val category = "Restau"
+  val price = "3,50 €"
+  val iconUrl = "https://s3.minipreco.pt/medias/hc0/hf7/8915812384798.jpg"
+
   ExpensesRegisterTheme {
-    ProductCardComposable()
+    ProductCardComposable(
+      ProductCardViewModel(
+        description,
+        category,
+        price,
+        iconUrl
+      )
+    )
   }
 }

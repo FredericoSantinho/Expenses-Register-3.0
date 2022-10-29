@@ -3,6 +3,7 @@
   <string name="title_home">Home</string>
   <string name="title_manual_register">Manual Register</string>
   <string name="title_bills">Bills</string>
+  <string name="title_edit">Edit</string>
 
   <string name="title_edit_product">Product</string>
   <string name="title_edit_category">Category</string>
@@ -19,8 +20,10 @@
   <string name="manual_register_amount">Amount</string>
   <string name="manual_register_total">Total</string>
   <string name="manual_register_register">Register</string>
-
   <string name="manual_register_register_success">Registered %1$s</string>
+
+  <!-- Bills -->
+  <string name="bills_place">Place</string>
 
   <string name="manual_register_empty_description">Empty description!</string>
   <string name="manual_register_empty_place">Empty place!</string>
