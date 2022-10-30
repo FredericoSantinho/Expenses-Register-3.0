@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.exchangebot.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.R
-import neuro.expenses.register.ui.home.BillViewModel
+import neuro.expenses.register.ui.home.view.model.BillViewModel
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

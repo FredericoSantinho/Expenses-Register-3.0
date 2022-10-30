@@ -7,7 +7,7 @@ import androidx.compose.ui.graphics.Color
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun DropDownMenu(
+fun DropDownTextField(
   modifier: Modifier = Modifier,
   color: Color = Color.Transparent,
   label: String = "",

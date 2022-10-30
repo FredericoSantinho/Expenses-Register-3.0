@@ -14,11 +14,11 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.fragment.app.FragmentActivity
 import com.exchangebot.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.R
-import neuro.expenses.register.ui.composable.DropDownMenu
+import neuro.expenses.register.ui.composable.DropDownTextField
 import neuro.expenses.register.ui.composable.MapsComposable
 import neuro.expenses.register.ui.composables.datetime.DateTimeComposable
-import neuro.expenses.register.ui.home.BillViewModel
-import neuro.expenses.register.ui.home.HomeViewModel
+import neuro.expenses.register.ui.home.view.model.BillViewModel
+import neuro.expenses.register.ui.home.view.model.HomeViewModel
 import neuro.expenses.register.ui.report.composable.BillComposable
 import org.koin.androidx.compose.getViewModel
 
@@ -49,7 +49,7 @@ fun HomeComposable(
             .align(CenterVertically)
             .padding(start = 8.dp)
         )
-        DropDownMenu(
+        DropDownTextField(
           modifier = Modifier
             .padding(start = 8.dp)
             .requiredWidth(180.dp),

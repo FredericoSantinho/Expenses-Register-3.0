@@ -17,7 +17,7 @@
       android:title="@string/title_bills" />
 
   <item
-      android:id="@+id/navigation_edit_product"
+      android:id="@+id/navigation_edit"
       android:icon="@drawable/ic_edit_24"
       android:title="@string/title_edit" />
 

@@ -18,7 +18,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.exchangebot.ui.theme.ExpensesRegisterTheme
 import com.exchangebot.ui.theme.ExpensesRegisterTypography
-import neuro.expenses.register.ui.home.ProductCardViewModel
+import neuro.expenses.register.ui.home.view.model.ProductCardViewModel
 import neuro.expenses.register.ui.report.composable.AsyncImage
 
 @Composable
