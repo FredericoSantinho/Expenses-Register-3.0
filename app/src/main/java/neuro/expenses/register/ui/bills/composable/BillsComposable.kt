@@ -75,8 +75,8 @@ fun BillsComposable(
               val color by animateColorAsState(
                 when (dismissState.targetValue) {
                   DismissValue.Default -> Color.LightGray
-                  DismissValue.DismissedToEnd -> Color.Red
-                  DismissValue.DismissedToStart -> Color.Red
+                  DismissValue.DismissedToEnd -> Color.Transparent
+                  DismissValue.DismissedToStart -> Color.Transparent
                 }
               )
               val alignment = when (direction) {
