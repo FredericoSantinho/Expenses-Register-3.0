@@ -113,7 +113,7 @@ class ManualRegisterViewModel(
 }
 
 sealed class UiEvent {
-  class ShowRegisterSuccess(val productName: String) : UiEvent()
+  class ShowRegisterSuccess(val productDescription: String) : UiEvent()
 }
 
 sealed class UiState {

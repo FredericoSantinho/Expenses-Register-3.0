@@ -12,6 +12,8 @@ lib.koin_compose = "io.insert-koin:koin-androidx-compose:$ver.koin_android"
 lib.koin_test = "io.insert-koin:koin-test-junit4:$ver.koin_test"
 
 lib.junit = "junit:junit:$ver.junit"
+lib.mockito = ["org.mockito:mockito-core:$ver.mockito",
+               "org.mockito.kotlin:mockito-kotlin:$ver.mockito_kotlin"]
 
 lib.timber = "com.jakewharton.timber:timber:$ver.timber"
 

@@ -1,6 +1,7 @@
 package neuro.expenses.register.domain.usecase.register
 
 import neuro.expenses.register.domain.dto.BillItemDto
+import neuro.expenses.register.domain.usecase.register.validator.RegisterExpenseError
 import java.util.*
 
 interface RegisterExpenseUseCase {

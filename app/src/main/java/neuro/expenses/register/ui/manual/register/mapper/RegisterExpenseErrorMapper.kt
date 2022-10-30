@@ -1,6 +1,6 @@
 package neuro.expenses.register.ui.manual.register.mapper
 
-import neuro.expenses.register.domain.usecase.register.RegisterExpenseError
+import neuro.expenses.register.domain.usecase.register.validator.RegisterExpenseError
 import neuro.expenses.register.ui.manual.register.UiStateError
 
 interface RegisterExpenseErrorMapper {

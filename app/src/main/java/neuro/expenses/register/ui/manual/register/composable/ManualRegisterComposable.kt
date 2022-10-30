@@ -215,7 +215,7 @@ fun onUiEvent(uiEvent: UiEvent?) {
 
 @Composable
 fun showSuccessSnackbar(uiEvent: UiEvent.ShowRegisterSuccess) {
-  showSnackbar(text = uiEvent.productName, key = uiEvent)
+  showSnackbar(text = uiEvent.productDescription, key = uiEvent)
 }
 
 @Composable

@@ -4,6 +4,8 @@ ext {
 
 ver.kotlin = "1.7.20"
 ver.junit = "4.13.2"
+ver.mockito = "4.8.1"
+ver.mockito_kotlin = "4.0.0"
 ver.koin = "3.2.2"
 ver.koin_android = "3.3.0"
 ver.koin_test = "3.2.2"
@@ -14,7 +16,7 @@ ver.timber = "5.0.1"
 
 ver.ktx = "1.9.0"
 ver.androidX = "1.5.1"
-ver.androidXJunit = "1.1.2"
+ver.androidXJunit = "1.1.3-rc01"
 ver.material = "1.7.0"
 ver.constraintLayout = "2.1.4"
 ver.constraintLayoutCompose = "1.0.1"

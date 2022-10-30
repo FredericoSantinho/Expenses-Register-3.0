@@ -8,6 +8,10 @@ import neuro.expenses.register.ui.home.EditProductViewModel
 import neuro.expenses.register.ui.home.view.model.HomeViewModel
 import neuro.expenses.register.ui.home.view.model.ProductsListViewModel
 import neuro.expenses.register.ui.manual.register.ManualRegisterViewModel
+import neuro.expenses.register.ui.manual.register.mapper.BillItemVMMapper
+import neuro.expenses.register.ui.manual.register.mapper.BillItemVMMapperImpl
+import neuro.expenses.register.ui.manual.register.mapper.RegisterExpenseErrorMapper
+import neuro.expenses.register.ui.manual.register.mapper.RegisterExpenseErrorMapperImpl
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -15,6 +19,8 @@ val viewModelModule = module {
   viewModel { HomeViewModel(get()) }
   viewModel { ProductsListViewModel() }
   viewModel { ManualRegisterViewModel(get(), get(), get(), get(), get(), get()) }
+  single<BillItemVMMapper> { BillItemVMMapperImpl() }
+  single<RegisterExpenseErrorMapper> { RegisterExpenseErrorMapperImpl() }
   viewModel { BillsViewModel() }
   viewModel { EditViewModel() }
   viewModel { EditProductViewModel() }
