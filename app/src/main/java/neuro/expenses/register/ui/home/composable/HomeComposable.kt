@@ -14,12 +14,11 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.fragment.app.FragmentActivity
 import com.exchangebot.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.R
+import neuro.expenses.register.ui.common.BillComposableContainer
 import neuro.expenses.register.ui.composable.DropDownTextField
 import neuro.expenses.register.ui.composable.MapsComposable
 import neuro.expenses.register.ui.composables.datetime.DateTimeComposable
-import neuro.expenses.register.ui.home.view.model.BillViewModel
 import neuro.expenses.register.ui.home.view.model.HomeViewModel
-import neuro.expenses.register.ui.report.composable.BillComposable
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -33,9 +32,9 @@ fun HomeComposable(
   ) {
     val (mainC, billC) = createRefs()
 
-    BillComposableContainer(modifier = Modifier.constrainAs(billC) {
+    BillComposableContainer(homeViewModel.billViewModel, modifier = Modifier.constrainAs(billC) {
       bottom.linkTo(parent.bottom)
-    }, homeViewModel.billViewModel)
+    })
     Column(modifier = Modifier.constrainAs(mainC) {
       top.linkTo(parent.top)
       bottom.linkTo(billC.top)
@@ -60,15 +59,6 @@ fun HomeComposable(
       Divider(thickness = 1.dp, color = Color.LightGray)
       ProductsListComposable(homeViewModel.productsListViewModel)
     }
-  }
-}
-
-@Composable
-private fun BillComposableContainer(modifier: Modifier, billViewModel: BillViewModel) {
-  Column(modifier = modifier) {
-    Divider(thickness = 2.dp, color = Color.LightGray)
-    BillComposable(billViewModel = billViewModel)
-    Divider(thickness = 2.dp, color = Color.LightGray)
   }
 }
 

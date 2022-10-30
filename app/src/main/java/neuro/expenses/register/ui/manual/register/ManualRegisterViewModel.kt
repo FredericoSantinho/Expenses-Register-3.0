@@ -9,6 +9,7 @@ import neuro.expenses.register.domain.usecase.calendar.GetCalendarUseCase
 import neuro.expenses.register.domain.usecase.category.GetCategoriesUseCase
 import neuro.expenses.register.domain.usecase.near.GetNearestPlaceUseCase
 import neuro.expenses.register.domain.usecase.register.RegisterExpenseUseCase
+import neuro.expenses.register.ui.home.view.model.BillViewModel
 import neuro.expenses.register.ui.manual.register.mapper.BillItemVMMapper
 import neuro.expenses.register.ui.manual.register.mapper.RegisterExpenseErrorMapper
 
@@ -28,6 +29,7 @@ class ManualRegisterViewModel(
   val amount = mutableStateOf("")
   val calendar = mutableStateOf(getCalendarUseCase.getCalendar())
   val categories = getCategoriesUseCase.getCategories()
+  val billViewModel = BillViewModel()
 
   private val _uiState = mutableStateOf<UiState>(UiState.Ready)
   val uiState = _uiState.asState()

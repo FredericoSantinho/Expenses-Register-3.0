@@ -7,7 +7,7 @@ import neuro.expenses.register.ui.home.view.model.BillViewModel
 
 class BillsViewModel : ViewModel() {
   val bills = mutableStateListOf<BillViewModel>()
-  val isEditMode = mutableStateOf<Boolean>(false)
+  val isEditMode = mutableStateOf(false)
 
   init {
     bills.addAll(getList())

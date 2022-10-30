@@ -48,7 +48,6 @@ fun BillsComposable(
     ConstraintLayout(
       modifier = Modifier
         .fillMaxSize()
-        .padding(8.dp)
         .background(color = grey_fog_lighter)
     ) {
       val (lazyColumnC, editBillC) = createRefs()
@@ -69,13 +68,13 @@ fun BillsComposable(
               true
             }
           )
-          if (dismissState.isDismissed(DismissDirection.EndToStart) || dismissState.isDismissed(
-              DismissDirection.StartToEnd
-            )
+          if (dismissState.isDismissed(DismissDirection.EndToStart) ||
+            dismissState.isDismissed(DismissDirection.StartToEnd)
           ) {
             billsViewModel.onBillSwipe(item)
           }
           SwipeToDismiss(
+            modifier = Modifier.padding(start = 4.dp, end = 4.dp),
             state = dismissState,
             directions = if (billsViewModel.isEditMode.value) setOf() else setOf(
               DismissDirection.StartToEnd,

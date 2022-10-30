@@ -24,6 +24,7 @@ import neuro.expenses.register.common.picker.date.ShowDatePicker
 import neuro.expenses.register.common.picker.date.ShowMaterialDatePicker
 import neuro.expenses.register.common.picker.time.DefaultShowTimePicker
 import neuro.expenses.register.common.picker.time.ShowTimePicker
+import neuro.expenses.register.ui.common.BillComposableContainer
 import neuro.expenses.register.ui.composables.datetime.DateTimeComposable
 import neuro.expenses.register.ui.composables.datetime.mapper.DateTextMapper
 import neuro.expenses.register.ui.composables.datetime.mapper.DateTextMapperImpl
@@ -151,6 +152,7 @@ fun ManualRegisterComposable(
 
       val totalVar =
         remember { mutableStateOf(getTotalStr(amountVar.value, priceVar.value, currency)) }
+
       CurrencyTextField(
         label = stringResource(R.string.manual_register_price),
         modifier = Modifier.constrainAs(price) {
@@ -200,6 +202,7 @@ fun ManualRegisterComposable(
         Text(text = stringResource(R.string.manual_register_register))
       }
     }
+    BillComposableContainer(manualRegisterViewModel.billViewModel)
   }
 }
 
