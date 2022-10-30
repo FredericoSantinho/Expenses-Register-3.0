@@ -14,12 +14,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.fragment.app.FragmentActivity
 import com.exchangebot.ui.theme.grey_fog_lighter
+import kotlinx.coroutines.launch
 import neuro.expenses.register.ui.bills.BillsViewModel
 import neuro.expenses.register.ui.home.BillViewModel
 import neuro.expenses.register.ui.report.composable.BillComposable
@@ -31,7 +31,18 @@ fun BillsComposable(
   billsViewModel: BillsViewModel = getViewModel(),
   fragmentActivity: FragmentActivity
 ) {
-  val density = LocalDensity.current
+  val coroutineScope = rememberCoroutineScope()
+
+  val modalBottomSheetValue = if (billsViewModel.isEditMode.value)
+    ModalBottomSheetValue.Expanded else ModalBottomSheetValue.Hidden
+
+  val modalBottomSheetState =
+    rememberModalBottomSheetState(
+      modalBottomSheetValue,
+      confirmStateChange = {
+        it != ModalBottomSheetValue.HalfExpanded
+      }
+    )
 
   Column(Modifier.background(color = grey_fog_lighter)) {
     ConstraintLayout(
@@ -111,24 +122,26 @@ fun BillsComposable(
           )
         }
       }
-      this@Column.AnimatedVisibility(
-        visible = billsViewModel.isEditMode.value,
-        enter = slideInVertically {
-          with(density) { -0.dp.roundToPx() }
-        } + expandVertically(
-          expandFrom = Alignment.Top
-        ) + fadeIn(),
-        exit = slideOutVertically {
-          with(density) { -0.dp.roundToPx() }
-        } + shrinkVertically(
-          shrinkTowards = Alignment.Bottom
-        ) + fadeOut(),
-        modifier = Modifier
-          .constrainAs(editBillC) {
-            bottom.linkTo(parent.bottom)
+      ModalBottomSheetLayout(
+        sheetBackgroundColor = Color.Transparent,
+        sheetState = modalBottomSheetState,
+        sheetContent = {
+          EditBillComposable(fragmentActivity)
+        }
+      ) {}
+      val isEditMode = billsViewModel.isEditMode.value
+      if (isEditMode) {
+        LaunchedEffect(isEditMode) {
+          coroutineScope.launch {
+            modalBottomSheetState.show()
           }
-      ) {
-        EditBillComposable(fragmentActivity)
+        }
+      } else {
+        LaunchedEffect(isEditMode) {
+          coroutineScope.launch {
+            modalBottomSheetState.hide()
+          }
+        }
       }
     }
   }
