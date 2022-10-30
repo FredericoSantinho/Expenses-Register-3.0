@@ -29,12 +29,12 @@ import java.util.*
 @Composable
 fun DateTimeComposable(
   fragmentActivity: FragmentActivity,
+  modifier: Modifier = Modifier,
   showTimePicker: ShowTimePicker = DefaultShowTimePicker(),
   showDatePicker: ShowDatePicker = ShowMaterialDatePicker(),
   timeTextMapper: TimeTextMapper = TimeTextMapperImpl(),
   dateTextMapper: DateTextMapper = DateTextMapperImpl(),
-  calendar: MutableState<Calendar> = mutableStateOf(Calendar.getInstance()),
-  modifier: Modifier = Modifier
+  calendar: MutableState<Calendar> = mutableStateOf(Calendar.getInstance())
 ) {
   var hourVar = calendar.value.get(Calendar.HOUR_OF_DAY)
   var minuteVar = calendar.value.get(Calendar.MINUTE)

@@ -1,7 +1,9 @@
 package neuro.expenses.register.ui.manual.register.composable
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
@@ -80,7 +82,9 @@ fun ManualRegisterComposable(
   onUiEvent(uiEvent)
 
   Column(
-    Modifier.fillMaxSize(),
+    Modifier
+      .fillMaxSize()
+      .verticalScroll(rememberScrollState()),
     verticalArrangement = Arrangement.Bottom
   ) {
     val amountVar = remember { mutableStateOf(0.0) }
@@ -88,14 +92,14 @@ fun ManualRegisterComposable(
 
     DateTimeComposable(
       fragmentActivity,
+      modifier = Modifier
+        .fillMaxWidth()
+        .padding(bottom = 8.dp),
       showTimePicker,
       showDatePicker,
       timeTextMapper,
       dateTextMapper,
-      calendar = manualRegisterViewModel.calendar,
-      modifier = Modifier
-        .fillMaxWidth()
-        .padding(bottom = 8.dp)
+      calendar = manualRegisterViewModel.calendar
     )
     TextFieldWithError(
       label = stringResource(R.string.manual_register_description),
