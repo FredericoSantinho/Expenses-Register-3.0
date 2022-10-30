@@ -8,7 +8,6 @@ import neuro.expenses.register.domain.usecase.bill.GetLastBillUseCase
 import neuro.expenses.register.domain.usecase.bill.SaveBillUseCase
 import neuro.expenses.register.domain.usecase.register.validator.BillItemValidator
 import neuro.expenses.register.domain.usecase.register.validator.RegisterExpenseError
-import java.util.*
 
 class RegisterExpenseUseCaseImpl(
   val getLastBillUseCase: GetLastBillUseCase,
@@ -17,23 +16,24 @@ class RegisterExpenseUseCaseImpl(
   val billItemDtoMapper: BillItemDtoMapper
 ) : RegisterExpenseUseCase {
   override fun registerExpense(
-    billItemDto: BillItemDto,
-    calendar: Calendar
+    billItemDto: BillItemDto
   ): List<RegisterExpenseError> {
     val lastBillOptional = getLastBillUseCase.getLastBill()
     val place = billItemDto.place
+    val calendar = billItemDto.calendar
     val lastBill =
       if (!lastBillOptional.isPresent || !lastBillOptional.get().isOpen || lastBillOptional.get().place != place) {
         Bill(place, calendar.timeInMillis)
       } else {
         lastBillOptional.get()
       }
-    val lastBillController = BillController(lastBill)
-    val billItem = billItemDtoMapper.map(billItemDto)
 
     val validate = billItemValidator.validate(billItemDto)
 
     if (validate.isEmpty()) {
+      val lastBillController = BillController(lastBill)
+      val billItem = billItemDtoMapper.map(billItemDto)
+
       lastBillController.add(billItem)
       saveBillUseCase.save(lastBillController.bill, place)
     }

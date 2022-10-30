@@ -48,10 +48,11 @@ class ManualRegisterViewModel(
         category.value,
         place.value,
         price.value,
-        amount.value
+        amount.value,
+        calendar.value
       )
 
-    val registerExpenseErrors = registerExpenseUseCase.registerExpense(billItemDto, calendar.value)
+    val registerExpenseErrors = registerExpenseUseCase.registerExpense(billItemDto)
 
     if (registerExpenseErrors.isEmpty()) {
       publishAndReset()

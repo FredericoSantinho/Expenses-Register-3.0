@@ -1,6 +1,7 @@
 package neuro.expenses.register.ui.manual.register.mapper
 
 import neuro.expenses.register.domain.dto.BillItemDto
+import java.util.*
 
 
 interface BillItemVMMapper {
@@ -9,6 +10,7 @@ interface BillItemVMMapper {
     category: String,
     place: String,
     price: String,
-    amount: String
+    amount: String,
+    calendar: Calendar
   ): BillItemDto
 }

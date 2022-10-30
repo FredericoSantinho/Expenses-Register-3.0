@@ -51,9 +51,9 @@ internal class RegisterExpenseUseCaseImplTest : KoinTest {
       RegisterExpenseUseCaseImpl(getLastBillUseCase, saveBillUseCase, billItemValidator, get())
 
 
-    val billItemDto = BillItemDto(ProductDto("desc", "", 0.0), "place", 1.0)
     val calendar = Calendar.getInstance()
-    registerExpenseUseCase.registerExpense(billItemDto, calendar)
+    val billItemDto = BillItemDto(ProductDto("desc", "", 0.0), "place", 1.0, calendar)
+    registerExpenseUseCase.registerExpense(billItemDto)
 
     verify(saveBillUseCase, times(1)).save(expectedBill, "place")
   }
@@ -83,9 +83,9 @@ internal class RegisterExpenseUseCaseImplTest : KoinTest {
       RegisterExpenseUseCaseImpl(getLastBillUseCase, saveBillUseCase, billItemValidator, get())
 
 
-    val billItemDto = BillItemDto(ProductDto("desc", "", 0.0), "place", 1.0)
     val calendar = Calendar.getInstance()
-    registerExpenseUseCase.registerExpense(billItemDto, calendar)
+    val billItemDto = BillItemDto(ProductDto("desc", "", 0.0), "place", 1.0, calendar)
+    registerExpenseUseCase.registerExpense(billItemDto)
 
     verify(saveBillUseCase, times(1)).save(expectedBill, "place")
   }
@@ -115,10 +115,10 @@ internal class RegisterExpenseUseCaseImplTest : KoinTest {
       RegisterExpenseUseCaseImpl(getLastBillUseCase, saveBillUseCase, billItemValidator, get())
 
 
-    val billItemDto = BillItemDto(ProductDto("desc", "", 0.0), "place2", 1.0)
     val calendar = Calendar.getInstance()
     calendar.time = Date(1)
-    registerExpenseUseCase.registerExpense(billItemDto, calendar)
+    val billItemDto = BillItemDto(ProductDto("desc", "", 0.0), "place2", 1.0, calendar)
+    registerExpenseUseCase.registerExpense(billItemDto)
 
     verify(saveBillUseCase, times(1)).save(expectedBill, "place2")
   }
@@ -148,10 +148,10 @@ internal class RegisterExpenseUseCaseImplTest : KoinTest {
       RegisterExpenseUseCaseImpl(getLastBillUseCase, saveBillUseCase, billItemValidator, get())
 
 
-    val billItemDto = BillItemDto(ProductDto("desc", "", 0.0), "place", 1.0)
     val calendar = Calendar.getInstance()
+    val billItemDto = BillItemDto(ProductDto("desc", "", 0.0), "place", 1.0, calendar)
     calendar.time = Date(1)
-    registerExpenseUseCase.registerExpense(billItemDto, calendar)
+    registerExpenseUseCase.registerExpense(billItemDto)
 
     verify(saveBillUseCase, times(1)).save(expectedBill, "place")
   }
@@ -174,11 +174,11 @@ internal class RegisterExpenseUseCaseImplTest : KoinTest {
       RegisterExpenseUseCaseImpl(getLastBillUseCase, saveBillUseCase, billItemValidator, get())
 
 
-    val billItemDto = BillItemDto(ProductDto("desc", "", 0.0), "place", 1.0)
     val calendar = Calendar.getInstance()
+    val billItemDto = BillItemDto(ProductDto("desc", "", 0.0), "place", 1.0, calendar)
     calendar.time = Date(1)
 
-    assertEquals(getErrorList(), registerExpenseUseCase.registerExpense(billItemDto, calendar))
+    assertEquals(getErrorList(), registerExpenseUseCase.registerExpense(billItemDto))
 
     verify(saveBillUseCase, times(0)).save(any(), ArgumentMatchers.anyString())
   }
