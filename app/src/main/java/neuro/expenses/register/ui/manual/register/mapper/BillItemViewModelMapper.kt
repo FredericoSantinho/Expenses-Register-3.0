@@ -4,7 +4,7 @@ import neuro.expenses.register.domain.dto.BillItemDto
 import java.util.*
 
 
-interface BillItemVMMapper {
+interface BillItemViewModelMapper {
   fun map(
     description: String,
     category: String,

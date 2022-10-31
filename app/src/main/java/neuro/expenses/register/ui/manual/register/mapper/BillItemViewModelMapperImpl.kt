@@ -5,7 +5,7 @@ import neuro.expenses.register.domain.dto.ProductDto
 import java.util.*
 
 
-class BillItemVMMapperImpl : BillItemVMMapper {
+class BillItemViewModelMapperImpl : BillItemViewModelMapper {
 
   override fun map(
     description: String,

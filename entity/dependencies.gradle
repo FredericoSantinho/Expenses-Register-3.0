@@ -5,5 +5,9 @@ dependencies {
 
     implementation lib.kotlin
 
+    implementation lib.koin_core
+
     testImplementation lib.junit
+    testImplementation lib.mockito
+    testImplementation lib.koin_test
 }

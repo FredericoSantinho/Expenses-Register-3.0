@@ -7,6 +7,7 @@ import neuro.expenses.register.data.di.databaseMapperModule
 import neuro.expenses.register.data.di.repositoryModule
 import neuro.expenses.register.di.initModule
 import neuro.expenses.register.di.viewModelModule
+import neuro.expenses.register.domain.di.entityModule
 import neuro.expenses.register.domain.di.useCaseModule
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
@@ -25,6 +26,7 @@ class ExpensesRegisterApplication : Application() {
       modules(
         viewModelModule,
         useCaseModule,
+        entityModule,
         repositoryModule,
         databaseModule,
         databaseMapperModule,

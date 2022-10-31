@@ -1,9 +1,8 @@
 package neuro.expenses.register.domain.di
 
-import neuro.expenses.register.domain.mapper.BillItemDtoMapper
-import neuro.expenses.register.domain.mapper.BillItemDtoMapperImpl
-import neuro.expenses.register.domain.mapper.ProductDtoMapper
-import neuro.expenses.register.domain.mapper.ProductDtoMapperImpl
+import neuro.expenses.register.domain.entity.controller.CalculateBillTotal
+import neuro.expenses.register.domain.entity.controller.CalculateBillTotalImpl
+import neuro.expenses.register.domain.mapper.*
 import neuro.expenses.register.domain.usecase.bill.GetLastBillUseCase
 import neuro.expenses.register.domain.usecase.bill.GetLastBillUseCaseImpl
 import neuro.expenses.register.domain.usecase.bill.SaveBillUseCase
@@ -23,10 +22,21 @@ import neuro.expenses.register.domain.usecase.register.validator.BillItemValidat
 import org.koin.dsl.module
 
 val useCaseModule = module {
-  single<RegisterExpenseUseCase> { RegisterExpenseUseCaseImpl(get(), get(), get(), get()) }
+  single<RegisterExpenseUseCase> {
+    RegisterExpenseUseCaseImpl(
+      get(),
+      get(),
+      get(),
+      get(),
+      get(),
+      get()
+    )
+  }
   single<GetLastBillUseCase> { GetLastBillUseCaseImpl() }
   single<SaveBillUseCase> { SaveBillUseCaseImpl() }
   single<BillItemDtoMapper> { BillItemDtoMapperImpl(get()) }
+  single<BillDtoMapper> { BillDtoMapperImpl(get()) }
+  single<CalculateBillTotal> { CalculateBillTotalImpl() }
   single<ProductDtoMapper> { ProductDtoMapperImpl() }
   single<BillItemValidator> { BillItemValidatorImpl(get()) }
   single<IsValidCategory> { IsValidCategoryImpl() }

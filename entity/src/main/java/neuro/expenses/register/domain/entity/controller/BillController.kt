@@ -3,7 +3,7 @@ package neuro.expenses.register.domain.entity.controller
 import neuro.expenses.register.domain.entity.Bill
 import neuro.expenses.register.domain.entity.BillItem
 
-class BillController(var bill: Bill) {
+class BillController(private val calculateBillTotal: CalculateBillTotal, var bill: Bill) {
   fun contains(productDescription: String): Boolean {
     return bill.billItems.find { it.product.description == productDescription } != null
   }
@@ -14,9 +14,13 @@ class BillController(var bill: Bill) {
       val oldAmount = getBillItem(productDescription).amount
       val newBillItem = BillItem(billItem.product, oldAmount + billItem.amount)
 
-      bill = Bill(bill.place, bill.timestamp, buildList(newBillItem))
+      val billItems = buildList(newBillItem)
+      val total = calculateBillTotal.getTotal(billItems)
+      bill = Bill(bill.place, bill.timestamp, total, billItems)
     } else {
-      bill = Bill(bill.place, bill.timestamp, buildList(billItem))
+      val billItems = buildList(billItem)
+      val total = calculateBillTotal.getTotal(billItems)
+      bill = Bill(bill.place, bill.timestamp, total, billItems)
     }
   }
 
