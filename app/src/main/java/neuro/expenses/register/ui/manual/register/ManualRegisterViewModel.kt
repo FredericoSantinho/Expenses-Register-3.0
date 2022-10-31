@@ -2,33 +2,27 @@ package neuro.expenses.register.ui.manual.register
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import neuro.expenses.register.common.live.data.SingleLiveEvent
 import neuro.expenses.register.common.view.model.asLiveData
 import neuro.expenses.register.common.view.model.asState
-import neuro.expenses.register.domain.dto.BillDto
 import neuro.expenses.register.domain.dto.ExpenseDto
-import neuro.expenses.register.domain.usecase.bill.ObserveLastBillUseCase
 import neuro.expenses.register.domain.usecase.calendar.GetCalendarUseCase
 import neuro.expenses.register.domain.usecase.category.GetCategoriesUseCase
 import neuro.expenses.register.domain.usecase.near.GetNearestPlaceUseCase
 import neuro.expenses.register.domain.usecase.register.RegisterExpenseUseCase
+import neuro.expenses.register.ui.common.bill.FeedLastBillViewModel
 import neuro.expenses.register.ui.home.view.model.BillViewModel
-import neuro.expenses.register.ui.manual.register.mapper.DateTimeMapper
-import neuro.expenses.register.ui.manual.register.mapper.DoubleMapper
 import neuro.expenses.register.ui.manual.register.mapper.RegisterExpenseErrorMapper
 
 class ManualRegisterViewModel(
   private val getCalendarUseCase: GetCalendarUseCase,
   private val getCategoriesUseCase: GetCategoriesUseCase,
   private val registerExpenseUseCase: RegisterExpenseUseCase,
-  private val observeLastBillUseCase: ObserveLastBillUseCase,
   private val getNearestPlaceUseCase: GetNearestPlaceUseCase,
-  private val dateTimeMapper: DateTimeMapper,
-  private val doubleMapper: DoubleMapper,
+  private val feedLastBillViewModel: FeedLastBillViewModel,
   private val registerExpenseErrorMapper: RegisterExpenseErrorMapper,
-  private val currency: Char = '€'
+  val billViewModel: BillViewModel
 ) : ViewModel() {
 
   val description = mutableStateOf("")
@@ -38,7 +32,6 @@ class ManualRegisterViewModel(
   val amount = mutableStateOf("")
   val calendar = mutableStateOf(getCalendarUseCase.getCalendar())
   val categories = getCategoriesUseCase.getCategories()
-  val billViewModel = BillViewModel()
   private val disposable: CompositeDisposable = CompositeDisposable()
 
   private val _uiState = mutableStateOf<UiState>(UiState.Ready)
@@ -47,12 +40,7 @@ class ManualRegisterViewModel(
   val uiEvent = _uiEvent.asLiveData()
 
   init {
-    disposable.add(
-      observeLastBillUseCase.observeLastBill()
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe {
-          publish(it)
-        })
+    disposable.add(feedLastBillViewModel.subscribe())
   }
 
   override fun onCleared() {
@@ -113,14 +101,6 @@ class ManualRegisterViewModel(
       amount.value.toDouble(),
       calendar.value
     )
-  }
-
-  private fun publish(billDto: BillDto) {
-    billViewModel.iconUrl.value = billDto.iconUrl
-    billViewModel.place.value = billDto.place
-    billViewModel.time.value = dateTimeMapper.mapTime(billDto.timestamp)
-    billViewModel.date.value = dateTimeMapper.mapDate(billDto.timestamp)
-    billViewModel.total.value = doubleMapper.map(billDto.total) + " $currency"
   }
 
   private fun publishAndReset() {

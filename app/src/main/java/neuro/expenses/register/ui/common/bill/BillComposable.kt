@@ -1,4 +1,4 @@
-package neuro.expenses.register.ui.report.composable
+package neuro.expenses.register.ui.common.bill
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
@@ -20,6 +20,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import com.exchangebot.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.R
 import neuro.expenses.register.ui.home.view.model.BillViewModel
+import neuro.expenses.register.ui.report.composable.AsyncImage
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

@@ -1,4 +1,4 @@
-package neuro.expenses.register.ui.common
+package neuro.expenses.register.ui.common.bill
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Divider
@@ -7,7 +7,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import neuro.expenses.register.ui.home.view.model.BillViewModel
-import neuro.expenses.register.ui.report.composable.BillComposable
 
 @Composable
 fun BillComposableContainer(billViewModel: BillViewModel, modifier: Modifier = Modifier) {

@@ -5,7 +5,7 @@ import neuro.expenses.register.domain.dto.BillDto
 
 interface ObserveLastBillUseCase {
   /**
-   * @return an Observable that emits the last bill stored. In case there's no Bills yet, it will not emit until one appears.
+   * @return an Observable that emits the last bill stored. In case there's no Bills yet, it will emit a default closed one, which is only stored in memory.
    */
   fun observeLastBill(): Observable<BillDto>
 }

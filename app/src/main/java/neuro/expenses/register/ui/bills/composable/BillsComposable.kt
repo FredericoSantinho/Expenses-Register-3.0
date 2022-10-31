@@ -21,8 +21,8 @@ import androidx.fragment.app.FragmentActivity
 import com.exchangebot.ui.theme.grey_fog_lighter
 import kotlinx.coroutines.launch
 import neuro.expenses.register.ui.bills.BillsViewModel
+import neuro.expenses.register.ui.common.bill.BillComposable
 import neuro.expenses.register.ui.home.view.model.BillViewModel
-import neuro.expenses.register.ui.report.composable.BillComposable
 import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalMaterialApi::class)
