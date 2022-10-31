@@ -4,14 +4,14 @@ import neuro.expenses.register.domain.dto.BillItemDto
 import neuro.expenses.register.domain.entity.BillItem
 import java.util.*
 
-class BillItemDtoMapperImpl(private val productDtoMapper: ProductDtoMapper) : BillItemDtoMapper {
+class BillItemMapperImpl(private val productMapper: ProductMapper) : BillItemMapper {
   override fun map(billItem: BillItem, place: String, calendar: Calendar): BillItemDto {
-    return BillItemDto(productDtoMapper.map(billItem.product), place, billItem.amount, calendar)
+    return BillItemDto(productMapper.map(billItem.product), billItem.amount, calendar)
   }
 
   override fun map(billItemDto: BillItemDto): BillItem {
     return BillItem(
-      productDtoMapper.map(billItemDto.product),
+      productMapper.map(billItemDto.product),
       billItemDto.amount
     )
   }

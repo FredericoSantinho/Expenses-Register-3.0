@@ -15,10 +15,12 @@ import neuro.expenses.register.domain.usecase.category.IsValidCategory
 import neuro.expenses.register.domain.usecase.category.IsValidCategoryImpl
 import neuro.expenses.register.domain.usecase.near.GetNearestPlaceUseCase
 import neuro.expenses.register.domain.usecase.near.GetNearestPlaceUseCaseImpl
+import neuro.expenses.register.domain.usecase.product.GetOrCreateProductUseCase
+import neuro.expenses.register.domain.usecase.product.GetOrCreateProductUseCaseImpl
 import neuro.expenses.register.domain.usecase.register.RegisterExpenseUseCase
 import neuro.expenses.register.domain.usecase.register.RegisterExpenseUseCaseImpl
-import neuro.expenses.register.domain.usecase.register.validator.BillItemValidator
-import neuro.expenses.register.domain.usecase.register.validator.BillItemValidatorImpl
+import neuro.expenses.register.domain.usecase.register.validator.ExpenseValidator
+import neuro.expenses.register.domain.usecase.register.validator.ExpenseValidatorImpl
 import org.koin.dsl.module
 
 val useCaseModule = module {
@@ -29,18 +31,20 @@ val useCaseModule = module {
       get(),
       get(),
       get(),
+      get(),
       get()
     )
   }
   single<GetLastBillUseCase> { GetLastBillUseCaseImpl() }
   single<SaveBillUseCase> { SaveBillUseCaseImpl() }
-  single<BillItemDtoMapper> { BillItemDtoMapperImpl(get()) }
-  single<BillDtoMapper> { BillDtoMapperImpl(get()) }
+  single<BillItemMapper> { BillItemMapperImpl(get()) }
+  single<BillMapper> { BillMapperImpl(get()) }
   single<CalculateBillTotal> { CalculateBillTotalImpl() }
-  single<ProductDtoMapper> { ProductDtoMapperImpl() }
-  single<BillItemValidator> { BillItemValidatorImpl(get()) }
+  single<ProductMapper> { ProductMapperImpl() }
+  single<ExpenseValidator> { ExpenseValidatorImpl(get()) }
   single<IsValidCategory> { IsValidCategoryImpl() }
   single<GetCalendarUseCase> { GetCalendarUseCaseImpl() }
   single<GetCategoriesUseCase> { GetCategoriesUseCaseImpl(get()) }
   single<GetNearestPlaceUseCase> { GetNearestPlaceUseCaseImpl() }
+  single<GetOrCreateProductUseCase> { GetOrCreateProductUseCaseImpl() }
 }

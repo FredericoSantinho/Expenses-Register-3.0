@@ -8,13 +8,13 @@ import neuro.expenses.register.common.live.data.SingleLiveEvent
 import neuro.expenses.register.common.view.model.asLiveData
 import neuro.expenses.register.common.view.model.asState
 import neuro.expenses.register.domain.dto.BillDto
+import neuro.expenses.register.domain.dto.ExpenseDto
 import neuro.expenses.register.domain.usecase.bill.GetLastBillUseCase
 import neuro.expenses.register.domain.usecase.calendar.GetCalendarUseCase
 import neuro.expenses.register.domain.usecase.category.GetCategoriesUseCase
 import neuro.expenses.register.domain.usecase.near.GetNearestPlaceUseCase
 import neuro.expenses.register.domain.usecase.register.RegisterExpenseUseCase
 import neuro.expenses.register.ui.home.view.model.BillViewModel
-import neuro.expenses.register.ui.manual.register.mapper.BillItemViewModelMapper
 import neuro.expenses.register.ui.manual.register.mapper.DateTimeMapper
 import neuro.expenses.register.ui.manual.register.mapper.DoubleMapper
 import neuro.expenses.register.ui.manual.register.mapper.RegisterExpenseErrorMapper
@@ -26,7 +26,6 @@ class ManualRegisterViewModel(
   private val getLastBillUseCase: GetLastBillUseCase,
   private val getNearestPlaceUseCase: GetNearestPlaceUseCase,
   private val dateTimeMapper: DateTimeMapper,
-  private val billItemViewModelMapper: BillItemViewModelMapper,
   private val doubleMapper: DoubleMapper,
   private val registerExpenseErrorMapper: RegisterExpenseErrorMapper,
   private val currency: Char = '€'
@@ -68,18 +67,8 @@ class ManualRegisterViewModel(
   }
 
   fun onRegisterButton() {
-    val billItemDto =
-      billItemViewModelMapper.map(
-        description.value,
-        category.value,
-        place.value,
-        price.value,
-        amount.value,
-        calendar.value
-      )
-
     disposable.add(
-      registerExpenseUseCase.registerExpense(billItemDto).subscribe { registerExpenseErrors ->
+      registerExpenseUseCase.registerExpense(buildExpense()).subscribe { registerExpenseErrors ->
         if (registerExpenseErrors.isEmpty()) {
           publishAndReset()
         } else {
@@ -113,6 +102,17 @@ class ManualRegisterViewModel(
 
       emitState(previousErrors, errors)
     }
+  }
+
+  private fun buildExpense(): ExpenseDto {
+    return ExpenseDto(
+      description.value,
+      category.value,
+      place.value,
+      price.value.toDouble(),
+      amount.value.toDouble(),
+      calendar.value
+    )
   }
 
   private fun publish(billDto: BillDto) {

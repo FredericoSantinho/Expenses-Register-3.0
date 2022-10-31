@@ -4,7 +4,7 @@ import neuro.expenses.register.domain.dto.BillItemDto
 import neuro.expenses.register.domain.entity.BillItem
 import java.util.*
 
-interface BillItemDtoMapper {
+interface BillItemMapper {
   fun map(billItem: BillItem, place: String, calendar: Calendar): BillItemDto
   fun map(billItemDto: BillItemDto): BillItem
 }

@@ -19,7 +19,7 @@ class BillItemViewModelMapperImpl : BillItemViewModelMapper {
     val amountDouble: Double = if (amount.isNotEmpty()) amount.toDouble() else 0.0
 
     val product = ProductDto(description, category, priceDouble)
-    val billItem = BillItemDto(product, place, amountDouble, calendar)
+    val billItem = BillItemDto(product, amountDouble, calendar)
     return billItem
   }
 }

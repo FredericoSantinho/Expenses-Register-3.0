@@ -2,34 +2,36 @@ package neuro.expenses.register.domain.usecase.register
 
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
-import neuro.expenses.register.domain.dto.BillItemDto
+import neuro.expenses.register.domain.controller.BillController
+import neuro.expenses.register.domain.dto.ExpenseDto
 import neuro.expenses.register.domain.entity.Bill
-import neuro.expenses.register.domain.entity.controller.BillController
 import neuro.expenses.register.domain.entity.controller.CalculateBillTotal
-import neuro.expenses.register.domain.mapper.BillDtoMapper
-import neuro.expenses.register.domain.mapper.BillItemDtoMapper
+import neuro.expenses.register.domain.mapper.BillMapper
+import neuro.expenses.register.domain.mapper.ExpenseMapper
 import neuro.expenses.register.domain.usecase.bill.GetLastBillUseCase
 import neuro.expenses.register.domain.usecase.bill.SaveBillUseCase
-import neuro.expenses.register.domain.usecase.register.validator.BillItemValidator
+import neuro.expenses.register.domain.usecase.product.GetOrCreateProductUseCase
+import neuro.expenses.register.domain.usecase.register.validator.ExpenseValidator
 import neuro.expenses.register.domain.usecase.register.validator.RegisterExpenseError
 import java.util.*
 
 class RegisterExpenseUseCaseImpl(
   private val getLastBillUseCase: GetLastBillUseCase,
   private val saveBillUseCase: SaveBillUseCase,
-  private val billItemValidator: BillItemValidator,
-  private val billItemDtoMapper: BillItemDtoMapper,
-  private val billDtoMapper: BillDtoMapper,
+  private val getOrCreateProductUseCase: GetOrCreateProductUseCase,
+  private val expenseValidator: ExpenseValidator,
+  private val billMapper: BillMapper,
+  private val expenseMapper: ExpenseMapper,
   private val calculateBillTotal: CalculateBillTotal
 ) : RegisterExpenseUseCase {
   override fun registerExpense(
-    billItemDto: BillItemDto
+    expenseDto: ExpenseDto
   ): Single<List<RegisterExpenseError>> {
     return getLastBillUseCase.getLastBill().singleOrError().subscribeOn(Schedulers.io())
-      .map { if (it.isPresent) Optional.of(billDtoMapper.map(it.get())) else Optional.empty<Bill>() }
-      .map { lastBillOptional ->
-        val place = billItemDto.place
-        val calendar = billItemDto.calendar
+      .map { if (it.isPresent) Optional.of(billMapper.map(it.get())) else Optional.empty<Bill>() }
+      .flatMap { lastBillOptional ->
+        val place = expenseDto.place
+        val calendar = expenseDto.calendar
         val lastBill =
           if (!lastBillOptional.isPresent || !lastBillOptional.get().isOpen || lastBillOptional.get().place != place) {
             Bill(place, calendar.timeInMillis)
@@ -37,17 +39,23 @@ class RegisterExpenseUseCaseImpl(
             lastBillOptional.get()
           }
 
-        val validate = billItemValidator.validate(billItemDto)
+        val expense = expenseMapper.map(expenseDto)
+        val validate = expenseValidator.validate(expense)
 
         if (validate.isEmpty()) {
-          val lastBillController = BillController(calculateBillTotal, lastBill)
-          val billItem = billItemDtoMapper.map(billItemDto)
+          val lastBillController =
+            BillController(calculateBillTotal, getOrCreateProductUseCase, lastBill)
+          val billItem = expenseMapper.map(expenseDto)
 
-          lastBillController.add(billItem)
-          saveBillUseCase.save(lastBillController.bill, place)
+          return@flatMap lastBillController.add(billItem).doOnComplete {
+            saveBillUseCase.save(
+              lastBillController.bill,
+              place
+            )
+          }.toSingleDefault(validate)
         }
 
-        return@map validate
+        return@flatMap Single.just(validate)
       }
   }
 }
