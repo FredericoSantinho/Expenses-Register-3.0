@@ -3,8 +3,8 @@ package neuro.expenses.register.domain.di
 import neuro.expenses.register.domain.entity.controller.CalculateBillTotal
 import neuro.expenses.register.domain.entity.controller.CalculateBillTotalImpl
 import neuro.expenses.register.domain.mapper.*
-import neuro.expenses.register.domain.usecase.bill.GetLastBillUseCase
-import neuro.expenses.register.domain.usecase.bill.GetLastBillUseCaseImpl
+import neuro.expenses.register.domain.usecase.bill.ObserveLastBillUseCase
+import neuro.expenses.register.domain.usecase.bill.ObserveLastBillUseCaseImpl
 import neuro.expenses.register.domain.usecase.bill.SaveBillUseCase
 import neuro.expenses.register.domain.usecase.bill.SaveBillUseCaseImpl
 import neuro.expenses.register.domain.usecase.calendar.GetCalendarUseCase
@@ -35,7 +35,7 @@ val useCaseModule = module {
       get()
     )
   }
-  single<GetLastBillUseCase> { GetLastBillUseCaseImpl() }
+  single<ObserveLastBillUseCase> { ObserveLastBillUseCaseImpl() }
   single<SaveBillUseCase> { SaveBillUseCaseImpl() }
   single<BillItemMapper> { BillItemMapperImpl(get()) }
   single<BillMapper> { BillMapperImpl(get()) }

@@ -9,7 +9,7 @@ import neuro.expenses.register.common.view.model.asLiveData
 import neuro.expenses.register.common.view.model.asState
 import neuro.expenses.register.domain.dto.BillDto
 import neuro.expenses.register.domain.dto.ExpenseDto
-import neuro.expenses.register.domain.usecase.bill.GetLastBillUseCase
+import neuro.expenses.register.domain.usecase.bill.ObserveLastBillUseCase
 import neuro.expenses.register.domain.usecase.calendar.GetCalendarUseCase
 import neuro.expenses.register.domain.usecase.category.GetCategoriesUseCase
 import neuro.expenses.register.domain.usecase.near.GetNearestPlaceUseCase
@@ -23,7 +23,7 @@ class ManualRegisterViewModel(
   private val getCalendarUseCase: GetCalendarUseCase,
   private val getCategoriesUseCase: GetCategoriesUseCase,
   private val registerExpenseUseCase: RegisterExpenseUseCase,
-  private val getLastBillUseCase: GetLastBillUseCase,
+  private val observeLastBillUseCase: ObserveLastBillUseCase,
   private val getNearestPlaceUseCase: GetNearestPlaceUseCase,
   private val dateTimeMapper: DateTimeMapper,
   private val doubleMapper: DoubleMapper,
@@ -48,7 +48,7 @@ class ManualRegisterViewModel(
 
   init {
     disposable.add(
-      getLastBillUseCase.getLastBill().subscribeOn(Schedulers.io()).filter { it.isPresent }
+      observeLastBillUseCase.observeLastBill().subscribeOn(Schedulers.io()).filter { it.isPresent }
         .map { it.get() }
         .subscribe {
           publish(it)

@@ -8,7 +8,7 @@ import neuro.expenses.register.domain.entity.Bill
 import neuro.expenses.register.domain.entity.controller.CalculateBillTotal
 import neuro.expenses.register.domain.mapper.BillMapper
 import neuro.expenses.register.domain.mapper.ExpenseMapper
-import neuro.expenses.register.domain.usecase.bill.GetLastBillUseCase
+import neuro.expenses.register.domain.usecase.bill.ObserveLastBillUseCase
 import neuro.expenses.register.domain.usecase.bill.SaveBillUseCase
 import neuro.expenses.register.domain.usecase.product.GetOrCreateProductUseCase
 import neuro.expenses.register.domain.usecase.register.validator.ExpenseValidator
@@ -16,7 +16,7 @@ import neuro.expenses.register.domain.usecase.register.validator.RegisterExpense
 import java.util.*
 
 class RegisterExpenseUseCaseImpl(
-  private val getLastBillUseCase: GetLastBillUseCase,
+  private val observeLastBillUseCase: ObserveLastBillUseCase,
   private val saveBillUseCase: SaveBillUseCase,
   private val getOrCreateProductUseCase: GetOrCreateProductUseCase,
   private val expenseValidator: ExpenseValidator,
@@ -27,7 +27,7 @@ class RegisterExpenseUseCaseImpl(
   override fun registerExpense(
     expenseDto: ExpenseDto
   ): Single<List<RegisterExpenseError>> {
-    return getLastBillUseCase.getLastBill().singleOrError().subscribeOn(Schedulers.io())
+    return observeLastBillUseCase.observeLastBill().singleOrError().subscribeOn(Schedulers.io())
       .map { if (it.isPresent) Optional.of(billMapper.map(it.get())) else Optional.empty<Bill>() }
       .flatMap { lastBillOptional ->
         val place = expenseDto.place

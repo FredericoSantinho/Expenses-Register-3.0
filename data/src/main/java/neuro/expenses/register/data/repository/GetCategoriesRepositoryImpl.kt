@@ -10,6 +10,6 @@ class GetCategoriesRepositoryImpl(
   private val categoriesMapper: CategoriesMapper
 ) : GetCategoriesRepository {
   override fun getCategories(): Observable<List<String>> {
-    return categoryDao.getCategories().map { categoriesMapper.map(it) }
+    return categoryDao.observeCategories().map { categoriesMapper.map(it) }
   }
 }

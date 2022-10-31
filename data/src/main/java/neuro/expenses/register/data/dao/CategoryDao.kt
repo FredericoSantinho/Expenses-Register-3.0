@@ -7,7 +7,7 @@ import neuro.expenses.register.data.model.RoomCategory
 @Dao
 interface CategoryDao {
   @Query("select * from category_table")
-  fun getCategories(): Observable<List<RoomCategory>>
+  fun observeCategories(): Observable<List<RoomCategory>>
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   fun insert(category: RoomCategory)
