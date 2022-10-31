@@ -26,11 +26,20 @@ val viewModelModule = module {
       get(),
       get(),
       get(),
+      get(),
       get()
     )
   }
   single { BillViewModel() }
-  single<FeedLastBillViewModel> { FeedLastBillViewModelImpl(get(), get(), get(), get()) }
+  single<FeedLastBillViewModel> {
+    FeedLastBillViewModelImpl(
+      get(),
+      get(),
+      get(),
+      get(),
+      get()
+    )
+  }
   single<DateTimeMapper> { DateTimeMapperImpl() }
   single<DoubleMapper> { DoubleMapperImpl() }
   single<BillItemViewModelMapper> { BillItemViewModelMapperImpl() }

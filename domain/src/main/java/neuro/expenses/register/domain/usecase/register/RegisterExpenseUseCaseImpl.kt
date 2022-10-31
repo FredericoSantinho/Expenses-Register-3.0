@@ -1,7 +1,6 @@
 package neuro.expenses.register.domain.usecase.register
 
 import io.reactivex.rxjava3.core.Single
-import io.reactivex.rxjava3.schedulers.Schedulers
 import neuro.expenses.register.domain.controller.BillController
 import neuro.expenses.register.domain.dto.ExpenseDto
 import neuro.expenses.register.domain.entity.Bill
@@ -26,7 +25,7 @@ class RegisterExpenseUseCaseImpl(
   override fun registerExpense(
     expenseDto: ExpenseDto
   ): Single<List<RegisterExpenseError>> {
-    return observeLastBillUseCase.observeLastBill().singleOrError().subscribeOn(Schedulers.io())
+    return observeLastBillUseCase.observeLastBill().singleOrError()
       .map { billMapper.map(it) }
       .flatMap { lastBillOptional ->
         val place = expenseDto.place

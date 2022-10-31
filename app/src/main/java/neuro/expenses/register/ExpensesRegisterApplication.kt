@@ -6,6 +6,7 @@ import neuro.expenses.register.data.di.daoModule
 import neuro.expenses.register.data.di.databaseMapperModule
 import neuro.expenses.register.data.di.repositoryModule
 import neuro.expenses.register.di.initModule
+import neuro.expenses.register.di.schedulersModule
 import neuro.expenses.register.di.viewModelModule
 import neuro.expenses.register.domain.di.entityModule
 import neuro.expenses.register.domain.di.useCaseModule
@@ -24,6 +25,7 @@ class ExpensesRegisterApplication : Application() {
 
     startKoin {
       modules(
+        schedulersModule,
         viewModelModule,
         useCaseModule,
         entityModule,

@@ -1,9 +1,10 @@
 package neuro.expenses.register.ui.manual.register
 
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.ViewModel
+import com.exchangebot.common.schedulers.SchedulerProvider
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import neuro.expenses.register.common.live.data.SingleLiveEvent
+import neuro.expenses.register.common.view.model.BaseViewModel
 import neuro.expenses.register.common.view.model.asLiveData
 import neuro.expenses.register.common.view.model.asState
 import neuro.expenses.register.domain.dto.ExpenseDto
@@ -15,6 +16,7 @@ import neuro.expenses.register.ui.common.bill.FeedLastBillViewModel
 import neuro.expenses.register.ui.home.view.model.BillViewModel
 import neuro.expenses.register.ui.manual.register.mapper.RegisterExpenseErrorMapper
 
+
 class ManualRegisterViewModel(
   private val getCalendarUseCase: GetCalendarUseCase,
   private val getCategoriesUseCase: GetCategoriesUseCase,
@@ -22,8 +24,9 @@ class ManualRegisterViewModel(
   private val getNearestPlaceUseCase: GetNearestPlaceUseCase,
   private val feedLastBillViewModel: FeedLastBillViewModel,
   private val registerExpenseErrorMapper: RegisterExpenseErrorMapper,
+  private val schedulerProvider: SchedulerProvider,
   val billViewModel: BillViewModel
-) : ViewModel() {
+) : BaseViewModel(schedulerProvider) {
 
   val description = mutableStateOf("")
   val category = mutableStateOf("")
@@ -56,13 +59,15 @@ class ManualRegisterViewModel(
 
   fun onRegisterButton() {
     disposable.add(
-      registerExpenseUseCase.registerExpense(buildExpense()).subscribe { registerExpenseErrors ->
-        if (registerExpenseErrors.isEmpty()) {
-          publishAndReset()
-        } else {
-          _uiState.value = UiState.Error(registerExpenseErrorMapper.map(registerExpenseErrors))
-        }
-      })
+      registerExpenseUseCase.registerExpense(buildExpense())
+        .baseSubscribe { registerExpenseErrors ->
+          if (registerExpenseErrors.isEmpty()) {
+            publishAndReset()
+          } else {
+            _uiState.value = UiState.Error(registerExpenseErrorMapper.map(registerExpenseErrors))
+          }
+        })
+
   }
 
   fun onDescriptionChange() {
