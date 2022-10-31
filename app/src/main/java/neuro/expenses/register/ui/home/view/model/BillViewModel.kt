@@ -5,12 +5,12 @@ import androidx.compose.runtime.mutableStateOf
 class BillViewModel(i: Int = 0, isEdit: Boolean = false) {
   // TODO: create id
   val id = mutableStateOf(hashCode())
-  val iconUrl = mutableStateOf("https://s3.minipreco.pt/medias/hc0/hf7/8915812384798.jpg")
-  val place = mutableStateOf("Bitoque " + i)
-  val time = mutableStateOf("03h40")
-  val date = mutableStateOf("20/10/2022")
-  val total = mutableStateOf("19,80 €")
-  val isBillOpen = mutableStateOf(true)
+  val iconUrl = mutableStateOf("")
+  val place = mutableStateOf("N/A " + i)
+  val time = mutableStateOf("N/A")
+  val date = mutableStateOf("N/A")
+  val total = mutableStateOf("0,00 €")
+  val isBillOpen = mutableStateOf(false)
   val isEdit = mutableStateOf(isEdit)
 
   fun onClick() {

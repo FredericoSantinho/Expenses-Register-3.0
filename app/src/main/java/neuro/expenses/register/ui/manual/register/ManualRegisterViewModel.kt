@@ -2,8 +2,8 @@ package neuro.expenses.register.ui.manual.register
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.schedulers.Schedulers
 import neuro.expenses.register.common.live.data.SingleLiveEvent
 import neuro.expenses.register.common.view.model.asLiveData
 import neuro.expenses.register.common.view.model.asState
@@ -48,8 +48,8 @@ class ManualRegisterViewModel(
 
   init {
     disposable.add(
-      observeLastBillUseCase.observeLastBill().subscribeOn(Schedulers.io()).filter { it.isPresent }
-        .map { it.get() }
+      observeLastBillUseCase.observeLastBill()
+        .observeOn(AndroidSchedulers.mainThread())
         .subscribe {
           publish(it)
         })

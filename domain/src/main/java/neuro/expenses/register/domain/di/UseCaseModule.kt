@@ -47,4 +47,5 @@ val useCaseModule = module {
   single<GetCategoriesUseCase> { GetCategoriesUseCaseImpl(get()) }
   single<GetNearestPlaceUseCase> { GetNearestPlaceUseCaseImpl() }
   single<GetOrCreateProductUseCase> { GetOrCreateProductUseCaseImpl() }
+  single<ExpenseMapper> { ExpenseMapperImpl() }
 }

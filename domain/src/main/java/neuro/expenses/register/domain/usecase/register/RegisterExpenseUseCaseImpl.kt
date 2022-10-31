@@ -13,7 +13,6 @@ import neuro.expenses.register.domain.usecase.bill.SaveBillUseCase
 import neuro.expenses.register.domain.usecase.product.GetOrCreateProductUseCase
 import neuro.expenses.register.domain.usecase.register.validator.ExpenseValidator
 import neuro.expenses.register.domain.usecase.register.validator.RegisterExpenseError
-import java.util.*
 
 class RegisterExpenseUseCaseImpl(
   private val observeLastBillUseCase: ObserveLastBillUseCase,
@@ -28,15 +27,15 @@ class RegisterExpenseUseCaseImpl(
     expenseDto: ExpenseDto
   ): Single<List<RegisterExpenseError>> {
     return observeLastBillUseCase.observeLastBill().singleOrError().subscribeOn(Schedulers.io())
-      .map { if (it.isPresent) Optional.of(billMapper.map(it.get())) else Optional.empty<Bill>() }
+      .map { billMapper.map(it) }
       .flatMap { lastBillOptional ->
         val place = expenseDto.place
         val calendar = expenseDto.calendar
         val lastBill =
-          if (!lastBillOptional.isPresent || !lastBillOptional.get().isOpen || lastBillOptional.get().place != place) {
+          if (!lastBillOptional.isOpen || lastBillOptional.place != place) {
             Bill(place, calendar.timeInMillis)
           } else {
-            lastBillOptional.get()
+            lastBillOptional
           }
 
         val expense = expenseMapper.map(expenseDto)

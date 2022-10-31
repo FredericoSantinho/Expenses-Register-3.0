@@ -13,6 +13,7 @@ dependencies {
   implementation lib.koin_compose
   implementation lib.glide
   implementation lib.coil
+  implementation lib.rxAndroid
   implementation lib.rxKotlin
 
   implementation lib.timber
