@@ -67,7 +67,6 @@ class ManualRegisterViewModel(
             _uiState.value = UiState.Error(registerExpenseErrorMapper.map(registerExpenseErrors))
           }
         })
-
   }
 
   fun onDescriptionChange() {
@@ -102,8 +101,8 @@ class ManualRegisterViewModel(
       description.value,
       category.value,
       place.value,
-      price.value.toDouble(),
-      amount.value.toDouble(),
+      if (price.value.isEmpty()) 0.0 else price.value.toDouble(),
+      if (amount.value.isEmpty()) 0.0 else amount.value.toDouble(),
       calendar.value
     )
   }

@@ -1,9 +1,7 @@
 package neuro.expenses.register.domain.dto
 
-import java.util.*
-
 data class BillItemDto(
-  val product: ProductDto,
+  val product: PricedProductDto,
   val amount: Double,
-  val calendar: Calendar
+  val total: Double = product.price * amount
 )

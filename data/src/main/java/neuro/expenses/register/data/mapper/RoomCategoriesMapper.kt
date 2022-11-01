@@ -2,6 +2,6 @@ package neuro.expenses.register.data.mapper
 
 import neuro.expenses.register.data.model.RoomCategory
 
-interface CategoriesMapper {
+interface RoomCategoriesMapper {
   fun map(categories: List<RoomCategory>): List<String>
 }

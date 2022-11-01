@@ -4,5 +4,7 @@ import neuro.expenses.register.data.ExpensesRegisterDatabase
 import org.koin.dsl.module
 
 val daoModule = module {
+  single { get<ExpensesRegisterDatabase>().productDao }
   single { get<ExpensesRegisterDatabase>().categoryDao }
+  single { get<ExpensesRegisterDatabase>().billDao }
 }

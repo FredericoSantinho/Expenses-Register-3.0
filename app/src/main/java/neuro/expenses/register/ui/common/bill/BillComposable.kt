@@ -158,6 +158,6 @@ private fun editBillIcon(imageConstraintModifier: Modifier, billViewModel: BillV
 @Composable
 fun PreviewDateTimeComposable() {
   ExpensesRegisterTheme {
-    BillComposable(BillViewModel(1))
+    BillComposable(BillViewModel())
   }
 }

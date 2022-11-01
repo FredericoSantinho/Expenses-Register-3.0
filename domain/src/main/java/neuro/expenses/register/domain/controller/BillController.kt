@@ -24,7 +24,8 @@ internal class BillController(
           val billItem = getBillItem(productDescription)
           val product = billItem.product
           val oldAmount = billItem.amount
-          val newBillItem = BillItem(product, oldAmount + expense.amount)
+          val newAmount = oldAmount + expense.amount
+          val newBillItem = BillItem(product, newAmount, newAmount * product.price)
 
           val billItems = buildList(newBillItem)
           val total = calculateBillTotal.getTotal(billItems)
@@ -32,7 +33,7 @@ internal class BillController(
         }
       } else {
         return@defer getOrCreateProductUseCase.getOrCreateProduct(expense).doOnSuccess { product ->
-          val newBillItem = BillItem(product, expense.amount)
+          val newBillItem = BillItem(product, expense.amount, expense.price * expense.amount)
           val billItems = buildList(newBillItem)
           val total = calculateBillTotal.getTotal(billItems)
           bill = Bill(bill.place, bill.timestamp, total, billItems)

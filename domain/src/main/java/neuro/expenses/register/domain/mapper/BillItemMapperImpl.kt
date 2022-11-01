@@ -6,13 +6,14 @@ import java.util.*
 
 class BillItemMapperImpl(private val productMapper: ProductMapper) : BillItemMapper {
   override fun map(billItem: BillItem, place: String, calendar: Calendar): BillItemDto {
-    return BillItemDto(productMapper.map(billItem.product), billItem.amount, calendar)
+    return BillItemDto(
+      productMapper.map(billItem.product),
+      billItem.amount,
+      billItem.total
+    )
   }
 
   override fun map(billItemDto: BillItemDto): BillItem {
-    return BillItem(
-      productMapper.map(billItemDto.product),
-      billItemDto.amount
-    )
+    return BillItem(productMapper.map(billItemDto.product), billItemDto.amount, billItemDto.total)
   }
 }

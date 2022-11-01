@@ -1,6 +1,7 @@
 package neuro.expenses.register
 
 import android.app.Application
+import com.exchangebot.common.schedulers.SchedulerProvider
 import neuro.expenses.register.data.databaseModule
 import neuro.expenses.register.data.di.daoModule
 import neuro.expenses.register.data.di.databaseMapperModule
@@ -13,11 +14,10 @@ import neuro.expenses.register.domain.di.useCaseModule
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.GlobalContext.startKoin
-import java.util.concurrent.ExecutorService
 
 class ExpensesRegisterApplication : Application() {
 
-  private val executorService: ExecutorService by inject()
+  private val schedulerProvider: SchedulerProvider by inject()
   private val prePopulateDatabase: PrePopulateDatabase by inject()
 
   override fun onCreate() {
@@ -38,6 +38,6 @@ class ExpensesRegisterApplication : Application() {
       androidContext(this@ExpensesRegisterApplication)
     }
 
-    executorService.execute { prePopulateDatabase.prePopulateDatabase() }
+    prePopulateDatabase.prePopulateDatabase().subscribeOn(schedulerProvider.io()).subscribe()
   }
 }

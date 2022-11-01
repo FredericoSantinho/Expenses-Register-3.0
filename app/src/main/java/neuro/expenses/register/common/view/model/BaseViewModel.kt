@@ -46,18 +46,32 @@ open class BaseViewModel(
         onError: ((Throwable) -> Unit)? = null,
         onSuccess: (T) -> Unit
     ): Disposable {
-        return this.subscribeOn(subscribeOn)
-            .run {
-                if (observeOn != null) {
-                    observeOn(observeOn)
-                } else {
-                    this
+        if (onError != null) {
+            return this.subscribeOn(subscribeOn)
+                .run {
+                    if (observeOn != null) {
+                        observeOn(observeOn)
+                    } else {
+                        this
+                    }
                 }
-            }
-            .subscribe(
-                { onSuccess.invoke(it) },
-                { onError?.invoke(it) }
-            )
+                .subscribe(
+                    { onSuccess.invoke(it) },
+                    { onError.invoke(it) }
+                )
+        } else {
+            return this.subscribeOn(subscribeOn)
+                .run {
+                    if (observeOn != null) {
+                        observeOn(observeOn)
+                    } else {
+                        this
+                    }
+                }
+                .subscribe(
+                    { onSuccess.invoke(it) }
+                )
+        }
     }
 
     fun Completable.baseSubscribe(
