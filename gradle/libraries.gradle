@@ -22,6 +22,7 @@ lib.rxKotlin = ["io.reactivex.rxjava3:rxkotlin:$ver.rxKotlin",
                 "com.jakewharton.rxrelay3:rxrelay:$ver.rxRelay3"]
 
 lib.google = ["androidx.core:core-ktx:$ver.ktx",
+              "androidx.security:security-crypto:$ver.androidXSecurity",
               "androidx.appcompat:appcompat:$ver.androidX",
               "com.google.android.material:material:$ver.material",
               "androidx.constraintlayout:constraintlayout:$ver.constraintLayout",
