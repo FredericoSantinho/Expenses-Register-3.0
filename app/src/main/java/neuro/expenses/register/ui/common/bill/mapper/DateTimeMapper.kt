@@ -1,4 +1,4 @@
-package neuro.expenses.register.ui.manual.register.mapper
+package neuro.expenses.register.ui.common.bill.mapper
 
 interface DateTimeMapper {
   fun mapTime(timestamp: Long): String

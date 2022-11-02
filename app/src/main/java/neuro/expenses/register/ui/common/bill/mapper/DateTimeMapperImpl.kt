@@ -1,4 +1,4 @@
-package neuro.expenses.register.ui.manual.register.mapper
+package neuro.expenses.register.ui.common.bill.mapper
 
 class DateTimeMapperImpl : DateTimeMapper {
   override fun mapTime(timestamp: Long): String {

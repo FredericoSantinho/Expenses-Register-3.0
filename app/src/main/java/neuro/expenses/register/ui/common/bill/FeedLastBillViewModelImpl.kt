@@ -4,9 +4,9 @@ import com.exchangebot.common.schedulers.SchedulerProvider
 import io.reactivex.rxjava3.disposables.Disposable
 import neuro.expenses.register.domain.dto.BillDto
 import neuro.expenses.register.domain.usecase.bill.ObserveLastBillUseCase
+import neuro.expenses.register.ui.common.bill.mapper.DateTimeMapper
+import neuro.expenses.register.ui.common.bill.mapper.DoubleMapper
 import neuro.expenses.register.ui.home.view.model.BillViewModel
-import neuro.expenses.register.ui.manual.register.mapper.DateTimeMapper
-import neuro.expenses.register.ui.manual.register.mapper.DoubleMapper
 
 
 class FeedLastBillViewModelImpl(
