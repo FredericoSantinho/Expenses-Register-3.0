@@ -16,6 +16,20 @@ interface BillDao {
   @Query("select * from bill_table order by billId asc")
   fun observeBills(): Observable<List<RoomBillWithBillItems>>
 
+  @Transaction
+  fun insert(roomBill: RoomBill, roomBillItem: RoomBillItem) {
+    insert(roomBill).flatMap { billId ->
+      insert(roomBillItem).flatMap { billItemId ->
+        insert(
+          BillItemPricedProductCrossRef(
+            billItemId,
+            roomBillItem.pricedProductId
+          )
+        )
+      }
+    }.blockingGet()
+  }
+
   @Insert(onConflict = OnConflictStrategy.ABORT)
   fun insert(roomBill: RoomBill): Single<Long>
 

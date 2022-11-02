@@ -27,14 +27,14 @@ class RegisterExpenseUseCaseImpl(
   ): Single<List<RegisterExpenseError>> {
     return observeLastBillUseCase.observeLastBill().singleOrError()
       .map { billMapper.map(it) }
-      .flatMap { lastBillOptional ->
+      .flatMap { lastStoredBill ->
         val place = expenseDto.place
         val calendar = expenseDto.calendar
         val lastBill =
-          if (!lastBillOptional.isOpen || lastBillOptional.place != place) {
+          if (!lastStoredBill.isOpen || lastStoredBill.place != place) {
             Bill(place, calendar.timeInMillis)
           } else {
-            lastBillOptional
+            lastStoredBill
           }
 
         val expense = expenseMapper.map(expenseDto)

@@ -28,6 +28,23 @@ interface ProductDao {
   @Insert(onConflict = OnConflictStrategy.ABORT)
   fun insert(roomPricedProduct: RoomPricedProduct): Single<Long>
 
+  @Transaction
+  fun insert(roomProduct: RoomProduct, category: String, price: Double): Long {
+    return insert(roomProduct).flatMap { productId ->
+      insert(
+        RoomPricedProduct(productId, category, price)
+      ).flatMap { pricedProductId ->
+        insert(
+          PricedProductCategoryCrossRef(
+            pricedProductId,
+            category
+          )
+        ).concatMap { insert(PricedProductProductCrossRef(pricedProductId, productId)) }
+          .map { pricedProductId }
+      }
+    }.blockingGet()
+  }
+
   @Delete()
   fun delete(roomPricedProduct: RoomPricedProduct): Completable
 
