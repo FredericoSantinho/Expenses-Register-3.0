@@ -28,8 +28,8 @@ class FeedLastBillViewModelImpl(
   private fun publish(billDto: BillDto) {
     billViewModel.iconUrl.value = billDto.iconUrl
     billViewModel.place.value = billDto.place
-    billViewModel.time.value = dateTimeMapper.mapTime(billDto.timestamp)
-    billViewModel.date.value = dateTimeMapper.mapDate(billDto.timestamp)
+    billViewModel.time.value = dateTimeMapper.mapTime(billDto.calendar)
+    billViewModel.date.value = dateTimeMapper.mapDate(billDto.calendar)
     billViewModel.total.value = doubleMapper.map(billDto.total) + " $currency"
   }
 

@@ -31,7 +31,7 @@ internal class BillController(
 
           val billItems = buildList(newBillItem)
           val total = calculateBillTotal.getTotal(billItems)
-          bill = Bill(billId, bill.place, bill.timestamp, total, billItems)
+          bill = Bill(billId, bill.place, bill.calendar, total, billItems)
         }
       } else {
         return@defer getOrCreateProductUseCase.getOrCreateProduct(expense).doOnSuccess { product ->
@@ -42,7 +42,7 @@ internal class BillController(
           )
           val billItems = buildList(newBillItem)
           val total = calculateBillTotal.getTotal(billItems)
-          bill = Bill(0, bill.place, bill.timestamp, total, billItems)
+          bill = Bill(0, bill.place, bill.calendar, total, billItems)
         }.ignoreElement()
       }
     }

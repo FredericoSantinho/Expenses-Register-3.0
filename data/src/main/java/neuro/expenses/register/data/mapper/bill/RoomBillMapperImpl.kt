@@ -7,11 +7,11 @@ class RoomBillMapperImpl : RoomBillMapper {
   override fun map(billDto: BillDto): RoomBill {
     val id = billDto.id
     val place = billDto.place
-    val timestamp = billDto.timestamp
+    val calendar = billDto.calendar
     val total = billDto.total
     val isOpen = billDto.isOpen
     val iconUrl = billDto.iconUrl
 
-    return RoomBill(id, place, timestamp, total, isOpen, iconUrl)
+    return RoomBill(id, place, calendar, total, isOpen, iconUrl)
   }
 }

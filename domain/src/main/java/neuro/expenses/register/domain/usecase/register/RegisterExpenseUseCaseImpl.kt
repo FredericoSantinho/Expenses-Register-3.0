@@ -14,6 +14,7 @@ import neuro.expenses.register.domain.usecase.bill.SaveBillUseCase
 import neuro.expenses.register.domain.usecase.product.GetOrCreateProductUseCase
 import neuro.expenses.register.domain.usecase.register.validator.ExpenseValidator
 import neuro.expenses.register.domain.usecase.register.validator.RegisterExpenseError
+import java.util.*
 
 class RegisterExpenseUseCaseImpl(
   private val observeLastBillUseCase: ObserveLastBillUseCase,
@@ -25,7 +26,7 @@ class RegisterExpenseUseCaseImpl(
   private val expenseMapper: ExpenseMapper,
   private val calculateBillTotal: CalculateBillTotal
 ) : RegisterExpenseUseCase {
-  private val defaultBillDto = BillDto(0, "N/A", 0, 1.0)
+  private val defaultBillDto = BillDto(0, "N/A", Calendar.getInstance(), 1.0)
 
   override fun registerExpense(
     expenseDto: ExpenseDto
@@ -35,7 +36,7 @@ class RegisterExpenseUseCaseImpl(
         val place = expenseDto.place
         val calendar = expenseDto.calendar
         val lastBill = if (!lastStoredBill.isOpen || lastStoredBill.place != place) {
-          Bill(0, place, calendar.timeInMillis)
+          Bill(0, place, calendar)
         } else {
           lastStoredBill
         }

@@ -12,7 +12,7 @@ class RoomBillWithBillItemsMapperImpl(private val roomBillItemWithPricedProductM
 
     val id = roomBill.billId
     val place = roomBill.place
-    val timestamp = roomBill.timestamp
+    val timestamp = roomBill.calendar
     val total = roomBill.total
     val billItems = billItemDtoList
     val isOpen = roomBill.isOpen

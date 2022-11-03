@@ -1,6 +1,7 @@
 package neuro.expenses.register.data
 
 import androidx.room.Room
+import neuro.expenses.register.data.converter.Converters
 import org.koin.dsl.module
 
 private val DATABASE_NAME = "expenses"
@@ -11,6 +12,6 @@ val databaseModule = module {
       get(),
       ExpensesRegisterDatabase::class.java,
       DATABASE_NAME
-    ).build()
+    ).addTypeConverter(Converters()).build()
   }
 }

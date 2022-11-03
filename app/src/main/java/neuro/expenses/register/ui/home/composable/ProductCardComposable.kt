@@ -16,10 +16,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import androidx.fragment.app.FragmentActivity
 import com.exchangebot.ui.theme.ExpensesRegisterTheme
 import com.exchangebot.ui.theme.ExpensesRegisterTypography
-import neuro.expenses.register.ui.composables.datetime.DateTimeComposable
 import neuro.expenses.register.ui.home.view.model.ProductCardViewModel
 import neuro.expenses.register.ui.report.composable.AsyncImage
 
@@ -103,6 +101,6 @@ fun PreviewDateTimeComposable() {
   val iconUrl = "https://s3.minipreco.pt/medias/hc0/hf7/8915812384798.jpg"
 
   ExpensesRegisterTheme {
-    DateTimeComposable(FragmentActivity())
+    ProductCardComposable(ProductCardViewModel(description, category, price, iconUrl))
   }
 }
