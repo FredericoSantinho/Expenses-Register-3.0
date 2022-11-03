@@ -41,21 +41,22 @@ class RegisterExpenseUseCaseImpl(
         }
 
         val expense = expenseMapper.map(expenseDto)
-        val validate = expenseValidator.validate(expense)
 
-        if (validate.isEmpty()) {
-          val lastBillController =
-            BillController(calculateBillTotal, getOrCreateProductUseCase, lastBill)
-          val billItem = expenseMapper.map(expenseDto)
+        expenseValidator.validate(expense).flatMap innerFlatMap@{ validate ->
+          if (validate.isEmpty()) {
+            val lastBillController =
+              BillController(calculateBillTotal, getOrCreateProductUseCase, lastBill)
+            val billItem = expenseMapper.map(expenseDto)
 
-          return@flatMap lastBillController.add(billItem).doOnComplete {
-            saveBillUseCase.save(
-              lastBillController.bill
-            )
-          }.toSingleDefault(validate)
+            return@innerFlatMap lastBillController.add(billItem).doOnComplete {
+              saveBillUseCase.save(
+                lastBillController.bill
+              )
+            }.toSingleDefault(validate)
+          }
+
+          return@innerFlatMap Single.just(validate)
         }
-
-        return@flatMap Single.just(validate)
       }
   }
 }

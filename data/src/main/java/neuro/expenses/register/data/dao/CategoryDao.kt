@@ -2,6 +2,7 @@ package neuro.expenses.register.data.dao
 
 import androidx.room.*
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import neuro.expenses.register.data.model.RoomCategory
@@ -12,7 +13,7 @@ interface CategoryDao {
   fun observeCategories(): Observable<List<RoomCategory>>
 
   @Query("select * from category_table where name=:name")
-  fun getCategory(name: String): Single<RoomCategory>
+  fun getCategory(name: String): Maybe<RoomCategory>
 
   @Insert(onConflict = OnConflictStrategy.ABORT)
   fun insert(category: RoomCategory): Single<Long>
