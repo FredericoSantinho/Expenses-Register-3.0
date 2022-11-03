@@ -8,10 +8,10 @@ import coil.compose.rememberAsyncImagePainter
 
 @Composable
 fun AsyncImage(modifier: Modifier = Modifier, url: String) {
-    Image(
-        modifier = modifier,
-        painter = rememberAsyncImagePainter(url),
-        contentDescription = null,
-        contentScale = ContentScale.Crop
-    )
+  Image(
+    modifier = modifier,
+    painter = rememberAsyncImagePainter(url),
+    contentDescription = null,
+    contentScale = ContentScale.Crop
+  )
 }

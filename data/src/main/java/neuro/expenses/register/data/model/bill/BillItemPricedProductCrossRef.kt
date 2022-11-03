@@ -4,10 +4,10 @@ import androidx.room.Entity
 import androidx.room.Index
 
 @Entity(
-    primaryKeys = ["billItemId", "pricedProductId"],
-    indices = [Index(value = ["pricedProductId"])]
+  primaryKeys = ["billItemId", "pricedProductId"],
+  indices = [Index(value = ["pricedProductId"])]
 )
 data class BillItemPricedProductCrossRef(
-    val billItemId: Long,
-    val pricedProductId: Long
+  val billItemId: Long,
+  val pricedProductId: Long
 )

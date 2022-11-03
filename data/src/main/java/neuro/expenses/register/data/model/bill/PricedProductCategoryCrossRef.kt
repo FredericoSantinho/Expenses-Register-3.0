@@ -5,6 +5,6 @@ import androidx.room.Index
 
 @Entity(primaryKeys = ["pricedProductId", "name"], indices = [Index(value = ["name"])])
 data class PricedProductCategoryCrossRef(
-    val pricedProductId: Long,
-    val name: String
+  val pricedProductId: Long,
+  val name: String
 )
