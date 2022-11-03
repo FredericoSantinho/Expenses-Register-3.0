@@ -9,7 +9,7 @@ import neuro.expenses.register.common.view.model.asLiveData
 import neuro.expenses.register.common.view.model.asState
 import neuro.expenses.register.domain.dto.ExpenseDto
 import neuro.expenses.register.domain.usecase.calendar.GetCalendarUseCase
-import neuro.expenses.register.domain.usecase.category.GetCategoriesUseCase
+import neuro.expenses.register.domain.usecase.category.ObserveCategoriesUseCase
 import neuro.expenses.register.domain.usecase.near.GetNearestPlaceUseCase
 import neuro.expenses.register.domain.usecase.register.RegisterExpenseUseCase
 import neuro.expenses.register.ui.common.bill.FeedLastBillViewModel
@@ -19,7 +19,7 @@ import neuro.expenses.register.ui.manual.register.mapper.RegisterExpenseErrorMap
 
 class ManualRegisterViewModel(
   private val getCalendarUseCase: GetCalendarUseCase,
-  private val getCategoriesUseCase: GetCategoriesUseCase,
+  private val observeCategoriesUseCase: ObserveCategoriesUseCase,
   private val registerExpenseUseCase: RegisterExpenseUseCase,
   private val getNearestPlaceUseCase: GetNearestPlaceUseCase,
   private val feedLastBillViewModel: FeedLastBillViewModel,
@@ -34,7 +34,7 @@ class ManualRegisterViewModel(
   val price = mutableStateOf("")
   val amount = mutableStateOf("")
   val calendar = mutableStateOf(getCalendarUseCase.getCalendar())
-  val categories = getCategoriesUseCase.getCategories()
+  val categories = observeCategoriesUseCase.observeCategories()
   private val disposable: CompositeDisposable = CompositeDisposable()
 
   private val _uiState = mutableStateOf<UiState>(UiState.Ready)

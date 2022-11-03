@@ -37,7 +37,7 @@ fun TextFieldWithDropdown(
   }
 
   fun onValueChanged(value: TextFieldValue) {
-    dropDownExpanded.value = true
+    dropDownExpanded.value = value.text.isNotBlank()
     textFieldValue.value = value
     dropDownOptions.value = dataIn.value.filter {
       it.startsWith(value.text) && it != value.text
@@ -74,6 +74,10 @@ fun TextFieldWithDropdown(
 ) {
   var isErrorVar by rememberSaveable { isError }
 
+  if (value.value == "") {
+    setValue.invoke(TextFieldValue(value.value))
+  }
+
   Box(modifier) {
     TextField(
       modifier = Modifier
@@ -109,7 +113,7 @@ fun TextFieldWithDropdown(
           setValue(
             TextFieldValue(
               value.value,
-              TextRange(text.length)
+              TextRange(value.value.length)
             )
           )
         }) {

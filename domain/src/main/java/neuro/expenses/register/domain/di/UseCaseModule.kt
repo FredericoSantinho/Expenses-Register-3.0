@@ -6,10 +6,10 @@ import neuro.expenses.register.domain.mapper.*
 import neuro.expenses.register.domain.usecase.bill.*
 import neuro.expenses.register.domain.usecase.calendar.GetCalendarUseCase
 import neuro.expenses.register.domain.usecase.calendar.GetCalendarUseCaseImpl
-import neuro.expenses.register.domain.usecase.category.GetCategoriesUseCase
-import neuro.expenses.register.domain.usecase.category.GetCategoriesUseCaseImpl
 import neuro.expenses.register.domain.usecase.category.IsValidCategory
 import neuro.expenses.register.domain.usecase.category.IsValidCategoryImpl
+import neuro.expenses.register.domain.usecase.category.ObserveCategoriesUseCase
+import neuro.expenses.register.domain.usecase.category.ObserveCategoriesUseCaseImpl
 import neuro.expenses.register.domain.usecase.near.GetNearestPlaceUseCase
 import neuro.expenses.register.domain.usecase.near.GetNearestPlaceUseCaseImpl
 import neuro.expenses.register.domain.usecase.product.GetOrCreateProductUseCase
@@ -43,7 +43,7 @@ val useCaseModule = module {
   single<ExpenseValidator> { ExpenseValidatorImpl(get()) }
   single<IsValidCategory> { IsValidCategoryImpl() }
   single<GetCalendarUseCase> { GetCalendarUseCaseImpl() }
-  single<GetCategoriesUseCase> { GetCategoriesUseCaseImpl(get()) }
+  single<ObserveCategoriesUseCase> { ObserveCategoriesUseCaseImpl(get()) }
   single<GetNearestPlaceUseCase> { GetNearestPlaceUseCaseImpl() }
   single<GetOrCreateProductUseCase> { GetOrCreateProductUseCaseImpl() }
   single<ExpenseMapper> { ExpenseMapperImpl() }
