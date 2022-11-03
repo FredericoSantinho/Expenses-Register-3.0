@@ -1,6 +1,7 @@
 package neuro.expenses.register.domain.entity
 
 data class Bill(
+  val id: Long,
   val place: String,
   val timestamp: Long,
   val total: Double = 0.0,

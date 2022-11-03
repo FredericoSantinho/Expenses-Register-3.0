@@ -11,12 +11,13 @@ import neuro.expenses.register.data.model.RoomPricedProduct
     entity = RoomPricedProduct::class,
     parentColumns = arrayOf("pricedProductId"),
     childColumns = arrayOf("pricedProductId"),
-    onDelete = ForeignKey.RESTRICT
+    onDelete = ForeignKey.CASCADE
   )], indices = [Index(value = ["pricedProductId"])]
 )
 data class RoomBillItem(
+  @PrimaryKey(autoGenerate = true)
+  val billItemId: Long = 0,
   val amount: Double,
   val pricedProductId: Long,
-  @PrimaryKey(autoGenerate = true)
-  var billItemId: Long = 0,
+  val parentBillId: Long
 )

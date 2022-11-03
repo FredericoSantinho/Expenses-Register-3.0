@@ -12,13 +12,22 @@ class BillMapperImpl(
     calendar.time = Date(bill.timestamp)
     val billItems = bill.billItems.map { billItemMapper.map(it, bill.place, calendar) }
 
-    return BillDto(bill.place, bill.timestamp, bill.total, billItems, bill.isOpen, bill.iconUrl)
+    return BillDto(
+      bill.id,
+      bill.place,
+      bill.timestamp,
+      bill.total,
+      billItems,
+      bill.isOpen,
+      bill.iconUrl
+    )
   }
 
   override fun map(billDto: BillDto): Bill {
     val billItems = billDto.billItems.map { billItemMapper.map(it) }
 
     return Bill(
+      billDto.id,
       billDto.place,
       billDto.timestamp,
       billDto.total,

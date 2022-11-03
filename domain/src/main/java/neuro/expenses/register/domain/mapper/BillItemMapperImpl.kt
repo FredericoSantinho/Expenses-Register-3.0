@@ -7,6 +7,7 @@ import java.util.*
 class BillItemMapperImpl(private val productMapper: ProductMapper) : BillItemMapper {
   override fun map(billItem: BillItem, place: String, calendar: Calendar): BillItemDto {
     return BillItemDto(
+      billItem.id,
       productMapper.map(billItem.product),
       billItem.amount,
       billItem.total
@@ -14,6 +15,11 @@ class BillItemMapperImpl(private val productMapper: ProductMapper) : BillItemMap
   }
 
   override fun map(billItemDto: BillItemDto): BillItem {
-    return BillItem(productMapper.map(billItemDto.product), billItemDto.amount, billItemDto.total)
+    return BillItem(
+      billItemDto.id,
+      productMapper.map(billItemDto.product),
+      billItemDto.amount,
+      billItemDto.total
+    )
   }
 }

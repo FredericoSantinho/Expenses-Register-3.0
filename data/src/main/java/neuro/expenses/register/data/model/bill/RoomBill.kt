@@ -5,11 +5,11 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "bill_table")
 data class RoomBill(
+  @PrimaryKey(autoGenerate = true)
+  var billId: Long = 0,
   val place: String,
   val timestamp: Long,
   val total: Double,
   val isOpen: Boolean,
-  val iconUrl: String,
-  @PrimaryKey(autoGenerate = true)
-  var billId: Long = 0
+  val iconUrl: String
 )

@@ -13,7 +13,10 @@ interface ProductDao {
   @Query("select * from product_table where productId=:productId")
   fun getProduct(productId: Long): Maybe<RoomProduct>
 
-  @Insert(onConflict = OnConflictStrategy.ABORT)
+  @Query("select * from product_table where description=:description")
+  fun getProduct(description: String): Maybe<RoomProduct>
+
+  @Insert(onConflict = OnConflictStrategy.REPLACE)
   fun insert(roomProduct: RoomProduct): Single<Long>
 
   @Update()
@@ -25,32 +28,43 @@ interface ProductDao {
   @Query("select * from priced_product_table where pricedProductId=:pricedProductId")
   fun getPricedProduct(pricedProductId: Long): Single<RoomPricedProduct>
 
-  @Insert(onConflict = OnConflictStrategy.ABORT)
+  @Query("select * from priced_product_table where productId=:productId and category=:category and price=:price")
+  fun getPricedProduct(productId: Long, category: String, price: Double): Maybe<RoomPricedProduct>
+
+  @Insert(onConflict = OnConflictStrategy.REPLACE)
   fun insert(roomPricedProduct: RoomPricedProduct): Single<Long>
 
   @Transaction
-  fun insert(roomProduct: RoomProduct, category: String, price: Double): Long {
-    return insert(roomProduct).flatMap { productId ->
-      insert(
-        RoomPricedProduct(productId, category, price)
-      ).flatMap { pricedProductId ->
-        insert(
-          PricedProductCategoryCrossRef(
-            pricedProductId,
-            category
-          )
-        ).concatMap { insert(PricedProductProductCrossRef(pricedProductId, productId)) }
-          .map { pricedProductId }
-      }
-    }.blockingGet()
+  fun insert(category: String, price: Double, description: String): Long {
+    return getProduct(description).defaultIfEmpty(RoomProduct(0, description))
+      .flatMap { roomProduct ->
+        insert(roomProduct).flatMap { productId ->
+          getPricedProduct(productId, category, price).defaultIfEmpty(
+            RoomPricedProduct(
+              productId,
+              category,
+              price
+            )
+          ).flatMap { roomPricedProduct ->
+            insert(roomPricedProduct)
+          }
+            .flatMap { pricedProductId ->
+              insert(PricedProductCategoryCrossRef(pricedProductId, category))
+                .flatMap {
+                  insert(PricedProductProductCrossRef(pricedProductId, productId))
+                }
+                .map { pricedProductId }
+            }
+        }
+      }.blockingGet()
   }
 
   @Delete()
   fun delete(roomPricedProduct: RoomPricedProduct): Completable
 
-  @Insert(onConflict = OnConflictStrategy.ABORT)
+  @Insert(onConflict = OnConflictStrategy.REPLACE)
   fun insert(productCategoryCrossRef: PricedProductCategoryCrossRef): Single<Long>
 
-  @Insert(onConflict = OnConflictStrategy.ABORT)
+  @Insert(onConflict = OnConflictStrategy.REPLACE)
   fun insert(pricedProductProductCrossRef: PricedProductProductCrossRef): Single<Long>
 }

@@ -22,21 +22,27 @@ internal class BillController(
       if (contains(productDescription)) {
         return@defer Completable.fromAction {
           val billItem = getBillItem(productDescription)
+          val billId = bill.id
+          val billItemId = billItem.id
           val product = billItem.product
           val oldAmount = billItem.amount
           val newAmount = oldAmount + expense.amount
-          val newBillItem = BillItem(product, newAmount, newAmount * product.price)
+          val newBillItem = BillItem(billItemId, product, newAmount, newAmount * product.price)
 
           val billItems = buildList(newBillItem)
           val total = calculateBillTotal.getTotal(billItems)
-          bill = Bill(bill.place, bill.timestamp, total, billItems)
+          bill = Bill(billId, bill.place, bill.timestamp, total, billItems)
         }
       } else {
         return@defer getOrCreateProductUseCase.getOrCreateProduct(expense).doOnSuccess { product ->
-          val newBillItem = BillItem(product, expense.amount, expense.price * expense.amount)
+          val newBillItem = BillItem(
+            0, product,
+            expense.amount,
+            expense.price * expense.amount
+          )
           val billItems = buildList(newBillItem)
           val total = calculateBillTotal.getTotal(billItems)
-          bill = Bill(bill.place, bill.timestamp, total, billItems)
+          bill = Bill(0, bill.place, bill.timestamp, total, billItems)
         }.ignoreElement()
       }
     }

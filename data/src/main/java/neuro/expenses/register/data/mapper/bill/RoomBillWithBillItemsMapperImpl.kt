@@ -7,8 +7,10 @@ class RoomBillWithBillItemsMapperImpl(private val roomBillItemWithPricedProductM
   RoomBillWithBillItemsMapper {
   override fun map(roomBillWithBillItems: RoomBillWithBillItems): BillDto {
     val roomBill = roomBillWithBillItems.roomBill
-    val billItemDtoList = roomBillItemWithPricedProductMapper.map(roomBillWithBillItems.billItems)
+    val billItemDtoList =
+      roomBillWithBillItems.billItems.map { roomBillItemWithPricedProductMapper.map(it) }
 
+    val id = roomBill.billId
     val place = roomBill.place
     val timestamp = roomBill.timestamp
     val total = roomBill.total
@@ -16,6 +18,6 @@ class RoomBillWithBillItemsMapperImpl(private val roomBillItemWithPricedProductM
     val isOpen = roomBill.isOpen
     val iconUrl = roomBill.iconUrl
 
-    return BillDto(place, timestamp, total, billItems, isOpen, iconUrl)
+    return BillDto(id, place, timestamp, total, billItems, isOpen, iconUrl)
   }
 }

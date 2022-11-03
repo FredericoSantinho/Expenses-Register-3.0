@@ -29,7 +29,7 @@ fun TextFieldWithDropdown(
 ) {
 
   val dropDownOptions = remember { mutableStateOf(listOf<String>()) }
-  val textFieldValue = remember { mutableStateOf(TextFieldValue()) }
+  val textFieldValue = remember { mutableStateOf(TextFieldValue(value.value)) }
   val dropDownExpanded = remember { mutableStateOf(false) }
 
   fun onDropdownDismissRequest() {
@@ -105,9 +105,10 @@ fun TextFieldWithDropdown(
     ) {
       list.forEach { text ->
         DropdownMenuItem(onClick = {
+          value.value = text
           setValue(
             TextFieldValue(
-              text,
+              value.value,
               TextRange(text.length)
             )
           )

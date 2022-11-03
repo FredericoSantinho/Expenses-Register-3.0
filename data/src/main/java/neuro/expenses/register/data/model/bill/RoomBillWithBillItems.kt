@@ -8,7 +8,7 @@ data class RoomBillWithBillItems(
   @Relation(
     entity = RoomBillItem::class,
     parentColumn = "billId",
-    entityColumn = "billItemId"
+    entityColumn = "parentBillId"
   )
   val billItems: List<RoomBillItemWithPricedProduct>
 )

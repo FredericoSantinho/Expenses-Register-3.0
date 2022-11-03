@@ -1,6 +1,7 @@
 package neuro.expenses.register.domain.dto
 
 data class BillDto(
+  val id: Long,
   val place: String,
   val timestamp: Long,
   val total: Double,

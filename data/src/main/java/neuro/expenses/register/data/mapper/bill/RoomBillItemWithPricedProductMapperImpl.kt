@@ -6,17 +6,16 @@ import neuro.expenses.register.domain.dto.BillItemDto
 
 class RoomBillItemWithPricedProductMapperImpl(private val roomPricedProductWithProductAndCategoryMapper: RoomPricedProductWithProductAndCategoryMapper) :
   RoomBillItemWithPricedProductMapper {
-  override fun map(roomBillItem: RoomBillItemWithPricedProduct): BillItemDto {
-    val roomPricedProductWithProductAndCategory = roomBillItem.roomPricedProduct.get(0)
+  override fun map(roomBillItemWithPricedProduct: RoomBillItemWithPricedProduct): BillItemDto {
+    val roomPricedProductWithProductAndCategory =
+      roomBillItemWithPricedProduct.roomPricedProduct.get(0)
 
     return BillItemDto(
+      roomBillItemWithPricedProduct.roomBillItem.billItemId,
       roomPricedProductWithProductAndCategoryMapper.map(
         roomPricedProductWithProductAndCategory
-      ), roomBillItem.roomBillItem.amount
+      ),
+      roomBillItemWithPricedProduct.roomBillItem.amount
     )
-  }
-
-  override fun map(roomBillItems: List<RoomBillItemWithPricedProduct>): List<BillItemDto> {
-    return roomBillItems.map { map(it) }
   }
 }
