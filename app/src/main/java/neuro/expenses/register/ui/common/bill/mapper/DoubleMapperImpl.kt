@@ -1,7 +1,9 @@
 package neuro.expenses.register.ui.common.bill.mapper
 
-class DoubleMapperImpl : DoubleMapper {
+import neuro.expenses.register.common.formatter.DecimalFormatter
+
+class DoubleMapperImpl(private val decimalFormatter: DecimalFormatter) : DoubleMapper {
   override fun map(double: Double): String {
-    return double.toString()
+    return decimalFormatter.format(double)
   }
 }

@@ -1,5 +1,7 @@
 package neuro.expenses.register.di
 
+import neuro.expenses.register.common.formatter.DecimalFormatter
+import neuro.expenses.register.common.formatter.DecimalFormatterImpl
 import neuro.expenses.register.ui.bills.BillsViewModel
 import neuro.expenses.register.ui.common.bill.FeedLastBillViewModel
 import neuro.expenses.register.ui.common.bill.FeedLastBillViewModelImpl
@@ -46,7 +48,8 @@ val viewModelModule = module {
     )
   }
   single<DateTimeMapper> { DateTimeMapperImpl() }
-  single<DoubleMapper> { DoubleMapperImpl() }
+  single<DoubleMapper> { DoubleMapperImpl(get()) }
+  single<DecimalFormatter> { DecimalFormatterImpl(2) }
   single<RegisterExpenseErrorMapper> { RegisterExpenseErrorMapperImpl() }
   viewModel { BillsViewModel() }
   viewModel { EditViewModel() }
