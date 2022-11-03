@@ -1,13 +1,21 @@
 package neuro.expenses.register.ui.common.bill.mapper
 
+import neuro.expenses.register.common.formatter.NumberFormater
 import java.util.*
 
-class DateTimeMapperImpl : DateTimeMapper {
+class DateTimeMapperImpl(private val numberFormater: NumberFormater) : DateTimeMapper {
   override fun mapTime(calendar: Calendar): String {
-    return ""
+    val hour = calendar.get(Calendar.HOUR_OF_DAY)
+    val minute = calendar.get(Calendar.MINUTE)
+
+    return numberFormater.format(hour) + 'h' + numberFormater.format(minute)
   }
 
   override fun mapDate(calendar: Calendar): String {
-    return ""
+    val day = calendar.get(Calendar.DAY_OF_MONTH)
+    val month = calendar.get(Calendar.MONTH)
+    val year = calendar.get(Calendar.YEAR)
+
+    return numberFormater.format(day) + '/' + numberFormater.format(month) + '/' + year
   }
 }
