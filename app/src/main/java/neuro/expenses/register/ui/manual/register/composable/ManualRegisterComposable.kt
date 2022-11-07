@@ -70,17 +70,6 @@ fun ManualRegisterComposable(
   placeIsError.value = false
   placeErrorMessage.value = ""
 
-  onUiState(
-    uiState,
-    descriptionIsError,
-    descriptionErrorMessage,
-    categoryIsError,
-    placeIsError,
-    placeErrorMessage,
-    messageMapper
-  )
-  onUiEvent(uiEvent)
-
   Column(
     Modifier
       .fillMaxSize()
@@ -208,6 +197,17 @@ fun ManualRegisterComposable(
     }
     BillComposableContainer(manualRegisterViewModel.billViewModel)
   }
+
+  onUiState(
+    uiState,
+    descriptionIsError,
+    descriptionErrorMessage,
+    categoryIsError,
+    placeIsError,
+    placeErrorMessage,
+    messageMapper
+  )
+  onUiEvent(uiEvent)
 }
 
 @Composable
