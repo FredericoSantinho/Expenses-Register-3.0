@@ -13,6 +13,7 @@ import neuro.expenses.register.domain.usecase.category.ObserveCategoriesUseCase
 import neuro.expenses.register.domain.usecase.near.GetNearestPlaceUseCase
 import neuro.expenses.register.domain.usecase.register.RegisterExpenseUseCase
 import neuro.expenses.register.ui.common.bill.FeedLastBillViewModel
+import neuro.expenses.register.ui.common.formatter.DoubleFormatter
 import neuro.expenses.register.ui.home.view.model.BillViewModel
 import neuro.expenses.register.ui.manual.register.mapper.RegisterExpenseErrorMapper
 
@@ -25,6 +26,7 @@ class ManualRegisterViewModel(
   private val feedLastBillViewModel: FeedLastBillViewModel,
   private val registerExpenseErrorMapper: RegisterExpenseErrorMapper,
   private val schedulerProvider: SchedulerProvider,
+  private val doubleFormatter: DoubleFormatter,
   val billViewModel: BillViewModel
 ) : BaseViewModel(schedulerProvider) {
 
@@ -33,11 +35,13 @@ class ManualRegisterViewModel(
   val place = mutableStateOf("")
   val price = mutableStateOf("")
   val amount = mutableStateOf("")
+  val total = mutableStateOf(buildTotalStr())
+
   val calendar = mutableStateOf(getCalendarUseCase.getCalendar())
   val categories = observeCategoriesUseCase.observeCategories()
   private val disposable: CompositeDisposable = CompositeDisposable()
-
   private val _uiState = mutableStateOf<UiState>(UiState.Ready)
+
   val uiState = _uiState.asState()
   private val _uiEvent = SingleLiveEvent<UiEvent>()
   val uiEvent = _uiEvent.asLiveData()
@@ -69,6 +73,14 @@ class ManualRegisterViewModel(
         })
   }
 
+  fun onPriceChange() {
+    total.value = buildTotalStr()
+  }
+
+  fun onAmountChange() {
+    total.value = buildTotalStr()
+  }
+
   fun onDescriptionChange() {
     if (uiState.value is UiState.Error) {
       val previousErrors = (uiState.value as UiState.Error).errors
@@ -94,6 +106,12 @@ class ManualRegisterViewModel(
 
       emitState(previousErrors, errors)
     }
+  }
+
+  private fun buildTotalStr(): String {
+    val priceDouble = if (price.value.isBlank()) 0.0 else price.value.toDouble()
+    val amountDouble = if (amount.value.isBlank()) 0.0 else amount.value.toDouble()
+    return doubleFormatter.format(priceDouble * amountDouble)
   }
 
   private fun buildExpense(): ExpenseDto {

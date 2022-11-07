@@ -76,9 +76,6 @@ fun ManualRegisterComposable(
       .verticalScroll(rememberScrollState()),
     verticalArrangement = Arrangement.Bottom
   ) {
-    val amountVar = remember { mutableStateOf(0.0) }
-    val priceVar = remember { mutableStateOf(0.0) }
-
     DateTimeComposable(
       fragmentActivity,
       modifier = Modifier
@@ -141,52 +138,53 @@ fun ManualRegisterComposable(
       }
     }
     ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
-      val (price, amount, totalLabel, total) = createRefs()
-
-      val totalVar =
-        remember { mutableStateOf(getTotalStr(amountVar.value, priceVar.value, currency)) }
+      val (priceC, amountC, totalLabelC, totalC) = createRefs()
 
       CurrencyTextField(
         label = stringResource(R.string.manual_register_price),
-        modifier = Modifier.constrainAs(price) {
+        modifier = Modifier.constrainAs(priceC) {
           start.linkTo(parent.start, margin = 8.dp)
           width = Dimension.value(96.dp)
         },
         keyboardOptions = keyboardOptionsNumeric,
         onValueChange = {
-          priceVar.value = if (it.isNotEmpty()) it.toDouble() else 0.0
-          totalVar.value = getTotalStr(amountVar.value, priceVar.value, currency)
+          manualRegisterViewModel.price.value = it
+          manualRegisterViewModel.onPriceChange()
         },
         value = manualRegisterViewModel.price
       )
       TextFieldWithError(
         label = stringResource(R.string.manual_register_amount),
-        modifier = Modifier.constrainAs(amount) {
-          start.linkTo(price.end, margin = 8.dp)
+        modifier = Modifier.constrainAs(amountC) {
+          start.linkTo(priceC.end, margin = 8.dp)
           width = Dimension.value(96.dp)
         },
         keyboardOptions = keyboardOptionsNumeric,
         textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.End),
         onValueChange = {
-          amountVar.value = if (it.isNotEmpty()) it.toDouble() else 0.0
-          totalVar.value = getTotalStr(amountVar.value, priceVar.value, currency)
+          manualRegisterViewModel.amount.value = it
+          manualRegisterViewModel.onAmountChange()
         },
         value = manualRegisterViewModel.amount
       )
       Text(
         text = stringResource(R.string.manual_register_total) + ':',
-        modifier = Modifier.constrainAs(totalLabel) {
-          end.linkTo(total.start, margin = 8.dp)
-          top.linkTo(amount.top, margin = 8.dp)
-          bottom.linkTo(amount.bottom)
+        modifier = Modifier.constrainAs(totalLabelC) {
+          end.linkTo(totalC.start, margin = 8.dp)
+          top.linkTo(amountC.top, margin = 8.dp)
+          bottom.linkTo(amountC.bottom)
         },
         fontSize = 16.sp
       )
-      Text(text = totalVar.value, modifier = Modifier.constrainAs(total) {
-        end.linkTo(parent.end, margin = 16.dp)
-        top.linkTo(amount.top, margin = 8.dp)
-        bottom.linkTo(amount.bottom)
-      }, fontSize = 16.sp)
+      Text(
+        text = getTotalStr(manualRegisterViewModel.total.value, currency),
+        modifier = Modifier.constrainAs(totalC) {
+          end.linkTo(parent.end, margin = 16.dp)
+          top.linkTo(amountC.top, margin = 8.dp)
+          bottom.linkTo(amountC.bottom)
+        },
+        fontSize = 16.sp
+      )
     }
     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
       Button(onClick = {
@@ -299,8 +297,11 @@ private fun showDescriptionError(
   descriptionIsError.value = true
 }
 
-private fun getTotalStr(amount: Double, price: Double, currency: String): String {
-  return (amount * price).toString() + ' ' + currency
+private fun getTotalStr(
+  total: String,
+  currency: String
+): String {
+  return total + ' ' + currency
 }
 
 private val keyboardOptionsNumeric = KeyboardOptions.Default.copy(

@@ -9,8 +9,8 @@ import neuro.expenses.register.ui.common.bill.FeedLastBillViewModel
 import neuro.expenses.register.ui.common.bill.FeedLastBillViewModelImpl
 import neuro.expenses.register.ui.common.bill.mapper.DateTimeMapper
 import neuro.expenses.register.ui.common.bill.mapper.DateTimeMapperImpl
-import neuro.expenses.register.ui.common.bill.mapper.DoubleMapper
-import neuro.expenses.register.ui.common.bill.mapper.DoubleMapperImpl
+import neuro.expenses.register.ui.common.formatter.DoubleFormatter
+import neuro.expenses.register.ui.common.formatter.DoubleFormatterImpl
 import neuro.expenses.register.ui.edit.EditViewModel
 import neuro.expenses.register.ui.home.EditCategoryViewModel
 import neuro.expenses.register.ui.home.EditPlaceViewModel
@@ -36,6 +36,7 @@ val viewModelModule = module {
       get(),
       get(),
       get(),
+      get(),
       get()
     )
   }
@@ -51,7 +52,7 @@ val viewModelModule = module {
   }
   single<DateTimeMapper> { DateTimeMapperImpl(get()) }
   single<NumberFormater> { NumberFormaterImpl() }
-  single<DoubleMapper> { DoubleMapperImpl(get()) }
+  single<DoubleFormatter> { DoubleFormatterImpl(get()) }
   single<DecimalFormatter> { DecimalFormatterImpl(2) }
   single<RegisterExpenseErrorMapper> { RegisterExpenseErrorMapperImpl() }
   viewModel { BillsViewModel() }

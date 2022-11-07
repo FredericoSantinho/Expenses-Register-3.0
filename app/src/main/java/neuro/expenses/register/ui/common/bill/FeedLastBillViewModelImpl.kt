@@ -5,7 +5,7 @@ import io.reactivex.rxjava3.disposables.Disposable
 import neuro.expenses.register.domain.dto.BillDto
 import neuro.expenses.register.domain.usecase.bill.ObserveLastBillUseCase
 import neuro.expenses.register.ui.common.bill.mapper.DateTimeMapper
-import neuro.expenses.register.ui.common.bill.mapper.DoubleMapper
+import neuro.expenses.register.ui.common.formatter.DoubleFormatter
 import neuro.expenses.register.ui.home.view.model.BillViewModel
 
 
@@ -13,7 +13,7 @@ class FeedLastBillViewModelImpl(
   private val observeLastBillUseCase: ObserveLastBillUseCase,
   private val billViewModel: BillViewModel,
   private val dateTimeMapper: DateTimeMapper,
-  private val doubleMapper: DoubleMapper,
+  private val doubleFormatter: DoubleFormatter,
   private val schedulerProvider: SchedulerProvider,
   private val currency: Char = '€'
 ) : FeedLastBillViewModel {
@@ -30,7 +30,7 @@ class FeedLastBillViewModelImpl(
     billViewModel.place.value = billDto.place
     billViewModel.time.value = dateTimeMapper.mapTime(billDto.calendar)
     billViewModel.date.value = dateTimeMapper.mapDate(billDto.calendar)
-    billViewModel.total.value = doubleMapper.map(billDto.total) + " $currency"
+    billViewModel.total.value = doubleFormatter.format(billDto.total) + " $currency"
   }
 
 }
