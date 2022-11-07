@@ -9,6 +9,8 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rxjava3.subscribeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -70,6 +72,8 @@ fun ManualRegisterComposable(
   placeIsError.value = false
   placeErrorMessage.value = ""
 
+  val focusManager = LocalFocusManager.current
+
   Column(
     Modifier
       .fillMaxSize()
@@ -125,6 +129,7 @@ fun ManualRegisterComposable(
       )
       IconButton(onClick = {
         manualRegisterViewModel.onNearestPlaceButton()
+        focusManager.moveFocus(FocusDirection.Next)
       }, modifier = Modifier.constrainAs(placeAuto) {
         end.linkTo(parent.end, margin = 8.dp)
         top.linkTo(place.top, margin = 8.dp)
