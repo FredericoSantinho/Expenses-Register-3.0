@@ -2,7 +2,6 @@ package neuro.expenses.register.ui.manual.register.composable
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -13,8 +12,6 @@ import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -29,6 +26,8 @@ import neuro.expenses.register.common.picker.date.ShowMaterialDatePicker
 import neuro.expenses.register.common.picker.time.DefaultShowTimePicker
 import neuro.expenses.register.common.picker.time.ShowTimePicker
 import neuro.expenses.register.ui.common.bill.BillComposableContainer
+import neuro.expenses.register.ui.common.keyboard.keyboardOptionsNumeric
+import neuro.expenses.register.ui.common.keyboard.keyboardOptionsText
 import neuro.expenses.register.ui.composables.datetime.DateTimeComposable
 import neuro.expenses.register.ui.composables.datetime.mapper.DateTextMapper
 import neuro.expenses.register.ui.composables.datetime.mapper.DateTextMapperImpl
@@ -156,7 +155,6 @@ fun ManualRegisterComposable(
           start.linkTo(parent.start, margin = 8.dp)
           width = Dimension.value(96.dp)
         },
-        keyboardOptions = keyboardOptionsNumeric,
         onValueChange = {
           manualRegisterViewModel.price.value = it
           manualRegisterViewModel.onPriceChange()
@@ -333,14 +331,6 @@ private fun getTotalStr(
 ): String {
   return total + ' ' + currency
 }
-
-private val keyboardOptionsNumeric = KeyboardOptions.Default.copy(
-  keyboardType = KeyboardType.Number, imeAction = ImeAction.Next
-)
-
-private val keyboardOptionsText = KeyboardOptions.Default.copy(
-  keyboardType = KeyboardType.Text, imeAction = ImeAction.Next
-)
 
 @Preview
 @Composable
