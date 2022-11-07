@@ -16,6 +16,7 @@ class RegisterExpenseErrorMapperImpl : RegisterExpenseErrorMapper {
         }
         INVALID_CATEGORY -> error = UiStateError.ShowCategoryError
         EMPTY_PLACE -> error = UiStateError.ShowPlaceError(Message.EMPTY_PLACE)
+        INVALID_AMOUNT -> error = UiStateError.ShowAmountError(Message.INVALID_AMOUNT)
       }
       list.add(error)
     }

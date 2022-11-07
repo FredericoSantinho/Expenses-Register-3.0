@@ -78,6 +78,13 @@ class ManualRegisterViewModel(
   }
 
   fun onAmountChange() {
+    if (uiState.value is UiState.Error) {
+      val previousErrors = (uiState.value as UiState.Error).errors
+      val errors = previousErrors.filter { it !is UiStateError.ShowAmountError }
+
+      emitState(previousErrors, errors)
+    }
+
     total.value = buildTotalStr()
   }
 
@@ -164,10 +171,12 @@ sealed class UiState {
 sealed class UiStateError {
   data class ShowDescriptionError(val message: Message) : UiStateError()
   data class ShowPlaceError(val message: Message) : UiStateError()
+  data class ShowAmountError(val message: Message) : UiStateError()
   object ShowCategoryError : UiStateError()
 }
 
 enum class Message {
   EMPTY_DESCRIPTION,
-  EMPTY_PLACE
+  EMPTY_PLACE,
+  INVALID_AMOUNT
 }

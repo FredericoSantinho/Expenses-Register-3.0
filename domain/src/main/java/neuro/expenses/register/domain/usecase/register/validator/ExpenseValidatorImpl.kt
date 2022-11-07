@@ -13,6 +13,9 @@ class ExpenseValidatorImpl(val isValidCategoryUseCase: IsValidCategoryUseCase) :
       if (expense.place.isBlank()) {
         errors.add(RegisterExpenseError.EMPTY_PLACE)
       }
+      if (expense.amount <= 0) {
+        errors.add(RegisterExpenseError.INVALID_AMOUNT)
+      }
       isValidCategoryUseCase.isValidCategory(expense.category).doOnSuccess { isValidCategory ->
         if (!isValidCategory) {
           errors.add(RegisterExpenseError.INVALID_CATEGORY)

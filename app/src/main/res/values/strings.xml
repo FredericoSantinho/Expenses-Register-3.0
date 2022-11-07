@@ -31,4 +31,5 @@
 
   <string name="manual_register_empty_description">Empty description!</string>
   <string name="manual_register_empty_place">Empty place!</string>
+  <string name="manual_register_invalid_amount">Invalid amount!</string>
 </resources>

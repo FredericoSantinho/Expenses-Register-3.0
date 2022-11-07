@@ -65,12 +65,17 @@ fun ManualRegisterComposable(
   val categoryIsError = remember { mutableStateOf(false) }
   val placeIsError = remember { mutableStateOf(false) }
   val placeErrorMessage = remember { mutableStateOf("") }
+  val amountIsError = remember { mutableStateOf(false) }
+  val amountErrorMessage = remember { mutableStateOf("") }
 
+  // Reset all error states on recomposition
   descriptionIsError.value = false
   descriptionErrorMessage.value = ""
   categoryIsError.value = false
   placeIsError.value = false
   placeErrorMessage.value = ""
+  amountIsError.value = false
+  amountErrorMessage.value = ""
 
   val focusManager = LocalFocusManager.current
 
@@ -170,7 +175,9 @@ fun ManualRegisterComposable(
           manualRegisterViewModel.amount.value = it
           manualRegisterViewModel.onAmountChange()
         },
-        value = manualRegisterViewModel.amount
+        value = manualRegisterViewModel.amount,
+        isError = amountIsError,
+        errorMessage = amountErrorMessage,
       )
       Text(
         text = stringResource(R.string.manual_register_total) + ':',
@@ -208,6 +215,8 @@ fun ManualRegisterComposable(
     categoryIsError,
     placeIsError,
     placeErrorMessage,
+    amountIsError,
+    amountErrorMessage,
     messageMapper
   )
   onUiEvent(uiEvent)
@@ -236,6 +245,8 @@ private fun onUiState(
   categoryIsError: MutableState<Boolean>,
   placeIsError: MutableState<Boolean>,
   placeErrorMessage: MutableState<String>,
+  amountIsError: MutableState<Boolean>,
+  amountErrorMessage: MutableState<String>,
   messageMapper: ManualRegisterMessageMapper
 ) {
   when (uiState) {
@@ -246,6 +257,8 @@ private fun onUiState(
       categoryIsError,
       placeIsError,
       placeErrorMessage,
+      amountIsError,
+      amountErrorMessage,
       messageMapper
     )
   }
@@ -259,6 +272,8 @@ fun onUiError(
   categoryIsError: MutableState<Boolean>,
   placeIsError: MutableState<Boolean>,
   placeErrorMessage: MutableState<String>,
+  amountIsError: MutableState<Boolean>,
+  amountErrorMessage: MutableState<String>,
   messageMapper: ManualRegisterMessageMapper
 ) {
   errors.forEach { error ->
@@ -270,14 +285,24 @@ fun onUiError(
       )
       is UiStateError.ShowCategoryError -> showCategoryError(categoryIsError)
       is UiStateError.ShowDescriptionError -> showDescriptionError(
-        stringResource(
-          messageMapper.map(
-            error.message
-          )
-        ), descriptionIsError, descriptionErrorMessage
+        stringResource(messageMapper.map(error.message)),
+        descriptionIsError,
+        descriptionErrorMessage
+      )
+      is UiStateError.ShowAmountError -> showAmountError(
+        stringResource(messageMapper.map(error.message)), amountIsError, amountErrorMessage
       )
     }
   }
+}
+
+fun showAmountError(
+  message: String,
+  amountIsError: MutableState<Boolean>,
+  amountErrorMessage: MutableState<String>
+) {
+  amountErrorMessage.value = message
+  amountIsError.value = true
 }
 
 private fun showPlaceError(
