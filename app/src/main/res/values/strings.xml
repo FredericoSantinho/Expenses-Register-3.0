@@ -9,6 +9,10 @@
   <string name="title_edit_category">Category</string>
   <string name="title_edit_place">Place</string>
 
+  <!-- Permissions -->
+  <string name="permissions_title">Location Permission</string>
+  <string name="permissions_text">This app requires access to device location in order to work properly.</string>
+
   <!-- home -->
   <string name="home_place">Place</string>
 
