@@ -7,6 +7,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -18,8 +20,12 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.exchangebot.ui.theme.ExpensesRegisterTheme
 import com.exchangebot.ui.theme.ExpensesRegisterTypography
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import neuro.expenses.register.domain.dto.ProductDto
 import neuro.expenses.register.ui.home.view.model.ProductCardViewModel
 import neuro.expenses.register.ui.report.composable.AsyncImage
+import org.koin.androidx.compose.get
+import java.util.*
 
 @Composable
 fun ProductCardComposable(productCardViewModel: ProductCardViewModel) {
@@ -34,7 +40,6 @@ fun ProductCardComposable(productCardViewModel: ProductCardViewModel) {
       backgroundColor = Color.White,
       shape = RoundedCornerShape(corner = CornerSize(4.dp))
     ) {
-
       ConstraintLayout(
         modifier = Modifier
           .fillMaxWidth()
@@ -61,8 +66,7 @@ fun ProductCardComposable(productCardViewModel: ProductCardViewModel) {
             top.linkTo(parent.top)
           }
           .size(48.dp)
-          .clip(RoundedCornerShape(corner = CornerSize(8.dp))),
-          productCardViewModel.iconUrl.value)
+          .clip(RoundedCornerShape(corner = CornerSize(8.dp))), productCardViewModel.iconUrl.value)
         Text(
           text = productCardViewModel.category.value,
           modifier = Modifier
@@ -95,12 +99,27 @@ fun ProductCardComposable(productCardViewModel: ProductCardViewModel) {
 @Preview
 @Composable
 fun PreviewDateTimeComposable() {
+  val id: Long = 0
   val description = "Tosta de Atúm"
   val category = "Restau"
-  val price = "3,50 €"
+  val place = "place"
+  val price = 3.50
+  val amount = 1.0
   val iconUrl = "https://s3.minipreco.pt/medias/hc0/hf7/8915812384798.jpg"
+  val productDto = ProductDto(id, description, category, price, amount, iconUrl)
+  val calendar = remember { mutableStateOf(Calendar.getInstance()) }
 
   ExpensesRegisterTheme {
-    ProductCardComposable(ProductCardViewModel(description, category, price, iconUrl))
+    ProductCardComposable(
+      ProductCardViewModel(
+        productDto,
+        place,
+        calendar,
+        get(),
+        get(),
+        get(),
+        disposable = CompositeDisposable()
+      )
+    )
   }
 }

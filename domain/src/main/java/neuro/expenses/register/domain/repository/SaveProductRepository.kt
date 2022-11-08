@@ -4,6 +4,7 @@ interface SaveProductRepository {
   fun saveProduct(
     description: String,
     category: String,
-    price: Double
+    price: Double,
+    amount: Double
   ): Long
 }

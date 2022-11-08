@@ -17,7 +17,7 @@ fun ProductsListComposable(
     verticalArrangement = Arrangement.spacedBy(8.dp),
     horizontalArrangement = Arrangement.spacedBy(8.dp)
   ) {
-    items(productsListViewModel.products, key = {
+    items(productsListViewModel.products.value, key = {
       it.description
     }) { productCardViewModel ->
       ProductCardComposable(productCardViewModel)

@@ -11,10 +11,14 @@ fun DropDownTextField(
   modifier: Modifier = Modifier,
   color: Color = Color.Transparent,
   label: String = "",
-  listItems: State<List<String>>
+  listItems: State<List<String>>,
+  onSelectedOption: (Int) -> (Unit)
 ) {
   var selectedItem by remember {
     mutableStateOf(if (listItems.value.isNotEmpty()) listItems.value[0] else "")
+  }
+  var selectedItemIndex by remember {
+    mutableStateOf(0)
   }
 
   var expanded by remember {
@@ -50,9 +54,10 @@ fun DropDownTextField(
       expanded = expanded,
       onDismissRequest = { expanded = false }
     ) {
-      listItems.value.forEach { selectedOption ->
+      listItems.value.forEachIndexed { index, selectedOption ->
         DropdownMenuItem(onClick = {
-          selectedItem = selectedOption
+          onSelectedOption.invoke(index)
+          selectedItemIndex = index
           expanded = false
         }) {
           Text(text = selectedOption)
@@ -60,5 +65,5 @@ fun DropDownTextField(
       }
     }
   }
-  selectedItem = if (listItems.value.isNotEmpty()) listItems.value[0] else ""
+  selectedItem = if (listItems.value.isNotEmpty()) listItems.value[selectedItemIndex] else ""
 }

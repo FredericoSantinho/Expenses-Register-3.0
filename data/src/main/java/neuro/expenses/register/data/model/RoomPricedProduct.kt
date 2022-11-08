@@ -27,6 +27,7 @@ data class RoomPricedProduct(
   val productId: Long,
   val category: String,
   val price: Double,
+  val defaultAmount: Double,
   @PrimaryKey(autoGenerate = true)
   var pricedProductId: Long = 0
 )

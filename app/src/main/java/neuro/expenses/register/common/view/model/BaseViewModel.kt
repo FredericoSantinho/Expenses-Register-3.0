@@ -2,10 +2,7 @@ package neuro.expenses.register.common.view.model
 
 import androidx.lifecycle.ViewModel
 import com.exchangebot.common.schedulers.SchedulerProvider
-import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.Scheduler
-import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.core.*
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 
@@ -18,6 +15,40 @@ open class BaseViewModel(
   override fun onCleared() {
     super.onCleared()
     disposable.clear()
+  }
+
+  fun <T> Maybe<T>.baseSubscribe(
+    subscribeOn: Scheduler = schedulerProvider.io(),
+    observeOn: Scheduler = schedulerProvider.ui(),
+    onError: ((Throwable) -> Unit)? = null,
+    onSuccess: (T) -> Unit
+  ): Disposable {
+    if (onError != null) {
+      return this.subscribeOn(subscribeOn)
+        .run {
+          if (observeOn != null) {
+            observeOn(observeOn)
+          } else {
+            this
+          }
+        }
+        .subscribe(
+          { onSuccess.invoke(it) },
+          { onError.invoke(it) }
+        )
+    } else {
+      return this.subscribeOn(subscribeOn)
+        .run {
+          if (observeOn != null) {
+            observeOn(observeOn)
+          } else {
+            this
+          }
+        }
+        .subscribe(
+          { onSuccess.invoke(it) }
+        )
+    }
   }
 
   fun <T> Single<T>.baseSubscribe(
@@ -35,14 +66,7 @@ open class BaseViewModel(
         }
       }
       .subscribe(
-        { onSuccess.invoke(it) },
-        {
-          if (onError != null) {
-            onError.invoke(it)
-          } else {
-            throw RuntimeException(it)
-          }
-        }
+        onSuccess
       )
   }
 

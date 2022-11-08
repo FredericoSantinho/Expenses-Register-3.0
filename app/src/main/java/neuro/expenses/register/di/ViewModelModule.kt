@@ -17,7 +17,6 @@ import neuro.expenses.register.ui.home.EditPlaceViewModel
 import neuro.expenses.register.ui.home.EditProductViewModel
 import neuro.expenses.register.ui.home.view.model.BillViewModel
 import neuro.expenses.register.ui.home.view.model.HomeViewModel
-import neuro.expenses.register.ui.home.view.model.ProductsListViewModel
 import neuro.expenses.register.ui.manual.register.ManualRegisterViewModel
 import neuro.expenses.register.ui.manual.register.mapper.RegisterExpenseErrorMapper
 import neuro.expenses.register.ui.manual.register.mapper.RegisterExpenseErrorMapperImpl
@@ -26,7 +25,6 @@ import org.koin.dsl.module
 
 val viewModelModule = module {
   viewModel { HomeViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
-  viewModel { ProductsListViewModel() }
   viewModel {
     ManualRegisterViewModel(
       get(),

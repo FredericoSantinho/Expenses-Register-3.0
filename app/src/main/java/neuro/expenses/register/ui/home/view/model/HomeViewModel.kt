@@ -5,47 +5,63 @@ import com.exchangebot.common.schedulers.SchedulerProvider
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import neuro.expenses.register.common.view.model.BaseViewModel
-import neuro.expenses.register.domain.dto.LatLngDto
 import neuro.expenses.register.domain.dto.PlaceDto
 import neuro.expenses.register.domain.usecase.calendar.GetCalendarUseCase
 import neuro.expenses.register.domain.usecase.location.GetCurrentLocationUseCase
 import neuro.expenses.register.domain.usecase.place.GetNearestPlacesUseCase
 import neuro.expenses.register.ui.common.bill.FeedLastBillViewModel
 import neuro.expenses.register.ui.common.mapper.LatLngMapper
+import neuro.expenses.register.ui.home.factory.ProductCardViewModelFactory
 
-private val lisbon = LatLng(38.722252, -9.139337)
+private val lisbon = CameraPosition.fromLatLngZoom(LatLng(38.722252, -9.139337), 7.0f)
 
 class HomeViewModel(
-  val productsListViewModel: ProductsListViewModel,
   private val getNearestPlacesUseCase: GetNearestPlacesUseCase,
   private val getCurrentLocationUseCase: GetCurrentLocationUseCase,
   private val getCalendarUseCase: GetCalendarUseCase,
   private val feedLastBillViewModel: FeedLastBillViewModel,
+  private val productCardViewModelFactory: ProductCardViewModelFactory,
   private val latLngMapper: LatLngMapper,
   val billViewModel: BillViewModel,
   schedulerProvider: SchedulerProvider,
   private val nearestPlacesLimit: Int = 5,
   private val zoom: Float = 19.0f
 ) : BaseViewModel(schedulerProvider) {
-  val cameraPosition = mutableStateOf(CameraPosition.fromLatLngZoom(lisbon, 7.0f))
-  val places = mutableStateOf(emptyList<String>())
-  val place = mutableStateOf(emptyPlaceDto())
+  val cameraPosition = mutableStateOf(lisbon)
+  private val places = mutableStateOf(emptyList<PlaceDto>())
+  val placesNames = mutableStateOf(emptyList<String>())
 
   val calendar = mutableStateOf(getCalendarUseCase.getCalendar())
+
+  val productsListViewModel: ProductsListViewModel = newProductsListViewModel()
 
   init {
     getCurrentLocationUseCase.getCurrentLocation()
       .flatMap { getNearestPlacesUseCase.getNearestPlaces(it, nearestPlacesLimit) }
       .baseSubscribe { nearestPlaces ->
-        places.value = nearestPlaces.map { placeDto -> placeDto.name }
-        if (nearestPlaces.isNotEmpty()) place.value = nearestPlaces.get(0)
+        places.value = nearestPlaces
+        placesNames.value = nearestPlaces.map { placeDto -> placeDto.name }
         cameraPosition.value =
-          CameraPosition.fromLatLngZoom(latLngMapper.map(place.value.latLng), zoom)
+          CameraPosition.fromLatLngZoom(latLngMapper.map(nearestPlaces.get(0).latLng), zoom)
+        productsListViewModel.setProducts(nearestPlaces.get(0))
       }
     disposable.add(feedLastBillViewModel.subscribe())
   }
 
-  private fun emptyPlaceDto(): PlaceDto {
-    return PlaceDto("", LatLngDto(0.0, 0.0), emptyList())
+  fun onSelectedPlace(index: Int) {
+    val placeDto = places.value.get(index)
+    cameraPosition.value = CameraPosition.fromLatLngZoom(latLngMapper.map(placeDto.latLng), zoom)
+    productsListViewModel.setProducts(placeDto)
+  }
+
+  private fun newProductsListViewModel() =
+    ProductsListViewModel(
+      productCardViewModelFactory,
+      calendar
+    )
+
+  override fun onCleared() {
+    super.onCleared()
+    productsListViewModel.clear()
   }
 }

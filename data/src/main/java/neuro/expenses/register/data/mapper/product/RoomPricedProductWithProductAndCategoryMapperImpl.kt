@@ -13,6 +13,7 @@ class RoomPricedProductWithProductAndCategoryMapperImpl :
       roomPricedProductWithProductAndCategory.roomProduct.get(0).description,
       roomPricedProductWithProductAndCategory.category.get(0).name,
       roomPricedProductWithProductAndCategory.roomPricedProduct.price,
+      roomPricedProductWithProductAndCategory.roomPricedProduct.defaultAmount,
       roomPricedProductWithProductAndCategory.roomProduct.get(0).iconUrl
     )
   }

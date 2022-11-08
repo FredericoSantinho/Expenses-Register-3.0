@@ -50,7 +50,7 @@ val useCaseModule = module {
   single<IsValidCategoryUseCase> { IsValidCategoryUseCaseImpl(get()) }
   single<GetCalendarUseCase> { GetCalendarUseCaseImpl() }
   single<ObserveCategoriesUseCase> { ObserveCategoriesUseCaseImpl(get()) }
-  single<GetNearestPlaceUseCase> { GetNearestPlaceUseCaseImpl() }
+  single<GetNearestPlaceUseCase> { GetNearestPlaceUseCaseImpl(get(), get()) }
   single<GetOrCreateProductUseCase> { GetOrCreateProductUseCaseImpl() }
   single<ExpenseMapper> { ExpenseMapperImpl() }
   single<GetNearestPlacesUseCase> { GetNearestPlacesUseCaseImpl(get(), get()) }

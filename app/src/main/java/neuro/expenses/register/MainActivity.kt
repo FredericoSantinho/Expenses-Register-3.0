@@ -68,10 +68,10 @@ class MainActivity : AppCompatActivity() {
     AlertDialog.Builder(this)
       .setTitle(R.string.permissions_title)
       .setMessage(R.string.permissions_text)
-      .setPositiveButton(android.R.string.ok, { dialog, which ->
+      .setPositiveButton(android.R.string.ok) { _, _ ->
         requestPermissions(this)
-      })
-      .setNegativeButton(android.R.string.cancel, { dialog, which ->
+      }
+      .setNegativeButton(android.R.string.cancel, { _, _ ->
         finish()
       })
       .setIcon(android.R.drawable.ic_dialog_alert)

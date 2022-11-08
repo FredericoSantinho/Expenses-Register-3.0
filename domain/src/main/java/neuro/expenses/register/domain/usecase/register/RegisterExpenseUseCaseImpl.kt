@@ -47,9 +47,8 @@ class RegisterExpenseUseCaseImpl(
           if (validate.isEmpty()) {
             val lastBillController =
               BillController(calculateBillTotal, getOrCreateProductUseCase, lastBill)
-            val billItem = expenseMapper.map(expenseDto)
 
-            return@innerFlatMap lastBillController.add(billItem).doOnComplete {
+            return@innerFlatMap lastBillController.add(expense).doOnComplete {
               saveBillUseCase.save(
                 lastBillController.bill
               )

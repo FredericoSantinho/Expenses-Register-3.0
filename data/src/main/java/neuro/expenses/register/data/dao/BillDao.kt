@@ -67,5 +67,5 @@ interface BillDao {
   fun delete(roomBillItem: RoomBillItem): Completable
 
   @Insert(onConflict = OnConflictStrategy.IGNORE)
-  fun insert(pricedProductCrossRef: BillItemPricedProductCrossRef): Single<Long>
+  fun insert(billItemPricedProductCrossRef: BillItemPricedProductCrossRef): Single<Long>
 }

@@ -7,8 +7,9 @@ class SaveProductRepositoryImpl(private val productDao: ProductDao) : SaveProduc
   override fun saveProduct(
     description: String,
     category: String,
-    price: Double
+    price: Double,
+    amount: Double
   ): Long {
-    return productDao.insert(description, category, price)
+    return productDao.insert(description, category, price, amount)
   }
 }

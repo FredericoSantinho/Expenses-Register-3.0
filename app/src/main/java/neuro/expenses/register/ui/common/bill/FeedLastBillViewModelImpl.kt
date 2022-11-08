@@ -31,6 +31,6 @@ class FeedLastBillViewModelImpl(
     billViewModel.time.value = dateTimeMapper.mapTime(billDto.calendar)
     billViewModel.date.value = dateTimeMapper.mapDate(billDto.calendar)
     billViewModel.total.value = doubleFormatter.format(billDto.total) + " $currency"
+    billViewModel.isBillOpen.value = billDto.isOpen
   }
-
 }

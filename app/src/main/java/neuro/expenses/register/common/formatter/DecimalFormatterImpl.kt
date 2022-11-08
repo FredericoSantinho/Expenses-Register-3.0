@@ -10,9 +10,9 @@ class DecimalFormatterImpl(decimals: Int) : DecimalFormatter {
 
   init {
     require(!(decimals == 0)) { "Decimals must be greater than zero!" }
-    val pattern = StringBuilder("#.")
+    val pattern = StringBuilder("0.")
     for (i in 0 until decimals) {
-      pattern.append('#')
+      pattern.append('0')
     }
     val symbols = DecimalFormatSymbols(Locale.US)
     this.decimalFormat = DecimalFormat(pattern.toString(), symbols)

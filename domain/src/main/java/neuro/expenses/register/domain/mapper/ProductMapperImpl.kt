@@ -10,6 +10,7 @@ class ProductMapperImpl : ProductMapper {
       product.description,
       product.category,
       product.price,
+      product.defaultAmount,
       product.iconUrl
     )
   }
@@ -20,6 +21,7 @@ class ProductMapperImpl : ProductMapper {
       productDto.description,
       productDto.category,
       productDto.price,
+      productDto.defaultAmount,
       productDto.iconUrl
     )
   }

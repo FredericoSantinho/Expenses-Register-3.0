@@ -55,7 +55,7 @@ class ManualRegisterViewModel(
   }
 
   fun onNearestPlaceButton() {
-    place.value = getNearestPlace()
+    setNearestPlace()
     onPlaceChange()
   }
 
@@ -139,8 +139,8 @@ class ManualRegisterViewModel(
     amount.value = ""
   }
 
-  private fun getNearestPlace(): String {
-    return getNearestPlaceUseCase.getNearestPlace()
+  private fun setNearestPlace() {
+    getNearestPlaceUseCase.getNearestPlace().baseSubscribe { place.value = it.name }
   }
 
   private fun emitState(

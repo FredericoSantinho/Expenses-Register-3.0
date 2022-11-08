@@ -1,8 +1,11 @@
 package neuro.expenses.register.domain.usecase.near
 
+import io.reactivex.rxjava3.core.Maybe
+import neuro.expenses.register.domain.dto.PlaceDto
+
 interface GetNearestPlaceUseCase {
   /**
    * @return the nearest Place available based on current location.
    */
-  fun getNearestPlace(): String
+  fun getNearestPlace(): Maybe<PlaceDto>
 }

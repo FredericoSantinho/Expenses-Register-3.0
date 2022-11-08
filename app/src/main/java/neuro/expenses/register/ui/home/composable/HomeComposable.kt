@@ -54,7 +54,8 @@ fun HomeComposable(
             .padding(start = 8.dp)
             .requiredWidth(180.dp),
           label = stringResource(id = R.string.home_place),
-          listItems = homeViewModel.places
+          listItems = homeViewModel.placesNames,
+          onSelectedOption = { homeViewModel.onSelectedPlace(it) }
         )
       }
       Divider(thickness = 1.dp, color = Color.LightGray)
