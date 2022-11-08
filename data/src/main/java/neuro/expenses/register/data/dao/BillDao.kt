@@ -5,7 +5,10 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
-import neuro.expenses.register.data.model.bill.*
+import neuro.expenses.register.data.model.bill.BillItemPricedProductCrossRef
+import neuro.expenses.register.data.model.bill.RoomBill
+import neuro.expenses.register.data.model.bill.RoomBillItem
+import neuro.expenses.register.data.model.bill.RoomBillWithBillItems
 
 @Dao
 interface BillDao {
@@ -17,6 +20,7 @@ interface BillDao {
   @Query("select * from bill_table order by billId asc")
   fun observeBills(): Observable<List<RoomBillWithBillItems>>
 
+  @Transaction
   @Query("select * from bill_table order by billId desc limit 1")
   fun getLastBill(): Maybe<RoomBillWithBillItems>
 
@@ -63,6 +67,6 @@ interface BillDao {
   @Delete()
   fun delete(roomBillItem: RoomBillItem): Completable
 
-  @Insert(onConflict = OnConflictStrategy.ABORT)
+  @Insert(onConflict = OnConflictStrategy.IGNORE)
   fun insert(pricedProductCrossRef: BillItemPricedProductCrossRef): Single<Long>
 }

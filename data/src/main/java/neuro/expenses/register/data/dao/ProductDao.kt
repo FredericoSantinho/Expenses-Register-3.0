@@ -6,7 +6,8 @@ import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 import neuro.expenses.register.data.model.RoomPricedProduct
 import neuro.expenses.register.data.model.RoomProduct
-import neuro.expenses.register.data.model.bill.*
+import neuro.expenses.register.data.model.bill.PricedProductCategoryCrossRef
+import neuro.expenses.register.data.model.bill.PricedProductProductCrossRef
 
 @Dao
 interface ProductDao {
@@ -16,7 +17,7 @@ interface ProductDao {
   @Query("select * from product_table where description=:description")
   fun getProduct(description: String): Maybe<RoomProduct>
 
-  @Insert(onConflict = OnConflictStrategy.REPLACE)
+  @Insert(onConflict = OnConflictStrategy.IGNORE)
   fun insert(roomProduct: RoomProduct): Single<Long>
 
   @Update()
@@ -38,7 +39,13 @@ interface ProductDao {
   fun insert(category: String, price: Double, description: String): Long {
     return getProduct(description).defaultIfEmpty(RoomProduct(0, description))
       .flatMap { roomProduct ->
-        insert(roomProduct).flatMap { productId ->
+        insert(roomProduct).flatMap innerFlatMap@{ productId ->
+          if (productId == -1L) {
+            return@innerFlatMap getProduct(description).map { it.productId }.toSingle()
+          } else {
+            return@innerFlatMap Single.just(productId)
+          }
+        }.flatMap { productId ->
           getPricedProduct(productId, category, price).defaultIfEmpty(
             RoomPricedProduct(
               productId,
