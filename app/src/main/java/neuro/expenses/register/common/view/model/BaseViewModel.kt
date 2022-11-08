@@ -13,7 +13,7 @@ open class BaseViewModel(
   private val schedulerProvider: SchedulerProvider
 ) : ViewModel() {
 
-  private val disposable = CompositeDisposable()
+  protected val disposable = CompositeDisposable()
 
   override fun onCleared() {
     super.onCleared()

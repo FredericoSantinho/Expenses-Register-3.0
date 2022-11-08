@@ -31,7 +31,6 @@ interface BillDao {
         RoomBillItem(it.billItemId, it.amount, it.pricedProductId, billId)
       }
         .flatMapSingle { roomBillItem ->
-          println("routebrk: " + roomBillItem)
           insert(roomBillItem)
             .flatMap { billItemId ->
               insert(

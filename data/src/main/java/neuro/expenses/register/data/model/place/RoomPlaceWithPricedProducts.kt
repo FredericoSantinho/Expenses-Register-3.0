@@ -1,4 +1,4 @@
-package neuro.expenses.register.data.model.bill
+package neuro.expenses.register.data.model.place
 
 import androidx.room.Embedded
 import androidx.room.Junction
@@ -6,13 +6,13 @@ import androidx.room.Relation
 import neuro.expenses.register.data.model.RoomPricedProduct
 import neuro.expenses.register.data.model.product.RoomPricedProductWithProductAndCategory
 
-data class RoomBillItemWithPricedProduct(
-  @Embedded val roomBillItem: RoomBillItem,
+data class RoomPlaceWithPricedProducts(
+  @Embedded val roomPlace: RoomPlace,
   @Relation(
     entity = RoomPricedProduct::class,
-    parentColumn = "billItemId",
+    parentColumn = "name",
     entityColumn = "pricedProductId",
-    associateBy = Junction(BillItemPricedProductCrossRef::class)
+    associateBy = Junction(PlacePricedProductCrossRef::class)
   )
-  val roomPricedProduct: List<RoomPricedProductWithProductAndCategory>
+  val pricedProducts: List<RoomPricedProductWithProductAndCategory>,
 )

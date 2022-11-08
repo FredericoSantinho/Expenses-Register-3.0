@@ -6,8 +6,8 @@ import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 import neuro.expenses.register.data.model.RoomPricedProduct
 import neuro.expenses.register.data.model.RoomProduct
-import neuro.expenses.register.data.model.bill.PricedProductCategoryCrossRef
-import neuro.expenses.register.data.model.bill.PricedProductProductCrossRef
+import neuro.expenses.register.data.model.product.PricedProductCategoryCrossRef
+import neuro.expenses.register.data.model.product.PricedProductProductCrossRef
 
 @Dao
 interface ProductDao {
@@ -36,7 +36,7 @@ interface ProductDao {
   fun insert(roomPricedProduct: RoomPricedProduct): Single<Long>
 
   @Transaction
-  fun insert(category: String, price: Double, description: String): Long {
+  fun insert(description: String, category: String, price: Double): Long {
     return getProduct(description).defaultIfEmpty(RoomProduct(0, description))
       .flatMap { roomProduct ->
         insert(roomProduct).flatMap innerFlatMap@{ productId ->

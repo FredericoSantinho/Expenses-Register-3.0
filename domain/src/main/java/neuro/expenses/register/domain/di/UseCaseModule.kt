@@ -10,8 +10,14 @@ import neuro.expenses.register.domain.usecase.category.IsValidCategoryUseCase
 import neuro.expenses.register.domain.usecase.category.IsValidCategoryUseCaseImpl
 import neuro.expenses.register.domain.usecase.category.ObserveCategoriesUseCase
 import neuro.expenses.register.domain.usecase.category.ObserveCategoriesUseCaseImpl
+import neuro.expenses.register.domain.usecase.location.GetCurrentLocationUseCase
+import neuro.expenses.register.domain.usecase.location.GetCurrentLocationUseCaseImpl
 import neuro.expenses.register.domain.usecase.near.GetNearestPlaceUseCase
 import neuro.expenses.register.domain.usecase.near.GetNearestPlaceUseCaseImpl
+import neuro.expenses.register.domain.usecase.place.GetDistanceUseCase
+import neuro.expenses.register.domain.usecase.place.GetDistanceUseCaseImpl
+import neuro.expenses.register.domain.usecase.place.GetNearestPlacesUseCase
+import neuro.expenses.register.domain.usecase.place.GetNearestPlacesUseCaseImpl
 import neuro.expenses.register.domain.usecase.product.GetOrCreateProductUseCase
 import neuro.expenses.register.domain.usecase.product.GetOrCreateProductUseCaseImpl
 import neuro.expenses.register.domain.usecase.register.RegisterExpenseUseCase
@@ -47,4 +53,7 @@ val useCaseModule = module {
   single<GetNearestPlaceUseCase> { GetNearestPlaceUseCaseImpl() }
   single<GetOrCreateProductUseCase> { GetOrCreateProductUseCaseImpl() }
   single<ExpenseMapper> { ExpenseMapperImpl() }
+  single<GetNearestPlacesUseCase> { GetNearestPlacesUseCaseImpl(get(), get()) }
+  single<GetDistanceUseCase> { GetDistanceUseCaseImpl() }
+  single<GetCurrentLocationUseCase> { GetCurrentLocationUseCaseImpl() }
 }

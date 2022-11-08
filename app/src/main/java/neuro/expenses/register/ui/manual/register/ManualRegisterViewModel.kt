@@ -2,7 +2,6 @@ package neuro.expenses.register.ui.manual.register
 
 import androidx.compose.runtime.mutableStateOf
 import com.exchangebot.common.schedulers.SchedulerProvider
-import io.reactivex.rxjava3.disposables.CompositeDisposable
 import neuro.expenses.register.common.live.data.SingleLiveEvent
 import neuro.expenses.register.common.view.model.BaseViewModel
 import neuro.expenses.register.common.view.model.asLiveData
@@ -25,8 +24,8 @@ class ManualRegisterViewModel(
   private val getNearestPlaceUseCase: GetNearestPlaceUseCase,
   private val feedLastBillViewModel: FeedLastBillViewModel,
   private val registerExpenseErrorMapper: RegisterExpenseErrorMapper,
-  private val schedulerProvider: SchedulerProvider,
   private val doubleFormatter: DoubleFormatter,
+  schedulerProvider: SchedulerProvider,
   val billViewModel: BillViewModel
 ) : BaseViewModel(schedulerProvider) {
 
@@ -39,9 +38,8 @@ class ManualRegisterViewModel(
 
   val calendar = mutableStateOf(getCalendarUseCase.getCalendar())
   val categories = observeCategoriesUseCase.observeCategories()
-  private val disposable: CompositeDisposable = CompositeDisposable()
-  private val _uiState = mutableStateOf<UiState>(UiState.Ready)
 
+  private val _uiState = mutableStateOf<UiState>(UiState.Ready)
   val uiState = _uiState.asState()
   private val _uiEvent = SingleLiveEvent<UiEvent>()
   val uiEvent = _uiEvent.asLiveData()

@@ -14,7 +14,7 @@ fun DropDownTextField(
   listItems: State<List<String>>
 ) {
   var selectedItem by remember {
-    mutableStateOf(listItems.value[0])
+    mutableStateOf(if (listItems.value.isNotEmpty()) listItems.value[0] else "")
   }
 
   var expanded by remember {
@@ -60,4 +60,5 @@ fun DropDownTextField(
       }
     }
   }
+  selectedItem = if (listItems.value.isNotEmpty()) listItems.value[0] else ""
 }

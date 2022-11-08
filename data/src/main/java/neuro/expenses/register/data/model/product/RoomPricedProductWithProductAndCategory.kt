@@ -1,4 +1,4 @@
-package neuro.expenses.register.data.model.bill
+package neuro.expenses.register.data.model.product
 
 import androidx.room.Embedded
 import androidx.room.Junction

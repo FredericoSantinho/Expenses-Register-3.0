@@ -9,6 +9,6 @@ class SaveProductRepositoryImpl(private val productDao: ProductDao) : SaveProduc
     category: String,
     price: Double
   ): Long {
-    return productDao.insert(category, price, description)
+    return productDao.insert(description, category, price)
   }
 }

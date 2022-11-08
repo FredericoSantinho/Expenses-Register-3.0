@@ -39,7 +39,7 @@ fun TextFieldWithDropdown(
   fun onValueChanged(value: String) {
     dropDownExpanded.value = value.isNotBlank()
     dropDownOptions.value = dataIn.value.filter {
-      it.startsWith(value) && it != value
+      it.lowercase().startsWith(value) && it != value
     }.take(take)
     onValueChange.invoke(value)
   }

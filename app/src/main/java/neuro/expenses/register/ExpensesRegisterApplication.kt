@@ -6,10 +6,7 @@ import neuro.expenses.register.data.databaseModule
 import neuro.expenses.register.data.di.daoModule
 import neuro.expenses.register.data.di.databaseMapperModule
 import neuro.expenses.register.data.di.repositoryModule
-import neuro.expenses.register.di.androidModule
-import neuro.expenses.register.di.initModule
-import neuro.expenses.register.di.schedulersModule
-import neuro.expenses.register.di.viewModelModule
+import neuro.expenses.register.di.*
 import neuro.expenses.register.domain.di.entityModule
 import neuro.expenses.register.domain.di.useCaseModule
 import neuro.expenses.register.first.run.FirstRun
@@ -36,6 +33,7 @@ class ExpensesRegisterApplication : Application() {
         repositoryModule,
         databaseModule,
         databaseMapperModule,
+        uiMapperModule,
         daoModule,
         initModule
       )

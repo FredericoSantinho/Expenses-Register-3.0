@@ -7,4 +7,5 @@ val daoModule = module {
   single { get<ExpensesRegisterDatabase>().productDao }
   single { get<ExpensesRegisterDatabase>().categoryDao }
   single { get<ExpensesRegisterDatabase>().billDao }
+  single { get<ExpensesRegisterDatabase>().placeDao }
 }
