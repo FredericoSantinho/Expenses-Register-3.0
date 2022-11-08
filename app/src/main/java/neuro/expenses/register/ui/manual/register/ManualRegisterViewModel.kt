@@ -25,8 +25,8 @@ class ManualRegisterViewModel(
   private val feedLastBillViewModel: FeedLastBillViewModel,
   private val registerExpenseErrorMapper: RegisterExpenseErrorMapper,
   private val doubleFormatter: DoubleFormatter,
-  schedulerProvider: SchedulerProvider,
-  val billViewModel: BillViewModel
+  val billViewModel: BillViewModel,
+  schedulerProvider: SchedulerProvider
 ) : BaseViewModel(schedulerProvider) {
 
   val description = mutableStateOf("")

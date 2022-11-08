@@ -46,7 +46,8 @@ fun HomeComposable(
           fragmentActivity = fragmentActivity,
           modifier = Modifier
             .align(CenterVertically)
-            .padding(start = 8.dp)
+            .padding(start = 8.dp),
+          calendar = homeViewModel.calendar
         )
         DropDownTextField(
           modifier = Modifier

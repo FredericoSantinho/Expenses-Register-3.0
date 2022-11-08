@@ -7,8 +7,10 @@ import com.google.android.gms.maps.model.LatLng
 import neuro.expenses.register.common.view.model.BaseViewModel
 import neuro.expenses.register.domain.dto.LatLngDto
 import neuro.expenses.register.domain.dto.PlaceDto
+import neuro.expenses.register.domain.usecase.calendar.GetCalendarUseCase
 import neuro.expenses.register.domain.usecase.location.GetCurrentLocationUseCase
 import neuro.expenses.register.domain.usecase.place.GetNearestPlacesUseCase
+import neuro.expenses.register.ui.common.bill.FeedLastBillViewModel
 import neuro.expenses.register.ui.common.mapper.LatLngMapper
 
 private val lisbon = LatLng(38.722252, -9.139337)
@@ -17,7 +19,10 @@ class HomeViewModel(
   val productsListViewModel: ProductsListViewModel,
   private val getNearestPlacesUseCase: GetNearestPlacesUseCase,
   private val getCurrentLocationUseCase: GetCurrentLocationUseCase,
+  private val getCalendarUseCase: GetCalendarUseCase,
+  private val feedLastBillViewModel: FeedLastBillViewModel,
   private val latLngMapper: LatLngMapper,
+  val billViewModel: BillViewModel,
   schedulerProvider: SchedulerProvider,
   private val nearestPlacesLimit: Int = 5,
   private val zoom: Float = 19.0f
@@ -26,7 +31,7 @@ class HomeViewModel(
   val places = mutableStateOf(emptyList<String>())
   val place = mutableStateOf(emptyPlaceDto())
 
-  val billViewModel = BillViewModel()
+  val calendar = mutableStateOf(getCalendarUseCase.getCalendar())
 
   init {
     getCurrentLocationUseCase.getCurrentLocation()
@@ -37,6 +42,7 @@ class HomeViewModel(
         cameraPosition.value =
           CameraPosition.fromLatLngZoom(latLngMapper.map(place.value.latLng), zoom)
       }
+    disposable.add(feedLastBillViewModel.subscribe())
   }
 
   private fun emptyPlaceDto(): PlaceDto {

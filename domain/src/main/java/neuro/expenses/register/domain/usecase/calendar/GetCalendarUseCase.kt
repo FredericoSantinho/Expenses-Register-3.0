@@ -4,7 +4,7 @@ import java.util.*
 
 interface GetCalendarUseCase {
   /**
-   * @return If a bill is open, the bill's calendar, otherwise the current calendar.
+   * @return the current calendar.
    */
   fun getCalendar(): Calendar
 }
