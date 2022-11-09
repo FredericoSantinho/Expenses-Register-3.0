@@ -5,11 +5,11 @@ import neuro.expenses.register.domain.entity.Bill
 import neuro.expenses.register.domain.entity.BillItem
 import neuro.expenses.register.domain.entity.Expense
 import neuro.expenses.register.domain.entity.controller.CalculateBillTotal
-import neuro.expenses.register.domain.usecase.product.GetOrCreateProductUseCase
+import neuro.expenses.register.domain.mapper.ProductMapper
 
 internal class BillController(
   private val calculateBillTotal: CalculateBillTotal,
-  private val getOrCreateProductUseCase: GetOrCreateProductUseCase,
+  private val productMapper: ProductMapper,
   var bill: Bill
 ) {
   fun contains(productDescription: String): Boolean {
@@ -34,7 +34,9 @@ internal class BillController(
           bill = Bill(billId, bill.place, bill.calendar, total, billItems)
         }
       } else {
-        return@defer getOrCreateProductUseCase.getOrCreateProduct(expense).doOnSuccess { product ->
+        return@defer Completable.fromAction {
+          val product = productMapper.map(expense)
+
           val newBillItem = BillItem(
             0, product,
             expense.amount,
@@ -43,7 +45,7 @@ internal class BillController(
           val billItems = buildList(newBillItem)
           val total = calculateBillTotal.getTotal(billItems)
           bill = Bill(0, bill.place, bill.calendar, total, billItems)
-        }.ignoreElement()
+        }
       }
     }
   }

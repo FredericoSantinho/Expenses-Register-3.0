@@ -18,8 +18,6 @@ import neuro.expenses.register.domain.usecase.place.CalculateDistanceUseCase
 import neuro.expenses.register.domain.usecase.place.CalculateDistanceUseCaseImpl
 import neuro.expenses.register.domain.usecase.place.GetNearestPlacesUseCase
 import neuro.expenses.register.domain.usecase.place.GetNearestPlacesUseCaseImpl
-import neuro.expenses.register.domain.usecase.product.GetOrCreateProductUseCase
-import neuro.expenses.register.domain.usecase.product.GetOrCreateProductUseCaseImpl
 import neuro.expenses.register.domain.usecase.register.RegisterExpenseUseCase
 import neuro.expenses.register.domain.usecase.register.RegisterExpenseUseCaseImpl
 import neuro.expenses.register.domain.usecase.register.validator.ExpenseValidator
@@ -50,7 +48,6 @@ val useCaseModule = module {
   single<GetCalendarUseCase> { GetCalendarUseCaseImpl() }
   single<ObserveCategoriesUseCase> { ObserveCategoriesUseCaseImpl(get()) }
   single<GetNearestPlaceUseCase> { GetNearestPlaceUseCaseImpl(get(), get()) }
-  single<GetOrCreateProductUseCase> { GetOrCreateProductUseCaseImpl() }
   single<ExpenseMapper> { ExpenseMapperImpl() }
   single<GetNearestPlacesUseCase> { GetNearestPlacesUseCaseImpl(get(), get()) }
   single<CalculateDistanceUseCase> { CalculateDistanceUseCaseImpl(get()) }
