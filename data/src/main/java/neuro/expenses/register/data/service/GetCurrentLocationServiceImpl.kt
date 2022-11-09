@@ -6,6 +6,10 @@ import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
+import com.google.android.gms.tasks.CancellationToken
+import com.google.android.gms.tasks.CancellationTokenSource
+import com.google.android.gms.tasks.OnTokenCanceledListener
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
 import neuro.expenses.register.domain.dto.LatLngDto
@@ -30,7 +34,14 @@ class GetCurrentLocationServiceImpl(
       ) {
         throw IllegalStateException("Location permission not granted!")
       }
-      fusedLocationClient.lastLocation.addOnSuccessListener {
+      fusedLocationClient.getCurrentLocation(
+        Priority.PRIORITY_BALANCED_POWER_ACCURACY,
+        object : CancellationToken() {
+          override fun onCanceledRequested(p0: OnTokenCanceledListener) =
+            CancellationTokenSource().token
+
+          override fun isCancellationRequested() = false
+        }).addOnSuccessListener {
         if (it != null) {
           subscriber.onSuccess(it)
         } else {
