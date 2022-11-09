@@ -9,14 +9,14 @@ import neuro.expenses.register.domain.service.GetCurrentLocationService
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-private val IO_SCHDULER = "ioScheduler"
+private const val IO_SCHEDULER = "ioScheduler"
 
 val serviceModule = module {
-  single<Scheduler>(named(IO_SCHDULER)) { Schedulers.io() }
+  single<Scheduler>(named(IO_SCHEDULER)) { Schedulers.io() }
   single<GetCurrentLocationService> {
     GetCurrentLocationServiceImpl(
       get(),
-      get(named(IO_SCHDULER))
+      get(named(IO_SCHEDULER))
     )
   }
   single<CalculateDistanceService> { CalculateDistanceServiceImpl() }

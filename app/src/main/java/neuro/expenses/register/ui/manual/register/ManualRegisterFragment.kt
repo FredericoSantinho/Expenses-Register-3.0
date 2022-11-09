@@ -1,7 +1,7 @@
 package neuro.expenses.register.ui.manual.register
 
 import androidx.compose.runtime.Composable
-import neuro.expenses.register.common.android.BaseComposeFragment
+import neuro.expenses.register.common.android.fragment.BaseComposeFragment
 import neuro.expenses.register.ui.manual.register.composable.ManualRegisterComposable
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

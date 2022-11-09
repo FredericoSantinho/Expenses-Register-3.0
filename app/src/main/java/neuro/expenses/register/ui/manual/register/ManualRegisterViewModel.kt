@@ -49,12 +49,6 @@ class ManualRegisterViewModel(
     disposable.add(feedLastBillViewModel.subscribe())
   }
 
-  override fun onCleared() {
-    super.onCleared()
-
-    disposable.clear()
-  }
-
   fun onNearestPlaceButton() {
     setNearestPlace()
     onPlaceChange()

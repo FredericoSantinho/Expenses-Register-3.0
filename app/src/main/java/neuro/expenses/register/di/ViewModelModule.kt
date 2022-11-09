@@ -1,5 +1,6 @@
 package neuro.expenses.register.di
 
+import neuro.expenses.register.EntryViewModel
 import neuro.expenses.register.common.formatter.DecimalFormatter
 import neuro.expenses.register.common.formatter.DecimalFormatterImpl
 import neuro.expenses.register.common.formatter.NumberFormater
@@ -24,6 +25,7 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val viewModelModule = module {
+  viewModel { EntryViewModel(get()) }
   viewModel { HomeViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
   viewModel {
     ManualRegisterViewModel(

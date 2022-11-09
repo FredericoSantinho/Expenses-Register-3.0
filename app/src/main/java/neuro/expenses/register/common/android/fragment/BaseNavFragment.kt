@@ -1,4 +1,4 @@
-package neuro.expenses.register.common.android
+package neuro.expenses.register.common.android.fragment
 
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
