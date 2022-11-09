@@ -54,5 +54,5 @@ val useCaseModule = module {
   single<ExpenseMapper> { ExpenseMapperImpl() }
   single<GetNearestPlacesUseCase> { GetNearestPlacesUseCaseImpl(get(), get()) }
   single<GetDistanceUseCase> { GetDistanceUseCaseImpl() }
-  single<GetCurrentLocationUseCase> { GetCurrentLocationUseCaseImpl() }
+  single<GetCurrentLocationUseCase> { GetCurrentLocationUseCaseImpl(get()) }
 }

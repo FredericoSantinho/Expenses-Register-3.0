@@ -24,26 +24,18 @@ open class BaseViewModel(
     onSuccess: (T) -> Unit
   ): Disposable {
     if (onError != null) {
-      return this.subscribeOn(subscribeOn)
+      return subscribeOn(subscribeOn)
         .run {
-          if (observeOn != null) {
-            observeOn(observeOn)
-          } else {
-            this
-          }
+          observeOn(observeOn)
         }
         .subscribe(
           { onSuccess.invoke(it) },
           { onError.invoke(it) }
         )
     } else {
-      return this.subscribeOn(subscribeOn)
+      return subscribeOn(subscribeOn)
         .run {
-          if (observeOn != null) {
-            observeOn(observeOn)
-          } else {
-            this
-          }
+          observeOn(observeOn)
         }
         .subscribe(
           { onSuccess.invoke(it) }
@@ -51,52 +43,46 @@ open class BaseViewModel(
     }
   }
 
-  fun <T> Single<T>.baseSubscribe(
-    subscribeOn: Scheduler = schedulerProvider.io(),
-    observeOn: Scheduler = schedulerProvider.ui(),
-    onError: ((Throwable) -> Unit)? = null,
-    onSuccess: (T) -> Unit
-  ): Disposable {
-    return this.subscribeOn(subscribeOn)
-      .run {
-        if (observeOn != null) {
-          observeOn(observeOn)
-        } else {
-          this
-        }
-      }
-      .subscribe(
-        onSuccess
-      )
-  }
-
-  fun <T> Observable<T>.baseSubscribe(
+  fun <T : Any> Single<T>.baseSubscribe(
     subscribeOn: Scheduler = schedulerProvider.io(),
     observeOn: Scheduler = schedulerProvider.ui(),
     onError: ((Throwable) -> Unit)? = null,
     onSuccess: (T) -> Unit
   ): Disposable {
     if (onError != null) {
-      return this.subscribeOn(subscribeOn)
+      return subscribeOn(subscribeOn)
         .run {
-          if (observeOn != null) {
-            observeOn(observeOn)
-          } else {
-            this
-          }
+          observeOn(observeOn)
+        }
+        .subscribe(onSuccess, onError)
+    } else {
+      return subscribeOn(subscribeOn)
+        .run {
+          observeOn(observeOn)
+        }
+        .subscribe(onSuccess)
+    }
+  }
+
+  fun <T : Any> Observable<T>.baseSubscribe(
+    subscribeOn: Scheduler = schedulerProvider.io(),
+    observeOn: Scheduler = schedulerProvider.ui(),
+    onError: ((Throwable) -> Unit)? = null,
+    onSuccess: (T) -> Unit
+  ): Disposable {
+    if (onError != null) {
+      return subscribeOn(subscribeOn)
+        .run {
+          observeOn(observeOn)
         }
         .subscribe(
           { onSuccess.invoke(it) },
           { onError.invoke(it) }
         )
     } else {
-      return this.subscribeOn(subscribeOn)
+      return subscribeOn(subscribeOn)
         .run {
-          if (observeOn != null) {
-            observeOn(observeOn)
-          } else {
-            this
-          }
+          observeOn(observeOn)
         }
         .subscribe(
           { onSuccess.invoke(it) }
@@ -111,26 +97,18 @@ open class BaseViewModel(
     onComplete: () -> Unit
   ): Disposable {
     if (onError != null) {
-      return this.subscribeOn(subscribeOn)
+      return subscribeOn(subscribeOn)
         .run {
-          if (observeOn != null) {
-            observeOn(observeOn)
-          } else {
-            this
-          }
+          observeOn(observeOn)
         }
         .subscribe(
           { onComplete() },
           { onError.invoke(it) }
         )
     } else {
-      return this.subscribeOn(subscribeOn)
+      return subscribeOn(subscribeOn)
         .run {
-          if (observeOn != null) {
-            observeOn(observeOn)
-          } else {
-            this
-          }
+          observeOn(observeOn)
         }
         .subscribe(
           { onComplete() }

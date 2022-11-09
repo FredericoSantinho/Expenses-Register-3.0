@@ -2,9 +2,11 @@ package neuro.expenses.register.domain.usecase.location
 
 import io.reactivex.rxjava3.core.Single
 import neuro.expenses.register.domain.dto.LatLngDto
+import neuro.expenses.register.domain.service.GetCurrentLocationService
 
-class GetCurrentLocationUseCaseImpl : GetCurrentLocationUseCase {
+class GetCurrentLocationUseCaseImpl(private val getCurrentLocationService: GetCurrentLocationService) :
+  GetCurrentLocationUseCase {
   override fun getCurrentLocation(): Single<LatLngDto> {
-    return Single.just(LatLngDto(37.091495, -8.2475677))
+    return getCurrentLocationService.getCurrentLocation()
   }
 }

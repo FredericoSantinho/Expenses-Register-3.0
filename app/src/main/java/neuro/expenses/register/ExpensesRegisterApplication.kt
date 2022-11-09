@@ -6,6 +6,7 @@ import neuro.expenses.register.data.databaseModule
 import neuro.expenses.register.data.di.daoModule
 import neuro.expenses.register.data.di.databaseMapperModule
 import neuro.expenses.register.data.di.repositoryModule
+import neuro.expenses.register.data.di.serviceModule
 import neuro.expenses.register.di.*
 import neuro.expenses.register.domain.di.entityModule
 import neuro.expenses.register.domain.di.useCaseModule
@@ -31,6 +32,7 @@ class ExpensesRegisterApplication : Application() {
         useCaseModule,
         entityModule,
         repositoryModule,
+        serviceModule,
         databaseModule,
         databaseMapperModule,
         uiMapperModule,

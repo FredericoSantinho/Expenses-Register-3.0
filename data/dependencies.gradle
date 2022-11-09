@@ -13,6 +13,9 @@ dependencies {
   implementation lib.timber
 
   implementation lib.room
+
+  implementation lib.play_services_location
+
   api lib.room_rx3
   kapt lib.room_compiler
 }
