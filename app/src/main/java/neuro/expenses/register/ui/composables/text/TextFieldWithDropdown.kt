@@ -12,6 +12,7 @@ import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.window.PopupProperties
 import com.exchangebot.ui.theme.ExpensesRegisterTheme
@@ -26,7 +27,8 @@ fun TextFieldWithDropdown(
   keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
   onValueChange: (String) -> Unit = { },
   value: MutableState<String> = mutableStateOf(""),
-  isError: MutableState<Boolean> = mutableStateOf(false)
+  isError: MutableState<Boolean> = mutableStateOf(false),
+  textStyle: TextStyle = TextStyle.Default
 ) {
 
   val dropDownOptions = remember { mutableStateOf(listOf<String>()) }
@@ -39,13 +41,13 @@ fun TextFieldWithDropdown(
   fun onValueChanged(value: String) {
     dropDownExpanded.value = value.isNotBlank()
     dropDownOptions.value = dataIn.value.filter {
-      it.lowercase().startsWith(value) && it != value
+      it.lowercase().startsWith(value.lowercase()) && it != value
     }.take(take)
     onValueChange.invoke(value)
   }
 
   val focusManager = LocalFocusManager.current
-  TextFieldWithDropdown(
+  InternalTextFieldWithDropdown(
     modifier = modifier,
     setValue = { onValueChanged(it) },
     onDismissRequest = ::onDropdownDismissRequest,
@@ -55,12 +57,13 @@ fun TextFieldWithDropdown(
     keyboardOptions,
     value,
     isError,
-    focusManager
+    focusManager,
+    textStyle
   )
 }
 
 @Composable
-fun TextFieldWithDropdown(
+fun InternalTextFieldWithDropdown(
   modifier: Modifier = Modifier,
   setValue: (String) -> Unit,
   onDismissRequest: () -> Unit,
@@ -70,7 +73,8 @@ fun TextFieldWithDropdown(
   keyboardOptions: KeyboardOptions,
   value: MutableState<String>,
   isError: MutableState<Boolean>,
-  focusManager: FocusManager
+  focusManager: FocusManager,
+  textStyle: TextStyle
 ) {
   var isErrorVar by rememberSaveable { isError }
 
@@ -92,7 +96,8 @@ fun TextFieldWithDropdown(
       label = { Text(label) },
       colors = TextFieldDefaults.outlinedTextFieldColors(),
       singleLine = true,
-      isError = isErrorVar
+      isError = isErrorVar,
+      textStyle = textStyle
     )
     DropdownMenu(
       expanded = dropDownExpanded,

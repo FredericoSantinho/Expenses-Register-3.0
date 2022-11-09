@@ -20,6 +20,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.fragment.app.FragmentActivity
 import com.exchangebot.ui.theme.ExpensesRegisterTheme
+import com.exchangebot.ui.theme.ExpensesRegisterTypography
 import neuro.expenses.register.R
 import neuro.expenses.register.common.picker.date.ShowDatePicker
 import neuro.expenses.register.common.picker.date.ShowMaterialDatePicker
@@ -102,16 +103,18 @@ fun ManualRegisterComposable(
       value = manualRegisterViewModel.description,
       isError = descriptionIsError,
       errorMessage = descriptionErrorMessage,
-      onValueChange = { manualRegisterViewModel.onDescriptionChange() }
+      onValueChange = { manualRegisterViewModel.onDescriptionChange() },
+      textStyle = ExpensesRegisterTypography.body2
     )
     TextFieldWithDropdown(
       modifier = Modifier.padding(start = 8.dp, end = 8.dp),
       dataIn = manualRegisterViewModel.categories.subscribeAsState(initial = emptyList()),
       label = stringResource(R.string.manual_register_category),
       keyboardOptions = keyboardOptionsText,
+      onValueChange = { manualRegisterViewModel.onCategoryChange() },
       value = manualRegisterViewModel.category,
       isError = categoryIsError,
-      onValueChange = { manualRegisterViewModel.onCategoryChange() }
+      textStyle = ExpensesRegisterTypography.body2
     )
     ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
       val (place, placeAuto) = createRefs()
@@ -129,7 +132,8 @@ fun ManualRegisterComposable(
         errorMessage = placeErrorMessage,
         onValueChange = {
           manualRegisterViewModel.onPlaceChange()
-        }
+        },
+        textStyle = ExpensesRegisterTypography.body2
       )
       IconButton(onClick = {
         manualRegisterViewModel.onNearestPlaceButton()
@@ -159,7 +163,8 @@ fun ManualRegisterComposable(
           manualRegisterViewModel.price.value = it
           manualRegisterViewModel.onPriceChange()
         },
-        value = manualRegisterViewModel.price
+        value = manualRegisterViewModel.price,
+        textStyle = ExpensesRegisterTypography.body2
       )
       TextFieldWithError(
         label = stringResource(R.string.manual_register_amount),
@@ -168,14 +173,14 @@ fun ManualRegisterComposable(
           width = Dimension.value(96.dp)
         },
         keyboardOptions = keyboardOptionsNumeric,
-        textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.End),
+        textStyle = ExpensesRegisterTypography.body2.copy(textAlign = TextAlign.End),
         onValueChange = {
           manualRegisterViewModel.amount.value = it
           manualRegisterViewModel.onAmountChange()
         },
         value = manualRegisterViewModel.amount,
         isError = amountIsError,
-        errorMessage = amountErrorMessage,
+        errorMessage = amountErrorMessage
       )
       Text(
         text = stringResource(R.string.manual_register_total) + ':',
