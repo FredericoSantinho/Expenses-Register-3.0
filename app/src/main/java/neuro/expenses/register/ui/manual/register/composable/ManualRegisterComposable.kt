@@ -54,8 +54,7 @@ fun ManualRegisterComposable(
   showDatePicker: ShowDatePicker = ShowMaterialDatePicker(),
   timeTextMapper: TimeTextMapper = TimeTextMapperImpl(),
   dateTextMapper: DateTextMapper = DateTextMapperImpl(),
-  messageMapper: ManualRegisterMessageMapper = ManualRegisterMessageMapperImpl(),
-  currency: String = "€"
+  messageMapper: ManualRegisterMessageMapper = ManualRegisterMessageMapperImpl()
 ) {
   val uiEvent by manualRegisterViewModel.uiEvent.observeAsState(null)
   val uiState by manualRegisterViewModel.uiState
@@ -192,7 +191,7 @@ fun ManualRegisterComposable(
         fontSize = 16.sp
       )
       Text(
-        text = getTotalStr(manualRegisterViewModel.total.value, currency),
+        text = manualRegisterViewModel.total.value,
         modifier = Modifier.constrainAs(totalC) {
           end.linkTo(parent.end, margin = 16.dp)
           top.linkTo(amountC.top, margin = 8.dp)
@@ -328,13 +327,6 @@ private fun showDescriptionError(
 ) {
   descriptionErrorMessage.value = message
   descriptionIsError.value = true
-}
-
-private fun getTotalStr(
-  total: String,
-  currency: String
-): String {
-  return total + ' ' + currency
 }
 
 @Preview

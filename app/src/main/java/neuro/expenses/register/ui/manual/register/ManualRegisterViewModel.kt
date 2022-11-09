@@ -27,7 +27,8 @@ class ManualRegisterViewModel(
   private val registerExpenseErrorMapper: RegisterExpenseErrorMapper,
   private val doubleFormatter: DoubleFormatter,
   val billViewModel: BillViewModel,
-  schedulerProvider: SchedulerProvider
+  schedulerProvider: SchedulerProvider,
+  private val currency: String = "€"
 ) : BaseViewModel(schedulerProvider) {
 
   val description = mutableStateOf("")
@@ -111,7 +112,7 @@ class ManualRegisterViewModel(
   private fun buildTotalStr(): String {
     val priceDouble = if (price.value.isBlank()) 0.0 else price.value.toDouble()
     val amountDouble = if (amount.value.isBlank()) 0.0 else amount.value.toDouble()
-    return doubleFormatter.format(priceDouble * amountDouble)
+    return doubleFormatter.format(priceDouble * amountDouble) + ' ' + currency
   }
 
   private fun buildExpense(): ExpenseDto {
