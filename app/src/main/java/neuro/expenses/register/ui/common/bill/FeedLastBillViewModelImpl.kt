@@ -32,5 +32,8 @@ class FeedLastBillViewModelImpl(
     billViewModel.date.value = dateTimeMapper.mapDate(billDto.calendar)
     billViewModel.total.value = doubleFormatter.format(billDto.total) + " $currency"
     billViewModel.isBillOpen.value = billDto.isOpen
+    if (billDto.billItems.isNotEmpty()) {
+      billViewModel.iconUrl.value = billDto.billItems.get(0).product.iconUrl
+    }
   }
 }
