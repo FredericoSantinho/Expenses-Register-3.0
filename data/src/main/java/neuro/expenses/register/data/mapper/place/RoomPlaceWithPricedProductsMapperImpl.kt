@@ -17,6 +17,6 @@ class RoomPlaceWithPricedProductsMapperImpl(
       roomPricedProductWithProductAndCategoryMapper.map(it)
     }
 
-    return PlaceDto(name, latLng, products)
+    return PlaceDto(name, products, latLng)
   }
 }

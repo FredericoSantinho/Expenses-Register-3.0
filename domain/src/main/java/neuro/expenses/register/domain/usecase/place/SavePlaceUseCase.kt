@@ -1,8 +1,8 @@
-package neuro.expenses.register.domain.repository
+package neuro.expenses.register.domain.usecase.place
 
 import io.reactivex.rxjava3.core.Completable
 import neuro.expenses.register.domain.dto.PlaceDto
 
-interface SavePlaceRepository {
+interface SavePlaceUseCase {
   fun savePlace(placeDto: PlaceDto): Completable
 }

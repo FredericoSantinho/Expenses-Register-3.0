@@ -2,6 +2,7 @@ package neuro.expenses.register.data.dao
 
 import androidx.room.*
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import neuro.expenses.register.data.model.place.PlacePricedProductCrossRef
@@ -17,6 +18,9 @@ interface PlaceDao {
   @Transaction
   @Query("select * from place_table")
   fun observeAll(): Observable<List<RoomPlaceWithPricedProducts>>
+
+  @Query("select * from place_table where name=:name")
+  fun getPlace(name: String): Maybe<RoomPlaceWithPricedProducts>
 
   @Insert(onConflict = OnConflictStrategy.IGNORE)
   fun insert(roomPlace: RoomPlace): Single<Long>

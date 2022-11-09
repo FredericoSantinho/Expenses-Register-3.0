@@ -8,6 +8,7 @@ import neuro.expenses.register.data.di.databaseMapperModule
 import neuro.expenses.register.data.di.repositoryModule
 import neuro.expenses.register.data.di.serviceModule
 import neuro.expenses.register.di.*
+import neuro.expenses.register.domain.di.dtoMapperModule
 import neuro.expenses.register.domain.di.entityModule
 import neuro.expenses.register.domain.di.useCaseModule
 import neuro.expenses.register.first.run.FirstRun
@@ -30,6 +31,7 @@ class ExpensesRegisterApplication : Application() {
         schedulersModule,
         viewModelModule,
         useCaseModule,
+        dtoMapperModule,
         entityModule,
         repositoryModule,
         serviceModule,

@@ -35,7 +35,7 @@ internal class BillController(
         }
       } else {
         return@defer Completable.fromAction {
-          val product = productMapper.map(expense)
+          val product = productMapper.map(0L, expense)
 
           val newBillItem = BillItem(
             0, product,

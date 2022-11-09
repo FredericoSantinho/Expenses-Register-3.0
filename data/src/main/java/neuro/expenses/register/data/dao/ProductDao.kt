@@ -8,6 +8,7 @@ import neuro.expenses.register.data.model.RoomPricedProduct
 import neuro.expenses.register.data.model.RoomProduct
 import neuro.expenses.register.data.model.product.PricedProductCategoryCrossRef
 import neuro.expenses.register.data.model.product.PricedProductProductCrossRef
+import neuro.expenses.register.data.model.product.RoomPricedProductWithProductAndCategory
 
 @Dao
 interface ProductDao {
@@ -27,7 +28,7 @@ interface ProductDao {
   fun delete(roomProduct: RoomProduct): Completable
 
   @Query("select * from priced_product_table where pricedProductId=:pricedProductId")
-  fun getPricedProduct(pricedProductId: Long): Single<RoomPricedProduct>
+  fun getPricedProduct(pricedProductId: Long): Maybe<RoomPricedProductWithProductAndCategory>
 
   @Query("select * from priced_product_table where productId=:productId and category=:category and price=:price")
   fun getPricedProduct(productId: Long, category: String, price: Double): Maybe<RoomPricedProduct>
@@ -38,7 +39,7 @@ interface ProductDao {
   /**
    * Insert a RoomProduct, RoomPricedProduct, PricedProductCategoryCrossRef and PricedProductProductCrossRef if needed.
    *
-   * If any of the referred entities already exists in the database, it will not be overwritten.
+   * If any of the referred entities already exists in the database, it will not be rewritten.
    *
    * @param defaultAmount default amount to be used when creating the RoomPricedProduct.
    * @param iconUrl iconUrl to be used when creating the RoomProduct.

@@ -1,3 +1,3 @@
 package neuro.expenses.register.domain.dto
 
-data class PlaceDto(val name: String, val latLng: LatLngDto, val products: List<ProductDto>)
+data class PlaceDto(val name: String, val products: List<ProductDto>, val latLng: LatLngDto)

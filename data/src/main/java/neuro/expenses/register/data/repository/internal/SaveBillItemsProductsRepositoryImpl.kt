@@ -12,12 +12,12 @@ class SaveBillItemsProductsRepositoryImpl(
   override fun saveBillItemsProducts(billDto: BillDto): List<RoomBillItem> {
     val billId = billDto.id
     return billDto.billItems.map { billItemDto ->
-      val product = billItemDto.product
+      val productDto = billItemDto.product
       val amount = billItemDto.amount
 
-      val description = product.description
-      val category = product.category
-      val price = product.price
+      val description = productDto.description
+      val category = productDto.category
+      val price = productDto.price
       val pricedProductId = saveProductRepository.saveProduct(description, category, price, amount)
 
       roomBillItemMapper.map(billItemDto, billId, pricedProductId)

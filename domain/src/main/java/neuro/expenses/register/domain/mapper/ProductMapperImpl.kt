@@ -27,13 +27,7 @@ class ProductMapperImpl : ProductMapper {
     )
   }
 
-  override fun map(expense: Expense): Product {
-    return Product(
-      0,
-      expense.description,
-      expense.category,
-      expense.price,
-      expense.amount
-    )
+  override fun map(productId: Long, expense: Expense): Product {
+    return Product(productId, expense.description, expense.category, expense.price, expense.amount)
   }
 }

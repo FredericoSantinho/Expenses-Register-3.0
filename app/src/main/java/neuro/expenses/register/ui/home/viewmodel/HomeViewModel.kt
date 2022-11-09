@@ -35,6 +35,7 @@ class HomeViewModel(
   val calendar = mutableStateOf(getCalendarUseCase.getCalendar())
 
   val productsListViewModel: ProductsListViewModel = newProductsListViewModel()
+  private var selectedPlaceIndex = 0
 
   init {
     getCurrentLocationUseCase.getCurrentLocation()
@@ -43,13 +44,17 @@ class HomeViewModel(
         places.value = nearestPlaces
         placesNames.value = nearestPlaces.map { placeDto -> placeDto.name }
         cameraPosition.value =
-          CameraPosition.fromLatLngZoom(latLngMapper.map(nearestPlaces.get(0).latLng), zoom)
-        productsListViewModel.setProducts(nearestPlaces.get(0))
+          CameraPosition.fromLatLngZoom(
+            latLngMapper.map(nearestPlaces.get(selectedPlaceIndex).latLng),
+            zoom
+          )
+        productsListViewModel.setProducts(nearestPlaces.get(selectedPlaceIndex))
       }
     disposable.add(feedLastBillViewModel.subscribe())
   }
 
   fun onSelectedPlace(index: Int) {
+    selectedPlaceIndex = index
     val placeDto = places.value.get(index)
     cameraPosition.value = CameraPosition.fromLatLngZoom(latLngMapper.map(placeDto.latLng), zoom)
     productsListViewModel.setProducts(placeDto)
