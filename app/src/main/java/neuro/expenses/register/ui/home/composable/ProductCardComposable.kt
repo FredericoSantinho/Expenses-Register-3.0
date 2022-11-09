@@ -22,7 +22,7 @@ import com.exchangebot.ui.theme.ExpensesRegisterTheme
 import com.exchangebot.ui.theme.ExpensesRegisterTypography
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import neuro.expenses.register.domain.dto.ProductDto
-import neuro.expenses.register.ui.home.view.model.ProductCardViewModel
+import neuro.expenses.register.ui.home.viewmodel.ProductCardViewModel
 import neuro.expenses.register.ui.report.composable.AsyncImage
 import org.koin.androidx.compose.get
 import java.util.*

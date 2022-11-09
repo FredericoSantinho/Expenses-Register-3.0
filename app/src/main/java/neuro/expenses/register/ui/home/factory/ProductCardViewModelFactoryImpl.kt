@@ -5,7 +5,7 @@ import com.exchangebot.common.schedulers.SchedulerProvider
 import neuro.expenses.register.domain.dto.ProductDto
 import neuro.expenses.register.domain.usecase.register.RegisterExpenseUseCase
 import neuro.expenses.register.ui.common.formatter.DoubleFormatter
-import neuro.expenses.register.ui.home.view.model.ProductCardViewModel
+import neuro.expenses.register.ui.home.viewmodel.ProductCardViewModel
 import java.util.*
 
 class ProductCardViewModelFactoryImpl(

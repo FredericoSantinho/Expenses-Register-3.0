@@ -17,7 +17,7 @@ import neuro.expenses.register.ui.edit.EditViewModel
 import neuro.expenses.register.ui.home.EditCategoryViewModel
 import neuro.expenses.register.ui.home.EditPlaceViewModel
 import neuro.expenses.register.ui.home.EditProductViewModel
-import neuro.expenses.register.ui.home.view.model.HomeViewModel
+import neuro.expenses.register.ui.home.viewmodel.HomeViewModel
 import neuro.expenses.register.ui.manual.register.ManualRegisterViewModel
 import neuro.expenses.register.ui.manual.register.mapper.RegisterExpenseErrorMapper
 import neuro.expenses.register.ui.manual.register.mapper.RegisterExpenseErrorMapperImpl

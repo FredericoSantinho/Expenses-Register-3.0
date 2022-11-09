@@ -1,10 +1,10 @@
-package neuro.expenses.register.ui.home.view.model
+package neuro.expenses.register.ui.home.viewmodel
 
 import androidx.compose.runtime.mutableStateOf
 import com.exchangebot.common.schedulers.SchedulerProvider
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
-import neuro.expenses.register.common.view.model.BaseViewModel
+import neuro.expenses.register.common.viewmodel.BaseViewModel
 import neuro.expenses.register.domain.dto.PlaceDto
 import neuro.expenses.register.domain.usecase.calendar.GetCalendarUseCase
 import neuro.expenses.register.domain.usecase.location.GetCurrentLocationUseCase

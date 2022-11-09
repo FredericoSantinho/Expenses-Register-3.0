@@ -1,4 +1,4 @@
-package neuro.expenses.register.common.view.model
+package neuro.expenses.register.common.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.exchangebot.common.schedulers.SchedulerProvider

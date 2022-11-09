@@ -2,7 +2,7 @@ package neuro.expenses.register.ui.edit
 
 import androidx.lifecycle.ViewModel
 import neuro.expenses.register.common.live.data.SingleLiveEvent
-import neuro.expenses.register.common.view.model.asLiveData
+import neuro.expenses.register.common.viewmodel.asLiveData
 
 class EditViewModel : ViewModel() {
 

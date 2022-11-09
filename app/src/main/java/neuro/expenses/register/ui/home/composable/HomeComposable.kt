@@ -18,7 +18,7 @@ import neuro.expenses.register.ui.common.bill.BillComposableContainer
 import neuro.expenses.register.ui.composable.DropDownTextField
 import neuro.expenses.register.ui.composable.MapsComposable
 import neuro.expenses.register.ui.composables.datetime.DateTimeComposable
-import neuro.expenses.register.ui.home.view.model.HomeViewModel
+import neuro.expenses.register.ui.home.viewmodel.HomeViewModel
 import org.koin.androidx.compose.getViewModel
 
 @Composable

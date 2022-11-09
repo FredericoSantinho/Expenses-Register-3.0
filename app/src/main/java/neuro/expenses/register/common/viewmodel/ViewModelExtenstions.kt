@@ -1,4 +1,4 @@
-package neuro.expenses.register.common.view.model
+package neuro.expenses.register.common.viewmodel
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State

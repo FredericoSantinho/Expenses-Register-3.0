@@ -3,9 +3,9 @@ package neuro.expenses.register.ui.manual.register
 import androidx.compose.runtime.mutableStateOf
 import com.exchangebot.common.schedulers.SchedulerProvider
 import neuro.expenses.register.common.live.data.SingleLiveEvent
-import neuro.expenses.register.common.view.model.BaseViewModel
-import neuro.expenses.register.common.view.model.asLiveData
-import neuro.expenses.register.common.view.model.asState
+import neuro.expenses.register.common.viewmodel.BaseViewModel
+import neuro.expenses.register.common.viewmodel.asLiveData
+import neuro.expenses.register.common.viewmodel.asState
 import neuro.expenses.register.domain.dto.ExpenseDto
 import neuro.expenses.register.domain.usecase.calendar.GetCalendarUseCase
 import neuro.expenses.register.domain.usecase.category.ObserveCategoriesUseCase

@@ -2,8 +2,8 @@ package neuro.expenses.register
 
 import com.exchangebot.common.schedulers.SchedulerProvider
 import neuro.expenses.register.common.live.data.SingleLiveEvent
-import neuro.expenses.register.common.view.model.BaseViewModel
-import neuro.expenses.register.common.view.model.asLiveData
+import neuro.expenses.register.common.viewmodel.BaseViewModel
+import neuro.expenses.register.common.viewmodel.asLiveData
 
 
 class EntryViewModel(
