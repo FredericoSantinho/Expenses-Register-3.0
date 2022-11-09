@@ -14,8 +14,8 @@ import neuro.expenses.register.domain.usecase.location.GetCurrentLocationUseCase
 import neuro.expenses.register.domain.usecase.location.GetCurrentLocationUseCaseImpl
 import neuro.expenses.register.domain.usecase.near.GetNearestPlaceUseCase
 import neuro.expenses.register.domain.usecase.near.GetNearestPlaceUseCaseImpl
-import neuro.expenses.register.domain.usecase.place.GetDistanceUseCase
-import neuro.expenses.register.domain.usecase.place.GetDistanceUseCaseImpl
+import neuro.expenses.register.domain.usecase.place.CalculateDistanceUseCase
+import neuro.expenses.register.domain.usecase.place.CalculateDistanceUseCaseImpl
 import neuro.expenses.register.domain.usecase.place.GetNearestPlacesUseCase
 import neuro.expenses.register.domain.usecase.place.GetNearestPlacesUseCaseImpl
 import neuro.expenses.register.domain.usecase.product.GetOrCreateProductUseCase
@@ -53,6 +53,6 @@ val useCaseModule = module {
   single<GetOrCreateProductUseCase> { GetOrCreateProductUseCaseImpl() }
   single<ExpenseMapper> { ExpenseMapperImpl() }
   single<GetNearestPlacesUseCase> { GetNearestPlacesUseCaseImpl(get(), get()) }
-  single<GetDistanceUseCase> { GetDistanceUseCaseImpl() }
+  single<CalculateDistanceUseCase> { CalculateDistanceUseCaseImpl(get()) }
   single<GetCurrentLocationUseCase> { GetCurrentLocationUseCaseImpl(get()) }
 }

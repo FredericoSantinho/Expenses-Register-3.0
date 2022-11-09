@@ -7,12 +7,12 @@ import neuro.expenses.register.domain.repository.GetPlacesRepository
 
 class GetNearestPlacesUseCaseImpl(
   private val getPlacesRepository: GetPlacesRepository,
-  private val getDistanceUseCase: GetDistanceUseCase
+  private val calculateDistanceUseCase: CalculateDistanceUseCase
 ) : GetNearestPlacesUseCase {
   override fun getNearestPlaces(latLng: LatLngDto, limit: Int): Single<List<PlaceDto>> {
     return getPlacesRepository.getPlaces().map {
       it.sortedBy {
-        getDistanceUseCase.getDistance(
+        calculateDistanceUseCase.calculateDistance(
           latLng,
           it.latLng
         )
