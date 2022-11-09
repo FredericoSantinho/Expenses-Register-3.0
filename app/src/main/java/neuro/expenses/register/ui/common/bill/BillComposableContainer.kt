@@ -6,7 +6,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import neuro.expenses.register.ui.home.view.model.BillViewModel
 
 @Composable
 fun BillComposableContainer(billViewModel: BillViewModel, modifier: Modifier = Modifier) {

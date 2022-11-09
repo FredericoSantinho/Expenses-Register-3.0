@@ -9,6 +9,7 @@ import neuro.expenses.register.domain.dto.PlaceDto
 import neuro.expenses.register.domain.usecase.calendar.GetCalendarUseCase
 import neuro.expenses.register.domain.usecase.location.GetCurrentLocationUseCase
 import neuro.expenses.register.domain.usecase.place.GetNearestPlacesUseCase
+import neuro.expenses.register.ui.common.bill.BillViewModel
 import neuro.expenses.register.ui.common.bill.FeedLastBillViewModel
 import neuro.expenses.register.ui.common.mapper.LatLngMapper
 import neuro.expenses.register.ui.home.factory.ProductCardViewModelFactory

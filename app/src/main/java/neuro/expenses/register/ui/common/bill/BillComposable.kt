@@ -19,7 +19,6 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.exchangebot.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.R
-import neuro.expenses.register.ui.home.view.model.BillViewModel
 import neuro.expenses.register.ui.report.composable.AsyncImage
 
 @OptIn(ExperimentalFoundationApi::class)

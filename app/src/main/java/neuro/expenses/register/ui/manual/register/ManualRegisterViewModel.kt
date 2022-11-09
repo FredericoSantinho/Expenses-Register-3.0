@@ -12,9 +12,9 @@ import neuro.expenses.register.domain.usecase.category.ObserveCategoriesUseCase
 import neuro.expenses.register.domain.usecase.near.GetNearestPlaceUseCase
 import neuro.expenses.register.domain.usecase.register.RegisterExpenseUseCase
 import neuro.expenses.register.domain.usecase.register.validator.RegisterExpenseException
+import neuro.expenses.register.ui.common.bill.BillViewModel
 import neuro.expenses.register.ui.common.bill.FeedLastBillViewModel
 import neuro.expenses.register.ui.common.formatter.DoubleFormatter
-import neuro.expenses.register.ui.home.view.model.BillViewModel
 import neuro.expenses.register.ui.manual.register.mapper.RegisterExpenseErrorMapper
 
 

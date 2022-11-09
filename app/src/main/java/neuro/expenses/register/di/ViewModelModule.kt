@@ -5,6 +5,7 @@ import neuro.expenses.register.common.formatter.DecimalFormatterImpl
 import neuro.expenses.register.common.formatter.NumberFormater
 import neuro.expenses.register.common.formatter.NumberFormaterImpl
 import neuro.expenses.register.ui.bills.BillsViewModel
+import neuro.expenses.register.ui.common.bill.BillViewModel
 import neuro.expenses.register.ui.common.bill.FeedLastBillViewModel
 import neuro.expenses.register.ui.common.bill.FeedLastBillViewModelImpl
 import neuro.expenses.register.ui.common.bill.mapper.DateTimeMapper
@@ -15,7 +16,6 @@ import neuro.expenses.register.ui.edit.EditViewModel
 import neuro.expenses.register.ui.home.EditCategoryViewModel
 import neuro.expenses.register.ui.home.EditPlaceViewModel
 import neuro.expenses.register.ui.home.EditProductViewModel
-import neuro.expenses.register.ui.home.view.model.BillViewModel
 import neuro.expenses.register.ui.home.view.model.HomeViewModel
 import neuro.expenses.register.ui.manual.register.ManualRegisterViewModel
 import neuro.expenses.register.ui.manual.register.mapper.RegisterExpenseErrorMapper

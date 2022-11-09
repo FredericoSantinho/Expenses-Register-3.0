@@ -1,6 +1,6 @@
 package neuro.expenses.register.ui.bills.composable
 
-import androidx.compose.animation.*
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -22,7 +22,7 @@ import com.exchangebot.ui.theme.grey_fog_lighter
 import kotlinx.coroutines.launch
 import neuro.expenses.register.ui.bills.BillsViewModel
 import neuro.expenses.register.ui.common.bill.BillComposable
-import neuro.expenses.register.ui.home.view.model.BillViewModel
+import neuro.expenses.register.ui.common.bill.BillViewModel
 import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalMaterialApi::class)

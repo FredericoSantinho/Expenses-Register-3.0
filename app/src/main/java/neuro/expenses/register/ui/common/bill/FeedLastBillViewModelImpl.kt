@@ -6,7 +6,6 @@ import neuro.expenses.register.domain.dto.BillDto
 import neuro.expenses.register.domain.usecase.bill.ObserveLastBillUseCase
 import neuro.expenses.register.ui.common.bill.mapper.DateTimeMapper
 import neuro.expenses.register.ui.common.formatter.DoubleFormatter
-import neuro.expenses.register.ui.home.view.model.BillViewModel
 
 
 class FeedLastBillViewModelImpl(
