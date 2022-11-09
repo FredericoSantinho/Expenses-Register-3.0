@@ -37,7 +37,7 @@ class ProductCardViewModel(
         amount.value,
         calendar.value
       )
-    ).subscribeOn(schedulerProvider.io()).observeOn(schedulerProvider.ui()).subscribe { errors ->
+    ).subscribeOn(schedulerProvider.io()).observeOn(schedulerProvider.ui()).subscribe {
     })
   }
 

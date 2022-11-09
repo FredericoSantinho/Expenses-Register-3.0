@@ -11,6 +11,7 @@ import neuro.expenses.register.domain.usecase.calendar.GetCalendarUseCase
 import neuro.expenses.register.domain.usecase.category.ObserveCategoriesUseCase
 import neuro.expenses.register.domain.usecase.near.GetNearestPlaceUseCase
 import neuro.expenses.register.domain.usecase.register.RegisterExpenseUseCase
+import neuro.expenses.register.domain.usecase.register.validator.RegisterExpenseException
 import neuro.expenses.register.ui.common.bill.FeedLastBillViewModel
 import neuro.expenses.register.ui.common.formatter.DoubleFormatter
 import neuro.expenses.register.ui.home.view.model.BillViewModel
@@ -62,13 +63,13 @@ class ManualRegisterViewModel(
   fun onRegisterButton() {
     disposable.add(
       registerExpenseUseCase.registerExpense(buildExpense())
-        .baseSubscribe { registerExpenseErrors ->
-          if (registerExpenseErrors.isEmpty()) {
-            publishAndReset()
-          } else {
-            _uiState.value = UiState.Error(registerExpenseErrorMapper.map(registerExpenseErrors))
-          }
-        })
+        .baseSubscribe(
+          onComplete = { publishAndReset() },
+          onError = {
+            _uiState.value =
+              UiState.Error(registerExpenseErrorMapper.map((it as RegisterExpenseException).errors))
+          })
+    )
   }
 
   fun onPriceChange() {

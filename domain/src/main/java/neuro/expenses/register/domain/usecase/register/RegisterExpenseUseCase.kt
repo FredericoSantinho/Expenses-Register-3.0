@@ -1,13 +1,13 @@
 package neuro.expenses.register.domain.usecase.register
 
-import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.core.Completable
 import neuro.expenses.register.domain.dto.ExpenseDto
-import neuro.expenses.register.domain.usecase.register.validator.RegisterExpenseError
 
 interface RegisterExpenseUseCase {
   /**
    * Register expense.
-   * @return if register succeeds, an empty list. Otherwise, a list of errors.
+   * @return a Completable that completes if register succeeds or emits an error in case validation fails.
+   * @throws neuro.expenses.register.domain.usecase.register.validator.RegisterExpenseException with a list of validation errors.
    */
-  fun registerExpense(expenseDto: ExpenseDto): Single<List<RegisterExpenseError>>
+  fun registerExpense(expenseDto: ExpenseDto): Completable
 }

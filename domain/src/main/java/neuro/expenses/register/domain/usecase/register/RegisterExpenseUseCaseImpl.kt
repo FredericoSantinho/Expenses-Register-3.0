@@ -1,6 +1,6 @@
 package neuro.expenses.register.domain.usecase.register
 
-import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.core.Completable
 import neuro.expenses.register.domain.controller.BillController
 import neuro.expenses.register.domain.dto.BillDto
 import neuro.expenses.register.domain.dto.ExpenseDto
@@ -9,15 +9,12 @@ import neuro.expenses.register.domain.entity.controller.CalculateBillTotal
 import neuro.expenses.register.domain.mapper.BillMapper
 import neuro.expenses.register.domain.mapper.ExpenseMapper
 import neuro.expenses.register.domain.usecase.bill.GetLastBillUseCase
-import neuro.expenses.register.domain.usecase.bill.ObserveLastBillUseCase
 import neuro.expenses.register.domain.usecase.bill.SaveBillUseCase
 import neuro.expenses.register.domain.usecase.product.GetOrCreateProductUseCase
 import neuro.expenses.register.domain.usecase.register.validator.ExpenseValidator
-import neuro.expenses.register.domain.usecase.register.validator.RegisterExpenseError
 import java.util.*
 
 class RegisterExpenseUseCaseImpl(
-  private val observeLastBillUseCase: ObserveLastBillUseCase,
   private val getLastBillUseCase: GetLastBillUseCase,
   private val saveBillUseCase: SaveBillUseCase,
   private val getOrCreateProductUseCase: GetOrCreateProductUseCase,
@@ -30,9 +27,9 @@ class RegisterExpenseUseCaseImpl(
 
   override fun registerExpense(
     expenseDto: ExpenseDto
-  ): Single<List<RegisterExpenseError>> {
+  ): Completable {
     return getLastBillUseCase.getLastBill().defaultIfEmpty(defaultBillDto)
-      .map { billMapper.map(it) }.flatMap { lastStoredBill ->
+      .map { billMapper.map(it) }.flatMapCompletable { lastStoredBill ->
         val place = expenseDto.place
         val calendar = expenseDto.calendar
         val lastBill = if (!lastStoredBill.isOpen || lastStoredBill.place != place) {
@@ -43,20 +40,16 @@ class RegisterExpenseUseCaseImpl(
 
         val expense = expenseMapper.map(expenseDto)
 
-        expenseValidator.validate(expense).flatMap innerFlatMap@{ validate ->
-          if (validate.isEmpty()) {
-            val lastBillController =
-              BillController(calculateBillTotal, getOrCreateProductUseCase, lastBill)
+        return@flatMapCompletable expenseValidator.validate(expense).andThen(Completable.defer {
+          val lastBillController =
+            BillController(calculateBillTotal, getOrCreateProductUseCase, lastBill)
 
-            return@innerFlatMap lastBillController.add(expense).doOnComplete {
-              saveBillUseCase.save(
-                lastBillController.bill
-              )
-            }.toSingleDefault(validate)
+          return@defer lastBillController.add(expense).doOnComplete {
+            saveBillUseCase.save(
+              lastBillController.bill
+            )
           }
-
-          return@innerFlatMap Single.just(validate)
-        }
+        })
       }
   }
 }
