@@ -4,17 +4,14 @@ import com.exchangebot.common.schedulers.SchedulerProvider
 import io.reactivex.rxjava3.disposables.Disposable
 import neuro.expenses.register.domain.dto.BillDto
 import neuro.expenses.register.domain.usecase.bill.ObserveLastBillUseCase
-import neuro.expenses.register.ui.common.bill.mapper.DateTimeMapper
-import neuro.expenses.register.ui.common.formatter.DoubleFormatter
+import neuro.expenses.register.ui.common.bill.mapper.BillModelMapper
 
 
 class FeedLastBillViewModelImpl(
   private val observeLastBillUseCase: ObserveLastBillUseCase,
   private val billViewModel: BillViewModel,
-  private val dateTimeMapper: DateTimeMapper,
-  private val doubleFormatter: DoubleFormatter,
-  private val schedulerProvider: SchedulerProvider,
-  private val currency: Char = '€'
+  private val billModelMapper: BillModelMapper,
+  private val schedulerProvider: SchedulerProvider
 ) : FeedLastBillViewModel {
   override fun subscribe(): Disposable {
     return observeLastBillUseCase.observeLastBill()
@@ -25,19 +22,7 @@ class FeedLastBillViewModelImpl(
   }
 
   private fun publish(billDto: BillDto) {
-    billViewModel.id.value = billDto.id
-    billViewModel.iconUrl.value = billDto.iconUrl
-    billViewModel.place.value = billDto.place
-    billViewModel.time.value = dateTimeMapper.mapTime(billDto.calendar)
-    billViewModel.date.value = dateTimeMapper.mapDate(billDto.calendar)
-    billViewModel.total.value = doubleFormatter.format(billDto.total) + " $currency"
-    if (billDto.billItems.isNotEmpty()) {
-      billViewModel.iconUrl.value = billDto.billItems.get(0).product.iconUrl
-    }
-    if (billDto.isOpen) {
-      billViewModel.setOpenedBillState()
-    } else {
-      billViewModel.setClosedBillState()
-    }
+    val billModel = billModelMapper.map(billDto)
+    billViewModel.setBillModel(billModel)
   }
 }

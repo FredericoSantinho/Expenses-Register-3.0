@@ -30,8 +30,9 @@ internal class BillController(
           val newBillItem = BillItem(billItemId, product, newAmount, newAmount * product.price)
 
           val billItems = buildList(newBillItem)
+          val iconUrl = billItems.get(0).product.iconUrl
           val total = calculateBillTotal.getTotal(billItems)
-          bill = Bill(billId, bill.place, bill.calendar, total, billItems)
+          bill = Bill(billId, bill.place, bill.calendar, total, billItems, iconUrl)
         }
       } else {
         Completable.fromAction {

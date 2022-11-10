@@ -39,6 +39,7 @@ class ExpensesRegisterApplication : Application() {
         databaseModule,
         databaseMapperModule,
         uiMapperModule,
+        factoryModule,
         daoModule,
         initModule
       )

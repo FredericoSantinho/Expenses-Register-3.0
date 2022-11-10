@@ -2,18 +2,40 @@ package neuro.expenses.register.ui.common.bill
 
 import androidx.compose.runtime.mutableStateOf
 import neuro.expenses.register.common.viewmodel.asState
+import neuro.expenses.register.ui.common.bill.model.BillModel
 
-class BillViewModel {
-  // TODO: create id
-  val id = mutableStateOf(0L)
-  val iconUrl = mutableStateOf("")
-  val place = mutableStateOf("")
-  val time = mutableStateOf("")
-  val date = mutableStateOf("")
-  val total = mutableStateOf("")
+private val EMPTY = BillModel(0L, "", "", "", "", "", false)
+
+class BillViewModel(editable: Boolean = false, billModel: BillModel = EMPTY) {
+  val id = mutableStateOf(billModel.id)
+  val iconUrl = mutableStateOf(billModel.iconUrl)
+  val place = mutableStateOf(billModel.place)
+  val time = mutableStateOf(billModel.time)
+  val date = mutableStateOf(billModel.date)
+  val total = mutableStateOf(billModel.total)
 
   private val _uiState = mutableStateOf<UiState>(UiState.Loading)
   val uiState = _uiState.asState()
+
+  init {
+    if (editable) {
+      setEditableBillState()
+    }
+  }
+
+  fun setBillModel(billModel: BillModel) {
+    id.value = billModel.id
+    iconUrl.value = billModel.iconUrl
+    place.value = billModel.place
+    time.value = billModel.time
+    date.value = billModel.date
+    total.value = billModel.total
+    if (billModel.isOpen) {
+      setOpenedBillState()
+    } else {
+      setClosedBillState()
+    }
+  }
 
   fun onClick() {
 

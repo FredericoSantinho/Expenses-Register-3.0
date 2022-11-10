@@ -29,8 +29,8 @@ class BillMapperImpl(
       billDto.calendar,
       billDto.total,
       billItems,
-      billDto.isOpen,
-      billDto.iconUrl
+      billDto.iconUrl,
+      billDto.isOpen
     )
   }
 }

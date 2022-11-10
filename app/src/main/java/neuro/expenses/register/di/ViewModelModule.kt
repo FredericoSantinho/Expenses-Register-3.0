@@ -44,15 +44,7 @@ val viewModelModule = module {
     )
   }
   single { BillViewModel() }
-  single<FeedLastBillViewModel> {
-    FeedLastBillViewModelImpl(
-      get(),
-      get(),
-      get(),
-      get(),
-      get()
-    )
-  }
+  single<FeedLastBillViewModel> { FeedLastBillViewModelImpl(get(), get(), get(), get()) }
   single<DateTimeMapper> { DateTimeMapperImpl(get()) }
   single<NumberFormater> { NumberFormaterImpl() }
   single<DoubleFormatter> { DoubleFormatterImpl(get()) }

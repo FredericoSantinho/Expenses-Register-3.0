@@ -8,6 +8,6 @@ data class Bill(
   val calendar: Calendar,
   val total: Double = 0.0,
   val billItems: List<BillItem> = emptyList(),
-  val isOpen: Boolean = true,
-  val iconUrl: String = ""
+  val iconUrl: String = "",
+  val isOpen: Boolean = true
 )
