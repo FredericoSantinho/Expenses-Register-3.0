@@ -23,7 +23,7 @@ class RegisterExpenseUseCaseImpl(
   private val expenseMapper: ExpenseMapper,
   private val calculateBillTotal: CalculateBillTotal
 ) : RegisterExpenseUseCase {
-  private val defaultBillDto = BillDto(0, "N/A", Calendar.getInstance(), 1.0)
+  private val defaultBillDto = BillDto(0, "N/A", Calendar.getInstance(), 0.0, isOpen = false)
 
   override fun registerExpense(
     expenseDto: ExpenseDto

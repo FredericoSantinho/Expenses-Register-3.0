@@ -33,7 +33,7 @@ val useCaseModule = module {
       get()
     )
   }
-  single<ObserveLastBillUseCase> { ObserveLastBillUseCaseImpl(get()) }
+  single<ObserveLastBillUseCase> { ObserveLastBillUseCaseImpl(get(), get()) }
   single<GetLastBillUseCase> { GetLastBillUseCaseImpl(get()) }
   single<SaveBillUseCase> { SaveBillUseCaseImpl(get(), get()) }
   single<BillItemMapper> { BillItemMapperImpl(get()) }

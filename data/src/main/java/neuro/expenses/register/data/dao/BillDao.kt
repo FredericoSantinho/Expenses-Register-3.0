@@ -17,12 +17,12 @@ interface BillDao {
   fun observeLastBill(): Observable<RoomBillWithBillItems>
 
   @Transaction
-  @Query("select * from bill_table order by billId asc")
-  fun observeBills(): Observable<List<RoomBillWithBillItems>>
-
-  @Transaction
   @Query("select * from bill_table order by billId desc limit 1")
   fun getLastBill(): Maybe<RoomBillWithBillItems>
+
+  @Transaction
+  @Query("select * from bill_table order by billId asc")
+  fun observeBills(): Observable<List<RoomBillWithBillItems>>
 
   @Transaction
   fun insert(roomBill: RoomBill, roomBillItems: List<RoomBillItem>) {

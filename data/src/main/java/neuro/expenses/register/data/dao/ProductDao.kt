@@ -59,11 +59,11 @@ interface ProductDao {
   ): Long {
     return getProduct(description).defaultIfEmpty(RoomProduct(0, description, iconUrl))
       .flatMap { roomProduct ->
-        insert(roomProduct).flatMap innerFlatMap@{ productId ->
+        insert(roomProduct).flatMap { productId ->
           if (productId == -1L) {
-            return@innerFlatMap getProduct(description).map { it.productId }.toSingle()
+            getProduct(description).map { it.productId }.toSingle()
           } else {
-            return@innerFlatMap Single.just(productId)
+            Single.just(productId)
           }
         }.flatMap { productId ->
           getPricedProduct(productId, category, price).defaultIfEmpty(

@@ -20,7 +20,7 @@ internal class BillController(
     return Completable.defer {
       val productDescription = expense.description
       if (contains(productDescription)) {
-        return@defer Completable.fromAction {
+        Completable.fromAction {
           val billItem = getBillItem(productDescription)
           val billId = bill.id
           val billItemId = billItem.id
@@ -34,7 +34,7 @@ internal class BillController(
           bill = Bill(billId, bill.place, bill.calendar, total, billItems)
         }
       } else {
-        return@defer Completable.fromAction {
+        Completable.fromAction {
           val product = productMapper.map(0L, expense)
 
           val newBillItem = BillItem(
