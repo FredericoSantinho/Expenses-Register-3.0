@@ -1,4 +1,4 @@
-package neuro.expenses.register.ui.composables.datetime.mapper
+package neuro.expenses.register.ui.common.composables.datetime.mapper
 
 import neuro.expenses.register.common.formatter.NumberFormater
 import neuro.expenses.register.common.formatter.NumberFormaterImpl

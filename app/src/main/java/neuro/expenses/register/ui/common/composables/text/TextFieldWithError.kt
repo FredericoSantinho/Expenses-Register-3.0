@@ -1,4 +1,4 @@
-package neuro.expenses.register.ui.composables.text
+package neuro.expenses.register.ui.common.composables.text
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth

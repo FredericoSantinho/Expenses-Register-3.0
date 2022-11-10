@@ -17,8 +17,8 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentActivity
 import com.exchangebot.ui.theme.grey_fog_light
 import neuro.expenses.register.R
-import neuro.expenses.register.ui.composables.datetime.DateTimeComposable
-import neuro.expenses.register.ui.composables.text.TextFieldWithError
+import neuro.expenses.register.ui.common.composables.datetime.DateTimeComposable
+import neuro.expenses.register.ui.common.composables.text.TextFieldWithError
 
 @Composable
 fun EditBillComposable(

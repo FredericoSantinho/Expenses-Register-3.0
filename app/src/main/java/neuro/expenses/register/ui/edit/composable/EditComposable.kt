@@ -13,7 +13,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import neuro.expenses.register.ui.composables.dropdown.OnItemSelect
+import neuro.expenses.register.ui.common.composables.dropdown.OnItemSelect
 import neuro.expenses.register.ui.edit.Directions
 import neuro.expenses.register.ui.edit.EditViewModel
 import neuro.expenses.register.ui.edit.UiEvent

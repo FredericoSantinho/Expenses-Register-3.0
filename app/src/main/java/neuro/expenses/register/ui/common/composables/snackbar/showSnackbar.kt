@@ -1,4 +1,4 @@
-package neuro.expenses.register.ui.composables.snackbar
+package neuro.expenses.register.ui.common.composables.snackbar
 
 import androidx.compose.material.SnackbarHost
 import androidx.compose.material.SnackbarHostState

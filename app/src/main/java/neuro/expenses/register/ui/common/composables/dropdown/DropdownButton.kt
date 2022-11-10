@@ -19,7 +19,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import androidx.constraintlayout.compose.ConstraintLayout
-import neuro.expenses.register.ui.composables.dropdown.OnItemSelect
+import neuro.expenses.register.ui.common.composables.dropdown.OnItemSelect
 
 @Composable
 fun DropdownButton(items: List<String>, onItemSelect: OnItemSelect) {
