@@ -11,12 +11,12 @@ import neuro.expenses.register.domain.usecase.near.GetNearestPlaceUseCase
 import neuro.expenses.register.domain.usecase.place.SaveExpensePlaceAndProductUseCase
 import neuro.expenses.register.domain.usecase.register.RegisterExpenseUseCase
 import neuro.expenses.register.domain.usecase.register.validator.RegisterExpenseException
-import neuro.expenses.register.ui.manual.register.mapper.RegisterExpenseErrorMapper
 import neuro.expenses.register.viewmodel.bill.BillViewModel
 import neuro.expenses.register.viewmodel.bill.FeedLastBillViewModel
 import neuro.expenses.register.viewmodel.common.BaseViewModel
 import neuro.expenses.register.viewmodel.common.asLiveData
 import neuro.expenses.register.viewmodel.common.asState
+import neuro.expenses.register.viewmodel.manual.register.mapper.RegisterExpenseErrorMapper
 
 
 class ManualRegisterViewModel(
