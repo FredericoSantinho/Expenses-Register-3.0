@@ -3,7 +3,7 @@ package neuro.expenses.register.ui.bills
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import neuro.expenses.register.ui.common.bill.BillViewModel
+import neuro.expenses.register.viewmodel.bill.BillViewModel
 
 class BillsViewModel : ViewModel() {
   val bills = mutableStateListOf<BillViewModel>()

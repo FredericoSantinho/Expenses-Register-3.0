@@ -19,17 +19,20 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import neuro.expenses.register.R
 import neuro.expenses.register.ui.common.bill.BillComposableContainer
+import neuro.expenses.register.ui.common.mapper.LatLngMapper
 import neuro.expenses.register.ui.composable.DropDownTextField
 import neuro.expenses.register.ui.composable.MapsComposable
 import neuro.expenses.register.ui.composables.datetime.DateTimeComposable
-import neuro.expenses.register.ui.home.viewmodel.HomeViewModel
-import neuro.expenses.register.ui.home.viewmodel.UiState
+import neuro.expenses.register.viewmodel.home.HomeViewModel
+import neuro.expenses.register.viewmodel.home.UiState
+import org.koin.androidx.compose.get
 import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun HomeComposable(
   fragmentActivity: FragmentActivity,
   initialCameraPosition: CameraPosition,
+  latLngMapper: LatLngMapper = get(),
   homeViewModel: HomeViewModel = getViewModel()
 ) {
   val uiState by homeViewModel.uiState
@@ -71,7 +74,7 @@ fun HomeComposable(
         )
       }
       Divider(thickness = 1.dp, color = Color.LightGray)
-      onUiState(uiState, homeViewModel, loading, cameraPosition)
+      onUiState(uiState, homeViewModel, loading, cameraPosition, latLngMapper)
     }
   }
 }
@@ -81,11 +84,12 @@ private fun onUiState(
   uiState: UiState,
   homeViewModel: HomeViewModel,
   loading: MutableState<Boolean>,
-  cameraPosition: MutableState<CameraPosition>
+  cameraPosition: MutableState<CameraPosition>,
+  latLngMapper: LatLngMapper
 ) {
   when (uiState) {
     is UiState.Loading -> onUiLoading()
-    is UiState.Ready -> onUiReady(uiState, homeViewModel, loading, cameraPosition)
+    is UiState.Ready -> onUiReady(uiState, homeViewModel, loading, cameraPosition, latLngMapper)
   }
 }
 
@@ -105,11 +109,12 @@ private fun onUiReady(
   uiState: UiState.Ready,
   homeViewModel: HomeViewModel,
   loading: MutableState<Boolean>,
-  cameraPosition: MutableState<CameraPosition>
+  cameraPosition: MutableState<CameraPosition>,
+  latLngMapper: LatLngMapper
 ) {
   loading.value = false
   cameraPosition.value =
-    CameraPosition.fromLatLngZoom(uiState.latLng, uiState.zoom)
+    CameraPosition.fromLatLngZoom(latLngMapper.map(uiState.latLngModel), uiState.zoom)
   ProductsListComposable(homeViewModel.productsListViewModel)
 }
 

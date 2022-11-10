@@ -2,10 +2,8 @@ package neuro.expenses.register.ui.manual.register
 
 import androidx.compose.runtime.mutableStateOf
 import com.exchangebot.common.schedulers.SchedulerProvider
-import neuro.expenses.register.common.live.data.SingleLiveEvent
-import neuro.expenses.register.common.viewmodel.BaseViewModel
-import neuro.expenses.register.common.viewmodel.asLiveData
-import neuro.expenses.register.common.viewmodel.asState
+import neuro.expenses.register.common.formatter.DoubleFormatter
+import neuro.expenses.register.common.livedata.SingleLiveEvent
 import neuro.expenses.register.domain.dto.ExpenseDto
 import neuro.expenses.register.domain.usecase.calendar.GetCalendarUseCase
 import neuro.expenses.register.domain.usecase.category.ObserveCategoriesUseCase
@@ -13,10 +11,12 @@ import neuro.expenses.register.domain.usecase.near.GetNearestPlaceUseCase
 import neuro.expenses.register.domain.usecase.place.SaveExpensePlaceAndProductUseCase
 import neuro.expenses.register.domain.usecase.register.RegisterExpenseUseCase
 import neuro.expenses.register.domain.usecase.register.validator.RegisterExpenseException
-import neuro.expenses.register.ui.common.bill.BillViewModel
-import neuro.expenses.register.ui.common.bill.FeedLastBillViewModel
-import neuro.expenses.register.ui.common.formatter.DoubleFormatter
 import neuro.expenses.register.ui.manual.register.mapper.RegisterExpenseErrorMapper
+import neuro.expenses.register.viewmodel.bill.BillViewModel
+import neuro.expenses.register.viewmodel.bill.FeedLastBillViewModel
+import neuro.expenses.register.viewmodel.common.BaseViewModel
+import neuro.expenses.register.viewmodel.common.asLiveData
+import neuro.expenses.register.viewmodel.common.asState
 
 
 class ManualRegisterViewModel(

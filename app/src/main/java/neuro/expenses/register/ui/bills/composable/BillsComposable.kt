@@ -22,7 +22,7 @@ import com.exchangebot.ui.theme.grey_fog_lighter
 import kotlinx.coroutines.launch
 import neuro.expenses.register.ui.bills.BillsViewModel
 import neuro.expenses.register.ui.common.bill.BillComposable
-import neuro.expenses.register.ui.common.bill.BillViewModel
+import neuro.expenses.register.viewmodel.bill.BillViewModel
 import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalMaterialApi::class)

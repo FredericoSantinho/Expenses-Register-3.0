@@ -23,6 +23,8 @@ import neuro.expenses.register.R
 import neuro.expenses.register.common.viewmodel.shimmer
 import neuro.expenses.register.common.viewmodel.shimmerBackground
 import neuro.expenses.register.ui.report.composable.AsyncImage
+import neuro.expenses.register.viewmodel.bill.BillViewModel
+import neuro.expenses.register.viewmodel.bill.UiState
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

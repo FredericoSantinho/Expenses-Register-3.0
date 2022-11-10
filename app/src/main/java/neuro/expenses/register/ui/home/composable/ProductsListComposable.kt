@@ -6,7 +6,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
-import neuro.expenses.register.ui.home.viewmodel.ProductsListViewModel
+import neuro.expenses.register.viewmodel.home.ProductsListViewModel
 
 @Composable
 fun ProductsListComposable(

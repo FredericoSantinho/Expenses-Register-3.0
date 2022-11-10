@@ -13,6 +13,7 @@ import neuro.expenses.register.domain.di.dtoMapperModule
 import neuro.expenses.register.domain.di.entityModule
 import neuro.expenses.register.domain.di.useCaseModule
 import neuro.expenses.register.first.run.FirstRun
+import neuro.expenses.register.viewmodel.di.viewmodelMapperModule
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.GlobalContext.startKoin
@@ -32,6 +33,7 @@ class ExpensesRegisterApplication : Application() {
         androidModule,
         schedulersModule,
         viewModelModule,
+        viewmodelMapperModule,
         useCaseModule,
         dtoMapperModule,
         entityModule,
