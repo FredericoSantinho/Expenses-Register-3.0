@@ -14,6 +14,7 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Expenses Register 3.0"
 include ':app'
+include ':viewmodel'
 include ':domain'
 include ':entity'
 include ':data'

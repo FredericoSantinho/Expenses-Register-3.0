@@ -4,6 +4,7 @@ dependencies {
   implementation fileTree(dir: "libs", include: ["*.jar"])
 
   api project(path: ':domain')
+  api project(path: ':viewmodel')
   api project(path: ':data')
 
   implementation lib.google

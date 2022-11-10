@@ -1,0 +1,31 @@
+plugins {
+  id 'com.android.library'
+  id 'kotlin-android'
+  id 'kotlin-kapt'
+}
+
+apply from: "dependencies.gradle"
+
+dependencies {}
+
+android {
+  compileSdkVersion 33
+
+  defaultConfig {
+    minSdk 29
+    targetSdk 33
+
+    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+    kotlinOptions {
+      jvmTarget = '1.8'
+    }
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+    }
+  }
+}
