@@ -2,10 +2,12 @@ package neuro.expenses.register.ui.home.viewmodel
 
 import androidx.compose.runtime.mutableStateOf
 import com.exchangebot.common.schedulers.SchedulerProvider
-import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import neuro.expenses.register.common.live.data.SingleLiveEvent
 import neuro.expenses.register.common.viewmodel.BaseViewModel
+import neuro.expenses.register.common.viewmodel.asLiveData
 import neuro.expenses.register.common.viewmodel.asState
+import neuro.expenses.register.domain.dto.LatLngDto
 import neuro.expenses.register.domain.dto.PlaceDto
 import neuro.expenses.register.domain.usecase.calendar.GetCalendarUseCase
 import neuro.expenses.register.domain.usecase.location.GetCurrentLocationUseCase
@@ -14,8 +16,6 @@ import neuro.expenses.register.ui.common.bill.BillViewModel
 import neuro.expenses.register.ui.common.bill.FeedLastBillViewModel
 import neuro.expenses.register.ui.common.mapper.LatLngMapper
 import neuro.expenses.register.ui.home.factory.ProductCardViewModelFactory
-
-private val lisbon = CameraPosition.fromLatLngZoom(LatLng(38.722252, -9.139337), 7.0f)
 
 class HomeViewModel(
   private val getNearestPlacesUseCase: GetNearestPlacesUseCase,
@@ -29,17 +29,17 @@ class HomeViewModel(
   private val nearestPlacesLimit: Int = 5,
   private val zoom: Float = 19.0f
 ) : BaseViewModel(schedulerProvider) {
-  val cameraPosition = mutableStateOf(lisbon)
   private val places = mutableStateOf(emptyList<PlaceDto>())
   val placesNames = mutableStateOf(emptyList<String>())
+  private var selectedPlaceIndex = 0
 
   val calendar = mutableStateOf(getCalendarUseCase.getCalendar())
-
   val productsListViewModel: ProductsListViewModel = newProductsListViewModel()
-  private var selectedPlaceIndex = 0
 
   private val _uiState = mutableStateOf<UiState>(UiState.Loading)
   val uiState = _uiState.asState()
+  private val _uiEvent = SingleLiveEvent<UiEvent>()
+  val uiEvent = _uiEvent.asLiveData()
 
   init {
     getCurrentLocationUseCase.getCurrentLocation()
@@ -47,11 +47,7 @@ class HomeViewModel(
       .baseSubscribe { nearestPlaces ->
         places.value = nearestPlaces
         placesNames.value = nearestPlaces.map { placeDto -> placeDto.name }
-        cameraPosition.value =
-          CameraPosition.fromLatLngZoom(
-            latLngMapper.map(nearestPlaces.get(selectedPlaceIndex).latLng),
-            zoom
-          )
+        moveCamera(nearestPlaces.get(selectedPlaceIndex).latLng, zoom)
         productsListViewModel.setProducts(nearestPlaces.get(selectedPlaceIndex))
         _uiState.value = UiState.Ready
       }
@@ -61,7 +57,7 @@ class HomeViewModel(
   fun onSelectedPlace(index: Int) {
     selectedPlaceIndex = index
     val placeDto = places.value.get(index)
-    cameraPosition.value = CameraPosition.fromLatLngZoom(latLngMapper.map(placeDto.latLng), zoom)
+    moveCamera(placeDto.latLng, zoom)
     productsListViewModel.setProducts(placeDto)
   }
 
@@ -70,11 +66,19 @@ class HomeViewModel(
     productsListViewModel.clear()
   }
 
+  private fun moveCamera(latLngDto: LatLngDto, zoom: Float) {
+    _uiEvent.value = UiEvent.MoveCamera(latLngMapper.map(latLngDto), zoom)
+  }
+
   private fun newProductsListViewModel() =
     ProductsListViewModel(
       productCardViewModelFactory,
       calendar
     )
+}
+
+sealed class UiEvent {
+  data class MoveCamera(val latLng: LatLng, val zoom: Float) : UiEvent()
 }
 
 sealed class UiState {

@@ -49,7 +49,7 @@ fun EditComposable(editViewModel: EditViewModel = getViewModel()) {
 }
 
 @Composable
-fun onUiEvent(uiEvent: UiEvent?, navController: NavController) {
+private fun onUiEvent(uiEvent: UiEvent?, navController: NavController) {
   when (uiEvent) {
     UiEvent.NavigateToEditProduct -> navigate(navController, Directions.product)
     UiEvent.NavigateToEditCategory -> navigate(navController, Directions.category)
