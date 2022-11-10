@@ -1,17 +1,20 @@
 package neuro.expenses.register.common.android.activity
 
 import android.os.Bundle
-import android.view.View
+import androidx.viewbinding.ViewBinding
 
-abstract class BaseActivity : BaseNavActivity() {
+abstract class BaseActivity<T : ViewBinding> : BaseNavActivity() {
+
+  protected lateinit var binding: T
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
-    setContentView(getView())
+    binding = getViewBinding()
+    setContentView(binding.root)
     setupViewModel()
   }
 
-  protected abstract fun getView(): View
+  protected abstract fun getViewBinding(): T
   protected open fun setupViewModel() {}
 }

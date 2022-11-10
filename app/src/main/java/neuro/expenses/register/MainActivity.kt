@@ -1,7 +1,6 @@
 package neuro.expenses.register
 
 import android.os.Bundle
-import android.view.View
 import android.view.WindowManager
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -11,12 +10,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import neuro.expenses.register.common.android.activity.BaseActivity
 import neuro.expenses.register.databinding.ActivityMainBinding
 
-class MainActivity : BaseActivity() {
-  private lateinit var binding: ActivityMainBinding
+class MainActivity : BaseActivity<ActivityMainBinding>() {
 
-  override fun getView(): View {
-    binding = ActivityMainBinding.inflate(layoutInflater)
-    return binding.root
+  override fun getViewBinding(): ActivityMainBinding {
+    return ActivityMainBinding.inflate(layoutInflater)
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {

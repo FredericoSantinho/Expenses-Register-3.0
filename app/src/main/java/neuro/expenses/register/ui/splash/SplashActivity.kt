@@ -2,7 +2,6 @@ package neuro.expenses.register.ui.splash
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -11,14 +10,13 @@ import neuro.expenses.register.common.android.activity.BaseActivity
 import neuro.expenses.register.databinding.ActivitySplashBinding
 import org.koin.core.component.inject
 
-class SplashActivity : BaseActivity() {
 
-  private lateinit var binding: ActivitySplashBinding
+class SplashActivity : BaseActivity<ActivitySplashBinding>() {
+
   val splashViewModel: SplashViewModel by inject()
 
-  override fun getView(): View {
-    binding = ActivitySplashBinding.inflate(layoutInflater)
-    return binding.root
+  override fun getViewBinding(): ActivitySplashBinding {
+    return ActivitySplashBinding.inflate(layoutInflater)
   }
 
   override fun setupViewModel() {
