@@ -1,4 +1,4 @@
-package neuro.expenses.register.ui.home
+package neuro.expenses.register.viewmodel.edit.product
 
 import androidx.lifecycle.ViewModel
 
