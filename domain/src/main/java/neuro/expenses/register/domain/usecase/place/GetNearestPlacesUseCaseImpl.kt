@@ -14,7 +14,7 @@ class GetNearestPlacesUseCaseImpl(
       it.sortedBy {
         calculateDistanceUseCase.calculateDistance(
           latLng,
-          it.latLng
+          it.latLngDto
         )
       }.take(limit)
     }

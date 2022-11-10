@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Divider
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
@@ -24,7 +23,6 @@ import neuro.expenses.register.ui.composable.DropDownTextField
 import neuro.expenses.register.ui.composable.MapsComposable
 import neuro.expenses.register.ui.composables.datetime.DateTimeComposable
 import neuro.expenses.register.ui.home.viewmodel.HomeViewModel
-import neuro.expenses.register.ui.home.viewmodel.UiEvent
 import neuro.expenses.register.ui.home.viewmodel.UiState
 import org.koin.androidx.compose.getViewModel
 
@@ -34,7 +32,6 @@ fun HomeComposable(
   initialCameraPosition: CameraPosition,
   homeViewModel: HomeViewModel = getViewModel()
 ) {
-  val uiEvent by homeViewModel.uiEvent.observeAsState(null)
   val uiState by homeViewModel.uiState
 
   val loading = remember { mutableStateOf(true) }
@@ -74,18 +71,8 @@ fun HomeComposable(
         )
       }
       Divider(thickness = 1.dp, color = Color.LightGray)
-      onUiState(uiState, homeViewModel, loading)
+      onUiState(uiState, homeViewModel, loading, cameraPosition)
     }
-  }
-
-  onUiEvent(uiEvent, cameraPosition)
-}
-
-private fun onUiEvent(uiEvent: UiEvent?, cameraPosition: MutableState<CameraPosition>) {
-  when (uiEvent) {
-    is UiEvent.MoveCamera -> cameraPosition.value =
-      CameraPosition.fromLatLngZoom(uiEvent.latLng, uiEvent.zoom)
-    null -> {}
   }
 }
 
@@ -93,11 +80,12 @@ private fun onUiEvent(uiEvent: UiEvent?, cameraPosition: MutableState<CameraPosi
 private fun onUiState(
   uiState: UiState,
   homeViewModel: HomeViewModel,
-  loading: MutableState<Boolean>
+  loading: MutableState<Boolean>,
+  cameraPosition: MutableState<CameraPosition>
 ) {
   when (uiState) {
     is UiState.Loading -> onUiLoading()
-    is UiState.Ready -> onUiReady(homeViewModel, loading)
+    is UiState.Ready -> onUiReady(uiState, homeViewModel, loading, cameraPosition)
   }
 }
 
@@ -113,8 +101,15 @@ fun onUiLoading() {
 }
 
 @Composable
-private fun onUiReady(homeViewModel: HomeViewModel, loading: MutableState<Boolean>) {
+private fun onUiReady(
+  uiState: UiState.Ready,
+  homeViewModel: HomeViewModel,
+  loading: MutableState<Boolean>,
+  cameraPosition: MutableState<CameraPosition>
+) {
   loading.value = false
+  cameraPosition.value =
+    CameraPosition.fromLatLngZoom(uiState.latLng, uiState.zoom)
   ProductsListComposable(homeViewModel.productsListViewModel)
 }
 

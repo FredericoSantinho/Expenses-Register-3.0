@@ -3,11 +3,8 @@ package neuro.expenses.register.ui.home.viewmodel
 import androidx.compose.runtime.mutableStateOf
 import com.exchangebot.common.schedulers.SchedulerProvider
 import com.google.android.gms.maps.model.LatLng
-import neuro.expenses.register.common.live.data.SingleLiveEvent
 import neuro.expenses.register.common.viewmodel.BaseViewModel
-import neuro.expenses.register.common.viewmodel.asLiveData
 import neuro.expenses.register.common.viewmodel.asState
-import neuro.expenses.register.domain.dto.LatLngDto
 import neuro.expenses.register.domain.dto.PlaceDto
 import neuro.expenses.register.domain.usecase.calendar.GetCalendarUseCase
 import neuro.expenses.register.domain.usecase.location.GetCurrentLocationUseCase
@@ -40,8 +37,6 @@ class HomeViewModel(
 
   private val _uiState = mutableStateOf<UiState>(UiState.Loading)
   val uiState = _uiState.asState()
-  private val _uiEvent = SingleLiveEvent<UiEvent>()
-  val uiEvent = _uiEvent.asLiveData()
 
   init {
     getCurrentLocationUseCase.getCurrentLocation()
@@ -49,9 +44,9 @@ class HomeViewModel(
       .baseSubscribe { nearestPlaces ->
         places.value = nearestPlaces
         placesNames.value = nearestPlaces.map { placeDto -> placeDto.name }
-        moveCamera(nearestPlaces.get(selectedPlaceIndex).latLng, zoom)
         productsListViewModel.setProducts(nearestPlaces.get(selectedPlaceIndex))
-        _uiState.value = UiState.Ready
+        val latLng = latLngMapper.map(nearestPlaces.get(selectedPlaceIndex).latLngDto)
+        _uiState.value = UiState.Ready(latLng, zoom)
       }
     disposable.add(feedLastBillViewModel.subscribe())
   }
@@ -59,17 +54,14 @@ class HomeViewModel(
   fun onSelectedPlace(index: Int) {
     selectedPlaceIndex = index
     val placeDto = places.value.get(index)
-    moveCamera(placeDto.latLng, zoom)
+    val latLng = latLngMapper.map(placeDto.latLngDto)
+    _uiState.value = UiState.Ready(latLng, zoom)
     productsListViewModel.setProducts(placeDto)
   }
 
   override fun onCleared() {
     super.onCleared()
     productsListViewModel.clear()
-  }
-
-  private fun moveCamera(latLngDto: LatLngDto, zoom: Float) {
-    _uiEvent.value = UiEvent.MoveCamera(latLngMapper.map(latLngDto), zoom)
   }
 
   private fun newProductsListViewModel() =
@@ -80,11 +72,7 @@ class HomeViewModel(
     )
 }
 
-sealed class UiEvent {
-  data class MoveCamera(val latLng: LatLng, val zoom: Float) : UiEvent()
-}
-
-sealed class UiState {
+sealed class UiState() {
   object Loading : UiState()
-  object Ready : UiState()
+  class Ready(val latLng: LatLng, val zoom: Float) : UiState()
 }
