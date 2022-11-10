@@ -5,6 +5,7 @@ import com.exchangebot.common.schedulers.SchedulerProvider
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import neuro.expenses.register.common.viewmodel.BaseViewModel
+import neuro.expenses.register.common.viewmodel.asState
 import neuro.expenses.register.domain.dto.PlaceDto
 import neuro.expenses.register.domain.usecase.calendar.GetCalendarUseCase
 import neuro.expenses.register.domain.usecase.location.GetCurrentLocationUseCase
@@ -37,6 +38,9 @@ class HomeViewModel(
   val productsListViewModel: ProductsListViewModel = newProductsListViewModel()
   private var selectedPlaceIndex = 0
 
+  private val _uiState = mutableStateOf<UiState>(UiState.Loading)
+  val uiState = _uiState.asState()
+
   init {
     getCurrentLocationUseCase.getCurrentLocation()
       .flatMap { getNearestPlacesUseCase.getNearestPlaces(it, nearestPlacesLimit) }
@@ -49,6 +53,7 @@ class HomeViewModel(
             zoom
           )
         productsListViewModel.setProducts(nearestPlaces.get(selectedPlaceIndex))
+        _uiState.value = UiState.Ready
       }
     disposable.add(feedLastBillViewModel.subscribe())
   }
@@ -60,14 +65,19 @@ class HomeViewModel(
     productsListViewModel.setProducts(placeDto)
   }
 
+  override fun onCleared() {
+    super.onCleared()
+    productsListViewModel.clear()
+  }
+
   private fun newProductsListViewModel() =
     ProductsListViewModel(
       productCardViewModelFactory,
       calendar
     )
+}
 
-  override fun onCleared() {
-    super.onCleared()
-    productsListViewModel.clear()
-  }
+sealed class UiState {
+  object Loading : UiState()
+  object Ready : UiState()
 }

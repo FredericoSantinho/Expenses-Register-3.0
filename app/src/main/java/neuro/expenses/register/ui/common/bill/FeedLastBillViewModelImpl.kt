@@ -34,5 +34,6 @@ class FeedLastBillViewModelImpl(
     if (billDto.billItems.isNotEmpty()) {
       billViewModel.iconUrl.value = billDto.billItems.get(0).product.iconUrl
     }
+    billViewModel.isLoading.value = false
   }
 }

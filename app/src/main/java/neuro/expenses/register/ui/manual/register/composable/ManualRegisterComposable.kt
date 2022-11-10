@@ -225,7 +225,7 @@ fun ManualRegisterComposable(
 }
 
 @Composable
-fun onUiEvent(uiEvent: UiEvent?) {
+private fun onUiEvent(uiEvent: UiEvent?) {
   when (uiEvent) {
     is UiEvent.ShowRegisterSuccess -> {
       showSuccessSnackbar(uiEvent)
@@ -235,7 +235,7 @@ fun onUiEvent(uiEvent: UiEvent?) {
 }
 
 @Composable
-fun showSuccessSnackbar(uiEvent: UiEvent.ShowRegisterSuccess) {
+private fun showSuccessSnackbar(uiEvent: UiEvent.ShowRegisterSuccess) {
   showSnackbar(text = uiEvent.productDescription, key = uiEvent)
 }
 
@@ -267,7 +267,7 @@ private fun onUiState(
 }
 
 @Composable
-fun onUiError(
+private fun onUiError(
   errors: List<UiStateError>,
   descriptionIsError: MutableState<Boolean>,
   descriptionErrorMessage: MutableState<String>,
@@ -298,7 +298,7 @@ fun onUiError(
   }
 }
 
-fun showAmountError(
+private fun showAmountError(
   message: String,
   amountIsError: MutableState<Boolean>,
   amountErrorMessage: MutableState<String>

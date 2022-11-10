@@ -13,12 +13,15 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.exchangebot.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.R
+import neuro.expenses.register.common.viewmodel.shimmer
+import neuro.expenses.register.common.viewmodel.shimmerBackground
 import neuro.expenses.register.ui.report.composable.AsyncImage
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -27,6 +30,8 @@ fun BillComposable(
   billViewModel: BillViewModel,
   modifier: Modifier = Modifier
 ) {
+  val loading = billViewModel.isLoading.value
+
   Card(
     modifier = modifier
       .requiredHeight(80.dp)
@@ -43,6 +48,7 @@ fun BillComposable(
       modifier = Modifier
         .fillMaxWidth()
         .padding(8.dp)
+        .shimmer(loading)
     ) {
       val (imageC, placeC, dateC, totalC, closeBillC) = createRefs()
 
@@ -55,8 +61,10 @@ fun BillComposable(
             bottom.linkTo(parent.bottom)
           }
           .size(64.dp)
-          .clip(RoundedCornerShape(corner = CornerSize(8.dp))),
-        url = billViewModel.iconUrl.value
+          .clip(RoundedCornerShape(corner = CornerSize(8.dp)))
+          .shimmerBackground(loading),
+        url = billViewModel.iconUrl.value,
+        billViewModel.isLoading
       )
       Text(
         modifier = Modifier
@@ -64,7 +72,13 @@ fun BillComposable(
             start.linkTo(imageC.end)
             end.linkTo(totalC.start)
             top.linkTo(parent.top)
-          }, text = billViewModel.place.value, style = typography.h5, fontWeight = FontWeight.Bold
+          }
+          .widthIn(160.dp)
+          .shimmerBackground(loading),
+        textAlign = TextAlign.Center,
+        text = billViewModel.place.value,
+        style = typography.h5,
+        fontWeight = FontWeight.Bold
       )
       Row(modifier = Modifier.constrainAs(dateC) {
         start.linkTo(imageC.end)
@@ -72,11 +86,19 @@ fun BillComposable(
         bottom.linkTo(parent.bottom)
       }) {
         Text(
+          modifier = Modifier
+            .widthIn(48.dp)
+            .shimmerBackground(loading),
+          textAlign = TextAlign.Center,
           text = billViewModel.time.value,
           style = typography.body2
         )
         Text(
-          modifier = Modifier.padding(start = 8.dp),
+          modifier = Modifier
+            .padding(start = 8.dp)
+            .widthIn(80.dp)
+            .shimmerBackground(loading),
+          textAlign = TextAlign.Center,
           text = billViewModel.date.value,
           style = typography.body2
         )
@@ -87,7 +109,10 @@ fun BillComposable(
             end.linkTo(closeBillC.start)
             top.linkTo(parent.top)
             bottom.linkTo(parent.bottom)
-          },
+          }
+          .widthIn(80.dp)
+          .shimmerBackground(loading),
+        textAlign = TextAlign.End,
         text = billViewModel.total.value,
         fontSize = 26.sp,
         fontWeight = FontWeight.Bold,

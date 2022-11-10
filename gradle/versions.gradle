@@ -24,6 +24,7 @@ ver.constraintLayoutCompose = "1.0.1"
 ver.lifecycle = "2.5.1"
 ver.navigation = "2.5.2"
 ver.compose = "1.3.0"
+ver.compose_shimmer = "1.0.3"
 
 ver.play_services_location = "21.0.1"
 

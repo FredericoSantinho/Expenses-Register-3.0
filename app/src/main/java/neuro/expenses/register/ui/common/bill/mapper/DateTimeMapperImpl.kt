@@ -13,7 +13,7 @@ class DateTimeMapperImpl(private val numberFormater: NumberFormater) : DateTimeM
 
   override fun mapDate(calendar: Calendar): String {
     val day = calendar.get(Calendar.DAY_OF_MONTH)
-    val month = calendar.get(Calendar.MONTH)
+    val month = calendar.get(Calendar.MONTH) + 1
     val year = calendar.get(Calendar.YEAR)
 
     return numberFormater.format(day) + '/' + numberFormater.format(month) + '/' + year

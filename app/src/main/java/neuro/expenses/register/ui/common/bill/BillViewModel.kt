@@ -6,12 +6,13 @@ class BillViewModel(isEdit: Boolean = false) {
   // TODO: create id
   val id = mutableStateOf(hashCode())
   val iconUrl = mutableStateOf("")
-  val place = mutableStateOf("N/A")
-  val time = mutableStateOf("N/A")
-  val date = mutableStateOf("N/A")
-  val total = mutableStateOf("0,00 €")
+  val place = mutableStateOf("")
+  val time = mutableStateOf("")
+  val date = mutableStateOf("")
+  val total = mutableStateOf("")
   val isBillOpen = mutableStateOf(false)
   val isEdit = mutableStateOf(isEdit)
+  val isLoading = mutableStateOf(true)
 
   fun onClick() {
 
