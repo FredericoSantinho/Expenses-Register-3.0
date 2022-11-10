@@ -7,7 +7,7 @@ import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.MaterialTheme.typography
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -30,7 +30,9 @@ fun BillComposable(
   billViewModel: BillViewModel,
   modifier: Modifier = Modifier
 ) {
-  val loading = billViewModel.isLoading.value
+  val uiState by billViewModel.uiState
+
+  val loading = remember { mutableStateOf(billViewModel.uiState.value == UiState.Loading) }
 
   Card(
     modifier = modifier
@@ -48,7 +50,7 @@ fun BillComposable(
       modifier = Modifier
         .fillMaxWidth()
         .padding(8.dp)
-        .shimmer(loading)
+        .shimmer(loading.value)
     ) {
       val (imageC, placeC, dateC, totalC, closeBillC) = createRefs()
 
@@ -62,9 +64,9 @@ fun BillComposable(
           }
           .size(64.dp)
           .clip(RoundedCornerShape(corner = CornerSize(8.dp)))
-          .shimmerBackground(loading),
+          .shimmerBackground(loading.value),
         url = billViewModel.iconUrl.value,
-        billViewModel.isLoading
+        loading
       )
       Text(
         modifier = Modifier
@@ -74,7 +76,7 @@ fun BillComposable(
             top.linkTo(parent.top)
           }
           .widthIn(160.dp)
-          .shimmerBackground(loading),
+          .shimmerBackground(loading.value),
         textAlign = TextAlign.Center,
         text = billViewModel.place.value,
         style = typography.h5,
@@ -88,7 +90,7 @@ fun BillComposable(
         Text(
           modifier = Modifier
             .widthIn(48.dp)
-            .shimmerBackground(loading),
+            .shimmerBackground(loading.value),
           textAlign = TextAlign.Center,
           text = billViewModel.time.value,
           style = typography.body2
@@ -97,7 +99,7 @@ fun BillComposable(
           modifier = Modifier
             .padding(start = 8.dp)
             .widthIn(80.dp)
-            .shimmerBackground(loading),
+            .shimmerBackground(loading.value),
           textAlign = TextAlign.Center,
           text = billViewModel.date.value,
           style = typography.body2
@@ -111,7 +113,7 @@ fun BillComposable(
             bottom.linkTo(parent.bottom)
           }
           .widthIn(80.dp)
-          .shimmerBackground(loading),
+          .shimmerBackground(loading.value),
         textAlign = TextAlign.End,
         text = billViewModel.total.value,
         fontSize = 26.sp,
@@ -124,15 +126,34 @@ fun BillComposable(
           top.linkTo(parent.top)
           bottom.linkTo(parent.bottom)
         }
-      if (billViewModel.isEdit.value) {
-        editBillIcon(iconConstraintModifier, billViewModel)
-      } else {
-        if (billViewModel.isBillOpen.value) {
-          closeBillIcon(iconConstraintModifier)
-        } else {
-          guideDivider(iconConstraintModifier)
-        }
-      }
+      onUiState(uiState, billViewModel, iconConstraintModifier, loading)
+    }
+  }
+}
+
+@Composable
+private fun onUiState(
+  uiState: UiState,
+  billViewModel: BillViewModel,
+  modifier: Modifier,
+  loading: MutableState<Boolean>
+) {
+  when (uiState) {
+    is UiState.BillEditable -> {
+      editBillIcon(modifier, billViewModel)
+      loading.value = false
+    }
+    is UiState.BillOpen -> {
+      closeBillIcon(modifier)
+      loading.value = false
+    }
+    is UiState.BillClosed -> {
+      guideDivider(modifier)
+      loading.value = false
+    }
+    is UiState.Loading -> {
+      guideDivider(modifier)
+      loading.value = true
     }
   }
 }
@@ -163,11 +184,11 @@ private fun closeBillIcon(imageConstraintModifier: Modifier) {
 }
 
 @Composable
-private fun editBillIcon(imageConstraintModifier: Modifier, billViewModel: BillViewModel) {
+private fun editBillIcon(modifier: Modifier, billViewModel: BillViewModel) {
   IconButton(
     onClick = {
       billViewModel.onEditClick()
-    }, modifier = imageConstraintModifier
+    }, modifier = modifier
       .padding(start = 8.dp)
   ) {
     Icon(

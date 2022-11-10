@@ -16,7 +16,9 @@ class BillsViewModel : ViewModel() {
   private fun getList(): List<BillViewModel> {
     val list = mutableListOf<BillViewModel>()
     for (i in 1..20) {
-      list.add(BillViewModel(true))
+      val billViewModel = BillViewModel()
+      billViewModel.setEditableBillState()
+      list.add(billViewModel)
     }
     return list
   }

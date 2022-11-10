@@ -25,15 +25,19 @@ class FeedLastBillViewModelImpl(
   }
 
   private fun publish(billDto: BillDto) {
+    billViewModel.id.value = billDto.id
     billViewModel.iconUrl.value = billDto.iconUrl
     billViewModel.place.value = billDto.place
     billViewModel.time.value = dateTimeMapper.mapTime(billDto.calendar)
     billViewModel.date.value = dateTimeMapper.mapDate(billDto.calendar)
     billViewModel.total.value = doubleFormatter.format(billDto.total) + " $currency"
-    billViewModel.isBillOpen.value = billDto.isOpen
     if (billDto.billItems.isNotEmpty()) {
       billViewModel.iconUrl.value = billDto.billItems.get(0).product.iconUrl
     }
-    billViewModel.isLoading.value = false
+    if (billDto.isOpen) {
+      billViewModel.setOpenedBillState()
+    } else {
+      billViewModel.setClosedBillState()
+    }
   }
 }
