@@ -1,4 +1,4 @@
-package neuro.expenses.register
+package neuro.expenses.register.ui.splash
 
 import com.exchangebot.common.schedulers.SchedulerProvider
 import neuro.expenses.register.common.live.data.SingleLiveEvent
@@ -6,7 +6,7 @@ import neuro.expenses.register.common.viewmodel.BaseViewModel
 import neuro.expenses.register.common.viewmodel.asLiveData
 
 
-class EntryViewModel(
+class SplashViewModel(
   schedulerProvider: SchedulerProvider
 ) : BaseViewModel(schedulerProvider) {
 

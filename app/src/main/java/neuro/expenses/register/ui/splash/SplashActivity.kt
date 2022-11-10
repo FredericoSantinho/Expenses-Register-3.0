@@ -1,4 +1,4 @@
-package neuro.expenses.register
+package neuro.expenses.register.ui.splash
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -6,22 +6,23 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import neuro.expenses.register.R
 import neuro.expenses.register.common.android.activity.BaseActivity
-import neuro.expenses.register.databinding.ActivityEntryBinding
+import neuro.expenses.register.databinding.ActivitySplashBinding
 import org.koin.core.component.inject
 
-class EntryActivity : BaseActivity() {
+class SplashActivity : BaseActivity() {
 
-  private lateinit var binding: ActivityEntryBinding
-  val entryViewModel: EntryViewModel by inject()
+  private lateinit var binding: ActivitySplashBinding
+  val splashViewModel: SplashViewModel by inject()
 
   override fun getView(): View {
-    binding = ActivityEntryBinding.inflate(layoutInflater)
+    binding = ActivitySplashBinding.inflate(layoutInflater)
     return binding.root
   }
 
   override fun setupViewModel() {
-    entryViewModel.uiEvent.observe(this) { onUiEvent(it) }
+    splashViewModel.uiEvent.observe(this) { onUiEvent(it) }
   }
 
   private fun onUiEvent(uiEvent: UiEvent) {
@@ -41,9 +42,9 @@ class EntryActivity : BaseActivity() {
         Manifest.permission.ACCESS_FINE_LOCATION
       ) != PackageManager.PERMISSION_GRANTED
     ) {
-      entryViewModel.onPermissionsNotGranted()
+      splashViewModel.onPermissionsNotGranted()
     } else {
-      entryViewModel.onPermissionsGranted()
+      splashViewModel.onPermissionsGranted()
     }
   }
 
@@ -73,7 +74,7 @@ class EntryActivity : BaseActivity() {
   }
 
   private fun navigateToMainActivity() {
-    navigateTo(EntryFragmentDirections.actionNavigationEntryToNavigationMain())
+    navigateTo(SplashFragmentDirections.actionNavigationSplashToNavigationMain())
     finish()
   }
 

@@ -1,13 +1,14 @@
-package neuro.expenses.register
+package neuro.expenses.register.ui.splash
 
 import androidx.annotation.LayoutRes
+import neuro.expenses.register.R
 import neuro.expenses.register.common.android.fragment.BaseFragment
 
-class EntryFragment : BaseFragment() {
+class SplashFragment : BaseFragment() {
 
   @LayoutRes
   override fun getLayout(): Int {
-    return R.layout.fragment_entry
+    return R.layout.fragment_splash
   }
 
   override fun setupViewModel() {}

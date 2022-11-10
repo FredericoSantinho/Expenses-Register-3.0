@@ -1,4 +1,4 @@
-package neuro.expenses.register
+package neuro.expenses.register.database
 
 import io.reactivex.rxjava3.core.Completable
 import neuro.expenses.register.data.ExpensesRegisterDatabase

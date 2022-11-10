@@ -1,6 +1,5 @@
 package neuro.expenses.register.di
 
-import neuro.expenses.register.EntryViewModel
 import neuro.expenses.register.common.formatter.DecimalFormatter
 import neuro.expenses.register.common.formatter.DecimalFormatterImpl
 import neuro.expenses.register.common.formatter.NumberFormater
@@ -21,12 +20,13 @@ import neuro.expenses.register.ui.home.viewmodel.HomeViewModel
 import neuro.expenses.register.ui.manual.register.ManualRegisterViewModel
 import neuro.expenses.register.ui.manual.register.mapper.RegisterExpenseErrorMapper
 import neuro.expenses.register.ui.manual.register.mapper.RegisterExpenseErrorMapperImpl
+import neuro.expenses.register.ui.splash.SplashViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val viewModelModule = module {
-  viewModel { EntryViewModel(get()) }
+  viewModel { SplashViewModel(get()) }
   viewModel { HomeViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
   viewModel {
     ManualRegisterViewModel(

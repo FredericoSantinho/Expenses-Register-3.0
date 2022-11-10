@@ -7,6 +7,7 @@ import neuro.expenses.register.data.di.daoModule
 import neuro.expenses.register.data.di.databaseMapperModule
 import neuro.expenses.register.data.di.repositoryModule
 import neuro.expenses.register.data.di.serviceModule
+import neuro.expenses.register.database.PrePopulateDatabase
 import neuro.expenses.register.di.*
 import neuro.expenses.register.domain.di.dtoMapperModule
 import neuro.expenses.register.domain.di.entityModule
