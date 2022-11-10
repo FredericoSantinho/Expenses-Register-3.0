@@ -18,7 +18,7 @@ import com.exchangebot.ui.theme.ExpensesRegisterTheme
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import neuro.expenses.register.R
-import neuro.expenses.register.ui.common.bill.BillComposableContainer
+import neuro.expenses.register.ui.bill.BillComposableContainer
 import neuro.expenses.register.ui.common.mapper.LatLngMapper
 import neuro.expenses.register.ui.composable.DropDownTextField
 import neuro.expenses.register.ui.composable.MapsComposable

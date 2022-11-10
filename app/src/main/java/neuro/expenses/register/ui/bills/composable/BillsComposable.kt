@@ -20,9 +20,9 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.fragment.app.FragmentActivity
 import com.exchangebot.ui.theme.grey_fog_lighter
 import kotlinx.coroutines.launch
-import neuro.expenses.register.ui.bills.BillsViewModel
-import neuro.expenses.register.ui.common.bill.BillComposable
+import neuro.expenses.register.ui.bill.BillComposable
 import neuro.expenses.register.viewmodel.bill.BillViewModel
+import neuro.expenses.register.viewmodel.bills.BillsViewModel
 import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalMaterialApi::class)

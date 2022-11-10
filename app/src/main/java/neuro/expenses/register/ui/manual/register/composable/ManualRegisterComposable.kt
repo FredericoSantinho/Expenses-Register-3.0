@@ -26,7 +26,7 @@ import neuro.expenses.register.common.picker.date.ShowDatePicker
 import neuro.expenses.register.common.picker.date.ShowMaterialDatePicker
 import neuro.expenses.register.common.picker.time.DefaultShowTimePicker
 import neuro.expenses.register.common.picker.time.ShowTimePicker
-import neuro.expenses.register.ui.common.bill.BillComposableContainer
+import neuro.expenses.register.ui.bill.BillComposableContainer
 import neuro.expenses.register.ui.common.keyboard.keyboardOptionsNumeric
 import neuro.expenses.register.ui.common.keyboard.keyboardOptionsText
 import neuro.expenses.register.ui.composables.datetime.DateTimeComposable

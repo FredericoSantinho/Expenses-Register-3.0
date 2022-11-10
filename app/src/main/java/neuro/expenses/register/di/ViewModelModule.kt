@@ -1,7 +1,6 @@
 package neuro.expenses.register.di
 
 import neuro.expenses.register.common.formatter.*
-import neuro.expenses.register.ui.bills.BillsViewModel
 import neuro.expenses.register.ui.edit.EditViewModel
 import neuro.expenses.register.ui.home.EditCategoryViewModel
 import neuro.expenses.register.ui.home.EditPlaceViewModel
@@ -15,6 +14,7 @@ import neuro.expenses.register.viewmodel.bill.FeedLastBillViewModel
 import neuro.expenses.register.viewmodel.bill.FeedLastBillViewModelImpl
 import neuro.expenses.register.viewmodel.bill.mapper.DateTimeMapper
 import neuro.expenses.register.viewmodel.bill.mapper.DateTimeMapperImpl
+import neuro.expenses.register.viewmodel.bills.BillsViewModel
 import neuro.expenses.register.viewmodel.home.HomeViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named

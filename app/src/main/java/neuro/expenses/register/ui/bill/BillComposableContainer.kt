@@ -1,4 +1,4 @@
-package neuro.expenses.register.ui.common.bill
+package neuro.expenses.register.ui.bill
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Divider

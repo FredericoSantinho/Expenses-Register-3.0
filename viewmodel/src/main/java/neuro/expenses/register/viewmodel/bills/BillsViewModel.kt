@@ -1,4 +1,4 @@
-package neuro.expenses.register.ui.bills
+package neuro.expenses.register.viewmodel.bills
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
