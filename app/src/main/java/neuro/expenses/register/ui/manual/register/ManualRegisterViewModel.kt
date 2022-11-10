@@ -30,7 +30,7 @@ class ManualRegisterViewModel(
   private val doubleFormatter: DoubleFormatter,
   val billViewModel: BillViewModel,
   schedulerProvider: SchedulerProvider,
-  private val currency: String = "€"
+  private val currency: String
 ) : BaseViewModel(schedulerProvider) {
 
   val description = mutableStateOf("")

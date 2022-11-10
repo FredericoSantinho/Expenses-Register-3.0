@@ -16,6 +16,7 @@ import neuro.expenses.register.ui.common.bill.BillViewModel
 import neuro.expenses.register.ui.common.bill.FeedLastBillViewModel
 import neuro.expenses.register.ui.common.mapper.LatLngMapper
 import neuro.expenses.register.ui.home.factory.ProductCardViewModelFactory
+import neuro.expenses.register.ui.home.mapper.ProductCardModelMapper
 
 class HomeViewModel(
   private val getNearestPlacesUseCase: GetNearestPlacesUseCase,
@@ -24,6 +25,7 @@ class HomeViewModel(
   private val feedLastBillViewModel: FeedLastBillViewModel,
   private val productCardViewModelFactory: ProductCardViewModelFactory,
   private val latLngMapper: LatLngMapper,
+  private val productCardModelMapper: ProductCardModelMapper,
   val billViewModel: BillViewModel,
   schedulerProvider: SchedulerProvider,
   private val nearestPlacesLimit: Int = 5,
@@ -73,6 +75,7 @@ class HomeViewModel(
   private fun newProductsListViewModel() =
     ProductsListViewModel(
       productCardViewModelFactory,
+      productCardModelMapper,
       calendar
     )
 }

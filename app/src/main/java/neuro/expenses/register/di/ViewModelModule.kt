@@ -22,11 +22,12 @@ import neuro.expenses.register.ui.manual.register.ManualRegisterViewModel
 import neuro.expenses.register.ui.manual.register.mapper.RegisterExpenseErrorMapper
 import neuro.expenses.register.ui.manual.register.mapper.RegisterExpenseErrorMapperImpl
 import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val viewModelModule = module {
   viewModel { EntryViewModel(get()) }
-  viewModel { HomeViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
+  viewModel { HomeViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
   viewModel {
     ManualRegisterViewModel(
       get(),
@@ -38,7 +39,8 @@ val viewModelModule = module {
       get(),
       get(),
       get(),
-      get()
+      get(),
+      get(named(CURRENCY))
     )
   }
   single { BillViewModel() }

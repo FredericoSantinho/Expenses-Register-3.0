@@ -20,8 +20,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.exchangebot.ui.theme.ExpensesRegisterTheme
 import com.exchangebot.ui.theme.ExpensesRegisterTypography
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import neuro.expenses.register.domain.dto.ProductDto
+import neuro.expenses.register.ui.home.model.ProductCardModel
 import neuro.expenses.register.ui.home.viewmodel.ProductCardViewModel
 import neuro.expenses.register.ui.report.composable.AsyncImage
 import org.koin.androidx.compose.get
@@ -99,26 +98,21 @@ fun ProductCardComposable(productCardViewModel: ProductCardViewModel) {
 @Preview
 @Composable
 fun PreviewDateTimeComposable() {
-  val id: Long = 0
   val description = "Tosta de Atúm"
   val category = "Restau"
   val place = "place"
-  val price = 3.50
   val amount = 1.0
   val iconUrl = "https://s3.minipreco.pt/medias/hc0/hf7/8915812384798.jpg"
-  val productDto = ProductDto(id, description, category, price, amount, iconUrl)
+  val productCardModel = ProductCardModel(description, category, place, category, amount, iconUrl)
   val calendar = remember { mutableStateOf(Calendar.getInstance()) }
 
   ExpensesRegisterTheme {
     ProductCardComposable(
       ProductCardViewModel(
-        productDto,
-        place,
+        productCardModel,
         calendar,
         get(),
-        get(),
-        get(),
-        disposable = CompositeDisposable()
+        get()
       )
     )
   }

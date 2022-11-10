@@ -27,6 +27,7 @@ class ExpensesRegisterApplication : Application() {
 
     startKoin {
       modules(
+        registerExpensesModule,
         androidModule,
         schedulersModule,
         viewModelModule,

@@ -6,7 +6,7 @@ import neuro.expenses.register.first.run.FirstRun
 import neuro.expenses.register.first.run.FirstRunImpl
 import org.koin.dsl.module
 
-private val SECURE_PREFERENCES_NAME = "expensesRegisterPreferences"
+private const val SECURE_PREFERENCES_NAME = "expensesRegisterPreferences"
 
 val androidModule = module {
   single<SecureSharedPreferencesCreator> { SecureSharedPreferencesCreatorImpl() }
