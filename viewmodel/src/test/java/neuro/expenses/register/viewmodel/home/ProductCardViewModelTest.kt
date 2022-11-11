@@ -6,29 +6,29 @@ import org.junit.Assert
 import org.junit.Test
 import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
-import org.mockito.kotlin.any
+import org.mockito.kotlin.eq
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.same
 import org.mockito.kotlin.verifyNoInteractions
 import java.util.*
 
-class ProductCardViewModelTest {
+internal class ProductCardViewModelTest {
 
   @Test
   fun test() {
-    val homeViewModel = mock<IHomeViewModel>()
+    val onProductCardClick = mock<OnProductCardClick>()
     val description = "desc"
     val category = "cat"
     val place = "place"
     val price = "1.00 €"
     val amount = 1.0
     val iconUrl = "url"
-
     val productCardModel = ProductCardModel(description, category, place, price, amount, iconUrl)
     val calendar = mutableStateOf(Calendar.getInstance())
 
-    val productCardViewModel = ProductCardViewModel(homeViewModel, productCardModel, calendar)
+    val productCardViewModel = ProductCardViewModel(onProductCardClick, productCardModel, calendar)
 
+    Assert.assertEquals(calendar, productCardViewModel.calendar)
     Assert.assertEquals(description, productCardViewModel.description.value)
     Assert.assertEquals(category, productCardViewModel.category.value)
     Assert.assertEquals(place, productCardViewModel.place.value)
@@ -36,10 +36,11 @@ class ProductCardViewModelTest {
     Assert.assertEquals(amount, productCardViewModel.amount.value, 0.0)
     Assert.assertEquals(iconUrl, productCardViewModel.iconUrl.value)
 
-    verifyNoInteractions(homeViewModel)
+    verifyNoInteractions(onProductCardClick)
     productCardViewModel.onCardClick()
-    println(calendar.value)
-
-    verify(homeViewModel, times(1)).onProductCardClick(any(), same(calendar.value))
+    verify(onProductCardClick, times(1)).onProductCardClick(
+      eq(productCardModel),
+      same(calendar.value)
+    )
   }
 }

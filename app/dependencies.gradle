@@ -20,5 +20,10 @@ dependencies {
 
   testImplementation lib.koin_test
   testImplementation lib.junit
+  testImplementation lib.mockito
+  androidTestImplementation lib.mockito
   androidTestImplementation lib.google_test
+  androidTestImplementation lib.compose_ui_test_junit4
+  debugImplementation lib.compose_test
+  runtimeOnly lib.mockito_android
 }

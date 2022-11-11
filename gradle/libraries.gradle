@@ -15,6 +15,8 @@ lib.junit = "junit:junit:$ver.junit"
 lib.mockito = ["org.mockito:mockito-core:$ver.mockito",
                "org.mockito.kotlin:mockito-kotlin:$ver.mockito_kotlin"]
 
+lib.mockito_android = "org.mockito:mockito-android:$ver.mockito"
+
 lib.timber = "com.jakewharton.timber:timber:$ver.timber"
 
 lib.rxAndroid = "io.reactivex.rxjava3:rxandroid:$ver.rxAndroid"
@@ -37,6 +39,9 @@ lib.google = ["androidx.core:core-ktx:$ver.ktx",
               "androidx.compose.ui:ui:$ver.compose",
               "androidx.compose.material:material:$ver.compose",
               "androidx.compose.ui:ui-tooling:$ver.compose",]
+
+lib.compose_ui_test_junit4 = "androidx.compose.ui:ui-test-junit4:$ver.compose"
+lib.compose_test = "androidx.compose.ui:ui-test-manifest:$ver.compose"
 
 lib.compose_shimmer = "com.valentinilk.shimmer:compose-shimmer:$ver.compose_shimmer"
 

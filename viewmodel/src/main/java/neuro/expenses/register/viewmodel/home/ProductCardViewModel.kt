@@ -6,18 +6,18 @@ import neuro.expenses.register.viewmodel.home.model.ProductCardModel
 import java.util.*
 
 class ProductCardViewModel(
-  private val homeViewModel: IHomeViewModel,
+  private val onProductCardClick: OnProductCardClick,
   productCardModel: ProductCardModel,
   val calendar: State<Calendar>
-) {
-  val description = mutableStateOf(productCardModel.description)
-  val category = mutableStateOf(productCardModel.category)
+) : IProductCardViewModel {
+  override val description = mutableStateOf(productCardModel.description)
+  override val category = mutableStateOf(productCardModel.category)
+  override val price = mutableStateOf(productCardModel.price)
+  override val iconUrl = mutableStateOf(productCardModel.iconUrl)
   val place = mutableStateOf(productCardModel.place)
-  val price = mutableStateOf(productCardModel.price)
   val amount = mutableStateOf(productCardModel.amount)
-  val iconUrl = mutableStateOf(productCardModel.iconUrl)
 
-  fun onCardClick() {
+  override fun onCardClick() {
     val productCardModel = ProductCardModel(
       description.value,
       category.value,
@@ -26,6 +26,6 @@ class ProductCardViewModel(
       amount.value,
       iconUrl.value
     )
-    homeViewModel.onProductCardClick(productCardModel, calendar.value)
+    onProductCardClick.onProductCardClick(productCardModel, calendar.value)
   }
 }

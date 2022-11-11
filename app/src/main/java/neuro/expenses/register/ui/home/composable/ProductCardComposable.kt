@@ -12,6 +12,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -21,16 +23,18 @@ import androidx.constraintlayout.compose.Dimension
 import neuro.expenses.register.ui.common.composables.image.AsyncImage
 import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.ui.theme.ExpensesRegisterTypography
+import neuro.expenses.register.viewmodel.home.IProductCardViewModel
+import neuro.expenses.register.viewmodel.home.OnProductCardClick
 import neuro.expenses.register.viewmodel.home.ProductCardViewModel
 import neuro.expenses.register.viewmodel.home.model.ProductCardModel
-import org.koin.androidx.compose.getViewModel
 import java.util.*
 
 @Composable
-fun ProductCardComposable(productCardViewModel: ProductCardViewModel) {
+fun ProductCardComposable(productCardViewModel: IProductCardViewModel) {
   Row {
     Card(
       modifier = Modifier
+        .semantics { testTag = ProductCardTags.CARD }
         .height(100.dp)
         .clickable {
           productCardViewModel.onCardClick()
@@ -49,6 +53,7 @@ fun ProductCardComposable(productCardViewModel: ProductCardViewModel) {
         Text(
           text = productCardViewModel.description.value,
           modifier = Modifier
+            .semantics { testTag = ProductCardTags.PRODUCT_DESCRIPTION }
             .constrainAs(descriptionC) {
               start.linkTo(parent.start)
               top.linkTo(parent.top, margin = 4.dp)
@@ -60,6 +65,7 @@ fun ProductCardComposable(productCardViewModel: ProductCardViewModel) {
           maxLines = 3,
         )
         AsyncImage(modifier = Modifier
+          .semantics { testTag = ProductCardTags.ICON }
           .constrainAs(imageC) {
             end.linkTo(parent.end)
             top.linkTo(parent.top)
@@ -70,6 +76,7 @@ fun ProductCardComposable(productCardViewModel: ProductCardViewModel) {
         Text(
           text = productCardViewModel.category.value,
           modifier = Modifier
+            .semantics { testTag = ProductCardTags.CATEGORY }
             .constrainAs(categoryC) {
               start.linkTo(descriptionC.start)
               bottom.linkTo(parent.bottom, margin = 4.dp)
@@ -82,6 +89,7 @@ fun ProductCardComposable(productCardViewModel: ProductCardViewModel) {
         Text(
           text = productCardViewModel.price.value,
           modifier = Modifier
+            .semantics { testTag = ProductCardTags.PRICE }
             .constrainAs(priceC) {
               end.linkTo(parent.end)
               bottom.linkTo(parent.bottom)
@@ -99,15 +107,38 @@ fun ProductCardComposable(productCardViewModel: ProductCardViewModel) {
 @Preview
 @Composable
 fun PreviewDateTimeComposable() {
-  val description = "Tosta de Atúm"
+  val description = "Tosta Mista Pâo Caseiro"
   val category = "Restau"
-  val place = "place"
+  val place = "Riviera"
+  val price = "4.20 €"
   val amount = 1.0
-  val iconUrl = "https://s3.minipreco.pt/medias/hc0/hf7/8915812384798.jpg"
-  val productCardModel = ProductCardModel(description, category, place, category, amount, iconUrl)
+  val iconUrl =
+    "https://www.iguaria.com/wp-content/uploads/2016/03/Iguaria_Tosta-de-Bacon-Queijo-Fiambre.jpg"
+  val productCardModel = ProductCardModel(description, category, place, price, amount, iconUrl)
   val calendar = remember { mutableStateOf(Calendar.getInstance()) }
 
   ExpensesRegisterTheme {
-    ProductCardComposable(ProductCardViewModel(getViewModel(), productCardModel, calendar))
+    ProductCardComposable(
+      ProductCardViewModel(
+        MockedOnProductCardClick(),
+        productCardModel,
+        calendar
+      )
+    )
+  }
+}
+
+private class MockedOnProductCardClick : OnProductCardClick {
+  override fun onProductCardClick(productCardModel: ProductCardModel, calendar: Calendar) {
+  }
+}
+
+class ProductCardTags {
+  companion object {
+    const val CARD = "card"
+    const val PRODUCT_DESCRIPTION = "productDescription"
+    const val CATEGORY = "category"
+    const val PRICE = "price"
+    const val ICON = "icon"
   }
 }

@@ -3,10 +3,9 @@ package neuro.expenses.register.viewmodel.home
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import neuro.expenses.register.viewmodel.bill.BillViewModel
-import neuro.expenses.register.viewmodel.home.model.ProductCardModel
 import java.util.*
 
-interface IHomeViewModel {
+interface IHomeViewModel : OnProductCardClick {
   val billViewModel: BillViewModel
   val placesNames: MutableState<List<String>>
   val calendar: MutableState<Calendar>
@@ -15,5 +14,4 @@ interface IHomeViewModel {
 
   fun onSelectedPlace(index: Int)
   fun newProductsListViewModel(): ProductsListViewModel
-  fun onProductCardClick(productCardModel: ProductCardModel, calendar: Calendar)
 }
