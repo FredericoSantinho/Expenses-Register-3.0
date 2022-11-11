@@ -30,15 +30,15 @@ class RegisterExpenseUseCaseImpl(
   ): Completable {
     return getLastBillUseCase.getLastBill().defaultIfEmpty(defaultBillDto)
       .map { billMapper.map(it) }.flatMapCompletable { lastStoredBill ->
-        val place = expenseDto.place
-        val calendar = expenseDto.calendar
+        val expense = expenseMapper.map(expenseDto)
+
+        val place = expense.place
+        val calendar = expense.calendar
         val lastBill = if (!lastStoredBill.isOpen || lastStoredBill.place != place) {
           Bill(0, place, calendar)
         } else {
           lastStoredBill
         }
-
-        val expense = expenseMapper.map(expenseDto)
 
         return@flatMapCompletable expenseValidator.validate(expense).andThen(Completable.defer {
           val lastBillController =
