@@ -2,13 +2,13 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_splash">
+    app:startDestination="@+id/navigation_permissions">
 
   <fragment
-      android:id="@+id/navigation_splash"
-      android:name="neuro.expenses.register.ui.splash.SplashFragment">
+      android:id="@+id/navigation_permissions"
+      android:name="neuro.expenses.register.ui.permissions.PermissionsFragment">
     <action
-        android:id="@+id/action_navigation_splash_to_navigation_main"
+        android:id="@+id/action_navigation_permissions_to_navigation_main"
         app:destination="@id/navigation_main" />
   </fragment>
 

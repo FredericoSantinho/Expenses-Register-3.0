@@ -1,4 +1,4 @@
-package neuro.expenses.register.ui.splash
+package neuro.expenses.register.ui.permissions
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -7,22 +7,22 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import neuro.expenses.register.R
 import neuro.expenses.register.common.android.activity.BaseActivity
-import neuro.expenses.register.databinding.ActivitySplashBinding
-import neuro.expenses.register.viewmodel.splash.SplashViewModel
-import neuro.expenses.register.viewmodel.splash.UiEvent
+import neuro.expenses.register.databinding.ActivityPermissionsBinding
+import neuro.expenses.register.viewmodel.permissions.PermissionsViewModel
+import neuro.expenses.register.viewmodel.permissions.UiEvent
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class SplashActivity : BaseActivity<ActivitySplashBinding>() {
+class PermissionsActivity : BaseActivity<ActivityPermissionsBinding>() {
 
-  val splashViewModel: SplashViewModel by viewModel()
+  val permissionsViewModel: PermissionsViewModel by viewModel()
 
-  override fun getViewBinding(): ActivitySplashBinding {
-    return ActivitySplashBinding.inflate(layoutInflater)
+  override fun getViewBinding(): ActivityPermissionsBinding {
+    return ActivityPermissionsBinding.inflate(layoutInflater)
   }
 
   override fun setupViewModel() {
-    splashViewModel.uiEvent.observe(this) { onUiEvent(it) }
+    permissionsViewModel.uiEvent.observe(this) { onUiEvent(it) }
   }
 
   private fun onUiEvent(uiEvent: UiEvent) {
@@ -42,9 +42,9 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         Manifest.permission.ACCESS_FINE_LOCATION
       ) != PackageManager.PERMISSION_GRANTED
     ) {
-      splashViewModel.onPermissionsNotGranted()
+      permissionsViewModel.onPermissionsNotGranted()
     } else {
-      splashViewModel.onPermissionsGranted()
+      permissionsViewModel.onPermissionsGranted()
     }
   }
 
@@ -74,7 +74,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
   }
 
   private fun navigateToMainActivity() {
-    navigateTo(SplashFragmentDirections.actionNavigationSplashToNavigationMain())
+    navigateTo(PermissionsFragmentDirections.actionNavigationPermissionsToNavigationMain())
     finish()
   }
 

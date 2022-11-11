@@ -1,4 +1,4 @@
-package neuro.expenses.register.viewmodel.splash
+package neuro.expenses.register.viewmodel.permissions
 
 import neuro.expenses.register.viewmodel.common.BaseViewModel
 import neuro.expenses.register.viewmodel.common.asLiveData
@@ -6,7 +6,7 @@ import neuro.expenses.register.viewmodel.common.livedata.SingleLiveEvent
 import neuro.expenses.register.viewmodel.common.schedulers.SchedulerProvider
 
 
-class SplashViewModel(
+class PermissionsViewModel(
   schedulerProvider: SchedulerProvider
 ) : BaseViewModel(schedulerProvider) {
 
