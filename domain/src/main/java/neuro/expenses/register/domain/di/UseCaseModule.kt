@@ -1,7 +1,5 @@
 package neuro.expenses.register.domain.di
 
-import neuro.expenses.register.domain.entity.controller.CalculateBillTotal
-import neuro.expenses.register.domain.entity.controller.CalculateBillTotalImpl
 import neuro.expenses.register.domain.mapper.*
 import neuro.expenses.register.domain.usecase.bill.*
 import neuro.expenses.register.domain.usecase.calendar.GetCalendarUseCase
@@ -19,6 +17,8 @@ import neuro.expenses.register.domain.usecase.register.RegisterExpenseUseCase
 import neuro.expenses.register.domain.usecase.register.RegisterExpenseUseCaseImpl
 import neuro.expenses.register.domain.usecase.register.validator.ExpenseValidator
 import neuro.expenses.register.domain.usecase.register.validator.ExpenseValidatorImpl
+import neuro.expenses.register.entity.controller.CalculateBillTotal
+import neuro.expenses.register.entity.controller.CalculateBillTotalImpl
 import org.koin.dsl.module
 
 val useCaseModule = module {

@@ -19,8 +19,4 @@ class ProductsListViewModel(
       placeDto.products.map { productCardModelMapper.map(it, placeDto.name) }
         .map { productCardViewModelFactory.create(it, calendar) }
   }
-
-  fun clear() {
-    products.value.forEach { it.clear() }
-  }
 }

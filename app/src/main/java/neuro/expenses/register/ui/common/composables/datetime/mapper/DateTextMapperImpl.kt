@@ -1,7 +1,7 @@
 package neuro.expenses.register.ui.common.composables.datetime.mapper
 
-import neuro.expenses.register.common.formatter.NumberFormater
-import neuro.expenses.register.common.formatter.NumberFormaterImpl
+import neuro.expenses.register.viewmodel.common.formatter.NumberFormater
+import neuro.expenses.register.viewmodel.common.formatter.NumberFormaterImpl
 
 class DateTextMapperImpl(private val numberFormater: NumberFormater = NumberFormaterImpl()) :
   DateTextMapper {

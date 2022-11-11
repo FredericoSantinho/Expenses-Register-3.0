@@ -1,4 +1,4 @@
-package neuro.expenses.register.common.livedata
+package neuro.expenses.register.viewmodel.common.livedata
 
 /*
  *  Copyright 2017 Google Inc.

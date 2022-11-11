@@ -1,3 +1,3 @@
-package neuro.expenses.register.domain.entity
+package neuro.expenses.register.entity
 
 data class Place(val name: String, val latLng: LatLng)

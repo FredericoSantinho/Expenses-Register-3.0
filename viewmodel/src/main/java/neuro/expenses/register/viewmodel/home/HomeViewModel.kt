@@ -1,26 +1,29 @@
 package neuro.expenses.register.viewmodel.home
 
 import androidx.compose.runtime.mutableStateOf
-import neuro.expenses.register.common.schedulers.SchedulerProvider
 import neuro.expenses.register.domain.dto.PlaceDto
 import neuro.expenses.register.domain.usecase.calendar.GetCalendarUseCase
 import neuro.expenses.register.domain.usecase.location.GetCurrentLocationUseCase
 import neuro.expenses.register.domain.usecase.place.GetNearestPlacesUseCase
+import neuro.expenses.register.domain.usecase.register.RegisterExpenseUseCase
 import neuro.expenses.register.viewmodel.bill.BillViewModel
 import neuro.expenses.register.viewmodel.bill.FeedLastBillViewModel
 import neuro.expenses.register.viewmodel.common.BaseViewModel
 import neuro.expenses.register.viewmodel.common.asState
-import neuro.expenses.register.viewmodel.home.factory.ProductCardViewModelFactory
+import neuro.expenses.register.viewmodel.common.schedulers.SchedulerProvider
+import neuro.expenses.register.viewmodel.home.factory.ProductCardViewModelFactoryImpl
 import neuro.expenses.register.viewmodel.home.mapper.LatLngModelMapper
 import neuro.expenses.register.viewmodel.home.mapper.ProductCardModelMapper
 import neuro.expenses.register.viewmodel.home.model.LatLngModel
+import neuro.expenses.register.viewmodel.home.model.ProductCardModel
+import java.util.*
 
 class HomeViewModel(
   private val getNearestPlacesUseCase: GetNearestPlacesUseCase,
   private val getCurrentLocationUseCase: GetCurrentLocationUseCase,
   private val getCalendarUseCase: GetCalendarUseCase,
+  private val registerExpenseUseCase: RegisterExpenseUseCase,
   private val feedLastBillViewModel: FeedLastBillViewModel,
-  private val productCardViewModelFactory: ProductCardViewModelFactory,
   private val latLngModelMapper: LatLngModelMapper,
   private val productCardModelMapper: ProductCardModelMapper,
   val billViewModel: BillViewModel,
@@ -59,17 +62,19 @@ class HomeViewModel(
     productsListViewModel.setProducts(placeDto)
   }
 
-  override fun onCleared() {
-    super.onCleared()
-    productsListViewModel.clear()
-  }
-
   private fun newProductsListViewModel() =
     ProductsListViewModel(
-      productCardViewModelFactory,
+      ProductCardViewModelFactoryImpl(this),
       productCardModelMapper,
       calendar
     )
+
+  fun onProductCardClick(productCardModel: ProductCardModel, calendar: Calendar) {
+    registerExpenseUseCase.registerExpense(
+      productCardModelMapper.map(productCardModel, calendar)
+    ).baseSubscribe {
+    }
+  }
 }
 
 sealed class UiState() {

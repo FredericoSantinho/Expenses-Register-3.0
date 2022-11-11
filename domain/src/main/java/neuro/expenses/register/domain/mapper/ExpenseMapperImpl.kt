@@ -1,7 +1,7 @@
 package neuro.expenses.register.domain.mapper
 
 import neuro.expenses.register.domain.dto.ExpenseDto
-import neuro.expenses.register.domain.entity.Expense
+import neuro.expenses.register.entity.Expense
 
 class ExpenseMapperImpl : ExpenseMapper {
   override fun map(expenseDto: ExpenseDto): Expense {

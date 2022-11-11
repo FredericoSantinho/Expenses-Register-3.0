@@ -1,4 +1,4 @@
-package neuro.expenses.register.common.schedulers
+package neuro.expenses.register.viewmodel.common.schedulers
 
 import io.reactivex.rxjava3.core.Scheduler
 

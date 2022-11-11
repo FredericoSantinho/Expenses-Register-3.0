@@ -1,4 +1,4 @@
-package neuro.expenses.register.domain.entity
+package neuro.expenses.register.entity
 
 data class Product(
   val id: Long,

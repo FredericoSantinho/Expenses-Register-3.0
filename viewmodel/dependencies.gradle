@@ -7,6 +7,8 @@ dependencies {
 
   implementation lib.google
 
+  implementation lib.koin_android
+
   implementation lib.kotlin
 
   implementation lib.koin_core

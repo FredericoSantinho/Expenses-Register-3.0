@@ -1,3 +1,3 @@
-package neuro.expenses.register.domain.entity
+package neuro.expenses.register.entity
 
 data class LatLng(val latitude: Double, val longitude: Double)

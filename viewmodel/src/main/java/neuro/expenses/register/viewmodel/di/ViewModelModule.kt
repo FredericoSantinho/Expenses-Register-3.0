@@ -1,12 +1,15 @@
-package neuro.expenses.register.di
+package neuro.expenses.register.viewmodel.di
 
-import neuro.expenses.register.common.formatter.*
 import neuro.expenses.register.viewmodel.bill.BillViewModel
 import neuro.expenses.register.viewmodel.bill.FeedLastBillViewModel
 import neuro.expenses.register.viewmodel.bill.FeedLastBillViewModelImpl
 import neuro.expenses.register.viewmodel.bill.mapper.DateTimeMapper
 import neuro.expenses.register.viewmodel.bill.mapper.DateTimeMapperImpl
 import neuro.expenses.register.viewmodel.bills.BillsViewModel
+import neuro.expenses.register.viewmodel.common.formatter.DecimalFormatter
+import neuro.expenses.register.viewmodel.common.formatter.DecimalFormatterImpl
+import neuro.expenses.register.viewmodel.common.formatter.NumberFormater
+import neuro.expenses.register.viewmodel.common.formatter.NumberFormaterImpl
 import neuro.expenses.register.viewmodel.edit.EditViewModel
 import neuro.expenses.register.viewmodel.edit.category.EditCategoryViewModel
 import neuro.expenses.register.viewmodel.edit.place.EditPlaceViewModel
@@ -19,6 +22,8 @@ import neuro.expenses.register.viewmodel.splash.SplashViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
+
+const val CURRENCY = "currency"
 
 val viewModelModule = module {
   viewModel { SplashViewModel(get()) }
@@ -42,7 +47,6 @@ val viewModelModule = module {
   single<FeedLastBillViewModel> { FeedLastBillViewModelImpl(get(), get(), get(), get()) }
   single<DateTimeMapper> { DateTimeMapperImpl(get()) }
   single<NumberFormater> { NumberFormaterImpl() }
-  single<DoubleFormatter> { DoubleFormatterImpl(get()) }
   single<DecimalFormatter> { DecimalFormatterImpl(2) }
   single<RegisterExpenseErrorMapper> { RegisterExpenseErrorMapperImpl() }
   viewModel { BillsViewModel() }

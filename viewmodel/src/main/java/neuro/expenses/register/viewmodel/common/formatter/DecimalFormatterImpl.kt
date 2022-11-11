@@ -1,4 +1,4 @@
-package neuro.expenses.register.common.formatter
+package neuro.expenses.register.viewmodel.common.formatter
 
 import java.math.RoundingMode
 import java.text.DecimalFormat

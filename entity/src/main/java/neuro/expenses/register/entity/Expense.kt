@@ -1,4 +1,4 @@
-package neuro.expenses.register.domain.entity
+package neuro.expenses.register.entity
 
 import java.util.*
 

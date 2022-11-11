@@ -2,8 +2,8 @@ package neuro.expenses.register.domain.usecase.register.validator
 
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
-import neuro.expenses.register.domain.entity.Expense
 import neuro.expenses.register.domain.usecase.category.IsValidCategoryUseCase
+import neuro.expenses.register.entity.Expense
 
 class ExpenseValidatorImpl(val isValidCategoryUseCase: IsValidCategoryUseCase) : ExpenseValidator {
   override fun validate(expense: Expense): Completable {

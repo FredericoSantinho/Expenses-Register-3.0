@@ -1,19 +1,32 @@
 package neuro.expenses.register.viewmodel.home.mapper
 
-import neuro.expenses.register.common.formatter.DoubleFormatter
+import neuro.expenses.register.domain.dto.ExpenseDto
 import neuro.expenses.register.domain.dto.ProductDto
+import neuro.expenses.register.viewmodel.common.formatter.DecimalFormatter
 import neuro.expenses.register.viewmodel.home.model.ProductCardModel
+import java.util.*
 
 class ProductCardModelMapperImpl(
-  private val doubleFormatter: DoubleFormatter,
+  private val decimalFormatter: DecimalFormatter,
   private val currency: String
 ) : ProductCardModelMapper {
   override fun map(productDto: ProductDto, place: String): ProductCardModel {
     val description = productDto.description
     val category = productDto.category
-    val price = doubleFormatter.format(productDto.price) + ' ' + currency
+    val price = decimalFormatter.format(productDto.price) + ' ' + currency
     val amount = productDto.defaultAmount
 
     return ProductCardModel(description, category, place, price, amount, productDto.iconUrl)
+  }
+
+  override fun map(productCardModel: ProductCardModel, calendar: Calendar): ExpenseDto {
+    return ExpenseDto(
+      productCardModel.description,
+      productCardModel.category,
+      productCardModel.place,
+      productCardModel.price.substring(0, productCardModel.price.length - 2).toDouble(),
+      productCardModel.amount,
+      calendar
+    )
   }
 }

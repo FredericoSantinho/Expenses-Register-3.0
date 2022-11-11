@@ -7,9 +7,9 @@ import neuro.expenses.register.domain.service.GetCurrentLocationService
 class GetCurrentLocationUseCaseImpl(private val getCurrentLocationService: GetCurrentLocationService) :
   GetCurrentLocationUseCase {
 
-  private val ZERO = LatLngDto(0.0, 0.0)
+  private val zero = LatLngDto(0.0, 0.0)
 
   override fun getCurrentLocation(): Single<LatLngDto> {
-    return getCurrentLocationService.getCurrentLocation().onErrorReturn { ZERO }
+    return getCurrentLocationService.getCurrentLocation().onErrorReturn { zero }
   }
 }

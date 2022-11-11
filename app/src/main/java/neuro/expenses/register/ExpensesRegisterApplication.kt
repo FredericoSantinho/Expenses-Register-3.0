@@ -1,15 +1,12 @@
 package neuro.expenses.register
 
 import android.app.Application
-import neuro.expenses.register.common.schedulers.SchedulerProvider
 import neuro.expenses.register.data.di.*
 import neuro.expenses.register.database.PrePopulateDatabase
 import neuro.expenses.register.di.*
-import neuro.expenses.register.domain.di.dtoMapperModule
-import neuro.expenses.register.domain.di.entityModule
-import neuro.expenses.register.domain.di.useCaseModule
 import neuro.expenses.register.first.run.FirstRun
-import neuro.expenses.register.viewmodel.di.viewmodelMapperModule
+import neuro.expenses.register.viewmodel.common.schedulers.SchedulerProvider
+import neuro.expenses.register.viewmodel.di.*
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.GlobalContext.startKoin
@@ -38,7 +35,6 @@ class ExpensesRegisterApplication : Application() {
         databaseModule,
         databaseMapperModule,
         uiMapperModule,
-        factoryModule,
         daoModule,
         initModule
       )

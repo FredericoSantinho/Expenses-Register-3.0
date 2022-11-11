@@ -4,7 +4,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import neuro.expenses.register.common.livedata.SingleLiveEvent
+import neuro.expenses.register.viewmodel.common.livedata.SingleLiveEvent
 
 fun <T> MutableState<T>.asState(): State<T> =
   this

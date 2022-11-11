@@ -4,6 +4,7 @@ import neuro.expenses.register.ui.common.mapper.LatLngMapper
 import neuro.expenses.register.ui.common.mapper.LatLngMapperImpl
 import neuro.expenses.register.viewmodel.bill.mapper.BillModelMapper
 import neuro.expenses.register.viewmodel.bill.mapper.BillModelMapperImpl
+import neuro.expenses.register.viewmodel.di.CURRENCY
 import neuro.expenses.register.viewmodel.home.mapper.ProductCardModelMapper
 import neuro.expenses.register.viewmodel.home.mapper.ProductCardModelMapperImpl
 import org.koin.core.qualifier.named

@@ -1,9 +1,9 @@
 package neuro.expenses.register.viewmodel.splash
 
-import neuro.expenses.register.common.livedata.SingleLiveEvent
-import neuro.expenses.register.common.schedulers.SchedulerProvider
 import neuro.expenses.register.viewmodel.common.BaseViewModel
 import neuro.expenses.register.viewmodel.common.asLiveData
+import neuro.expenses.register.viewmodel.common.livedata.SingleLiveEvent
+import neuro.expenses.register.viewmodel.common.schedulers.SchedulerProvider
 
 
 class SplashViewModel(

@@ -1,6 +1,6 @@
 package neuro.expenses.register.viewmodel.bill.mapper
 
-import neuro.expenses.register.common.formatter.NumberFormater
+import neuro.expenses.register.viewmodel.common.formatter.NumberFormater
 import java.util.*
 
 class DateTimeMapperImpl(private val numberFormater: NumberFormater) : DateTimeMapper {

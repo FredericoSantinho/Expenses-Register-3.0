@@ -23,7 +23,7 @@ import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.ui.theme.ExpensesRegisterTypography
 import neuro.expenses.register.viewmodel.home.ProductCardViewModel
 import neuro.expenses.register.viewmodel.home.model.ProductCardModel
-import org.koin.androidx.compose.get
+import org.koin.androidx.compose.getViewModel
 import java.util.*
 
 @Composable
@@ -65,7 +65,8 @@ fun ProductCardComposable(productCardViewModel: ProductCardViewModel) {
             top.linkTo(parent.top)
           }
           .size(48.dp)
-          .clip(RoundedCornerShape(corner = CornerSize(8.dp))), productCardViewModel.iconUrl.value)
+          .clip(RoundedCornerShape(corner = CornerSize(8.dp))),
+          productCardViewModel.iconUrl.value)
         Text(
           text = productCardViewModel.category.value,
           modifier = Modifier
@@ -107,13 +108,6 @@ fun PreviewDateTimeComposable() {
   val calendar = remember { mutableStateOf(Calendar.getInstance()) }
 
   ExpensesRegisterTheme {
-    ProductCardComposable(
-      ProductCardViewModel(
-        productCardModel,
-        calendar,
-        get(),
-        get()
-      )
-    )
+    ProductCardComposable(ProductCardViewModel(getViewModel(), productCardModel, calendar))
   }
 }

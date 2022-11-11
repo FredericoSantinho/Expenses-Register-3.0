@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import io.reactivex.rxjava3.core.*
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
-import neuro.expenses.register.common.schedulers.SchedulerProvider
+import neuro.expenses.register.viewmodel.common.schedulers.SchedulerProvider
 
 open class BaseViewModel(
   private val schedulerProvider: SchedulerProvider
@@ -22,24 +22,24 @@ open class BaseViewModel(
     observeOn: Scheduler = schedulerProvider.ui(),
     onError: ((Throwable) -> Unit)? = null,
     onSuccess: (T) -> Unit
-  ): Disposable {
+  ) {
     if (onError != null) {
-      return subscribeOn(subscribeOn)
+      subscribeOn(subscribeOn)
         .run {
           observeOn(observeOn)
         }
         .subscribe(
           { onSuccess.invoke(it) },
           { onError.invoke(it) }
-        )
+        ).addToCompositeDisposable()
     } else {
-      return subscribeOn(subscribeOn)
+      subscribeOn(subscribeOn)
         .run {
           observeOn(observeOn)
         }
         .subscribe(
           { onSuccess.invoke(it) }
-        )
+        ).addToCompositeDisposable()
     }
   }
 
@@ -48,19 +48,19 @@ open class BaseViewModel(
     observeOn: Scheduler = schedulerProvider.ui(),
     onError: ((Throwable) -> Unit)? = null,
     onSuccess: (T) -> Unit
-  ): Disposable {
+  ) {
     if (onError != null) {
-      return subscribeOn(subscribeOn)
+      subscribeOn(subscribeOn)
         .run {
           observeOn(observeOn)
         }
-        .subscribe(onSuccess, onError)
+        .subscribe(onSuccess, onError).addToCompositeDisposable()
     } else {
-      return subscribeOn(subscribeOn)
+      subscribeOn(subscribeOn)
         .run {
           observeOn(observeOn)
         }
-        .subscribe(onSuccess)
+        .subscribe(onSuccess).addToCompositeDisposable()
     }
   }
 
@@ -69,24 +69,24 @@ open class BaseViewModel(
     observeOn: Scheduler = schedulerProvider.ui(),
     onError: ((Throwable) -> Unit)? = null,
     onSuccess: (T) -> Unit
-  ): Disposable {
+  ) {
     if (onError != null) {
-      return subscribeOn(subscribeOn)
+      subscribeOn(subscribeOn)
         .run {
           observeOn(observeOn)
         }
         .subscribe(
           { onSuccess.invoke(it) },
           { onError.invoke(it) }
-        )
+        ).addToCompositeDisposable()
     } else {
-      return subscribeOn(subscribeOn)
+      subscribeOn(subscribeOn)
         .run {
           observeOn(observeOn)
         }
         .subscribe(
           { onSuccess.invoke(it) }
-        )
+        ).addToCompositeDisposable()
     }
   }
 
@@ -95,24 +95,28 @@ open class BaseViewModel(
     observeOn: Scheduler = schedulerProvider.ui(),
     onError: ((Throwable) -> Unit)? = null,
     onComplete: () -> Unit
-  ): Disposable {
+  ) {
     if (onError != null) {
-      return subscribeOn(subscribeOn)
+      subscribeOn(subscribeOn)
         .run {
           observeOn(observeOn)
         }
         .subscribe(
           { onComplete() },
           { onError.invoke(it) }
-        )
+        ).addToCompositeDisposable()
     } else {
-      return subscribeOn(subscribeOn)
+      subscribeOn(subscribeOn)
         .run {
           observeOn(observeOn)
         }
         .subscribe(
           { onComplete() }
-        )
+        ).addToCompositeDisposable()
     }
+  }
+
+  private fun Disposable.addToCompositeDisposable() {
+    disposable.add(this)
   }
 }

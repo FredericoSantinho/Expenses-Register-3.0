@@ -7,7 +7,7 @@ import neuro.expenses.register.domain.dto.ProductDto
 import java.util.*
 
 class PlaceMapperImpl : PlaceMapper {
-  private val ZERO = LatLngDto(0.0, 0.0)
+  private val zero = LatLngDto(0.0, 0.0)
 
   override fun map(expenseDto: ExpenseDto): PlaceDto {
     val products = Collections.singletonList(
@@ -19,6 +19,6 @@ class PlaceMapperImpl : PlaceMapper {
         expenseDto.amount
       )
     )
-    return PlaceDto(expenseDto.place, products, ZERO)
+    return PlaceDto(expenseDto.place, products, zero)
   }
 }

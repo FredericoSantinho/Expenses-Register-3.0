@@ -1,7 +1,7 @@
 package neuro.expenses.register.domain.mapper
 
 import neuro.expenses.register.domain.dto.BillItemDto
-import neuro.expenses.register.domain.entity.BillItem
+import neuro.expenses.register.entity.BillItem
 import java.util.*
 
 class BillItemMapperImpl(private val productMapper: ProductMapper) : BillItemMapper {

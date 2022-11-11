@@ -1,9 +1,6 @@
 package neuro.expenses.register.viewmodel.manual.register
 
 import androidx.compose.runtime.mutableStateOf
-import neuro.expenses.register.common.formatter.DoubleFormatter
-import neuro.expenses.register.common.livedata.SingleLiveEvent
-import neuro.expenses.register.common.schedulers.SchedulerProvider
 import neuro.expenses.register.domain.dto.ExpenseDto
 import neuro.expenses.register.domain.usecase.calendar.GetCalendarUseCase
 import neuro.expenses.register.domain.usecase.category.ObserveCategoriesUseCase
@@ -16,6 +13,9 @@ import neuro.expenses.register.viewmodel.bill.FeedLastBillViewModel
 import neuro.expenses.register.viewmodel.common.BaseViewModel
 import neuro.expenses.register.viewmodel.common.asLiveData
 import neuro.expenses.register.viewmodel.common.asState
+import neuro.expenses.register.viewmodel.common.formatter.DecimalFormatter
+import neuro.expenses.register.viewmodel.common.livedata.SingleLiveEvent
+import neuro.expenses.register.viewmodel.common.schedulers.SchedulerProvider
 import neuro.expenses.register.viewmodel.manual.register.mapper.RegisterExpenseErrorMapper
 
 
@@ -27,7 +27,7 @@ class ManualRegisterViewModel(
   private val saveExpensePlaceAndProductUseCase: SaveExpensePlaceAndProductUseCase,
   private val feedLastBillViewModel: FeedLastBillViewModel,
   private val registerExpenseErrorMapper: RegisterExpenseErrorMapper,
-  private val doubleFormatter: DoubleFormatter,
+  private val decimalFormatter: DecimalFormatter,
   val billViewModel: BillViewModel,
   schedulerProvider: SchedulerProvider,
   private val currency: String
@@ -59,16 +59,14 @@ class ManualRegisterViewModel(
 
   fun onRegisterButton() {
     val expenseDto = buildExpense()
-    disposable.add(
-      registerExpenseUseCase.registerExpense(expenseDto)
-        .andThen(saveExpensePlaceAndProductUseCase.saveExpensePlaceAndProduct(expenseDto))
-        .baseSubscribe(
-          onComplete = { publishAndReset() },
-          onError = {
-            _uiState.value =
-              UiState.Error(registerExpenseErrorMapper.map((it as RegisterExpenseException).errors))
-          })
-    )
+    registerExpenseUseCase.registerExpense(expenseDto)
+      .andThen(saveExpensePlaceAndProductUseCase.saveExpensePlaceAndProduct(expenseDto))
+      .baseSubscribe(
+        onComplete = { publishAndReset() },
+        onError = {
+          _uiState.value =
+            UiState.Error(registerExpenseErrorMapper.map((it as RegisterExpenseException).errors))
+        })
   }
 
   fun onPriceChange() {
@@ -116,7 +114,7 @@ class ManualRegisterViewModel(
   private fun buildTotalStr(): String {
     val priceDouble = if (price.value.isBlank()) 0.0 else price.value.toDouble()
     val amountDouble = if (amount.value.isBlank()) 0.0 else amount.value.toDouble()
-    return doubleFormatter.format(priceDouble * amountDouble) + ' ' + currency
+    return decimalFormatter.format(priceDouble * amountDouble) + ' ' + currency
   }
 
   private fun buildExpense(): ExpenseDto {

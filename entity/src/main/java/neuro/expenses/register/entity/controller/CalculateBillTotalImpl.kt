@@ -1,6 +1,6 @@
-package neuro.expenses.register.domain.entity.controller
+package neuro.expenses.register.entity.controller
 
-import neuro.expenses.register.domain.entity.BillItem
+import neuro.expenses.register.entity.BillItem
 
 class CalculateBillTotalImpl : CalculateBillTotal {
   override fun getTotal(billItems: List<BillItem>): Double {

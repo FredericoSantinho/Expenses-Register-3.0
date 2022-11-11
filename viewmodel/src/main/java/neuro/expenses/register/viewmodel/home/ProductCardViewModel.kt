@@ -2,19 +2,13 @@ package neuro.expenses.register.viewmodel.home
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import neuro.expenses.register.common.schedulers.SchedulerProvider
-import neuro.expenses.register.domain.dto.ExpenseDto
-import neuro.expenses.register.domain.usecase.register.RegisterExpenseUseCase
 import neuro.expenses.register.viewmodel.home.model.ProductCardModel
 import java.util.*
 
 class ProductCardViewModel(
+  private val homeViewModel: HomeViewModel,
   productCardModel: ProductCardModel,
-  val calendar: State<Calendar>,
-  private val registerExpenseUseCase: RegisterExpenseUseCase,
-  private val schedulerProvider: SchedulerProvider,
-  private val disposable: CompositeDisposable = CompositeDisposable()
+  val calendar: State<Calendar>
 ) {
   val description = mutableStateOf(productCardModel.description)
   val category = mutableStateOf(productCardModel.category)
@@ -24,21 +18,14 @@ class ProductCardViewModel(
   val iconUrl = mutableStateOf(productCardModel.iconUrl)
 
   fun onCardClick() {
-    disposable.add(
-      registerExpenseUseCase.registerExpense(
-        ExpenseDto(
-          description.value,
-          category.value,
-          place.value,
-          price.value.substring(0, price.value.length - 2).toDouble(),
-          amount.value,
-          calendar.value
-      )
-    ).subscribeOn(schedulerProvider.io()).observeOn(schedulerProvider.ui()).subscribe {
-    })
-  }
-
-  fun clear() {
-    disposable.clear()
+    val productCardModel = ProductCardModel(
+      description.value,
+      category.value,
+      place.value,
+      price.value,
+      amount.value,
+      iconUrl.value
+    )
+    homeViewModel.onProductCardClick(productCardModel, calendar.value)
   }
 }
