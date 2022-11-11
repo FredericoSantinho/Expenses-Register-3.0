@@ -3,6 +3,8 @@
 buildscript {
   dependencies {
     classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.5.3"
+    classpath "org.jacoco:org.jacoco.core:0.8.8"
+    classpath 'com.dicedmelon.gradle:jacoco-android:0.1.5'
   }
 }
 
@@ -18,4 +20,13 @@ ext {
   compileSdkVersion = 33
   minimumSdkVersion = 29
   targetSdkVersion = 33
+}
+
+allprojects {
+  apply plugin: 'jacoco'
+
+  tasks.withType(Test) {
+    jacoco.includeNoLocationClasses = true
+    jacoco.excludes = ['jdk.internal.*']
+  }
 }

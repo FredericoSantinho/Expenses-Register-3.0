@@ -5,5 +5,5 @@ import neuro.expenses.register.domain.dto.LatLngDto
 import neuro.expenses.register.domain.dto.PlaceDto
 
 interface GetNearestPlacesUseCase {
-  fun getNearestPlaces(latLng: LatLngDto, limit: Int): Single<List<PlaceDto>>
+  fun getNearestPlaces(latLngDto: LatLngDto, limit: Int): Single<List<PlaceDto>>
 }

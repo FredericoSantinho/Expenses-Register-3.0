@@ -2,6 +2,7 @@ plugins {
   id 'com.android.library'
   id 'kotlin-android'
   id 'kotlin-kapt'
+  id 'com.dicedmelon.gradle.jacoco-android'
 }
 
 apply from: "dependencies.gradle"
@@ -9,6 +10,7 @@ apply from: "dependencies.gradle"
 dependencies {}
 
 android {
+  namespace 'neuro.expenses.register.data'
   compileSdk project.compileSdkVersion
 
   defaultConfig {
