@@ -24,6 +24,7 @@ import neuro.expenses.register.ui.common.composables.dropdown.DropDownTextField
 import neuro.expenses.register.ui.common.mapper.LatLngMapper
 import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.viewmodel.home.HomeViewModel
+import neuro.expenses.register.viewmodel.home.IHomeViewModel
 import neuro.expenses.register.viewmodel.home.UiState
 import org.koin.androidx.compose.get
 import org.koin.androidx.compose.getViewModel
@@ -82,7 +83,7 @@ fun HomeComposable(
 @Composable
 private fun onUiState(
   uiState: UiState,
-  homeViewModel: HomeViewModel,
+  homeViewModel: IHomeViewModel,
   loading: MutableState<Boolean>,
   cameraPosition: MutableState<CameraPosition>,
   latLngMapper: LatLngMapper
@@ -107,7 +108,7 @@ fun onUiLoading() {
 @Composable
 private fun onUiReady(
   uiState: UiState.Ready,
-  homeViewModel: HomeViewModel,
+  homeViewModel: IHomeViewModel,
   loading: MutableState<Boolean>,
   cameraPosition: MutableState<CameraPosition>,
   latLngMapper: LatLngMapper

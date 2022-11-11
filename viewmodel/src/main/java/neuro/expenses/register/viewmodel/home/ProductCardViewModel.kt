@@ -6,7 +6,7 @@ import neuro.expenses.register.viewmodel.home.model.ProductCardModel
 import java.util.*
 
 class ProductCardViewModel(
-  private val homeViewModel: HomeViewModel,
+  private val homeViewModel: IHomeViewModel,
   productCardModel: ProductCardModel,
   val calendar: State<Calendar>
 ) {

@@ -26,20 +26,20 @@ class HomeViewModel(
   private val feedLastBillViewModel: FeedLastBillViewModel,
   private val latLngModelMapper: LatLngModelMapper,
   private val productCardModelMapper: ProductCardModelMapper,
-  val billViewModel: BillViewModel,
+  override val billViewModel: BillViewModel,
   schedulerProvider: SchedulerProvider,
   private val nearestPlacesLimit: Int = 5,
   private val zoom: Float = 19.0f
-) : BaseViewModel(schedulerProvider) {
+) : BaseViewModel(schedulerProvider), IHomeViewModel {
   private val places = mutableStateOf(emptyList<PlaceDto>())
-  val placesNames = mutableStateOf(emptyList<String>())
+  override val placesNames = mutableStateOf(emptyList<String>())
   private var selectedPlaceIndex = 0
 
-  val calendar = mutableStateOf(getCalendarUseCase.getCalendar())
-  val productsListViewModel: ProductsListViewModel = newProductsListViewModel()
+  override val calendar = mutableStateOf(getCalendarUseCase.getCalendar())
+  override val productsListViewModel: ProductsListViewModel = newProductsListViewModel()
 
   private val _uiState = mutableStateOf<UiState>(UiState.Loading)
-  val uiState = _uiState.asState()
+  override val uiState = _uiState.asState()
 
   init {
     getCurrentLocationUseCase.getCurrentLocation()
@@ -54,7 +54,7 @@ class HomeViewModel(
     disposable.add(feedLastBillViewModel.subscribe())
   }
 
-  fun onSelectedPlace(index: Int) {
+  override fun onSelectedPlace(index: Int) {
     selectedPlaceIndex = index
     val placeDto = places.value.get(index)
     val latLng = latLngModelMapper.map(placeDto.latLngDto)
@@ -62,14 +62,14 @@ class HomeViewModel(
     productsListViewModel.setProducts(placeDto)
   }
 
-  private fun newProductsListViewModel() =
+  override fun newProductsListViewModel() =
     ProductsListViewModel(
       ProductCardViewModelFactoryImpl(this),
       productCardModelMapper,
       calendar
     )
 
-  fun onProductCardClick(productCardModel: ProductCardModel, calendar: Calendar) {
+  override fun onProductCardClick(productCardModel: ProductCardModel, calendar: Calendar) {
     registerExpenseUseCase.registerExpense(
       productCardModelMapper.map(productCardModel, calendar)
     ).baseSubscribe {
@@ -77,7 +77,7 @@ class HomeViewModel(
   }
 }
 
-sealed class UiState() {
+sealed class UiState {
   object Loading : UiState()
   class Ready(val latLngModel: LatLngModel, val zoom: Float) : UiState()
 }
