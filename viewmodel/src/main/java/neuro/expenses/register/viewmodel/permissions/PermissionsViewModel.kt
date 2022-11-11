@@ -14,20 +14,20 @@ class PermissionsViewModel(
   val uiEvent = _uiEvent.asLiveData()
 
   init {
-    _uiEvent.value = UiEvent.CheckPermissions()
+    _uiEvent.value = UiEvent.CheckPermissions
   }
 
   fun onPermissionsGranted() {
-    _uiEvent.value = UiEvent.NavigateToMainActivity()
+    _uiEvent.value = UiEvent.NavigateToMainActivity
   }
 
   fun onPermissionsNotGranted() {
-    _uiEvent.value = UiEvent.RequestPermissions()
+    _uiEvent.value = UiEvent.RequestPermissions
   }
 }
 
 sealed class UiEvent {
-  class CheckPermissions : UiEvent()
-  class RequestPermissions : UiEvent()
-  class NavigateToMainActivity : UiEvent()
+  object CheckPermissions : UiEvent()
+  object RequestPermissions : UiEvent()
+  object NavigateToMainActivity : UiEvent()
 }

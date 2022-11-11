@@ -98,7 +98,7 @@ internal class BillComposableTest {
     onEditBillIcon.assertIsDisplayed()
   }
 
-  private fun onStateReadyTest(uiState: UiState) {
+  private fun onStateReadyTest(_uiState: UiState) {
     val billViewModel = mock<IBillViewModel>()
 
     val place = mutableStateOf("place")
@@ -106,7 +106,7 @@ internal class BillComposableTest {
     val date = mutableStateOf("date")
     val total = mutableStateOf("total")
     val iconUrl = mutableStateOf("iconUrl")
-    val uiState = mutableStateOf(uiState)
+    val uiState = mutableStateOf(_uiState)
 
     whenever(billViewModel.place).doReturn(place)
     whenever(billViewModel.time).doReturn(time)

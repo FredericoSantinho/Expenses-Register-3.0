@@ -6,10 +6,7 @@ import org.junit.Assert
 import org.junit.Test
 import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
-import org.mockito.kotlin.eq
-import org.mockito.kotlin.mock
-import org.mockito.kotlin.same
-import org.mockito.kotlin.verifyNoInteractions
+import org.mockito.kotlin.*
 import java.util.*
 
 internal class ProductCardViewModelTest {
@@ -39,6 +36,17 @@ internal class ProductCardViewModelTest {
     verifyNoInteractions(onProductCardClick)
     productCardViewModel.onCardClick()
     verify(onProductCardClick, times(1)).onProductCardClick(
+      eq(productCardModel),
+      same(calendar.value)
+    )
+    verify(onProductCardClick, times(0)).onProductCardLongClick(any(), any())
+
+    productCardViewModel.onCardLongClick()
+    verify(onProductCardClick, times(1)).onProductCardClick(
+      eq(productCardModel),
+      same(calendar.value)
+    )
+    verify(onProductCardClick, times(1)).onProductCardLongClick(
       eq(productCardModel),
       same(calendar.value)
     )

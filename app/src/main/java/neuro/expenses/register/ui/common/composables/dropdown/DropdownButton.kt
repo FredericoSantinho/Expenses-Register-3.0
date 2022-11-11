@@ -47,7 +47,7 @@ fun DropdownButton(items: List<String>, onItemSelect: OnItemSelect) {
           bottom.linkTo(parent.bottom)
         }, text = items[selectedIndex])
         Icon(arrowIcon, "contentDescription", Modifier.constrainAs(iconC) {
-          end.linkTo(parent.end, margin = -8.dp)
+          end.linkTo(parent.end, margin = (-8).dp)
           top.linkTo(parent.top)
           bottom.linkTo(parent.bottom)
         })

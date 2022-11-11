@@ -1,28 +1,10 @@
 package neuro.expenses.register.viewmodel.bill
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import neuro.expenses.register.viewmodel.bill.model.BillModel
 import neuro.expenses.register.viewmodel.common.asState
 
 private val EMPTY = BillModel(0L, "", "", "", "", "", false)
-
-interface IBillViewModel {
-  val id: MutableState<Long>
-  val iconUrl: MutableState<String>
-  val place: MutableState<String>
-  val time: MutableState<String>
-  val date: MutableState<String>
-  val total: MutableState<String>
-
-  val uiState: State<UiState>
-
-  fun setBillModel(billModel: BillModel)
-  fun onCardClick()
-  fun onCardLongClick()
-  fun onEditClick()
-}
 
 class BillViewModel(editable: Boolean = false, billModel: BillModel = EMPTY) : IBillViewModel {
   override val id = mutableStateOf(billModel.id)
