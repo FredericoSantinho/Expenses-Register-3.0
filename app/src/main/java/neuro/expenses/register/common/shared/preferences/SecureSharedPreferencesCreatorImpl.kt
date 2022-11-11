@@ -6,9 +6,7 @@ import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 
 class SecureSharedPreferencesCreatorImpl(
-  private val masterKeyAlias: String = MasterKeys.getOrCreate(
-    MasterKeys.AES256_GCM_SPEC
-  )
+  private val masterKeyAlias: String = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
 ) : SecureSharedPreferencesCreator {
 
   override fun create(context: Context, fileName: String): SharedPreferences {
