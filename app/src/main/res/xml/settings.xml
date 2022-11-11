@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <Preference
+      android:icon="@drawable/ic_clear_database_24"
+      app:key="@string/settings_key_clear_database"
+      app:summary="@string/settings_clear_database_summary"
+      app:title="@string/settings_clear_database_title" />
+
+</PreferenceScreen>

@@ -15,6 +15,7 @@ ver.rxAndroid = "3.0.0"
 ver.timber = "5.0.1"
 
 ver.ktx = "1.9.0"
+ver.preference = "1.2.0"
 ver.androidX = "1.5.1"
 ver.androidXSecurity = "1.0.0"
 ver.androidXJunit = "1.1.3-rc01"

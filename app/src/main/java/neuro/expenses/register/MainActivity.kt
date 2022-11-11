@@ -1,6 +1,9 @@
 package neuro.expenses.register
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.WindowManager
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -9,8 +12,18 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import neuro.expenses.register.common.android.activity.BaseActivity
 import neuro.expenses.register.databinding.ActivityMainBinding
+import neuro.expenses.register.ui.settings.SettingsActivity
+import neuro.expenses.register.viewmodel.main.MainViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
+  private val mainViewModel: MainViewModel by viewModel()
+
+  override fun setupViewModel() {
+    super.setupViewModel()
+
+    mainViewModel.uiEvent.observe(this) { onUiEvent(it) }
+  }
 
   override fun getViewBinding(): ActivityMainBinding {
     return ActivityMainBinding.inflate(layoutInflater)
@@ -36,5 +49,31 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     )
     setupActionBarWithNavController(navController, appBarConfiguration)
     navView.setupWithNavController(navController)
+  }
+
+  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    menuInflater.inflate(R.menu.menu, menu)
+
+    return super.onCreateOptionsMenu(menu)
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    val id = item.itemId
+    if (id == R.id.config_button) {
+      mainViewModel.onConfigButton()
+    }
+    return super.onOptionsItemSelected(item)
+  }
+
+  private fun onUiEvent(uiEvent: MainViewModel.UiEvent?) {
+    when (uiEvent) {
+      is MainViewModel.UiEvent.NavigateToSettings -> startSettingsActivity()
+      null -> {}
+    }
+  }
+
+  private fun startSettingsActivity() {
+    val i = Intent(this, SettingsActivity::class.java)
+    startActivity(i)
   }
 }

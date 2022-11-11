@@ -15,9 +15,11 @@ import neuro.expenses.register.viewmodel.edit.category.EditCategoryViewModel
 import neuro.expenses.register.viewmodel.edit.place.EditPlaceViewModel
 import neuro.expenses.register.viewmodel.edit.product.EditProductViewModel
 import neuro.expenses.register.viewmodel.home.HomeViewModel
+import neuro.expenses.register.viewmodel.main.MainViewModel
 import neuro.expenses.register.viewmodel.manual.register.ManualRegisterViewModel
 import neuro.expenses.register.viewmodel.manual.register.mapper.RegisterExpenseErrorMapper
 import neuro.expenses.register.viewmodel.manual.register.mapper.RegisterExpenseErrorMapperImpl
+import neuro.expenses.register.viewmodel.settings.SettingsViewModel
 import neuro.expenses.register.viewmodel.splash.SplashViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
@@ -27,6 +29,8 @@ const val CURRENCY = "currency"
 
 val viewModelModule = module {
   viewModel { SplashViewModel(get()) }
+  viewModel { MainViewModel() }
+  viewModel { SettingsViewModel() }
   viewModel { HomeViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
   viewModel {
     ManualRegisterViewModel(

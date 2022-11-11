@@ -9,9 +9,19 @@
   <string name="title_edit_category">Category</string>
   <string name="title_edit_place">Place</string>
 
+  <string name="title_settings">Settings</string>
+
   <!-- Permissions -->
   <string name="permissions_title">Location Permission</string>
   <string name="permissions_text">This app requires access to device location in order to work properly.</string>
+
+  <!-- Settings -->
+  <string name="settings_key_clear_database">clearDatabase</string>
+
+  <string name="settings_clear_database_title">Clear database</string>
+  <string name="settings_clear_database_summary">Remove all entries from the database</string>
+  <string name="settings_clear_database_confirm_title">Clear database</string>
+  <string name="settings_clear_database_confirm_message">Do you really want to clean the entire database?</string>
 
   <!-- home -->
   <string name="home_place">Place</string>

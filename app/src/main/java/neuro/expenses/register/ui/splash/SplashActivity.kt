@@ -10,12 +10,12 @@ import neuro.expenses.register.common.android.activity.BaseActivity
 import neuro.expenses.register.databinding.ActivitySplashBinding
 import neuro.expenses.register.viewmodel.splash.SplashViewModel
 import neuro.expenses.register.viewmodel.splash.UiEvent
-import org.koin.core.component.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
-  val splashViewModel: SplashViewModel by inject()
+  val splashViewModel: SplashViewModel by viewModel()
 
   override fun getViewBinding(): ActivitySplashBinding {
     return ActivitySplashBinding.inflate(layoutInflater)
