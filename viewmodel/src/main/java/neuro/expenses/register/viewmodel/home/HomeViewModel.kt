@@ -75,6 +75,10 @@ class HomeViewModel(
     ).baseSubscribe {
     }
   }
+
+  override fun onProductCardLongClick(productCardModel: ProductCardModel, calendar: Calendar) {
+
+  }
 }
 
 sealed class UiState {

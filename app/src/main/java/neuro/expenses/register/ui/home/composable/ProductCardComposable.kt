@@ -1,6 +1,7 @@
 package neuro.expenses.register.ui.home.composable
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -29,6 +30,7 @@ import neuro.expenses.register.viewmodel.home.ProductCardViewModel
 import neuro.expenses.register.viewmodel.home.model.ProductCardModel
 import java.util.*
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ProductCardComposable(productCardViewModel: IProductCardViewModel) {
   Row {
@@ -36,9 +38,10 @@ fun ProductCardComposable(productCardViewModel: IProductCardViewModel) {
       modifier = Modifier
         .semantics { testTag = ProductCardTags.CARD }
         .height(100.dp)
-        .clickable {
-          productCardViewModel.onCardClick()
-        },
+        .combinedClickable(
+          onClick = { productCardViewModel.onCardClick() },
+          onLongClick = { productCardViewModel.onCardLongClick() },
+        ),
       elevation = 2.dp,
       backgroundColor = Color.White,
       shape = RoundedCornerShape(corner = CornerSize(4.dp))
@@ -129,8 +132,9 @@ fun PreviewDateTimeComposable() {
 }
 
 private class MockedOnProductCardClick : OnProductCardClick {
-  override fun onProductCardClick(productCardModel: ProductCardModel, calendar: Calendar) {
-  }
+  override fun onProductCardClick(productCardModel: ProductCardModel, calendar: Calendar) {}
+
+  override fun onProductCardLongClick(productCardModel: ProductCardModel, calendar: Calendar) {}
 }
 
 class ProductCardTags {

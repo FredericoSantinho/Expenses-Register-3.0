@@ -18,6 +18,16 @@ class ProductCardViewModel(
   val amount = mutableStateOf(productCardModel.amount)
 
   override fun onCardClick() {
+    val productCardModel = buildProductCardModel()
+    onProductCardClick.onProductCardClick(productCardModel, calendar.value)
+  }
+
+  override fun onCardLongClick() {
+    val productCardModel = buildProductCardModel()
+    onProductCardClick.onProductCardLongClick(productCardModel, calendar.value)
+  }
+
+  private fun buildProductCardModel(): ProductCardModel {
     val productCardModel = ProductCardModel(
       description.value,
       category.value,
@@ -26,6 +36,6 @@ class ProductCardViewModel(
       amount.value,
       iconUrl.value
     )
-    onProductCardClick.onProductCardClick(productCardModel, calendar.value)
+    return productCardModel
   }
 }

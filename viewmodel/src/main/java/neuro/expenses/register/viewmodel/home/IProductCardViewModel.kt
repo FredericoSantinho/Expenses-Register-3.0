@@ -9,4 +9,5 @@ interface IProductCardViewModel {
   val iconUrl: MutableState<String>
 
   fun onCardClick()
+  fun onCardLongClick()
 }

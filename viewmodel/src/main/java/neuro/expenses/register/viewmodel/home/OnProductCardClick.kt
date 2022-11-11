@@ -5,4 +5,5 @@ import java.util.*
 
 interface OnProductCardClick {
   fun onProductCardClick(productCardModel: ProductCardModel, calendar: Calendar)
+  fun onProductCardLongClick(productCardModel: ProductCardModel, calendar: Calendar)
 }

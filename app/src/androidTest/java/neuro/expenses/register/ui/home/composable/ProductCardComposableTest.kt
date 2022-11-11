@@ -4,6 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.unit.dp
+import neuro.expenses.register.ui.performLongClick
 import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.viewmodel.home.IProductCardViewModel
 import org.junit.Rule
@@ -56,7 +57,12 @@ internal class ProductCardComposableTest {
     onIcon.assertWidthIsEqualTo(48.dp)
 
     verify(productCardViewModel, times(0)).onCardClick()
+    verify(productCardViewModel, times(0)).onCardLongClick()
     onCard.performClick()
     verify(productCardViewModel, times(1)).onCardClick()
+    verify(productCardViewModel, times(0)).onCardLongClick()
+    onCard.performLongClick()
+    verify(productCardViewModel, times(1)).onCardClick()
+    verify(productCardViewModel, times(1)).onCardLongClick()
   }
 }
