@@ -9,11 +9,11 @@ apply from: "dependencies.gradle"
 dependencies {}
 
 android {
-  compileSdkVersion 33
+  compileSdk project.compileSdkVersion
 
   defaultConfig {
-    minSdk 29
-    targetSdk 33
+    minSdk project.minimumSdkVersion
+    targetSdk project.targetSdkVersion
 
     testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 

@@ -13,3 +13,9 @@ plugins {
   // https://plugins.gradle.org/plugin/com.github.ben-manes.versions
   id "com.github.ben-manes.versions" version "0.43.0" apply true
 }
+
+ext {
+  compileSdkVersion = 33
+  minimumSdkVersion = 29
+  targetSdkVersion = 33
+}

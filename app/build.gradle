@@ -8,12 +8,12 @@ apply from: "dependencies.gradle"
 
 android {
   namespace 'neuro.expenses.register'
-  compileSdk 33
+  compileSdk project.compileSdkVersion
 
   defaultConfig {
     applicationId "neuro.expenses.register"
-    minSdk 29
-    targetSdk 33
+    minSdk project.minimumSdkVersion
+    targetSdk project.targetSdkVersion
     versionCode 1
     versionName "1.0"
 
