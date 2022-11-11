@@ -1,7 +1,7 @@
 package neuro.expenses.register.viewmodel.home.model
 
-import org.junit.Assert
-import org.junit.Test
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 
 internal class ProductCardModelTest {
   @Test
@@ -15,11 +15,11 @@ internal class ProductCardModelTest {
 
     val productCardModel = ProductCardModel(description, category, place, price, amount, iconUrl)
 
-    Assert.assertEquals(description, productCardModel.description)
-    Assert.assertEquals(category, productCardModel.category)
-    Assert.assertEquals(place, productCardModel.place)
-    Assert.assertEquals(price, productCardModel.price)
-    Assert.assertEquals(amount, productCardModel.amount, 0.0)
-    Assert.assertEquals(iconUrl, productCardModel.iconUrl)
+    Assertions.assertEquals(description, productCardModel.description)
+    Assertions.assertEquals(category, productCardModel.category)
+    Assertions.assertEquals(place, productCardModel.place)
+    Assertions.assertEquals(price, productCardModel.price)
+    Assertions.assertEquals(amount, productCardModel.amount, 0.0)
+    Assertions.assertEquals(iconUrl, productCardModel.iconUrl)
   }
 }

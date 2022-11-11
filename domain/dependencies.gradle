@@ -9,7 +9,8 @@ dependencies {
   implementation lib.koin_core
   implementation lib.rxKotlin
 
-  testImplementation lib.junit
+  testImplementation lib.junit5
+  testImplementation lib.junit5_engine
   testImplementation lib.mockito
   testImplementation lib.koin_test
 }

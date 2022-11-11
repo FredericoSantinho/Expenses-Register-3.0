@@ -2,8 +2,8 @@ package neuro.expenses.register.viewmodel.home
 
 import androidx.compose.runtime.mutableStateOf
 import neuro.expenses.register.viewmodel.home.model.ProductCardModel
-import org.junit.Assert
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
 import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
 import org.mockito.kotlin.*
@@ -25,13 +25,13 @@ internal class ProductCardViewModelTest {
 
     val productCardViewModel = ProductCardViewModel(onProductCardClick, productCardModel, calendar)
 
-    Assert.assertEquals(calendar, productCardViewModel.calendar)
-    Assert.assertEquals(description, productCardViewModel.description.value)
-    Assert.assertEquals(category, productCardViewModel.category.value)
-    Assert.assertEquals(place, productCardViewModel.place.value)
-    Assert.assertEquals(price, productCardViewModel.price.value)
-    Assert.assertEquals(amount, productCardViewModel.amount.value, 0.0)
-    Assert.assertEquals(iconUrl, productCardViewModel.iconUrl.value)
+    assertEquals(calendar, productCardViewModel.calendar)
+    assertEquals(description, productCardViewModel.description.value)
+    assertEquals(category, productCardViewModel.category.value)
+    assertEquals(place, productCardViewModel.place.value)
+    assertEquals(price, productCardViewModel.price.value)
+    assertEquals(amount, productCardViewModel.amount.value, 0.0)
+    assertEquals(iconUrl, productCardViewModel.iconUrl.value)
 
     verifyNoInteractions(onProductCardClick)
     productCardViewModel.onCardClick()

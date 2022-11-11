@@ -1,7 +1,7 @@
 package neuro.expenses.register.entity.service
 
 import neuro.expenses.register.entity.LatLng
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
 internal class CalculateDistanceServiceImplTest {

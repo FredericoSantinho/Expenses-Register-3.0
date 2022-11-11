@@ -4,6 +4,7 @@ ext {
 
 ver.kotlin = "1.7.20"
 ver.junit = "4.13.2"
+ver.junit5 = "5.9.1"
 ver.mockito = "4.8.1"
 ver.mockito_kotlin = "4.0.0"
 ver.koin = "3.2.2"

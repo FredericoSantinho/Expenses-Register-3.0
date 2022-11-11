@@ -16,7 +16,8 @@ dependencies {
   api lib.room_rx3
   kapt lib.room_compiler
 
+  testImplementation lib.junit5
   testImplementation lib.koin_test
-  testImplementation lib.junit
   testImplementation lib.mockito
+  testRuntimeOnly lib.junit5_engine
 }

@@ -13,7 +13,8 @@ dependencies {
   implementation lib.rxKotlin
   implementation lib.timber
 
-  testImplementation lib.junit
+  testImplementation lib.junit5
   testImplementation lib.mockito
   androidTestImplementation lib.google_test
+  testRuntimeOnly lib.junit5_engine
 }
