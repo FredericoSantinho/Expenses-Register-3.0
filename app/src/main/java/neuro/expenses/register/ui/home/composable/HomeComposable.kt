@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Divider
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
@@ -14,14 +15,13 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.fragment.app.FragmentActivity
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.LatLng
 import neuro.expenses.register.R
 import neuro.expenses.register.ui.bill.BillComposableContainer
-import neuro.expenses.register.ui.common.composables.MapsComposable
 import neuro.expenses.register.ui.common.composables.datetime.DateTimeComposable
 import neuro.expenses.register.ui.common.composables.dropdown.DropDownTextField
-import neuro.expenses.register.ui.common.mapper.LatLngMapper
+import neuro.expenses.register.ui.common.composables.maps.MapsComposable
+import neuro.expenses.register.ui.common.composables.maps.mapper.CameraPositionUiMapper
+import neuro.expenses.register.ui.home.mapper.HomeMapsEventMapper
 import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.viewmodel.home.HomeViewModel
 import neuro.expenses.register.viewmodel.home.IHomeViewModel
@@ -32,15 +32,14 @@ import org.koin.androidx.compose.getViewModel
 @Composable
 fun HomeComposable(
   fragmentActivity: FragmentActivity,
-  initialCameraPosition: CameraPosition,
-  latLngMapper: LatLngMapper = get(),
+  mapsEventMapper: HomeMapsEventMapper = get(),
+  cameraPositionUiMapper: CameraPositionUiMapper = get(),
   homeViewModel: HomeViewModel = getViewModel()
 ) {
   val uiState by homeViewModel.uiState
+  val uiEvent = homeViewModel.uiEvent.observeAsState(null)
 
   val loading = remember { mutableStateOf(true) }
-  val cameraPosition: MutableState<CameraPosition> =
-    remember { mutableStateOf(initialCameraPosition) }
 
   ConstraintLayout(
     modifier = Modifier
@@ -56,7 +55,11 @@ fun HomeComposable(
       bottom.linkTo(billC.top)
       height = Dimension.fillToConstraints
     }) {
-      MapsComposable(cameraPosition)
+      MapsComposable(
+        homeViewModel.initialCameraPosition,
+        cameraPositionUiMapper,
+        mapsEventMapper.map(uiEvent.value)
+      )
       Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
         DateTimeComposable(
           fragmentActivity = fragmentActivity,
@@ -75,7 +78,8 @@ fun HomeComposable(
         )
       }
       Divider(thickness = 1.dp, color = Color.LightGray)
-      onUiState(uiState, homeViewModel, loading, cameraPosition, latLngMapper)
+
+      onUiState(uiState, homeViewModel, loading)
     }
   }
 }
@@ -84,13 +88,11 @@ fun HomeComposable(
 private fun onUiState(
   uiState: UiState,
   homeViewModel: IHomeViewModel,
-  loading: MutableState<Boolean>,
-  cameraPosition: MutableState<CameraPosition>,
-  latLngMapper: LatLngMapper
+  loading: MutableState<Boolean>
 ) {
   when (uiState) {
     is UiState.Loading -> onUiLoading()
-    is UiState.Ready -> onUiReady(uiState, homeViewModel, loading, cameraPosition, latLngMapper)
+    is UiState.Ready -> onUiReady(homeViewModel, loading)
   }
 }
 
@@ -106,16 +108,8 @@ fun onUiLoading() {
 }
 
 @Composable
-private fun onUiReady(
-  uiState: UiState.Ready,
-  homeViewModel: IHomeViewModel,
-  loading: MutableState<Boolean>,
-  cameraPosition: MutableState<CameraPosition>,
-  latLngMapper: LatLngMapper
-) {
+private fun onUiReady(homeViewModel: IHomeViewModel, loading: MutableState<Boolean>) {
   loading.value = false
-  cameraPosition.value =
-    CameraPosition.fromLatLngZoom(latLngMapper.map(uiState.latLngModel), uiState.zoom)
   ProductsListComposable(homeViewModel.productsListViewModel)
 }
 
@@ -124,8 +118,7 @@ private fun onUiReady(
 fun PreviewHomeComposable() {
   ExpensesRegisterTheme {
     HomeComposable(
-      FragmentActivity(),
-      CameraPosition.fromLatLngZoom(LatLng(38.722252, -9.139337), 7.0f)
+      FragmentActivity()
     )
   }
 }

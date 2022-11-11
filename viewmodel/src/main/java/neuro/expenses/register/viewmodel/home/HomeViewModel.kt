@@ -9,14 +9,19 @@ import neuro.expenses.register.domain.usecase.register.RegisterExpenseUseCase
 import neuro.expenses.register.viewmodel.bill.BillViewModel
 import neuro.expenses.register.viewmodel.bill.FeedLastBillViewModel
 import neuro.expenses.register.viewmodel.common.BaseViewModel
+import neuro.expenses.register.viewmodel.common.asLiveData
 import neuro.expenses.register.viewmodel.common.asState
+import neuro.expenses.register.viewmodel.common.livedata.SingleLiveEvent
 import neuro.expenses.register.viewmodel.common.schedulers.SchedulerProvider
 import neuro.expenses.register.viewmodel.home.factory.ProductCardViewModelFactoryImpl
 import neuro.expenses.register.viewmodel.home.mapper.LatLngModelMapper
 import neuro.expenses.register.viewmodel.home.mapper.ProductCardModelMapper
+import neuro.expenses.register.viewmodel.home.model.CameraPositionModel
 import neuro.expenses.register.viewmodel.home.model.LatLngModel
 import neuro.expenses.register.viewmodel.home.model.ProductCardModel
 import java.util.*
+
+private val lisbon = CameraPositionModel(LatLngModel(38.722252, -9.139337), 7.0f)
 
 class HomeViewModel(
   private val getNearestPlacesUseCase: GetNearestPlacesUseCase,
@@ -29,7 +34,8 @@ class HomeViewModel(
   override val billViewModel: BillViewModel,
   schedulerProvider: SchedulerProvider,
   private val nearestPlacesLimit: Int = 5,
-  private val zoom: Float = 19.0f
+  private val zoom: Float = 19.0f,
+  val initialCameraPosition: CameraPositionModel = lisbon
 ) : BaseViewModel(schedulerProvider), IHomeViewModel {
   private val places = mutableStateOf(emptyList<PlaceDto>())
   override val placesNames = mutableStateOf(emptyList<String>())
@@ -40,6 +46,8 @@ class HomeViewModel(
 
   private val _uiState = mutableStateOf<UiState>(UiState.Loading)
   override val uiState = _uiState.asState()
+  private val _uiEvent = SingleLiveEvent<UiEvent>()
+  val uiEvent = _uiEvent.asLiveData()
 
   init {
     getCurrentLocationUseCase.getCurrentLocation()
@@ -48,8 +56,9 @@ class HomeViewModel(
         places.value = nearestPlaces
         placesNames.value = nearestPlaces.map { placeDto -> placeDto.name }
         productsListViewModel.setProducts(nearestPlaces.get(selectedPlaceIndex))
-        val latLng = latLngModelMapper.map(nearestPlaces.get(selectedPlaceIndex).latLngDto)
-        _uiState.value = UiState.Ready(latLng, zoom)
+        val latLngModel = latLngModelMapper.map(nearestPlaces.get(selectedPlaceIndex).latLngDto)
+        _uiState.value = UiState.Ready
+        _uiEvent.value = UiEvent.MoveCamera(latLngModel, zoom)
       }
     disposable.add(feedLastBillViewModel.subscribe())
   }
@@ -57,8 +66,9 @@ class HomeViewModel(
   override fun onSelectedPlace(index: Int) {
     selectedPlaceIndex = index
     val placeDto = places.value.get(index)
-    val latLng = latLngModelMapper.map(placeDto.latLngDto)
-    _uiState.value = UiState.Ready(latLng, zoom)
+    val latLngModel = latLngModelMapper.map(placeDto.latLngDto)
+    _uiState.value = UiState.Ready
+    _uiEvent.value = UiEvent.MoveCamera(latLngModel, zoom)
     productsListViewModel.setProducts(placeDto)
   }
 
@@ -81,7 +91,11 @@ class HomeViewModel(
   }
 }
 
+sealed class UiEvent {
+  class MoveCamera(val latLngModel: LatLngModel, val zoom: Float) : UiEvent()
+}
+
 sealed class UiState {
   object Loading : UiState()
-  class Ready(val latLngModel: LatLngModel, val zoom: Float) : UiState()
+  object Ready : UiState()
 }

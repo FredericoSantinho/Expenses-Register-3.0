@@ -1,4 +1,4 @@
-package neuro.expenses.register.ui.common.composables
+package neuro.expenses.register.ui.common.composables.maps
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,13 +15,20 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.*
 import com.google.maps.android.compose.widgets.ScaleBar
 import kotlinx.coroutines.launch
+import neuro.expenses.register.ui.common.composables.maps.mapper.CameraPositionUiMapper
+import neuro.expenses.register.viewmodel.home.model.CameraPositionModel
 
 @Composable
-fun MapsComposable(cameraPosition: State<CameraPosition>, height: Dp = 240.dp) {
+fun MapsComposable(
+  initialCameraPosition: CameraPositionModel,
+  cameraPositionUiMapper: CameraPositionUiMapper,
+  event: MapsMoveCameraEvent?,
+  height: Dp = 240.dp
+) {
   val mapLoaded = remember { mutableStateOf(false) }
   val bitoque = LatLng(37.091495, -8.2475677)
   val cameraPositionState = rememberCameraPositionState {
-    position = cameraPosition.value
+    position = cameraPositionUiMapper.map(initialCameraPosition)
   }
   val mapProperties by remember {
     mutableStateOf(
@@ -53,10 +60,17 @@ fun MapsComposable(cameraPosition: State<CameraPosition>, height: Dp = 240.dp) {
     )
   }
 
-  if (mapLoaded.value) {
-    LaunchedEffect(cameraPosition.value.target) {
+  val mapsMoveCameraEvent = event
+  if (mapLoaded.value && mapsMoveCameraEvent != null) {
+    LaunchedEffect(mapsMoveCameraEvent) {
       coroutineScope.launch {
-        cameraPositionState.animate(CameraUpdateFactory.newCameraPosition(cameraPosition.value))
+        cameraPositionState.animate(
+          CameraUpdateFactory.newCameraPosition(
+            CameraPosition.fromLatLngZoom(
+              mapsMoveCameraEvent.latLng, mapsMoveCameraEvent.zoom
+            )
+          )
+        )
       }
     }
   }
