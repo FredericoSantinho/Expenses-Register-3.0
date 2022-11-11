@@ -1,4 +1,4 @@
-package com.exchangebot.ui.theme
+package neuro.expenses.register.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

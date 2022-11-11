@@ -1,7 +1,7 @@
 package neuro.expenses.register.viewmodel.home.factory
 
 import androidx.compose.runtime.State
-import com.exchangebot.common.schedulers.SchedulerProvider
+import neuro.expenses.register.common.schedulers.SchedulerProvider
 import neuro.expenses.register.domain.usecase.register.RegisterExpenseUseCase
 import neuro.expenses.register.viewmodel.home.ProductCardViewModel
 import neuro.expenses.register.viewmodel.home.model.ProductCardModel

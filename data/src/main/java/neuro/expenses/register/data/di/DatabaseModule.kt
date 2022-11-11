@@ -1,6 +1,7 @@
-package neuro.expenses.register.data
+package neuro.expenses.register.data.di
 
 import androidx.room.Room
+import neuro.expenses.register.data.ExpensesRegisterDatabase
 import neuro.expenses.register.data.converter.Converters
 import org.koin.dsl.module
 

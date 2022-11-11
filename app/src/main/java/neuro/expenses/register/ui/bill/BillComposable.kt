@@ -18,11 +18,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.exchangebot.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.R
-import neuro.expenses.register.common.viewmodel.shimmer
-import neuro.expenses.register.common.viewmodel.shimmerBackground
-import neuro.expenses.register.ui.report.composable.AsyncImage
+import neuro.expenses.register.common.shimmer.shimmer
+import neuro.expenses.register.common.shimmer.shimmerBackground
+import neuro.expenses.register.ui.common.composables.image.AsyncImage
+import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.viewmodel.bill.BillViewModel
 import neuro.expenses.register.viewmodel.bill.UiState
 

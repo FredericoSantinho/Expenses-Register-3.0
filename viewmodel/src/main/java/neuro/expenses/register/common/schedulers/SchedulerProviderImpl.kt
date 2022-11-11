@@ -1,4 +1,4 @@
-package com.exchangebot.common.schedulers
+package neuro.expenses.register.common.schedulers
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Scheduler

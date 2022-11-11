@@ -19,8 +19,6 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.fragment.app.FragmentActivity
-import com.exchangebot.ui.theme.ExpensesRegisterTheme
-import com.exchangebot.ui.theme.ExpensesRegisterTypography
 import neuro.expenses.register.R
 import neuro.expenses.register.common.picker.date.ShowDatePicker
 import neuro.expenses.register.common.picker.date.ShowMaterialDatePicker
@@ -38,12 +36,14 @@ import neuro.expenses.register.ui.common.composables.text.TextFieldWithDropdown
 import neuro.expenses.register.ui.common.composables.text.TextFieldWithError
 import neuro.expenses.register.ui.common.keyboard.keyboardOptionsNumeric
 import neuro.expenses.register.ui.common.keyboard.keyboardOptionsText
-import neuro.expenses.register.ui.manual.register.ManualRegisterViewModel
-import neuro.expenses.register.ui.manual.register.UiEvent
-import neuro.expenses.register.ui.manual.register.UiState
-import neuro.expenses.register.ui.manual.register.UiStateError
 import neuro.expenses.register.ui.manual.register.mapper.ManualRegisterMessageMapper
 import neuro.expenses.register.ui.manual.register.mapper.ManualRegisterMessageMapperImpl
+import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
+import neuro.expenses.register.ui.theme.ExpensesRegisterTypography
+import neuro.expenses.register.viewmodel.manual.register.ManualRegisterViewModel
+import neuro.expenses.register.viewmodel.manual.register.UiEvent
+import neuro.expenses.register.viewmodel.manual.register.UiState
+import neuro.expenses.register.viewmodel.manual.register.UiStateError
 import org.koin.androidx.compose.getViewModel
 
 @Composable

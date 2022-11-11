@@ -1,4 +1,4 @@
-package neuro.expenses.register.ui.edit.composable
+package neuro.expenses.register.ui.edit
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,13 +13,14 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import neuro.expenses.register.ui.common.composables.dropdown.DropdownButton
 import neuro.expenses.register.ui.common.composables.dropdown.OnItemSelect
-import neuro.expenses.register.ui.edit.Directions
-import neuro.expenses.register.ui.edit.EditViewModel
-import neuro.expenses.register.ui.edit.UiEvent
-import neuro.expenses.register.ui.edit.category.composable.EditCategoryComposable
-import neuro.expenses.register.ui.edit.place.composable.EditPlaceComposable
-import neuro.expenses.register.ui.edit.product.composable.EditProductComposable
+import neuro.expenses.register.ui.edit.category.EditCategoryComposable
+import neuro.expenses.register.ui.edit.place.EditPlaceComposable
+import neuro.expenses.register.ui.edit.product.EditProductComposable
+import neuro.expenses.register.viewmodel.edit.Directions
+import neuro.expenses.register.viewmodel.edit.EditViewModel
+import neuro.expenses.register.viewmodel.edit.UiEvent
 import org.koin.androidx.compose.getViewModel
 
 @Composable

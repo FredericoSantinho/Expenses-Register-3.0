@@ -2,8 +2,8 @@ package neuro.expenses.register.ui.manual.register.mapper
 
 import androidx.annotation.StringRes
 import neuro.expenses.register.R
-import neuro.expenses.register.ui.manual.register.Message
-import neuro.expenses.register.ui.manual.register.Message.*
+import neuro.expenses.register.viewmodel.manual.register.Message
+import neuro.expenses.register.viewmodel.manual.register.Message.*
 
 interface ManualRegisterMessageMapper {
   @StringRes

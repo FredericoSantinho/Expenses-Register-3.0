@@ -1,4 +1,4 @@
-package neuro.expenses.register.ui.edit.composable
+package neuro.expenses.register.ui.common.composables.dropdown
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -19,7 +19,6 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import androidx.constraintlayout.compose.ConstraintLayout
-import neuro.expenses.register.ui.common.composables.dropdown.OnItemSelect
 
 @Composable
 fun DropdownButton(items: List<String>, onItemSelect: OnItemSelect) {

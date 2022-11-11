@@ -1,4 +1,4 @@
-package neuro.expenses.register.ui.composable
+package neuro.expenses.register.ui.common.composables.dropdown
 
 import androidx.compose.material.*
 import androidx.compose.runtime.*

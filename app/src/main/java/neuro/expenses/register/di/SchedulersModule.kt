@@ -1,7 +1,7 @@
 package neuro.expenses.register.di
 
-import com.exchangebot.common.schedulers.SchedulerProvider
-import com.exchangebot.common.schedulers.SchedulerProviderImpl
+import neuro.expenses.register.common.schedulers.SchedulerProvider
+import neuro.expenses.register.common.schedulers.SchedulerProviderImpl
 import org.koin.dsl.module
 
 val schedulersModule = module {

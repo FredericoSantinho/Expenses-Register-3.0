@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.ComposeView
-import com.exchangebot.ui.theme.ExpensesRegisterTheme
+import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
 
 abstract class BaseComposeFragment : BaseNavFragment() {
 

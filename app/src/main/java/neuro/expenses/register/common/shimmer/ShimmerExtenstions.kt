@@ -1,4 +1,4 @@
-package neuro.expenses.register.common.viewmodel
+package neuro.expenses.register.common.shimmer
 
 import androidx.compose.foundation.background
 import androidx.compose.ui.Modifier

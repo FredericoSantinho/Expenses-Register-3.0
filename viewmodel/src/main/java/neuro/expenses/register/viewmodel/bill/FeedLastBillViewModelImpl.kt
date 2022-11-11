@@ -1,7 +1,7 @@
 package neuro.expenses.register.viewmodel.bill
 
-import com.exchangebot.common.schedulers.SchedulerProvider
 import io.reactivex.rxjava3.disposables.Disposable
+import neuro.expenses.register.common.schedulers.SchedulerProvider
 import neuro.expenses.register.domain.dto.BillDto
 import neuro.expenses.register.domain.usecase.bill.ObserveLastBillUseCase
 import neuro.expenses.register.viewmodel.bill.mapper.BillModelMapper

@@ -1,4 +1,4 @@
-package neuro.expenses.register.common
+package neuro.expenses.register.common.viewbinding
 
 import android.app.Activity
 import android.view.LayoutInflater

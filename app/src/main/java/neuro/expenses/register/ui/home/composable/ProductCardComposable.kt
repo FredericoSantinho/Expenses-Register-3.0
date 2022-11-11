@@ -18,9 +18,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import com.exchangebot.ui.theme.ExpensesRegisterTheme
-import com.exchangebot.ui.theme.ExpensesRegisterTypography
-import neuro.expenses.register.ui.report.composable.AsyncImage
+import neuro.expenses.register.ui.common.composables.image.AsyncImage
+import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
+import neuro.expenses.register.ui.theme.ExpensesRegisterTypography
 import neuro.expenses.register.viewmodel.home.ProductCardViewModel
 import neuro.expenses.register.viewmodel.home.model.ProductCardModel
 import org.koin.androidx.compose.get

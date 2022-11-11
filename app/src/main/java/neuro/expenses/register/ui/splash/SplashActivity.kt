@@ -8,6 +8,8 @@ import androidx.core.content.ContextCompat
 import neuro.expenses.register.R
 import neuro.expenses.register.common.android.activity.BaseActivity
 import neuro.expenses.register.databinding.ActivitySplashBinding
+import neuro.expenses.register.viewmodel.splash.SplashViewModel
+import neuro.expenses.register.viewmodel.splash.UiEvent
 import org.koin.core.component.inject
 
 

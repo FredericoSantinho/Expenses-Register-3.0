@@ -12,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.fragment.app.FragmentActivity
-import com.exchangebot.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.R
 import neuro.expenses.register.common.picker.date.OnSetDate
 import neuro.expenses.register.common.picker.date.ShowDatePicker
@@ -24,6 +23,7 @@ import neuro.expenses.register.ui.common.composables.datetime.mapper.DateTextMap
 import neuro.expenses.register.ui.common.composables.datetime.mapper.DateTextMapperImpl
 import neuro.expenses.register.ui.common.composables.datetime.mapper.TimeTextMapper
 import neuro.expenses.register.ui.common.composables.datetime.mapper.TimeTextMapperImpl
+import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
 import java.util.*
 
 @Composable

@@ -1,9 +1,9 @@
-package neuro.expenses.register.ui.manual.register
+package neuro.expenses.register.viewmodel.manual.register
 
 import androidx.compose.runtime.mutableStateOf
-import com.exchangebot.common.schedulers.SchedulerProvider
 import neuro.expenses.register.common.formatter.DoubleFormatter
 import neuro.expenses.register.common.livedata.SingleLiveEvent
+import neuro.expenses.register.common.schedulers.SchedulerProvider
 import neuro.expenses.register.domain.dto.ExpenseDto
 import neuro.expenses.register.domain.usecase.calendar.GetCalendarUseCase
 import neuro.expenses.register.domain.usecase.category.ObserveCategoriesUseCase

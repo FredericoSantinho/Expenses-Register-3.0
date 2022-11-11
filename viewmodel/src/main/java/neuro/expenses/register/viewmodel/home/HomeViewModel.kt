@@ -1,7 +1,7 @@
 package neuro.expenses.register.viewmodel.home
 
 import androidx.compose.runtime.mutableStateOf
-import com.exchangebot.common.schedulers.SchedulerProvider
+import neuro.expenses.register.common.schedulers.SchedulerProvider
 import neuro.expenses.register.domain.dto.PlaceDto
 import neuro.expenses.register.domain.usecase.calendar.GetCalendarUseCase
 import neuro.expenses.register.domain.usecase.location.GetCurrentLocationUseCase

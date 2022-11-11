@@ -1,4 +1,4 @@
-package neuro.expenses.register.ui.report.composable
+package neuro.expenses.register.ui.common.composables.image
 
 import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
@@ -9,7 +9,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import coil.compose.rememberAsyncImagePainter
 import neuro.expenses.register.R
-import neuro.expenses.register.common.viewmodel.shimmerBackground
+import neuro.expenses.register.common.shimmer.shimmerBackground
 
 @Composable
 fun AsyncImage(

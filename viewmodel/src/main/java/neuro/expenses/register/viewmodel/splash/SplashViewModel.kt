@@ -1,7 +1,7 @@
-package neuro.expenses.register.ui.splash
+package neuro.expenses.register.viewmodel.splash
 
-import com.exchangebot.common.schedulers.SchedulerProvider
 import neuro.expenses.register.common.livedata.SingleLiveEvent
+import neuro.expenses.register.common.schedulers.SchedulerProvider
 import neuro.expenses.register.viewmodel.common.BaseViewModel
 import neuro.expenses.register.viewmodel.common.asLiveData
 

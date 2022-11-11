@@ -1,4 +1,4 @@
-package neuro.expenses.register.ui.edit.category.composable
+package neuro.expenses.register.ui.edit.category
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable

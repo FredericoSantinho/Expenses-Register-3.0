@@ -2,8 +2,8 @@ package neuro.expenses.register.viewmodel.manual.register.mapper
 
 import neuro.expenses.register.domain.usecase.register.validator.RegisterExpenseError
 import neuro.expenses.register.domain.usecase.register.validator.RegisterExpenseError.*
-import neuro.expenses.register.ui.manual.register.Message
-import neuro.expenses.register.ui.manual.register.UiStateError
+import neuro.expenses.register.viewmodel.manual.register.Message
+import neuro.expenses.register.viewmodel.manual.register.UiStateError
 
 class RegisterExpenseErrorMapperImpl : RegisterExpenseErrorMapper {
   override fun map(errors: List<RegisterExpenseError>): List<UiStateError> {

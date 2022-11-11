@@ -2,8 +2,8 @@ package neuro.expenses.register.viewmodel.home
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import com.exchangebot.common.schedulers.SchedulerProvider
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import neuro.expenses.register.common.schedulers.SchedulerProvider
 import neuro.expenses.register.domain.dto.ExpenseDto
 import neuro.expenses.register.domain.usecase.register.RegisterExpenseUseCase
 import neuro.expenses.register.viewmodel.home.model.ProductCardModel

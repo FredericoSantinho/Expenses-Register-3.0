@@ -1,10 +1,10 @@
 package neuro.expenses.register.viewmodel.common
 
 import androidx.lifecycle.ViewModel
-import com.exchangebot.common.schedulers.SchedulerProvider
 import io.reactivex.rxjava3.core.*
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
+import neuro.expenses.register.common.schedulers.SchedulerProvider
 
 open class BaseViewModel(
   private val schedulerProvider: SchedulerProvider
