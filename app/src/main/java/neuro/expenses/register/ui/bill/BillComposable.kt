@@ -12,6 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -24,12 +26,13 @@ import neuro.expenses.register.common.shimmer.shimmerBackground
 import neuro.expenses.register.ui.common.composables.image.AsyncImage
 import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.viewmodel.bill.BillViewModel
+import neuro.expenses.register.viewmodel.bill.IBillViewModel
 import neuro.expenses.register.viewmodel.bill.UiState
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BillComposable(
-  billViewModel: BillViewModel,
+  billViewModel: IBillViewModel,
   modifier: Modifier = Modifier
 ) {
   val uiState by billViewModel.uiState
@@ -38,11 +41,12 @@ fun BillComposable(
 
   Card(
     modifier = modifier
+      .semantics { testTag = BillTags.CARD }
       .requiredHeight(80.dp)
       .fillMaxWidth()
       .combinedClickable(
-        onClick = { billViewModel.onClick() },
-        onLongClick = { billViewModel.onLongClick() },
+        onClick = { billViewModel.onCardClick() },
+        onLongClick = { billViewModel.onCardLongClick() },
       ),
     elevation = 2.dp,
     backgroundColor = Color.White,
@@ -58,6 +62,7 @@ fun BillComposable(
 
       AsyncImage(
         modifier = Modifier
+          .semantics { testTag = billViewModel.iconUrl.value }
           .padding(start = 8.dp)
           .constrainAs(imageC) {
             start.linkTo(parent.start)
@@ -67,11 +72,12 @@ fun BillComposable(
           .size(64.dp)
           .clip(RoundedCornerShape(corner = CornerSize(8.dp)))
           .shimmerBackground(loading.value),
-        url = billViewModel.iconUrl.value,
+        billViewModel.iconUrl.value,
         loading
       )
       Text(
         modifier = Modifier
+          .semantics { testTag = BillTags.PLACE }
           .constrainAs(placeC) {
             start.linkTo(imageC.end)
             end.linkTo(totalC.start)
@@ -91,6 +97,7 @@ fun BillComposable(
       }) {
         Text(
           modifier = Modifier
+            .semantics { testTag = BillTags.TIME }
             .widthIn(48.dp)
             .shimmerBackground(loading.value),
           textAlign = TextAlign.Center,
@@ -99,6 +106,7 @@ fun BillComposable(
         )
         Text(
           modifier = Modifier
+            .semantics { testTag = BillTags.DATE }
             .padding(start = 8.dp)
             .widthIn(80.dp)
             .shimmerBackground(loading.value),
@@ -109,6 +117,7 @@ fun BillComposable(
       }
       Text(
         modifier = Modifier
+          .semantics { testTag = BillTags.TOTAL }
           .constrainAs(totalC) {
             end.linkTo(closeBillC.start)
             top.linkTo(parent.top)
@@ -136,7 +145,7 @@ fun BillComposable(
 @Composable
 private fun onUiState(
   uiState: UiState,
-  billViewModel: BillViewModel,
+  billViewModel: IBillViewModel,
   modifier: Modifier,
   loading: MutableState<Boolean>
 ) {
@@ -175,6 +184,7 @@ private fun closeBillIcon(imageConstraintModifier: Modifier) {
     onClick = {
 
     }, modifier = imageConstraintModifier
+      .semantics { testTag = BillTags.CLOSE_BILL_ICON }
       .padding(start = 8.dp)
   ) {
     Icon(
@@ -186,11 +196,12 @@ private fun closeBillIcon(imageConstraintModifier: Modifier) {
 }
 
 @Composable
-private fun editBillIcon(modifier: Modifier, billViewModel: BillViewModel) {
+private fun editBillIcon(modifier: Modifier, billViewModel: IBillViewModel) {
   IconButton(
     onClick = {
       billViewModel.onEditClick()
     }, modifier = modifier
+      .semantics { testTag = BillTags.EDIT_BILL_ICON }
       .padding(start = 8.dp)
   ) {
     Icon(
@@ -206,5 +217,17 @@ private fun editBillIcon(modifier: Modifier, billViewModel: BillViewModel) {
 fun PreviewDateTimeComposable() {
   ExpensesRegisterTheme {
     BillComposable(BillViewModel())
+  }
+}
+
+class BillTags {
+  companion object {
+    const val CARD = "card"
+    const val PLACE = "place"
+    const val TIME = "time"
+    const val DATE = "date"
+    const val TOTAL = "total"
+    const val EDIT_BILL_ICON = "editIcon"
+    const val CLOSE_BILL_ICON = "closeIcon"
   }
 }
