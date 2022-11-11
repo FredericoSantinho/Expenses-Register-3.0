@@ -17,5 +17,5 @@ val databaseMapperModule = module {
   single<RoomBillItemMapper> { RoomBillItemMapperImpl() }
   single<RoomPlaceMapper> { RoomPlaceMapperImpl(get()) }
   single<RoomPlaceWithPricedProductsMapper> { RoomPlaceWithPricedProductsMapperImpl(get(), get()) }
-  single<LatLngMapper> { LatLngMapperImpl() }
+  single<RoomLatLngMapper> { RoomLatLngMapperImpl() }
 }
