@@ -20,7 +20,7 @@ import neuro.expenses.register.ui.bill.BillComposableContainer
 import neuro.expenses.register.ui.common.composables.datetime.DateTimeComposable
 import neuro.expenses.register.ui.common.composables.dropdown.DropDownTextField
 import neuro.expenses.register.ui.common.composables.maps.MapsComposable
-import neuro.expenses.register.ui.common.composables.maps.mapper.CameraPositionUiMapper
+import neuro.expenses.register.ui.common.composables.maps.mapper.CameraPositionViewMapper
 import neuro.expenses.register.ui.home.mapper.HomeMapsEventMapper
 import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.viewmodel.home.HomeViewModel
@@ -33,7 +33,7 @@ import org.koin.androidx.compose.getViewModel
 fun HomeComposable(
   fragmentActivity: FragmentActivity,
   mapsEventMapper: HomeMapsEventMapper = get(),
-  cameraPositionUiMapper: CameraPositionUiMapper = get(),
+  cameraPositionViewMapper: CameraPositionViewMapper = get(),
   homeViewModel: HomeViewModel = getViewModel()
 ) {
   val uiState by homeViewModel.uiState
@@ -57,7 +57,7 @@ fun HomeComposable(
     }) {
       MapsComposable(
         homeViewModel.initialCameraPosition,
-        cameraPositionUiMapper,
+        cameraPositionViewMapper,
         mapsEventMapper.map(uiEvent.value)
       )
       Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {

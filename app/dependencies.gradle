@@ -8,14 +8,12 @@ dependencies {
 
   implementation lib.google
   implementation lib.google_maps
-
   implementation lib.koin_compose
   implementation lib.glide
   implementation lib.coil
   implementation lib.compose_shimmer
   implementation lib.rxAndroid
   implementation lib.rxKotlin
-
   implementation lib.timber
 
   testImplementation lib.koin_test

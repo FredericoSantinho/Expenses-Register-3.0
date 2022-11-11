@@ -1,13 +1,14 @@
 package neuro.expenses.register.ui.common.composables.maps.mapper
 
 import com.google.android.gms.maps.model.CameraPosition
-import neuro.expenses.register.ui.common.mapper.LatLngMapper
+import neuro.expenses.register.ui.common.mapper.LatLngViewMapper
 import neuro.expenses.register.viewmodel.home.model.CameraPositionModel
 
-class CameraPositionUiMapperImpl(private val latLngMapper: LatLngMapper) : CameraPositionUiMapper {
+class CameraPositionViewMapperImpl(private val latLngViewMapper: LatLngViewMapper) :
+  CameraPositionViewMapper {
   override fun map(cameraPositionModel: CameraPositionModel): CameraPosition {
     return CameraPosition.fromLatLngZoom(
-      latLngMapper.map(cameraPositionModel.latLngModel),
+      latLngViewMapper.map(cameraPositionModel.latLngModel),
       cameraPositionModel.zoom
     )
   }

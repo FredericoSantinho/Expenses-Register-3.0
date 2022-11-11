@@ -4,18 +4,19 @@ dependencies {
   implementation fileTree(dir: 'libs', include: ['*.jar'])
 
   implementation project(':domain')
+
   implementation lib.kotlin
-
   implementation lib.koin_core
-
   implementation lib.rxAndroid
   implementation lib.rxKotlin
-  implementation lib.timber
-
   implementation lib.room
-
   implementation lib.play_services_location
+  implementation lib.timber
 
   api lib.room_rx3
   kapt lib.room_compiler
+
+  testImplementation lib.koin_test
+  testImplementation lib.junit
+  testImplementation lib.mockito
 }

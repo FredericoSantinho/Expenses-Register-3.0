@@ -4,10 +4,9 @@ dependencies {
   implementation fileTree(dir: 'libs', include: ['*.jar'])
 
   implementation project(':entity')
+
   implementation lib.kotlin
-
   implementation lib.koin_core
-
   implementation lib.rxKotlin
 
   testImplementation lib.junit

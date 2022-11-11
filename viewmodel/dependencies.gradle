@@ -6,13 +6,9 @@ dependencies {
   implementation project(':domain')
 
   implementation lib.google
-
   implementation lib.koin_android
-
   implementation lib.kotlin
-
   implementation lib.koin_core
-
   implementation lib.rxAndroid
   implementation lib.rxKotlin
   implementation lib.timber
