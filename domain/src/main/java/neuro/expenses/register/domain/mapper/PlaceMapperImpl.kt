@@ -1,24 +1,17 @@
 package neuro.expenses.register.domain.mapper
 
-import neuro.expenses.register.domain.dto.ExpenseDto
-import neuro.expenses.register.domain.dto.LatLngDto
 import neuro.expenses.register.domain.dto.PlaceDto
-import neuro.expenses.register.domain.dto.ProductDto
-import java.util.*
+import neuro.expenses.register.entity.Place
 
-class PlaceMapperImpl : PlaceMapper {
-  private val zero = LatLngDto(0.0, 0.0)
+class PlaceMapperImpl(
+  private val productMapper: ProductMapper,
+  private val latLngMapper: LatLngMapper
+) : PlaceMapper {
+  override fun map(place: Place): PlaceDto {
+    val placeName = place.name
+    val productDtos = place.products.map { productMapper.map(it) }
+    val latLngDto = latLngMapper.map(place.latLng)
 
-  override fun map(expenseDto: ExpenseDto): PlaceDto {
-    val products = Collections.singletonList(
-      ProductDto(
-        0,
-        expenseDto.description,
-        expenseDto.category,
-        expenseDto.price,
-        expenseDto.amount
-      )
-    )
-    return PlaceDto(expenseDto.place, products, zero)
+    return PlaceDto(placeName, productDtos, latLngDto)
   }
 }

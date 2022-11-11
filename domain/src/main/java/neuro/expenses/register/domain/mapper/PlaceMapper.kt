@@ -1,8 +1,8 @@
 package neuro.expenses.register.domain.mapper
 
-import neuro.expenses.register.domain.dto.ExpenseDto
 import neuro.expenses.register.domain.dto.PlaceDto
+import neuro.expenses.register.entity.Place
 
 interface PlaceMapper {
-  fun map(expenseDto: ExpenseDto): PlaceDto
+  fun map(place: Place): PlaceDto
 }

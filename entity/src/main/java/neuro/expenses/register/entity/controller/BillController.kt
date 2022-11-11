@@ -4,11 +4,11 @@ import io.reactivex.rxjava3.core.Completable
 import neuro.expenses.register.entity.Bill
 import neuro.expenses.register.entity.BillItem
 import neuro.expenses.register.entity.Expense
-import neuro.expenses.register.entity.mapper.ProductMapper
+import neuro.expenses.register.entity.converter.ExpenseConverter
 
 class BillController(
   private val calculateBillTotal: CalculateBillTotal,
-  private val productMapper: ProductMapper,
+  private val expenseConverter: ExpenseConverter,
   var bill: Bill
 ) {
   fun contains(productDescription: String): Boolean {
@@ -35,7 +35,7 @@ class BillController(
         }
       } else {
         Completable.fromAction {
-          val product = productMapper.map(0L, expense)
+          val product = expenseConverter.convertToProduct(expense)
 
           val newBillItem = BillItem(
             0, product,

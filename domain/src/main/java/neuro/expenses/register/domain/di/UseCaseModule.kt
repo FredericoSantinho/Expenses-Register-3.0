@@ -1,6 +1,5 @@
 package neuro.expenses.register.domain.di
 
-import neuro.expenses.register.domain.mapper.*
 import neuro.expenses.register.domain.usecase.bill.*
 import neuro.expenses.register.domain.usecase.calendar.GetCalendarUseCase
 import neuro.expenses.register.domain.usecase.calendar.GetCalendarUseCaseImpl
@@ -36,19 +35,15 @@ val useCaseModule = module {
   single<ObserveLastBillUseCase> { ObserveLastBillUseCaseImpl(get(), get()) }
   single<GetLastBillUseCase> { GetLastBillUseCaseImpl(get()) }
   single<SaveBillUseCase> { SaveBillUseCaseImpl(get(), get()) }
-  single<BillItemMapper> { BillItemMapperImpl(get()) }
-  single<BillMapper> { BillMapperImpl(get()) }
   single<CalculateBillTotal> { CalculateBillTotalImpl() }
-  single<ProductMapper> { ProductMapperImpl() }
   single<ExpenseValidator> { ExpenseValidatorImpl(get()) }
   single<IsValidCategoryUseCase> { IsValidCategoryUseCaseImpl(get()) }
   single<GetCalendarUseCase> { GetCalendarUseCaseImpl() }
   single<ObserveCategoriesUseCase> { ObserveCategoriesUseCaseImpl(get()) }
   single<GetNearestPlaceUseCase> { GetNearestPlaceUseCaseImpl(get(), get()) }
-  single<ExpenseMapper> { ExpenseMapperImpl() }
   single<GetNearestPlacesUseCase> { GetNearestPlacesUseCaseImpl(get(), get()) }
   single<CalculateDistanceUseCase> { CalculateDistanceUseCaseImpl(get()) }
   single<GetCurrentLocationUseCase> { GetCurrentLocationUseCaseImpl(get()) }
   single<SavePlaceUseCase> { SavePlaceUseCaseImpl(get()) }
-  single<SaveExpensePlaceAndProductUseCase> { SaveExpensePlaceAndProductUseCaseImpl(get(), get()) }
+  single<SaveExpensePlace> { SaveExpensePlaceImpl(get(), get(), get(), get()) }
 }

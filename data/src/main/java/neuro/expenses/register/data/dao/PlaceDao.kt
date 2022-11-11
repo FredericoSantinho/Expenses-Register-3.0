@@ -19,6 +19,7 @@ interface PlaceDao {
   @Query("select * from place_table")
   fun observeAll(): Observable<List<RoomPlaceWithPricedProducts>>
 
+  @Transaction
   @Query("select * from place_table where name=:name")
   fun getPlace(name: String): Maybe<RoomPlaceWithPricedProducts>
 

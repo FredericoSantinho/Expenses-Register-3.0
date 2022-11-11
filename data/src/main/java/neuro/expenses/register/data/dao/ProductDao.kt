@@ -27,6 +27,7 @@ interface ProductDao {
   @Delete()
   fun delete(roomProduct: RoomProduct): Completable
 
+  @Transaction
   @Query("select * from priced_product_table where pricedProductId=:pricedProductId")
   fun getPricedProduct(pricedProductId: Long): Maybe<RoomPricedProductWithProductAndCategory>
 

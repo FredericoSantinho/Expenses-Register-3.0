@@ -17,7 +17,7 @@ class DefaultShowTimePicker : ShowTimePicker {
   ) {
     val picker = TimePickerDialog(
       activity,
-      { tp, sHour, sMinute -> onSetTime.onSetTime(sHour, sMinute) }, hour, minutes, true
+      { _, sHour, sMinute -> onSetTime.onSetTime(sHour, sMinute) }, hour, minutes, true
     )
     picker.show()
   }
