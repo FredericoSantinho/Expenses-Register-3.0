@@ -65,7 +65,7 @@ fun ProductCardComposable(productCardViewModel: IProductCardViewModel) {
           maxLines = 3,
         )
         AsyncImage(modifier = Modifier
-          .semantics { testTag = ProductCardTags.ICON }
+          .semantics { testTag = productCardViewModel.iconUrl.value }
           .constrainAs(imageC) {
             end.linkTo(parent.end)
             top.linkTo(parent.top)
@@ -139,6 +139,5 @@ class ProductCardTags {
     const val PRODUCT_DESCRIPTION = "productDescription"
     const val CATEGORY = "category"
     const val PRICE = "price"
-    const val ICON = "icon"
   }
 }

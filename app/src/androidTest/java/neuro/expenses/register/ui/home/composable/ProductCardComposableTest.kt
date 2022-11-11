@@ -39,7 +39,7 @@ internal class ProductCardComposableTest {
     val onDescription = composeTestRule.onNodeWithTag(ProductCardTags.PRODUCT_DESCRIPTION, true)
     val onCategory = composeTestRule.onNodeWithTag(ProductCardTags.CATEGORY, true)
     val onPrice = composeTestRule.onNodeWithTag(ProductCardTags.PRICE, true)
-    val onIcon = composeTestRule.onNodeWithTag(ProductCardTags.ICON, true)
+    val onIcon = composeTestRule.onNodeWithTag(productCardViewModel.iconUrl.value, true)
 
     onCard.assertHasClickAction()
 
