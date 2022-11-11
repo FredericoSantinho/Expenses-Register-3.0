@@ -1,17 +1,17 @@
 package neuro.expenses.register.domain.usecase.register
 
 import io.reactivex.rxjava3.core.Completable
-import neuro.expenses.register.domain.controller.BillController
 import neuro.expenses.register.domain.dto.BillDto
 import neuro.expenses.register.domain.dto.ExpenseDto
 import neuro.expenses.register.domain.mapper.BillMapper
 import neuro.expenses.register.domain.mapper.ExpenseMapper
-import neuro.expenses.register.domain.mapper.ProductMapper
 import neuro.expenses.register.domain.usecase.bill.GetLastBillUseCase
 import neuro.expenses.register.domain.usecase.bill.SaveBillUseCase
 import neuro.expenses.register.domain.usecase.register.validator.ExpenseValidator
 import neuro.expenses.register.entity.Bill
+import neuro.expenses.register.entity.controller.BillController
 import neuro.expenses.register.entity.controller.CalculateBillTotal
+import neuro.expenses.register.entity.mapper.ProductMapper
 import java.util.*
 
 class RegisterExpenseUseCaseImpl(

@@ -1,7 +1,6 @@
 package neuro.expenses.register.domain.mapper
 
 import neuro.expenses.register.domain.dto.ProductDto
-import neuro.expenses.register.entity.Expense
 import neuro.expenses.register.entity.Product
 
 class ProductMapperImpl : ProductMapper {
@@ -25,9 +24,5 @@ class ProductMapperImpl : ProductMapper {
       productDto.defaultAmount,
       productDto.iconUrl
     )
-  }
-
-  override fun map(productId: Long, expense: Expense): Product {
-    return Product(productId, expense.description, expense.category, expense.price, expense.amount)
   }
 }

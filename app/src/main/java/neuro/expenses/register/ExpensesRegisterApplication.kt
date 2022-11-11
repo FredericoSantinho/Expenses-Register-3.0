@@ -30,6 +30,7 @@ class ExpensesRegisterApplication : Application() {
         useCaseModule,
         dtoMapperModule,
         entityModule,
+        entityMapperModule,
         repositoryModule,
         serviceModule,
         databaseModule,

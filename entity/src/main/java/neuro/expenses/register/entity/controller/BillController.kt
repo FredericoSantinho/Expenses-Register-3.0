@@ -1,13 +1,12 @@
-package neuro.expenses.register.domain.controller
+package neuro.expenses.register.entity.controller
 
 import io.reactivex.rxjava3.core.Completable
-import neuro.expenses.register.domain.mapper.ProductMapper
 import neuro.expenses.register.entity.Bill
 import neuro.expenses.register.entity.BillItem
 import neuro.expenses.register.entity.Expense
-import neuro.expenses.register.entity.controller.CalculateBillTotal
+import neuro.expenses.register.entity.mapper.ProductMapper
 
-internal class BillController(
+class BillController(
   private val calculateBillTotal: CalculateBillTotal,
   private val productMapper: ProductMapper,
   var bill: Bill

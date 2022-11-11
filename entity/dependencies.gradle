@@ -4,8 +4,8 @@ dependencies {
   implementation fileTree(dir: 'libs', include: ['*.jar'])
 
   implementation lib.kotlin
-
   implementation lib.koin_core
+  implementation lib.rxKotlin
 
   testImplementation lib.junit
   testImplementation lib.mockito
