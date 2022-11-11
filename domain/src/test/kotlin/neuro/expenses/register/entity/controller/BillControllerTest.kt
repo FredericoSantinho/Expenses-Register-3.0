@@ -1,9 +1,7 @@
-package neuro.expenses.register.domain.controller
+package neuro.expenses.register.entity.controller
 
-import org.koin.test.KoinTest
-
-internal class BillControllerTest : KoinTest {
-//  @get:Rule
+internal class BillControllerTest {
+  //  @get:Rule
 //  val koinTestRule = KoinTestRule.create {
 //    modules(entityModule)
 //  }

@@ -1,14 +1,14 @@
-package neuro.expenses.register.domain.service
+package neuro.expenses.register.entity.service
 
-import neuro.expenses.register.domain.dto.LatLngDto
+import neuro.expenses.register.entity.LatLng
 
 class CalculateDistanceServiceImpl : CalculateDistanceService {
-  override fun calculateDistance(latLngDto1: LatLngDto, latLngDto2: LatLngDto): Double {
+  override fun calculateDistance(latLng1: LatLng, latLng2: LatLng): Double {
     return distance(
-      latLngDto1.latitude,
-      latLngDto2.latitude,
-      latLngDto1.longitude,
-      latLngDto2.longitude
+      latLng1.latitude,
+      latLng2.latitude,
+      latLng1.longitude,
+      latLng2.longitude
     )
   }
 

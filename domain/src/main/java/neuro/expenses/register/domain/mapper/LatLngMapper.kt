@@ -5,4 +5,5 @@ import neuro.expenses.register.entity.LatLng
 
 interface LatLngMapper {
   fun map(latLng: LatLng): LatLngDto
+  fun map(latLngDto: LatLngDto): LatLng
 }
