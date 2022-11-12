@@ -13,8 +13,10 @@ class SuffixTransformation(private val suffix: String) : VisualTransformation {
 
 fun suffixFilter(number: AnnotatedString, suffix: String): TransformedText {
 
-  val out = number.text + ' ' + suffix
-  val suffixOffset = suffix.length
+  val isEmpty = number.text.isEmpty()
+
+  val out = if (isEmpty) "" else number.text + ' ' + suffix
+  val suffixOffset = if (isEmpty) 0 else suffix.length
 
   val numberOffsetTranslator = object : OffsetMapping {
     override fun originalToTransformed(offset: Int): Int {
