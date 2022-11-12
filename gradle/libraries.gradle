@@ -27,6 +27,7 @@ lib.rxAndroid = "io.reactivex.rxjava3:rxandroid:$ver.rxAndroid"
 lib.rxKotlin = ["io.reactivex.rxjava3:rxkotlin:$ver.rxKotlin",
                 "com.jakewharton.rxrelay3:rxrelay:$ver.rxRelay3"]
 
+lib.compose_runtime = "androidx.compose.runtime:runtime:$ver.compose"
 lib.google = ["androidx.core:core-ktx:$ver.ktx",
               "androidx.preference:preference:$ver.preference",
               "androidx.security:security-crypto:$ver.androidXSecurity",
@@ -38,6 +39,7 @@ lib.google = ["androidx.core:core-ktx:$ver.ktx",
               "androidx.lifecycle:lifecycle-viewmodel-ktx:$ver.lifecycle",
               "androidx.navigation:navigation-fragment-ktx:$ver.navigation",
               "androidx.navigation:navigation-ui-ktx:$ver.navigation",
+              "$lib.compose_runtime",
               "androidx.compose.runtime:runtime-livedata:$ver.compose",
               "androidx.compose.runtime:runtime-rxjava3:$ver.compose",
               "androidx.compose.ui:ui:$ver.compose",
@@ -57,7 +59,7 @@ lib.google_test = ["androidx.test.ext:junit:$ver.androidXJunit",
 
 lib.google_maps = ["com.google.android.gms:play-services-maps:$ver.google_maps",
                    "com.google.maps.android:maps-compose:$ver.google_maps_compose",
-                   "com.google.maps.android:maps-compose-widgets:$ver.google_maps_compose",
+                   "com.google.maps.android:maps-utils-ktx:$ver.maps_utils_ktx",
                    "com.google.maps.android:android-maps-utils:$ver.google_maps_utils"]
 
 lib.glide = "com.github.bumptech.glide:glide:$ver.glide"

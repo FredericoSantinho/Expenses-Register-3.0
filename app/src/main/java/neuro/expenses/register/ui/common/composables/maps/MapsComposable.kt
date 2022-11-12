@@ -13,8 +13,8 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.*
-import com.google.maps.android.compose.widgets.ScaleBar
 import kotlinx.coroutines.launch
+import neuro.expenses.register.ui.common.composables.google.ScaleBar
 import neuro.expenses.register.ui.common.composables.maps.mapper.CameraPositionViewMapper
 import neuro.expenses.register.viewmodel.home.model.CameraPositionModel
 

@@ -5,7 +5,7 @@ dependencies {
 
   implementation project(':domain')
 
-  implementation lib.google
+  implementation lib.compose_runtime
   implementation lib.koin_android
   implementation lib.kotlin
   implementation lib.koin_core

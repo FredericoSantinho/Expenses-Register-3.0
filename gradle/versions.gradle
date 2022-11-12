@@ -2,7 +2,7 @@ ext {
   ver = [:]
 }
 
-ver.kotlin = "1.7.20"
+ver.kotlin = "1.7.21"
 ver.junit = "4.13.2"
 ver.junit5 = "5.9.1"
 ver.mockito = "4.8.1"
@@ -25,7 +25,7 @@ ver.constraintLayout = "2.1.4"
 ver.constraintLayoutCompose = "1.0.1"
 ver.lifecycle = "2.5.1"
 ver.navigation = "2.5.2"
-ver.compose = "1.3.0"
+ver.compose = "1.3.1"
 ver.compose_shimmer = "1.0.3"
 
 ver.play_services_location = "21.0.1"
@@ -35,6 +35,7 @@ ver.expresso = "3.4.0"
 ver.google_maps = "18.1.0"
 ver.google_maps_compose = "2.7.2"
 ver.google_maps_utils = "2.4.0"
+ver.maps_utils_ktx = "3.2.1"
 
 ver.glide = "4.14.2"
 ver.coil = "2.2.2"
