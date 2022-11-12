@@ -4,7 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import neuro.expenses.register.domain.dto.PlaceDto
 import neuro.expenses.register.domain.usecase.calendar.GetCalendarUseCase
 import neuro.expenses.register.domain.usecase.location.GetCurrentLocationUseCase
-import neuro.expenses.register.domain.usecase.place.GetNearestPlacesUseCase
+import neuro.expenses.register.domain.usecase.place.ObserveNearestPlacesUseCase
 import neuro.expenses.register.domain.usecase.register.RegisterExpenseUseCase
 import neuro.expenses.register.viewmodel.bill.BillViewModel
 import neuro.expenses.register.viewmodel.bill.FeedLastBillViewModel
@@ -24,7 +24,7 @@ import java.util.*
 private val lisbon = CameraPositionModel(LatLngModel(38.722252, -9.139337), 7.0f)
 
 class HomeViewModel(
-  private val getNearestPlacesUseCase: GetNearestPlacesUseCase,
+  private val observeNearestPlacesUseCase: ObserveNearestPlacesUseCase,
   private val getCurrentLocationUseCase: GetCurrentLocationUseCase,
   private val getCalendarUseCase: GetCalendarUseCase,
   private val registerExpenseUseCase: RegisterExpenseUseCase,
@@ -51,7 +51,12 @@ class HomeViewModel(
 
   init {
     getCurrentLocationUseCase.getCurrentLocation()
-      .flatMap { getNearestPlacesUseCase.getNearestPlaces(it, nearestPlacesLimit) }
+      .flatMapObservable {
+        observeNearestPlacesUseCase.observeNearestPlaces(
+          it,
+          nearestPlacesLimit
+        )
+      }
       .baseSubscribe { nearestPlaces ->
         places.value = nearestPlaces
         placesNames.value = nearestPlaces.map { placeDto -> placeDto.name }

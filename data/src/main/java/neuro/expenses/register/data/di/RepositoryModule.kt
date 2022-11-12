@@ -14,6 +14,7 @@ val repositoryModule = module {
   single<SaveBillRepository> { SaveBillRepositoryImpl(get(), get(), get()) }
   single<SaveProductRepository> { SaveProductRepositoryImpl(get()) }
   single<GetPlacesRepository> { GetPlacesRepositoryImpl(get(), get()) }
+  single<ObservePlacesRepository> { ObservePlacesRepositoryImpl(get(), get()) }
   single<SavePlaceRepository> { SavePlaceRepositoryImpl(get(), get(), get()) }
 
   //  Internal

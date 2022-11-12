@@ -19,4 +19,8 @@ class RoomPlaceWithPricedProductsMapperImpl(
 
     return PlaceDto(name, products, latLng)
   }
+
+  override fun map(roomPlaceWithPricedProductslist: List<RoomPlaceWithPricedProducts>): List<PlaceDto> {
+    return roomPlaceWithPricedProductslist.map { map(it) }
+  }
 }

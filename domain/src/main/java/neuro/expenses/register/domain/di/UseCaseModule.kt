@@ -41,7 +41,8 @@ val useCaseModule = module {
   single<GetCalendarUseCase> { GetCalendarUseCaseImpl() }
   single<ObserveCategoriesUseCase> { ObserveCategoriesUseCaseImpl(get()) }
   single<GetNearestPlaceUseCase> { GetNearestPlaceUseCaseImpl(get(), get()) }
-  single<GetNearestPlacesUseCase> { GetNearestPlacesUseCaseImpl(get(), get(), get()) }
+  single<GetNearestPlacesUseCase> { GetNearestPlacesUseCaseImpl(get()) }
+  single<ObserveNearestPlacesUseCase> { ObserveNearestPlacesUseCaseImpl(get(), get(), get()) }
   single<GetCurrentLocationUseCase> { GetCurrentLocationUseCaseImpl(get()) }
   single<SavePlaceUseCase> { SavePlaceUseCaseImpl(get()) }
   single<SaveExpensePlace> { SaveExpensePlaceImpl(get(), get(), get(), get()) }

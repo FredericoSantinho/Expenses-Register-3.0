@@ -1,16 +1,16 @@
 package neuro.expenses.register.data.repository
 
-import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.core.Observable
 import neuro.expenses.register.data.dao.PlaceDao
 import neuro.expenses.register.data.mapper.place.RoomPlaceWithPricedProductsMapper
 import neuro.expenses.register.domain.dto.PlaceDto
-import neuro.expenses.register.domain.repository.GetPlacesRepository
+import neuro.expenses.register.domain.repository.ObservePlacesRepository
 
-class GetPlacesRepositoryImpl(
+class ObservePlacesRepositoryImpl(
   private val placeDao: PlaceDao,
   private val roomPlaceWithPricedProductsMapper: RoomPlaceWithPricedProductsMapper
-) : GetPlacesRepository {
-  override fun getPlaces(): Single<List<PlaceDto>> {
-    return placeDao.getAll().map { roomPlaceWithPricedProductsMapper.map(it) }
+) : ObservePlacesRepository {
+  override fun observePlaces(): Observable<List<PlaceDto>> {
+    return placeDao.observeAll().map { roomPlaceWithPricedProductsMapper.map(it) }
   }
 }
