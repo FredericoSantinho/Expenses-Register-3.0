@@ -35,10 +35,23 @@ android {
     resValue "string", "google_maps_key", (project.findProperty("GOOGLE_MAPS_API_KEY") ?: "")
   }
 
+  signingConfigs {
+    debug {}
+    release {
+      storeFile = file(project.STORE_FILE_EXPENSES)
+      storePassword = project.STORE_PASSWORD_EXPENSES
+      keyAlias = project.KEY_ALIAS_EXPENSES
+      keyPassword = project.KEY_PASSWORD_EXPENSES
+    }
+  }
+
   buildTypes {
     release {
-      minifyEnabled false
+      minifyEnabled true
       proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+      shrinkResources true
+      zipAlignEnabled true
+      signingConfig signingConfigs.release
     }
     debug {
       testCoverageEnabled = true
