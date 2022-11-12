@@ -39,11 +39,11 @@ class HomeViewModel(
 ) : BaseViewModel(schedulerProvider), IHomeViewModel {
   private val places = mutableStateOf(emptyList<PlaceDto>())
   override val placesNames = mutableStateOf(emptyList<String>())
-  private var selectedPlaceIndex = 0
 
   override val calendar = mutableStateOf(getCalendarUseCase.getCalendar())
   override val productsListViewModel: ProductsListViewModel = newProductsListViewModel()
 
+  val selectedPlaceIndex = mutableStateOf(0)
   private val _uiState = mutableStateOf<UiState>(UiState.Loading)
   override val uiState = _uiState.asState()
   private val _uiEvent = SingleLiveEvent<UiEvent>()
@@ -55,8 +55,9 @@ class HomeViewModel(
       .baseSubscribe { nearestPlaces ->
         places.value = nearestPlaces
         placesNames.value = nearestPlaces.map { placeDto -> placeDto.name }
-        productsListViewModel.setProducts(nearestPlaces.get(selectedPlaceIndex))
-        val latLngModel = latLngModelMapper.map(nearestPlaces.get(selectedPlaceIndex).latLngDto)
+        productsListViewModel.setProducts(nearestPlaces.get(selectedPlaceIndex.value))
+        val latLngModel =
+          latLngModelMapper.map(nearestPlaces.get(selectedPlaceIndex.value).latLngDto)
         _uiState.value = UiState.Ready
         _uiEvent.value = UiEvent.MoveCamera(latLngModel, zoom)
       }
@@ -64,7 +65,6 @@ class HomeViewModel(
   }
 
   override fun onSelectedPlace(index: Int) {
-    selectedPlaceIndex = index
     val placeDto = places.value.get(index)
     val latLngModel = latLngModelMapper.map(placeDto.latLngDto)
     _uiState.value = UiState.Ready
