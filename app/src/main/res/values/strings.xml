@@ -26,12 +26,16 @@
   <!-- home -->
   <string name="home_place">Place</string>
 
+  <!-- Common -->
+  <string name="description">Description</string>
+  <string name="category">Category</string>
+  <string name="place">Place</string>
+  <string name="price">Price</string>
+  <string name="amount">Amount</string>
+  <string name="icon_url">Icon Url</string>
+  <string name="save">Save</string>
+
   <!-- Manual Register Screen -->
-  <string name="manual_register_description">Description</string>
-  <string name="manual_register_category">Category</string>
-  <string name="manual_register_place">Place</string>
-  <string name="manual_register_price">Price</string>
-  <string name="manual_register_amount">Amount</string>
   <string name="manual_register_total">Total</string>
   <string name="manual_register_register">Register</string>
   <string name="manual_register_register_success">Registered %1$s</string>

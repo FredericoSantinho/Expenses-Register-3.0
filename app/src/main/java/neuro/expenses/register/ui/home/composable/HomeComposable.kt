@@ -1,8 +1,8 @@
 package neuro.expenses.register.ui.home.composable
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Divider
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -15,20 +15,25 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.fragment.app.FragmentActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import neuro.expenses.register.R
 import neuro.expenses.register.ui.bill.BillComposableContainer
 import neuro.expenses.register.ui.common.composables.datetime.DateTimeComposable
 import neuro.expenses.register.ui.common.composables.dropdown.DropDownTextField
 import neuro.expenses.register.ui.common.composables.maps.MapsComposable
 import neuro.expenses.register.ui.common.composables.maps.mapper.CameraPositionViewMapper
+import neuro.expenses.register.ui.edit.product.EditProductComposable
 import neuro.expenses.register.ui.home.mapper.HomeMapsEventMapper
 import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.viewmodel.home.HomeViewModel
 import neuro.expenses.register.viewmodel.home.IHomeViewModel
+import neuro.expenses.register.viewmodel.home.UiEvent
 import neuro.expenses.register.viewmodel.home.UiState
 import org.koin.androidx.compose.get
 import org.koin.androidx.compose.getViewModel
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeComposable(
   fragmentActivity: FragmentActivity,
@@ -40,6 +45,16 @@ fun HomeComposable(
   val uiEvent = homeViewModel.uiEvent.observeAsState(null)
 
   val loading = remember { mutableStateOf(true) }
+
+  val coroutineScope = rememberCoroutineScope()
+  val modalBottomSheetInitialValue = remember {
+    if (uiState == UiState.Editing) ModalBottomSheetValue.Expanded else ModalBottomSheetValue.Hidden
+  }
+  val modalBottomSheetState = rememberModalBottomSheetState(
+    modalBottomSheetInitialValue,
+    confirmStateChange = {
+      it != ModalBottomSheetValue.HalfExpanded
+    }, skipHalfExpanded = true)
 
   ConstraintLayout(
     modifier = Modifier
@@ -83,6 +98,54 @@ fun HomeComposable(
       onUiState(uiState, homeViewModel, loading)
     }
   }
+  ModalBottomSheetLayout(
+    sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
+    sheetBackgroundColor = Color.Transparent,
+    sheetState = modalBottomSheetState,
+    sheetContent = {
+      EditProductComposable(homeViewModel.editProductViewModel)
+    }
+  ) {}
+
+  onUiEvent(uiEvent, coroutineScope, modalBottomSheetState)
+
+  if (!modalBottomSheetState.isVisible) {
+    homeViewModel.onModalBottomSheetStateNotVisible()
+  }
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun onUiEvent(
+  uiEvent: State<UiEvent?>,
+  coroutineScope: CoroutineScope,
+  modalBottomSheetState: ModalBottomSheetState
+) {
+  if (uiEvent.value != null) {
+    when (uiEvent.value) {
+      is UiEvent.OpenEditMode -> onOpenEditMode(
+        uiEvent.value as UiEvent.OpenEditMode,
+        coroutineScope,
+        modalBottomSheetState
+      )
+      is UiEvent.MoveCamera -> {}
+      null -> {}
+    }
+  }
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun onOpenEditMode(
+  uiEvent: UiEvent,
+  coroutineScope: CoroutineScope,
+  modalBottomSheetState: ModalBottomSheetState
+) {
+  LaunchedEffect(uiEvent) {
+    coroutineScope.launch {
+      modalBottomSheetState.show()
+    }
+  }
 }
 
 @Composable
@@ -91,9 +154,10 @@ private fun onUiState(
   homeViewModel: IHomeViewModel,
   loading: MutableState<Boolean>
 ) {
-  when (uiState) {
-    is UiState.Loading -> onUiLoading()
-    is UiState.Ready -> onUiReady(homeViewModel, loading)
+  if (uiState is UiState.Loading) {
+    onUiLoading()
+  } else {
+    onUiReady(homeViewModel, loading)
   }
 }
 

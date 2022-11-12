@@ -98,7 +98,7 @@ fun ManualRegisterComposable(
       calendar = manualRegisterViewModel.calendar
     )
     TextFieldWithError(
-      label = stringResource(R.string.manual_register_description),
+      label = stringResource(R.string.description),
       keyboardOptions = keyboardOptionsText,
       modifier = Modifier.padding(start = 8.dp, end = 8.dp),
       value = manualRegisterViewModel.description,
@@ -110,7 +110,7 @@ fun ManualRegisterComposable(
     TextFieldWithDropdown(
       modifier = Modifier.padding(start = 8.dp, end = 8.dp),
       dataIn = manualRegisterViewModel.categories.subscribeAsState(initial = emptyList()),
-      label = stringResource(R.string.manual_register_category),
+      label = stringResource(R.string.category),
       keyboardOptions = keyboardOptionsText,
       onValueChange = { manualRegisterViewModel.onCategoryChange() },
       value = manualRegisterViewModel.category,
@@ -121,7 +121,7 @@ fun ManualRegisterComposable(
       val (place, placeAuto) = createRefs()
 
       TextFieldWithError(
-        label = stringResource(R.string.manual_register_place),
+        label = stringResource(R.string.place),
         modifier = Modifier
           .constrainAs(place) {
             start.linkTo(parent.start, margin = 8.dp)
@@ -159,20 +159,19 @@ fun ManualRegisterComposable(
       val (priceC, amountC, totalLabelC, totalC) = createRefs()
 
       CurrencyTextField(
-        label = stringResource(R.string.manual_register_price),
+        label = stringResource(R.string.price),
         modifier = Modifier.constrainAs(priceC) {
           start.linkTo(parent.start, margin = 8.dp)
           width = Dimension.value(96.dp)
         },
         onValueChange = {
-          manualRegisterViewModel.price.value = it
           manualRegisterViewModel.onPriceChange()
         },
         value = manualRegisterViewModel.price,
         textStyle = ExpensesRegisterTypography.body2
       )
       TextFieldWithError(
-        label = stringResource(R.string.manual_register_amount),
+        label = stringResource(R.string.amount),
         modifier = Modifier.constrainAs(amountC) {
           start.linkTo(priceC.end, margin = 8.dp)
           width = Dimension.value(96.dp)

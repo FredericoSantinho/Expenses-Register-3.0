@@ -11,7 +11,7 @@ class HomeMapsEventMapper(private val latLngViewMapper: LatLngViewMapper) {
         latLngViewMapper.map(uiEvent.latLngModel),
         uiEvent.zoom
       )
-      null -> null
+      else -> null
     }
   }
 }

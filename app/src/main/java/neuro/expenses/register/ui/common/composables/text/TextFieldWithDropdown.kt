@@ -129,7 +129,7 @@ fun PreviewTextFieldWithDropdown() {
   ExpensesRegisterTheme {
     TextFieldWithDropdown(
       dataIn = dataIn,
-      label = stringResource(R.string.manual_register_category)
+      label = stringResource(R.string.category)
     )
   }
 }

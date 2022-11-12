@@ -27,6 +27,7 @@ fun CurrencyTextField(
   TextField(
     value = value.value,
     onValueChange = {
+      value.value = it
       onValueChange(it)
     },
     label = { Text(label) },

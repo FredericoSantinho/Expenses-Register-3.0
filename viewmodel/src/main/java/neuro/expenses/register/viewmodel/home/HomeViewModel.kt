@@ -13,6 +13,7 @@ import neuro.expenses.register.viewmodel.common.asLiveData
 import neuro.expenses.register.viewmodel.common.asState
 import neuro.expenses.register.viewmodel.common.livedata.SingleLiveEvent
 import neuro.expenses.register.viewmodel.common.schedulers.SchedulerProvider
+import neuro.expenses.register.viewmodel.edit.product.EditProductViewModel
 import neuro.expenses.register.viewmodel.home.factory.ProductCardViewModelFactoryImpl
 import neuro.expenses.register.viewmodel.home.mapper.LatLngModelMapper
 import neuro.expenses.register.viewmodel.home.mapper.ProductCardModelMapper
@@ -32,6 +33,7 @@ class HomeViewModel(
   private val latLngModelMapper: LatLngModelMapper,
   private val productCardModelMapper: ProductCardModelMapper,
   override val billViewModel: BillViewModel,
+  override val editProductViewModel: EditProductViewModel,
   schedulerProvider: SchedulerProvider,
   private val nearestPlacesLimit: Int = 5,
   private val zoom: Float = 19.0f,
@@ -77,12 +79,11 @@ class HomeViewModel(
     productsListViewModel.setProducts(placeDto)
   }
 
-  override fun newProductsListViewModel() =
-    ProductsListViewModel(
-      ProductCardViewModelFactoryImpl(this),
-      productCardModelMapper,
-      calendar
-    )
+  override fun onModalBottomSheetStateNotVisible() {
+    if (_uiState.value == UiState.Editing) {
+      _uiState.value = UiState.Ready
+    }
+  }
 
   override fun onProductCardClick(productCardModel: ProductCardModel, calendar: Calendar) {
     registerExpenseUseCase.registerExpense(
@@ -92,15 +93,25 @@ class HomeViewModel(
   }
 
   override fun onProductCardLongClick(productCardModel: ProductCardModel, calendar: Calendar) {
-
+    _uiEvent.value = UiEvent.OpenEditMode()
+    _uiState.value = UiState.Editing
   }
+
+  private fun newProductsListViewModel() =
+    ProductsListViewModel(
+      ProductCardViewModelFactoryImpl(this),
+      productCardModelMapper,
+      calendar
+    )
 }
 
 sealed class UiEvent {
   class MoveCamera(val latLngModel: LatLngModel, val zoom: Float) : UiEvent()
+  class OpenEditMode : UiEvent()
 }
 
 sealed class UiState {
   object Loading : UiState()
   object Ready : UiState()
+  object Editing : UiState()
 }
