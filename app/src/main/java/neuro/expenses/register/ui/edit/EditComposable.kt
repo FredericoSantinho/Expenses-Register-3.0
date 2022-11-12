@@ -15,9 +15,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import neuro.expenses.register.ui.common.composables.dropdown.DropdownButton
 import neuro.expenses.register.ui.common.composables.dropdown.OnItemSelect
-import neuro.expenses.register.ui.edit.category.EditCategoryComposable
-import neuro.expenses.register.ui.edit.place.EditPlaceComposable
-import neuro.expenses.register.ui.edit.product.EditProductComposable
+import neuro.expenses.register.ui.edit.category.EditCategoriesComposable
+import neuro.expenses.register.ui.edit.place.EditPlacesComposable
+import neuro.expenses.register.ui.edit.product.EditProductsComposable
 import neuro.expenses.register.viewmodel.edit.Directions
 import neuro.expenses.register.viewmodel.edit.EditViewModel
 import neuro.expenses.register.viewmodel.edit.UiEvent
@@ -42,9 +42,9 @@ fun EditComposable(editViewModel: EditViewModel = getViewModel()) {
       startDestination = Directions.product.toString(),
       modifier = Modifier.fillMaxSize()
     ) {
-      composable(Directions.product.toString()) { EditProductComposable() }
-      composable(Directions.category.toString()) { EditCategoryComposable() }
-      composable(Directions.place.toString()) { EditPlaceComposable() }
+      composable(Directions.product.toString()) { EditProductsComposable() }
+      composable(Directions.category.toString()) { EditCategoriesComposable() }
+      composable(Directions.place.toString()) { EditPlacesComposable() }
     }
   }
 }

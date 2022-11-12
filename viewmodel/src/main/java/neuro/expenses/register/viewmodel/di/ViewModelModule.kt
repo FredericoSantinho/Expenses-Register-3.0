@@ -11,9 +11,9 @@ import neuro.expenses.register.viewmodel.common.formatter.DecimalFormatterImpl
 import neuro.expenses.register.viewmodel.common.formatter.NumberFormater
 import neuro.expenses.register.viewmodel.common.formatter.NumberFormaterImpl
 import neuro.expenses.register.viewmodel.edit.EditViewModel
-import neuro.expenses.register.viewmodel.edit.category.EditCategoryViewModel
-import neuro.expenses.register.viewmodel.edit.place.EditPlaceViewModel
-import neuro.expenses.register.viewmodel.edit.product.EditProductViewModel
+import neuro.expenses.register.viewmodel.edit.category.EditCategoriesViewModel
+import neuro.expenses.register.viewmodel.edit.place.EditPlacesViewModel
+import neuro.expenses.register.viewmodel.edit.product.EditProductsViewModel
 import neuro.expenses.register.viewmodel.home.HomeViewModel
 import neuro.expenses.register.viewmodel.main.MainViewModel
 import neuro.expenses.register.viewmodel.manual.register.ManualRegisterViewModel
@@ -55,7 +55,7 @@ val viewModelModule = module {
   single<RegisterExpenseErrorMapper> { RegisterExpenseErrorMapperImpl() }
   viewModel { BillsViewModel() }
   viewModel { EditViewModel() }
-  viewModel { EditProductViewModel() }
-  viewModel { EditCategoryViewModel() }
-  viewModel { EditPlaceViewModel() }
+  viewModel { EditProductsViewModel() }
+  viewModel { EditCategoriesViewModel() }
+  viewModel { EditPlacesViewModel() }
 }
