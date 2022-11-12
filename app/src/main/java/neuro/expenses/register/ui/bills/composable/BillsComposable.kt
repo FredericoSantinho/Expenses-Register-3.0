@@ -107,6 +107,9 @@ fun BillsComposable(
           },
           dismissContent = {
             BillComposable(item)
+          },
+          dismissThresholds = {
+            FractionalThreshold(1.0f)
           }
         )
       }
