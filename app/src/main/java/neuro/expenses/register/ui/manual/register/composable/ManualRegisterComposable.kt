@@ -9,6 +9,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rxjava3.subscribeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -77,6 +78,7 @@ fun ManualRegisterComposable(
   amountErrorMessage.value = ""
 
   val focusManager = LocalFocusManager.current
+  val placeHasFocus = remember { mutableStateOf(false) }
 
   Column(
     Modifier
@@ -120,11 +122,13 @@ fun ManualRegisterComposable(
 
       TextFieldWithError(
         label = stringResource(R.string.manual_register_place),
-        modifier = Modifier.constrainAs(place) {
-          start.linkTo(parent.start, margin = 8.dp)
-          end.linkTo(placeAuto.start, margin = 8.dp)
-          width = Dimension.fillToConstraints
-        },
+        modifier = Modifier
+          .constrainAs(place) {
+            start.linkTo(parent.start, margin = 8.dp)
+            end.linkTo(placeAuto.start, margin = 8.dp)
+            width = Dimension.fillToConstraints
+          }
+          .onFocusEvent { placeHasFocus.value = it.isFocused },
         keyboardOptions = keyboardOptionsText,
         value = manualRegisterViewModel.place,
         isError = placeIsError,
@@ -136,7 +140,9 @@ fun ManualRegisterComposable(
       )
       IconButton(onClick = {
         manualRegisterViewModel.onNearestPlaceButton()
-        focusManager.moveFocus(FocusDirection.Next)
+        if (placeHasFocus.value) {
+          focusManager.moveFocus(FocusDirection.Next)
+        }
       }, modifier = Modifier.constrainAs(placeAuto) {
         end.linkTo(parent.end, margin = 8.dp)
         top.linkTo(place.top, margin = 8.dp)
