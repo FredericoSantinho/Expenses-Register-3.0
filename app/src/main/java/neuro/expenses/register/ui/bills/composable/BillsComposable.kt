@@ -15,8 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.constraintlayout.compose.Dimension
 import androidx.fragment.app.FragmentActivity
 import kotlinx.coroutines.launch
 import neuro.expenses.register.ui.bill.BillComposable
@@ -44,103 +42,94 @@ fun BillsComposable(
       }
     )
 
-  Column(Modifier.background(color = grey_fog_lighter)) {
-    ConstraintLayout(
-      modifier = Modifier
-        .fillMaxSize()
-        .background(color = grey_fog_lighter)
+  Column(
+    Modifier
+      .background(color = grey_fog_lighter)
+      .fillMaxSize()
+  ) {
+    LazyColumn(
+      verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-      val (lazyColumnC, editBillC) = createRefs()
-
-      LazyColumn(
-        Modifier
-          .constrainAs(lazyColumnC) {
-            top.linkTo(parent.top)
-            bottom.linkTo(editBillC.top)
-            height = Dimension.fillToConstraints
-          }, verticalArrangement = Arrangement.spacedBy(8.dp)
-      ) {
-        items(billsViewModel.bills, { listItem: BillViewModel -> listItem.id }) { item ->
-          var unread by remember { mutableStateOf(false) }
-          val dismissState = rememberDismissState(
-            confirmStateChange = {
-              if (it == DismissValue.DismissedToEnd) unread = !unread
-              true
-            }
-          )
-          if (dismissState.isDismissed(DismissDirection.EndToStart) ||
-            dismissState.isDismissed(DismissDirection.StartToEnd)
-          ) {
-            billsViewModel.onBillSwipe(item)
+      items(billsViewModel.bills, { listItem: BillViewModel -> listItem.id }) { item ->
+        var unread by remember { mutableStateOf(false) }
+        val dismissState = rememberDismissState(
+          confirmStateChange = {
+            if (it == DismissValue.DismissedToEnd) unread = !unread
+            true
           }
-          SwipeToDismiss(
-            modifier = Modifier.padding(start = 4.dp, end = 4.dp),
-            state = dismissState,
-            directions = if (billsViewModel.isEditMode.value) setOf() else setOf(
-              DismissDirection.StartToEnd,
-              DismissDirection.EndToStart
-            ),
-            background = {
-              val direction = dismissState.dismissDirection ?: return@SwipeToDismiss
-              val color by animateColorAsState(
-                when (dismissState.targetValue) {
-                  DismissValue.Default -> Color.LightGray
-                  DismissValue.DismissedToEnd -> Color.Transparent
-                  DismissValue.DismissedToStart -> Color.Transparent
-                }
-              )
-              val alignment = when (direction) {
-                DismissDirection.StartToEnd -> Alignment.CenterStart
-                DismissDirection.EndToStart -> Alignment.CenterEnd
-              }
-              val icon = when (direction) {
-                DismissDirection.StartToEnd -> Icons.Default.Delete
-                DismissDirection.EndToStart -> Icons.Default.Delete
-              }
-              val scale by animateFloatAsState(
-                if (dismissState.targetValue == DismissValue.Default) 0.75f else 1f
-              )
-
-              Box(
-                Modifier
-                  .fillMaxSize()
-                  .background(color)
-                  .padding(horizontal = 20.dp),
-                contentAlignment = alignment
-              ) {
-                Icon(
-                  icon,
-                  contentDescription = null,
-                  modifier = Modifier.scale(scale)
-                )
-              }
-            },
-            dismissContent = {
-              BillComposable(item)
-            }
-          )
+        )
+        if (dismissState.isDismissed(DismissDirection.EndToStart) ||
+          dismissState.isDismissed(DismissDirection.StartToEnd)
+        ) {
+          billsViewModel.onBillSwipe(item)
         }
+        SwipeToDismiss(
+          modifier = Modifier.padding(start = 4.dp, end = 4.dp),
+          state = dismissState,
+          directions = if (billsViewModel.isEditMode.value) setOf() else setOf(
+            DismissDirection.StartToEnd,
+            DismissDirection.EndToStart
+          ),
+          background = {
+            val direction = dismissState.dismissDirection ?: return@SwipeToDismiss
+            val color by animateColorAsState(
+              when (dismissState.targetValue) {
+                DismissValue.Default -> Color.LightGray
+                DismissValue.DismissedToEnd -> Color.Transparent
+                DismissValue.DismissedToStart -> Color.Transparent
+              }
+            )
+            val alignment = when (direction) {
+              DismissDirection.StartToEnd -> Alignment.CenterStart
+              DismissDirection.EndToStart -> Alignment.CenterEnd
+            }
+            val icon = when (direction) {
+              DismissDirection.StartToEnd -> Icons.Default.Delete
+              DismissDirection.EndToStart -> Icons.Default.Delete
+            }
+            val scale by animateFloatAsState(
+              if (dismissState.targetValue == DismissValue.Default) 0.75f else 1f
+            )
+
+            Box(
+              Modifier
+                .fillMaxSize()
+                .background(color)
+                .padding(horizontal = 20.dp),
+              contentAlignment = alignment
+            ) {
+              Icon(
+                icon,
+                contentDescription = null,
+                modifier = Modifier.scale(scale)
+              )
+            }
+          },
+          dismissContent = {
+            BillComposable(item)
+          }
+        )
       }
-      ModalBottomSheetLayout(
-        sheetBackgroundColor = Color.Transparent,
-        sheetState = modalBottomSheetState,
-        sheetContent = {
-          EditBillComposable(fragmentActivity)
-        }
-      ) {}
-      val isEditMode = billsViewModel.isEditMode.value
-      if (isEditMode) {
-        LaunchedEffect(isEditMode) {
-          coroutineScope.launch {
-            modalBottomSheetState.show()
-          }
-        }
-      } else {
-        LaunchedEffect(isEditMode) {
-          coroutineScope.launch {
-            modalBottomSheetState.hide()
-          }
-        }
+    }
+  }
+  ModalBottomSheetLayout(
+    sheetBackgroundColor = Color.Transparent,
+    sheetState = modalBottomSheetState,
+    sheetContent = {
+      EditBillComposable(fragmentActivity)
+    }
+  ) {}
+  val isEditMode = billsViewModel.isEditMode.value
+  if (isEditMode) {
+    LaunchedEffect(isEditMode) {
+      coroutineScope.launch {
+        modalBottomSheetState.show()
+      }
+    }
+  } else {
+    LaunchedEffect(isEditMode) {
+      coroutineScope.launch {
+        modalBottomSheetState.hide()
       }
     }
   }

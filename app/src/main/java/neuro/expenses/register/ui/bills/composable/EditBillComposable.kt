@@ -23,11 +23,12 @@ import neuro.expenses.register.ui.theme.grey_fog_light
 @Composable
 fun EditBillComposable(
   fragmentActivity: FragmentActivity,
-  value: MutableState<String> = mutableStateOf("")
+  value: MutableState<String> = mutableStateOf(""),
+  modifier: Modifier = Modifier
 ) {
   val isError = remember { mutableStateOf(false) }
   Card(
-    modifier = Modifier
+    modifier = modifier
       .fillMaxWidth(),
     elevation = 2.dp,
     backgroundColor = grey_fog_light,
