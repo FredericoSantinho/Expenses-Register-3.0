@@ -10,6 +10,6 @@ class GetCategoryRepositoryImpl(
   private val roomCategoriesMapper: RoomCategoriesMapper
 ) : GetCategoryRepository {
   override fun getCategory(name: String): Maybe<String> {
-    return categoryDao.getCategory(name).map { roomCategoriesMapper.map(it) }
+    return categoryDao.getCategory(name.lowercase()).map { roomCategoriesMapper.map(it) }
   }
 }

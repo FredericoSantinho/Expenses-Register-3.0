@@ -8,9 +8,9 @@ import androidx.room.PrimaryKey
 @Entity(
   tableName = "place_product_table",
   indices = [Index(
-    value = ["productId", "category", "price"],
+    value = ["productId", "categoryId", "price"],
     unique = true
-  ), Index(value = ["category"])],
+  ), Index(value = ["categoryId"])],
   foreignKeys = [ForeignKey(
     entity = RoomProduct::class,
     parentColumns = arrayOf("productId"),
@@ -18,14 +18,14 @@ import androidx.room.PrimaryKey
     onDelete = ForeignKey.CASCADE
   ), ForeignKey(
     entity = RoomCategory::class,
-    parentColumns = arrayOf("name"),
-    childColumns = arrayOf("category"),
+    parentColumns = arrayOf("categoryId"),
+    childColumns = arrayOf("categoryId"),
     onDelete = ForeignKey.CASCADE
   )]
 )
 data class RoomPlaceProduct(
   val productId: Long,
-  val category: String,
+  val categoryId: String,
   val price: Double,
   val defaultAmount: Double,
   @PrimaryKey(autoGenerate = true)

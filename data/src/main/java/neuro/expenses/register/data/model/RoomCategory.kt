@@ -5,6 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "category_table")
 data class RoomCategory(
+  val name: String,
   @PrimaryKey
-  val name: String
+  val categoryId: String = name.lowercase()
 )

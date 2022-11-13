@@ -31,7 +31,7 @@ interface ProductDao {
   @Query("select * from place_product_table where placeProductId=:placeProductId")
   fun getPlaceProduct(placeProductId: Long): Maybe<RoomPlaceProductWithProductAndCategory>
 
-  @Query("select * from place_product_table where productId=:productId and category=:category and price=:price")
+  @Query("select * from place_product_table where productId=:productId and categoryId=:category and price=:price")
   fun getPlaceProduct(productId: Long, category: String, price: Double): Maybe<RoomPlaceProduct>
 
   @Insert(onConflict = OnConflictStrategy.IGNORE)
@@ -67,10 +67,11 @@ interface ProductDao {
             Single.just(productId)
           }
         }.flatMap { productId ->
-          getPlaceProduct(productId, category, price).defaultIfEmpty(
+          val categoryId = category.lowercase()
+          getPlaceProduct(productId, categoryId, price).defaultIfEmpty(
             RoomPlaceProduct(
               productId,
-              category,
+              categoryId,
               price,
               defaultAmount
             )
@@ -79,12 +80,12 @@ interface ProductDao {
           }.flatMap {
             if (it == -1L) getPlaceProduct(
               roomProduct.productId,
-              category,
+              categoryId,
               price
             ).map { it.placeProductId }.toSingle() else Single.just(it)
           }
             .flatMap { placeProductId ->
-              insert(PlaceProductCategoryCrossRef(placeProductId, category))
+              insert(PlaceProductCategoryCrossRef(placeProductId, category.lowercase()))
                 .flatMap {
                   insert(PlaceProductProductCrossRef(placeProductId, productId))
                 }

@@ -17,7 +17,7 @@ data class RoomPlaceProductWithProductAndCategory(
   val roomProduct: List<RoomProduct>,
   @Relation(
     parentColumn = "placeProductId",
-    entityColumn = "name",
+    entityColumn = "categoryId",
     associateBy = Junction(PlaceProductCategoryCrossRef::class)
   )
   val category: List<RoomCategory>
