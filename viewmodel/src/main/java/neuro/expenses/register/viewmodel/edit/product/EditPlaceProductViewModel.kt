@@ -14,7 +14,7 @@ class EditPlaceProductViewModel(
   private val removePlaceProductUseCase: RemovePlaceProductUseCase,
   private val schedulerProvider: SchedulerProvider
 ) {
-  val place = mutableStateOf("")
+  val placeId = mutableStateOf(0L)
   val productId = mutableStateOf(0L)
   val description = mutableStateOf("")
   val category = mutableStateOf("")
@@ -32,7 +32,7 @@ class EditPlaceProductViewModel(
   }
 
   fun onSaveButton() {
-    updatePlaceProductUseCase.updatePlaceProduct(buildProductDto(), place.value)
+    updatePlaceProductUseCase.updatePlaceProduct(buildProductDto(), placeId.value)
       .subscribeOn(schedulerProvider.io())
       .andThen(Completable.fromAction {
         println("")
@@ -41,7 +41,7 @@ class EditPlaceProductViewModel(
   }
 
   fun onDeleteButton() {
-    removePlaceProductUseCase.removePlaceProduct(place.value, productId.value)
+    removePlaceProductUseCase.removePlaceProduct(placeId.value, productId.value)
       .subscribeOn(schedulerProvider.io()).subscribe()
   }
 

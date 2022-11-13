@@ -23,18 +23,22 @@ class PrePopulateDatabase(
       ).blockingGet()
 
       val placeDao = expensesRegisterDatabase.placeDao
-      val bitoque = "bitoque"
-      val vizinha = "vizinha"
+      val bitoque = "Bitoque"
+      val vizinha = "Vizinha"
+      val bitoqueId = 1L
+      val vizinhaId = 2L
 
       placeDao.insert(
         RoomPlace(
-          bitoque.replaceFirstChar { it.uppercase() },
+          bitoqueId,
+          bitoque,
           LatLng(37.091495, -8.2475677)
         )
       ).blockingGet()
       placeDao.insert(
         RoomPlace(
-          vizinha.replaceFirstChar { it.uppercase() },
+          vizinhaId,
+          vizinha,
           LatLng(37.098297, -8.2514809)
         )
       ).blockingGet()
@@ -50,7 +54,7 @@ class PrePopulateDatabase(
         )
       expensesRegisterDatabase.placeDao.insert(
         PlacePlaceProductCrossRef(
-          vizinha,
+          vizinhaId,
           placeProductId
         )
       ).blockingGet()
@@ -65,7 +69,7 @@ class PrePopulateDatabase(
         )
       expensesRegisterDatabase.placeDao.insert(
         PlacePlaceProductCrossRef(
-          bitoque,
+          bitoqueId,
           placeProductId
         )
       ).blockingGet()
@@ -80,7 +84,7 @@ class PrePopulateDatabase(
         )
       expensesRegisterDatabase.placeDao.insert(
         PlacePlaceProductCrossRef(
-          bitoque,
+          bitoqueId,
           placeProductId
         )
       ).blockingGet()
@@ -95,7 +99,7 @@ class PrePopulateDatabase(
         )
       expensesRegisterDatabase.placeDao.insert(
         PlacePlaceProductCrossRef(
-          bitoque,
+          bitoqueId,
           placeProductId
         )
       ).blockingGet()
@@ -110,7 +114,7 @@ class PrePopulateDatabase(
         )
       expensesRegisterDatabase.placeDao.insert(
         PlacePlaceProductCrossRef(
-          bitoque,
+          bitoqueId,
           placeProductId
         )
       ).blockingGet()
@@ -124,7 +128,7 @@ class PrePopulateDatabase(
       )
       expensesRegisterDatabase.placeDao.insert(
         PlacePlaceProductCrossRef(
-          bitoque,
+          bitoqueId,
           placeProductId
         )
       ).blockingGet()
@@ -138,7 +142,7 @@ class PrePopulateDatabase(
       )
       expensesRegisterDatabase.placeDao.insert(
         PlacePlaceProductCrossRef(
-          bitoque,
+          bitoqueId,
           placeProductId
         )
       ).blockingGet()
@@ -153,7 +157,7 @@ class PrePopulateDatabase(
         )
       expensesRegisterDatabase.placeDao.insert(
         PlacePlaceProductCrossRef(
-          bitoque,
+          bitoqueId,
           placeProductId
         )
       ).blockingGet()

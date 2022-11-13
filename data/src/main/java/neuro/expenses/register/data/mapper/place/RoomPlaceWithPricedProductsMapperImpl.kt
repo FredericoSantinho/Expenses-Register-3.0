@@ -17,7 +17,7 @@ class RoomPlaceWithPlaceProductsMapperImpl(
       roomPlaceProductWithProductAndCategoryMapper.map(it)
     }
 
-    return PlaceDto(name, products, latLng)
+    return PlaceDto(roomPlace.placeId, name, products, latLng)
   }
 
   override fun map(roomPlaceWithPlaceProductslist: List<RoomPlaceWithPlaceProducts>): List<PlaceDto> {

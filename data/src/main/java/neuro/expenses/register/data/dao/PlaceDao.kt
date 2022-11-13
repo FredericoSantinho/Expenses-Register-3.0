@@ -21,7 +21,11 @@ interface PlaceDao {
 
   @Transaction
   @Query("select * from place_table where placeId=:placeId")
-  fun getPlace(placeId: String): Maybe<RoomPlaceWithPlaceProducts>
+  fun getPlace(placeId: Long): Maybe<RoomPlaceWithPlaceProducts>
+
+  @Transaction
+  @Query("select * from place_table where nameLowercase=:placeNameLowercase")
+  fun getPlace(placeNameLowercase: String): Maybe<RoomPlaceWithPlaceProducts>
 
   @Insert(onConflict = OnConflictStrategy.IGNORE)
   fun insert(roomPlace: RoomPlace): Single<Long>
@@ -30,7 +34,7 @@ interface PlaceDao {
   fun delete(roomPlace: RoomPlace): Completable
 
   @Query("select * from placeplaceproductcrossref where placeId=:placeId")
-  fun getAllCrossRef(placeId: String): Single<List<PlacePlaceProductCrossRef>>
+  fun getAllCrossRef(placeId: Long): Single<List<PlacePlaceProductCrossRef>>
 
   @Insert(onConflict = OnConflictStrategy.IGNORE)
   fun insert(placePlaceProductCrossRef: PlacePlaceProductCrossRef): Single<Long>

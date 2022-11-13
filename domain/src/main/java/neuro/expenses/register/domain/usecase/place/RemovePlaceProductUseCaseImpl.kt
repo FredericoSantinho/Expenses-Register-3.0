@@ -5,7 +5,7 @@ import neuro.expenses.register.domain.repository.RemovePlaceProductRepository
 
 class RemovePlaceProductUseCaseImpl(private val removePlaceProductRepository: RemovePlaceProductRepository) :
   RemovePlaceProductUseCase {
-  override fun removePlaceProduct(place: String, productId: Long): Completable {
-    return removePlaceProductRepository.removePlaceProduct(place, productId)
+  override fun removePlaceProduct(placeId: Long, productId: Long): Completable {
+    return removePlaceProductRepository.removePlaceProduct(placeId, productId)
   }
 }

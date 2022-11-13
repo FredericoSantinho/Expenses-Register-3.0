@@ -8,12 +8,12 @@ class PlaceControllerImpl() : PlaceController {
     val products = mutableListOf<Product>()
     products.addAll(place.products)
     products.add(product)
-    return Place(place.name, products, place.latLng)
+    return Place(place.id, place.name, products, place.latLng)
   }
 
   override fun removeProduct(place: Place, product: Product): Place {
     val products = place.products.filter { it.id != product.id }
-    return Place(place.name, products, place.latLng)
+    return Place(place.id, place.name, products, place.latLng)
   }
 
   override fun updateProduct(place: Place, product: Product): Place {

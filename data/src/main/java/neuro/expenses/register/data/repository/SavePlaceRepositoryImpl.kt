@@ -19,7 +19,7 @@ class SavePlaceRepositoryImpl(
   private val roomPlaceMapper: RoomPlaceMapper
 ) : SavePlaceRepository {
   override fun savePlace(placeDto: PlaceDto): Completable {
-    return placeDao.getAllCrossRef(placeDto.name.lowercase()).flatMapCompletable { crossRefs ->
+    return placeDao.getAllCrossRef(placeDto.id).flatMapCompletable { crossRefs ->
       Single.just(roomPlaceMapper.map(placeDto)).flatMapObservable { roomPlace ->
         placeDao.insert(roomPlace).flatMapObservable {
           Observable.fromIterable(placeDto.products).map { productDto ->
@@ -28,7 +28,7 @@ class SavePlaceRepositoryImpl(
         }.flatMapSingle { productId ->
           placeDao.insert(
             PlacePlaceProductCrossRef(
-              placeDto.name.lowercase(),
+              placeDto.id,
               productId
             )
           )

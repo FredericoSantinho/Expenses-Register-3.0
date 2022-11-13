@@ -15,8 +15,8 @@ class AddPlaceProductUseCaseImpl(
   private val productMapper: ProductMapper,
   private val placeController: PlaceController = PlaceControllerImpl()
 ) : AddPlaceProductUseCase {
-  override fun addPlaceProduct(place: String, productDto: ProductDto): Completable {
-    return getPlaceUseCase.getPlace(place)
+  override fun addPlaceProduct(placeId: Long, productDto: ProductDto): Completable {
+    return getPlaceUseCase.getPlace(placeId)
       .map { placeDto -> addProduct(placeDto, productDto) }
       .flatMapCompletable { savePlaceUseCase.savePlace(it) }
   }

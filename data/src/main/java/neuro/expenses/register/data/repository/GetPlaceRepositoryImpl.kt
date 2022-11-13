@@ -10,6 +10,10 @@ class GetPlaceRepositoryImpl(
   private val placeDao: PlaceDao,
   private val roomPlaceWithPlaceProductsMapper: RoomPlaceWithPlaceProductsMapper
 ) : GetPlaceRepository {
+  override fun getPlace(placeId: Long): Maybe<PlaceDto> {
+    return placeDao.getPlace(placeId).map { roomPlaceWithPlaceProductsMapper.map(it) }
+  }
+
   override fun getPlace(placeName: String): Maybe<PlaceDto> {
     return placeDao.getPlace(placeName.lowercase()).map { roomPlaceWithPlaceProductsMapper.map(it) }
   }

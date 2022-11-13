@@ -6,6 +6,7 @@ import neuro.expenses.register.domain.dto.PlaceDto
 class RoomPlaceMapperImpl(private val roomLatLngMapper: RoomLatLngMapper) : RoomPlaceMapper {
   override fun map(placeDto: PlaceDto): RoomPlace {
     return RoomPlace(
+      placeDto.id,
       placeDto.name,
       roomLatLngMapper.map(placeDto.latLngDto)
     )
