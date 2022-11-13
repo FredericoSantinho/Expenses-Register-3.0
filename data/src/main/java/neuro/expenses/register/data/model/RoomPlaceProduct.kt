@@ -6,7 +6,7 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity(
-  tableName = "priced_product_table",
+  tableName = "place_product_table",
   indices = [Index(
     value = ["productId", "category", "price"],
     unique = true
@@ -23,11 +23,11 @@ import androidx.room.PrimaryKey
     onDelete = ForeignKey.CASCADE
   )]
 )
-data class RoomPricedProduct(
+data class RoomPlaceProduct(
   val productId: Long,
   val category: String,
   val price: Double,
   val defaultAmount: Double,
   @PrimaryKey(autoGenerate = true)
-  var pricedProductId: Long = 0
+  var placeProductId: Long = 0
 )

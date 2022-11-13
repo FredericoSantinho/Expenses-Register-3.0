@@ -1,9 +1,9 @@
 package neuro.expenses.register.data.mapper.place
 
-import neuro.expenses.register.data.model.place.RoomPlaceWithPricedProducts
+import neuro.expenses.register.data.model.place.RoomPlaceWithPlaceProducts
 import neuro.expenses.register.domain.dto.PlaceDto
 
-interface RoomPlaceWithPricedProductsMapper {
-  fun map(roomPlaceWithPricedProducts: RoomPlaceWithPricedProducts): PlaceDto
-  fun map(roomPlaceWithPricedProductslist: List<RoomPlaceWithPricedProducts>): List<PlaceDto>
+interface RoomPlaceWithPlaceProductsMapper {
+  fun map(roomPlaceWithPlaceProducts: RoomPlaceWithPlaceProducts): PlaceDto
+  fun map(roomPlaceWithPlaceProductslist: List<RoomPlaceWithPlaceProducts>): List<PlaceDto>
 }

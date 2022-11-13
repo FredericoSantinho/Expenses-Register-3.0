@@ -4,11 +4,11 @@ import androidx.room.*
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
-import neuro.expenses.register.data.model.RoomPricedProduct
+import neuro.expenses.register.data.model.RoomPlaceProduct
 import neuro.expenses.register.data.model.RoomProduct
-import neuro.expenses.register.data.model.product.PricedProductCategoryCrossRef
-import neuro.expenses.register.data.model.product.PricedProductProductCrossRef
-import neuro.expenses.register.data.model.product.RoomPricedProductWithProductAndCategory
+import neuro.expenses.register.data.model.product.PlaceProductCategoryCrossRef
+import neuro.expenses.register.data.model.product.PlaceProductProductCrossRef
+import neuro.expenses.register.data.model.product.RoomPlaceProductWithProductAndCategory
 
 @Dao
 interface ProductDao {
@@ -28,27 +28,27 @@ interface ProductDao {
   fun delete(roomProduct: RoomProduct): Completable
 
   @Transaction
-  @Query("select * from priced_product_table where pricedProductId=:pricedProductId")
-  fun getPricedProduct(pricedProductId: Long): Maybe<RoomPricedProductWithProductAndCategory>
+  @Query("select * from place_product_table where placeProductId=:placeProductId")
+  fun getPlaceProduct(placeProductId: Long): Maybe<RoomPlaceProductWithProductAndCategory>
 
-  @Query("select * from priced_product_table where productId=:productId and category=:category and price=:price")
-  fun getPricedProduct(productId: Long, category: String, price: Double): Maybe<RoomPricedProduct>
+  @Query("select * from place_product_table where productId=:productId and category=:category and price=:price")
+  fun getPlaceProduct(productId: Long, category: String, price: Double): Maybe<RoomPlaceProduct>
 
   @Insert(onConflict = OnConflictStrategy.IGNORE)
-  fun insert(roomPricedProduct: RoomPricedProduct): Single<Long>
+  fun insert(roomPlaceProduct: RoomPlaceProduct): Single<Long>
 
   /**
-   * Insert a RoomProduct, RoomPricedProduct, PricedProductCategoryCrossRef and PricedProductProductCrossRef if needed.
+   * Insert a RoomProduct, RoomPlaceProduct, PlaceProductCategoryCrossRef and PlaceProductProductCrossRef if needed.
    *
    * If any of the referred entities already exists in the database, it will not be rewritten.
    *
-   * @param defaultAmount default amount to be used when creating the RoomPricedProduct.
+   * @param defaultAmount default amount to be used when creating the RoomPlaceProduct.
    * @param iconUrl iconUrl to be used when creating the RoomProduct.
    *
    * **Both these parameters will be ignored in case the respective entities already exist in the
    * database. As such this shall not be used to update those attributes.**
    *
-   * @return pricedProductId.
+   * @return placeProductId.
    */
   @Transaction
   fun insert(
@@ -67,39 +67,39 @@ interface ProductDao {
             Single.just(productId)
           }
         }.flatMap { productId ->
-          getPricedProduct(productId, category, price).defaultIfEmpty(
-            RoomPricedProduct(
+          getPlaceProduct(productId, category, price).defaultIfEmpty(
+            RoomPlaceProduct(
               productId,
               category,
               price,
               defaultAmount
             )
-          ).flatMap { roomPricedProduct ->
-            insert(roomPricedProduct)
+          ).flatMap { roomPlaceProduct ->
+            insert(roomPlaceProduct)
           }.flatMap {
-            if (it == -1L) getPricedProduct(
+            if (it == -1L) getPlaceProduct(
               roomProduct.productId,
               category,
               price
-            ).map { it.pricedProductId }.toSingle() else Single.just(it)
+            ).map { it.placeProductId }.toSingle() else Single.just(it)
           }
-            .flatMap { pricedProductId ->
-              insert(PricedProductCategoryCrossRef(pricedProductId, category))
+            .flatMap { placeProductId ->
+              insert(PlaceProductCategoryCrossRef(placeProductId, category))
                 .flatMap {
-                  insert(PricedProductProductCrossRef(pricedProductId, productId))
+                  insert(PlaceProductProductCrossRef(placeProductId, productId))
                 }
-                .map { pricedProductId }
+                .map { placeProductId }
             }
         }
       }.blockingGet()
   }
 
   @Delete()
-  fun delete(roomPricedProduct: RoomPricedProduct): Completable
+  fun delete(roomPlaceProduct: RoomPlaceProduct): Completable
 
   @Insert(onConflict = OnConflictStrategy.IGNORE)
-  fun insert(productCategoryCrossRef: PricedProductCategoryCrossRef): Single<Long>
+  fun insert(productCategoryCrossRef: PlaceProductCategoryCrossRef): Single<Long>
 
   @Insert(onConflict = OnConflictStrategy.IGNORE)
-  fun insert(pricedProductProductCrossRef: PricedProductProductCrossRef): Single<Long>
+  fun insert(placeProductProductCrossRef: PlaceProductProductCrossRef): Single<Long>
 }

@@ -10,5 +10,5 @@ data class RoomBillWithBillItems(
     parentColumn = "billId",
     entityColumn = "parentBillId"
   )
-  val billItems: List<RoomBillItemWithPricedProduct>
+  val billItems: List<RoomBillItemWithPlaceProduct>
 )

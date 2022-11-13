@@ -5,7 +5,7 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
-import neuro.expenses.register.data.model.bill.BillItemPricedProductCrossRef
+import neuro.expenses.register.data.model.bill.BillItemPlaceProductCrossRef
 import neuro.expenses.register.data.model.bill.RoomBill
 import neuro.expenses.register.data.model.bill.RoomBillItem
 import neuro.expenses.register.data.model.bill.RoomBillWithBillItems
@@ -28,15 +28,15 @@ interface BillDao {
   fun insert(roomBill: RoomBill, roomBillItems: List<RoomBillItem>) {
     insert(roomBill).flatMapObservable { billId ->
       Observable.fromIterable(roomBillItems).map {
-        RoomBillItem(it.billItemId, it.amount, it.pricedProductId, billId)
+        RoomBillItem(it.billItemId, it.amount, it.placeProductId, billId)
       }
         .flatMapSingle { roomBillItem ->
           insert(roomBillItem)
             .flatMap { billItemId ->
               insert(
-                BillItemPricedProductCrossRef(
+                BillItemPlaceProductCrossRef(
                   billItemId,
-                  roomBillItem.pricedProductId
+                  roomBillItem.placeProductId
                 )
               )
             }
@@ -67,5 +67,5 @@ interface BillDao {
   fun delete(roomBillItem: RoomBillItem): Completable
 
   @Insert(onConflict = OnConflictStrategy.IGNORE)
-  fun insert(billItemPricedProductCrossRef: BillItemPricedProductCrossRef): Single<Long>
+  fun insert(billItemPlaceProductCrossRef: BillItemPlaceProductCrossRef): Single<Long>
 }

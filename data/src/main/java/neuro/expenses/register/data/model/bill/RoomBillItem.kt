@@ -4,20 +4,20 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import neuro.expenses.register.data.model.RoomPricedProduct
+import neuro.expenses.register.data.model.RoomPlaceProduct
 
 @Entity(
   tableName = "bill_item_table", foreignKeys = [ForeignKey(
-    entity = RoomPricedProduct::class,
-    parentColumns = arrayOf("pricedProductId"),
-    childColumns = arrayOf("pricedProductId"),
+    entity = RoomPlaceProduct::class,
+    parentColumns = arrayOf("placeProductId"),
+    childColumns = arrayOf("placeProductId"),
     onDelete = ForeignKey.CASCADE
-  )], indices = [Index(value = ["pricedProductId"])]
+  )], indices = [Index(value = ["placeProductId"])]
 )
 data class RoomBillItem(
   @PrimaryKey(autoGenerate = true)
   val billItemId: Long = 0,
   val amount: Double,
-  val pricedProductId: Long,
+  val placeProductId: Long,
   val parentBillId: Long
 )

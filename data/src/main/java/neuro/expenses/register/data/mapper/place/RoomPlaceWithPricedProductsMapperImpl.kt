@@ -1,26 +1,26 @@
 package neuro.expenses.register.data.mapper.place
 
-import neuro.expenses.register.data.mapper.product.RoomPricedProductWithProductAndCategoryMapper
-import neuro.expenses.register.data.model.place.RoomPlaceWithPricedProducts
+import neuro.expenses.register.data.mapper.product.RoomPlaceProductWithProductAndCategoryMapper
+import neuro.expenses.register.data.model.place.RoomPlaceWithPlaceProducts
 import neuro.expenses.register.domain.dto.PlaceDto
 
-class RoomPlaceWithPricedProductsMapperImpl(
+class RoomPlaceWithPlaceProductsMapperImpl(
   private val roomLatLngMapper: RoomLatLngMapper,
-  private val roomPricedProductWithProductAndCategoryMapper: RoomPricedProductWithProductAndCategoryMapper
-) : RoomPlaceWithPricedProductsMapper {
-  override fun map(roomPlaceWithPricedProducts: RoomPlaceWithPricedProducts): PlaceDto {
-    val roomPlace = roomPlaceWithPricedProducts.roomPlace
+  private val roomPlaceProductWithProductAndCategoryMapper: RoomPlaceProductWithProductAndCategoryMapper
+) : RoomPlaceWithPlaceProductsMapper {
+  override fun map(roomPlaceWithPlaceProducts: RoomPlaceWithPlaceProducts): PlaceDto {
+    val roomPlace = roomPlaceWithPlaceProducts.roomPlace
 
     val name = roomPlace.name
     val latLng = roomLatLngMapper.map(roomPlace.latLng)
-    val products = roomPlaceWithPricedProducts.pricedProducts.map {
-      roomPricedProductWithProductAndCategoryMapper.map(it)
+    val products = roomPlaceWithPlaceProducts.PlaceProducts.map {
+      roomPlaceProductWithProductAndCategoryMapper.map(it)
     }
 
     return PlaceDto(name, products, latLng)
   }
 
-  override fun map(roomPlaceWithPricedProductslist: List<RoomPlaceWithPricedProducts>): List<PlaceDto> {
-    return roomPlaceWithPricedProductslist.map { map(it) }
+  override fun map(roomPlaceWithPlaceProductslist: List<RoomPlaceWithPlaceProducts>): List<PlaceDto> {
+    return roomPlaceWithPlaceProductslist.map { map(it) }
   }
 }

@@ -5,23 +5,23 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
-import neuro.expenses.register.data.model.place.PlacePricedProductCrossRef
+import neuro.expenses.register.data.model.place.PlacePlaceProductCrossRef
 import neuro.expenses.register.data.model.place.RoomPlace
-import neuro.expenses.register.data.model.place.RoomPlaceWithPricedProducts
+import neuro.expenses.register.data.model.place.RoomPlaceWithPlaceProducts
 
 @Dao
 interface PlaceDao {
   @Transaction
   @Query("select * from place_table")
-  fun getAll(): Single<List<RoomPlaceWithPricedProducts>>
+  fun getAll(): Single<List<RoomPlaceWithPlaceProducts>>
 
   @Transaction
   @Query("select * from place_table")
-  fun observeAll(): Observable<List<RoomPlaceWithPricedProducts>>
+  fun observeAll(): Observable<List<RoomPlaceWithPlaceProducts>>
 
   @Transaction
   @Query("select * from place_table where name=:name")
-  fun getPlace(name: String): Maybe<RoomPlaceWithPricedProducts>
+  fun getPlace(name: String): Maybe<RoomPlaceWithPlaceProducts>
 
   @Insert(onConflict = OnConflictStrategy.IGNORE)
   fun insert(roomPlace: RoomPlace): Single<Long>
@@ -30,8 +30,8 @@ interface PlaceDao {
   fun delete(roomPlace: RoomPlace): Completable
 
   @Insert(onConflict = OnConflictStrategy.ABORT)
-  fun insert(placePricedProductCrossRef: PlacePricedProductCrossRef): Single<Long>
+  fun insert(placePlaceProductCrossRef: PlacePlaceProductCrossRef): Single<Long>
 
   @Delete()
-  fun delete(placePricedProductCrossRef: PlacePricedProductCrossRef): Completable
+  fun delete(placePlaceProductCrossRef: PlacePlaceProductCrossRef): Completable
 }

@@ -5,10 +5,10 @@ import neuro.expenses.register.domain.dto.BillItemDto
 
 class RoomBillItemMapperImpl : RoomBillItemMapper {
 
-  override fun map(billItemDto: BillItemDto, billId: Long, pricedProductId: Long): RoomBillItem {
+  override fun map(billItemDto: BillItemDto, billId: Long, placeProductId: Long): RoomBillItem {
     val billItemId = billItemDto.id
     val amount = billItemDto.amount
 
-    return RoomBillItem(billItemId, amount, pricedProductId, billId)
+    return RoomBillItem(billItemId, amount, placeProductId, billId)
   }
 }

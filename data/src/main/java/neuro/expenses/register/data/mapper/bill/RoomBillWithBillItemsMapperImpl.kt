@@ -3,12 +3,12 @@ package neuro.expenses.register.data.mapper.bill
 import neuro.expenses.register.data.model.bill.RoomBillWithBillItems
 import neuro.expenses.register.domain.dto.BillDto
 
-class RoomBillWithBillItemsMapperImpl(private val roomBillItemWithPricedProductMapper: RoomBillItemWithPricedProductMapper) :
+class RoomBillWithBillItemsMapperImpl(private val roomBillItemWithPlaceProductMapper: RoomBillItemWithPlaceProductMapper) :
   RoomBillWithBillItemsMapper {
   override fun map(roomBillWithBillItems: RoomBillWithBillItems): BillDto {
     val roomBill = roomBillWithBillItems.roomBill
     val billItemDtoList =
-      roomBillWithBillItems.billItems.map { roomBillItemWithPricedProductMapper.map(it) }
+      roomBillWithBillItems.billItems.map { roomBillItemWithPlaceProductMapper.map(it) }
 
     val id = roomBill.billId
     val place = roomBill.place

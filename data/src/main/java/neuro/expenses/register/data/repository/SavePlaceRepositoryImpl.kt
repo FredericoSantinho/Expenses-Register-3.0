@@ -5,7 +5,7 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import neuro.expenses.register.data.dao.PlaceDao
 import neuro.expenses.register.data.mapper.place.RoomPlaceMapper
-import neuro.expenses.register.data.model.place.PlacePricedProductCrossRef
+import neuro.expenses.register.data.model.place.PlacePlaceProductCrossRef
 import neuro.expenses.register.domain.dto.PlaceDto
 import neuro.expenses.register.domain.repository.SavePlaceRepository
 import neuro.expenses.register.domain.repository.SaveProductRepository
@@ -23,7 +23,7 @@ class SavePlaceRepositoryImpl(
         }
       }.flatMapSingle { productId ->
         placeDao.insert(
-          PlacePricedProductCrossRef(
+          PlacePlaceProductCrossRef(
             placeDto.name,
             productId
           )

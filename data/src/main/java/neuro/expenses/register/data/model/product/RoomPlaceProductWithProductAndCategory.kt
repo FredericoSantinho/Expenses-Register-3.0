@@ -4,21 +4,21 @@ import androidx.room.Embedded
 import androidx.room.Junction
 import androidx.room.Relation
 import neuro.expenses.register.data.model.RoomCategory
-import neuro.expenses.register.data.model.RoomPricedProduct
+import neuro.expenses.register.data.model.RoomPlaceProduct
 import neuro.expenses.register.data.model.RoomProduct
 
-data class RoomPricedProductWithProductAndCategory(
-  @Embedded val roomPricedProduct: RoomPricedProduct,
+data class RoomPlaceProductWithProductAndCategory(
+  @Embedded val roomPlaceProduct: RoomPlaceProduct,
   @Relation(
-    parentColumn = "pricedProductId",
+    parentColumn = "placeProductId",
     entityColumn = "productId",
-    associateBy = Junction(PricedProductProductCrossRef::class)
+    associateBy = Junction(PlaceProductProductCrossRef::class)
   )
   val roomProduct: List<RoomProduct>,
   @Relation(
-    parentColumn = "pricedProductId",
+    parentColumn = "placeProductId",
     entityColumn = "name",
-    associateBy = Junction(PricedProductCategoryCrossRef::class)
+    associateBy = Junction(PlaceProductCategoryCrossRef::class)
   )
   val category: List<RoomCategory>
 )

@@ -18,9 +18,9 @@ class SaveBillItemsProductsRepositoryImpl(
       val description = productDto.description
       val category = productDto.category
       val price = productDto.price
-      val pricedProductId = saveProductRepository.saveProduct(description, category, price, amount)
+      val placeProductId = saveProductRepository.saveProduct(description, category, price, amount)
 
-      roomBillItemMapper.map(billItemDto, billId, pricedProductId)
+      roomBillItemMapper.map(billItemDto, billId, placeProductId)
     }
   }
 }

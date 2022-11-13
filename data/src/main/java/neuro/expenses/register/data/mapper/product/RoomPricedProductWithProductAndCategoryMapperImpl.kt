@@ -1,20 +1,20 @@
 package neuro.expenses.register.data.mapper.product
 
-import neuro.expenses.register.data.model.product.RoomPricedProductWithProductAndCategory
+import neuro.expenses.register.data.model.product.RoomPlaceProductWithProductAndCategory
 import neuro.expenses.register.domain.dto.ProductDto
 
-class RoomPricedProductWithProductAndCategoryMapperImpl :
-  RoomPricedProductWithProductAndCategoryMapper {
+class RoomPlaceProductWithProductAndCategoryMapperImpl :
+  RoomPlaceProductWithProductAndCategoryMapper {
   override fun map(
-    roomPricedProductWithProductAndCategory: RoomPricedProductWithProductAndCategory
+    roomPlaceProductWithProductAndCategory: RoomPlaceProductWithProductAndCategory
   ): ProductDto {
     return ProductDto(
-      roomPricedProductWithProductAndCategory.roomPricedProduct.pricedProductId,
-      roomPricedProductWithProductAndCategory.roomProduct.get(0).description,
-      roomPricedProductWithProductAndCategory.category.get(0).name,
-      roomPricedProductWithProductAndCategory.roomPricedProduct.price,
-      roomPricedProductWithProductAndCategory.roomPricedProduct.defaultAmount,
-      roomPricedProductWithProductAndCategory.roomProduct.get(0).iconUrl
+      roomPlaceProductWithProductAndCategory.roomPlaceProduct.placeProductId,
+      roomPlaceProductWithProductAndCategory.roomProduct.get(0).description,
+      roomPlaceProductWithProductAndCategory.category.get(0).name,
+      roomPlaceProductWithProductAndCategory.roomPlaceProduct.price,
+      roomPlaceProductWithProductAndCategory.roomPlaceProduct.defaultAmount,
+      roomPlaceProductWithProductAndCategory.roomProduct.get(0).iconUrl
     )
   }
 }

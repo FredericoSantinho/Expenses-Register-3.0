@@ -9,20 +9,20 @@ import neuro.expenses.register.data.dao.CategoryDao
 import neuro.expenses.register.data.dao.PlaceDao
 import neuro.expenses.register.data.dao.ProductDao
 import neuro.expenses.register.data.model.RoomCategory
-import neuro.expenses.register.data.model.RoomPricedProduct
+import neuro.expenses.register.data.model.RoomPlaceProduct
 import neuro.expenses.register.data.model.RoomProduct
-import neuro.expenses.register.data.model.bill.BillItemPricedProductCrossRef
+import neuro.expenses.register.data.model.bill.BillItemPlaceProductCrossRef
 import neuro.expenses.register.data.model.bill.RoomBill
 import neuro.expenses.register.data.model.bill.RoomBillItem
-import neuro.expenses.register.data.model.place.PlacePricedProductCrossRef
+import neuro.expenses.register.data.model.place.PlacePlaceProductCrossRef
 import neuro.expenses.register.data.model.place.RoomPlace
-import neuro.expenses.register.data.model.product.PricedProductCategoryCrossRef
-import neuro.expenses.register.data.model.product.PricedProductProductCrossRef
+import neuro.expenses.register.data.model.product.PlaceProductCategoryCrossRef
+import neuro.expenses.register.data.model.product.PlaceProductProductCrossRef
 
 @Database(
-  entities = [RoomProduct::class, RoomPricedProduct::class, RoomCategory::class, RoomBill::class,
-    RoomBillItem::class, BillItemPricedProductCrossRef::class, PricedProductCategoryCrossRef::class,
-    PricedProductProductCrossRef::class, RoomPlace::class, PlacePricedProductCrossRef::class],
+  entities = [RoomProduct::class, RoomPlaceProduct::class, RoomCategory::class, RoomBill::class,
+    RoomBillItem::class, BillItemPlaceProductCrossRef::class, PlaceProductCategoryCrossRef::class,
+    PlaceProductProductCrossRef::class, RoomPlace::class, PlacePlaceProductCrossRef::class],
   version = 1
 )
 @TypeConverters(Converters::class)
