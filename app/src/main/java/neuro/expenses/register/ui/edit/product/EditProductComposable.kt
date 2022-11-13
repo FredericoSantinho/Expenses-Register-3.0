@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -25,11 +26,11 @@ import neuro.expenses.register.ui.common.composables.text.TextFieldWithDropdown
 import neuro.expenses.register.ui.common.composables.text.TextFieldWithError
 import neuro.expenses.register.ui.common.keyboard.keyboardOptionsText
 import neuro.expenses.register.ui.theme.ExpensesRegisterTypography
-import neuro.expenses.register.viewmodel.edit.product.EditProductViewModel
+import neuro.expenses.register.viewmodel.edit.product.EditPlaceProductViewModel
 
 @Composable
 fun EditProductComposable(
-  editProductViewModel: EditProductViewModel, modifier: Modifier = Modifier
+  editPlaceProductViewModel: EditPlaceProductViewModel, modifier: Modifier = Modifier
 ) {
   val descriptionIsError = remember { mutableStateOf(false) }
   val descriptionErrorMessage = remember { mutableStateOf("") }
@@ -42,45 +43,53 @@ fun EditProductComposable(
     horizontalAlignment = Alignment.CenterHorizontally
   ) {
     AsyncImage(modifier = Modifier
-      .semantics { testTag = editProductViewModel.iconUrl.value }
+      .semantics { testTag = editPlaceProductViewModel.iconUrl.value }
       .size(128.dp)
       .clip(RoundedCornerShape(corner = CornerSize(8.dp))),
-      editProductViewModel.iconUrl.value)
+      editPlaceProductViewModel.iconUrl.value)
     TextFieldWithError(
       label = stringResource(R.string.description),
       keyboardOptions = keyboardOptionsText,
-      value = editProductViewModel.description,
+      value = editPlaceProductViewModel.description,
       isError = descriptionIsError,
       errorMessage = descriptionErrorMessage,
-      onValueChange = { editProductViewModel.onDescriptionChange() },
+      onValueChange = { editPlaceProductViewModel.onDescriptionChange() },
       textStyle = ExpensesRegisterTypography.body2
     )
     TextFieldWithDropdown(
-      dataIn = editProductViewModel.categories.subscribeAsState(initial = emptyList()),
+      dataIn = editPlaceProductViewModel.categories.subscribeAsState(initial = emptyList()),
       label = stringResource(R.string.category),
       keyboardOptions = keyboardOptionsText,
-      onValueChange = { editProductViewModel.onCategoryChange() },
-      value = editProductViewModel.category,
+      onValueChange = { editPlaceProductViewModel.onCategoryChange() },
+      value = editPlaceProductViewModel.category,
       isError = categoryIsError,
       textStyle = ExpensesRegisterTypography.body2
     )
     TextFieldWithError(
       label = stringResource(R.string.icon_url),
       keyboardOptions = keyboardOptionsText,
-      value = editProductViewModel.iconUrl,
+      value = editPlaceProductViewModel.iconUrl,
       textStyle = ExpensesRegisterTypography.body2
     )
-    Row(verticalAlignment = Alignment.CenterVertically) {
+    Row(verticalAlignment = Alignment.Bottom) {
       CurrencyTextField(
-        modifier = Modifier
-          .width(96.dp),
+        modifier = Modifier.width(96.dp),
         label = stringResource(R.string.price),
-        value = editProductViewModel.price,
+        value = editPlaceProductViewModel.price,
         textStyle = ExpensesRegisterTypography.body2
       )
       Spacer(modifier = Modifier.weight(1f))
+      Button(
+        onClick = {
+          editPlaceProductViewModel.onDeleteButton()
+        },
+        colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red),
+      ) {
+        Text(text = stringResource(R.string.delete), color = Color.White)
+      }
+      Spacer(modifier = Modifier.weight(1f))
       Button(modifier = Modifier.padding(end = 16.dp), onClick = {
-        editProductViewModel.onSaveButton()
+        editPlaceProductViewModel.onSaveButton()
       }) {
         Text(text = stringResource(R.string.save))
       }

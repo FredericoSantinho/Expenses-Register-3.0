@@ -14,4 +14,12 @@ class PlaceMapperImpl(
 
     return PlaceDto(placeName, productDtos, latLngDto)
   }
+
+  override fun map(placeDto: PlaceDto): Place {
+    val placeName = placeDto.name
+    val productDtos = placeDto.products.map { productMapper.map(it) }
+    val latLngDto = latLngMapper.map(placeDto.latLngDto)
+
+    return Place(placeName, productDtos, latLngDto)
+  }
 }

@@ -7,8 +7,7 @@ class RoomPlaceMapperImpl(private val roomLatLngMapper: RoomLatLngMapper) : Room
   override fun map(placeDto: PlaceDto): RoomPlace {
     return RoomPlace(
       placeDto.name,
-      roomLatLngMapper.map(placeDto.latLngDto),
-      placeDto.name.lowercase()
+      roomLatLngMapper.map(placeDto.latLngDto)
     )
   }
 }

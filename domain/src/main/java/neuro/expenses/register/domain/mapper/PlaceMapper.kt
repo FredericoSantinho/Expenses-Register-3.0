@@ -5,4 +5,5 @@ import neuro.expenses.register.entity.Place
 
 interface PlaceMapper {
   fun map(place: Place): PlaceDto
+  fun map(placeDto: PlaceDto): Place
 }

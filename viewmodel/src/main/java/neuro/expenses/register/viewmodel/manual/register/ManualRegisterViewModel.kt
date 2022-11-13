@@ -5,7 +5,7 @@ import neuro.expenses.register.domain.dto.ExpenseDto
 import neuro.expenses.register.domain.usecase.calendar.GetCalendarUseCase
 import neuro.expenses.register.domain.usecase.category.ObserveCategoriesUseCase
 import neuro.expenses.register.domain.usecase.near.GetNearestPlaceUseCase
-import neuro.expenses.register.domain.usecase.place.SaveExpensePlace
+import neuro.expenses.register.domain.usecase.place.SaveExpensePlaceUseCase
 import neuro.expenses.register.domain.usecase.register.RegisterExpenseUseCase
 import neuro.expenses.register.domain.usecase.register.validator.RegisterExpenseException
 import neuro.expenses.register.viewmodel.bill.BillViewModel
@@ -24,7 +24,7 @@ class ManualRegisterViewModel(
   private val observeCategoriesUseCase: ObserveCategoriesUseCase,
   private val registerExpenseUseCase: RegisterExpenseUseCase,
   private val getNearestPlaceUseCase: GetNearestPlaceUseCase,
-  private val saveExpensePlace: SaveExpensePlace,
+  private val saveExpensePlaceUseCase: SaveExpensePlaceUseCase,
   private val feedLastBillViewModel: FeedLastBillViewModel,
   private val registerExpenseErrorMapper: RegisterExpenseErrorMapper,
   private val decimalFormatter: DecimalFormatter,
@@ -60,7 +60,7 @@ class ManualRegisterViewModel(
   fun onRegisterButton() {
     val expenseDto = buildExpense()
     registerExpenseUseCase.registerExpense(expenseDto)
-      .andThen(saveExpensePlace.saveExpensePlace(expenseDto))
+      .andThen(saveExpensePlaceUseCase.saveExpensePlace(expenseDto))
       .baseSubscribe(
         onComplete = { publishAndReset() },
         onError = {

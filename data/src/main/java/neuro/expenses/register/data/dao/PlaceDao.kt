@@ -29,7 +29,10 @@ interface PlaceDao {
   @Delete()
   fun delete(roomPlace: RoomPlace): Completable
 
-  @Insert(onConflict = OnConflictStrategy.ABORT)
+  @Query("select * from placeplaceproductcrossref where placeId=:placeId")
+  fun getAllCrossRef(placeId: String): Single<List<PlacePlaceProductCrossRef>>
+
+  @Insert(onConflict = OnConflictStrategy.IGNORE)
   fun insert(placePlaceProductCrossRef: PlacePlaceProductCrossRef): Single<Long>
 
   @Delete()

@@ -10,6 +10,7 @@ class ProductCardViewModel(
   productCardModel: ProductCardModel,
   val calendar: State<Calendar>
 ) : IProductCardViewModel {
+  override val productId = mutableStateOf(productCardModel.id)
   override val description = mutableStateOf(productCardModel.description)
   override val category = mutableStateOf(productCardModel.category)
   override val price = mutableStateOf(productCardModel.price)
@@ -29,12 +30,13 @@ class ProductCardViewModel(
 
   private fun buildProductCardModel(): ProductCardModel {
     val productCardModel = ProductCardModel(
+      productId.value,
       description.value,
       category.value,
       place.value,
       price.value,
-      amount.value,
-      iconUrl.value
+      iconUrl.value,
+      amount.value
     )
     return productCardModel
   }

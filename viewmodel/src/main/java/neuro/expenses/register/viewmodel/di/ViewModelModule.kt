@@ -13,7 +13,7 @@ import neuro.expenses.register.viewmodel.common.formatter.NumberFormaterImpl
 import neuro.expenses.register.viewmodel.edit.EditViewModel
 import neuro.expenses.register.viewmodel.edit.category.EditCategoriesViewModel
 import neuro.expenses.register.viewmodel.edit.place.EditPlacesViewModel
-import neuro.expenses.register.viewmodel.edit.product.EditProductViewModel
+import neuro.expenses.register.viewmodel.edit.product.EditPlaceProductViewModel
 import neuro.expenses.register.viewmodel.edit.product.EditProductsViewModel
 import neuro.expenses.register.viewmodel.home.HomeViewModel
 import neuro.expenses.register.viewmodel.main.MainViewModel
@@ -33,7 +33,7 @@ val viewModelModule = module {
   viewModel { MainViewModel() }
   viewModel { SettingsViewModel() }
   viewModel { HomeViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) }
-  single { EditProductViewModel(get()) }
+  single { EditPlaceProductViewModel(get(), get(), get(), get()) }
   viewModel {
     ManualRegisterViewModel(
       get(),

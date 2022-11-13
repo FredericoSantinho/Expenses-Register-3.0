@@ -103,7 +103,7 @@ fun HomeComposable(
     sheetBackgroundColor = Color.Transparent,
     sheetState = modalBottomSheetState,
     sheetContent = {
-      EditProductComposable(homeViewModel.editProductViewModel)
+      EditProductComposable(homeViewModel.editPlaceProductViewModel)
     }
   ) {}
 

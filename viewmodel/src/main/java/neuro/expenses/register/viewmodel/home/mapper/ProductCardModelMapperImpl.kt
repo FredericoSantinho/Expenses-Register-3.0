@@ -11,12 +11,20 @@ class ProductCardModelMapperImpl(
   private val currency: String
 ) : ProductCardModelMapper {
   override fun map(productDto: ProductDto, place: String): ProductCardModel {
+    val productId = productDto.id
     val description = productDto.description
     val category = productDto.category
     val price = decimalFormatter.format(productDto.price) + ' ' + currency
     val amount = productDto.defaultAmount
 
-    return ProductCardModel(description, category, place, price, amount, productDto.iconUrl)
+    return ProductCardModel(
+      productId,
+      description,
+      category,
+      place,
+      price,
+      productDto.iconUrl
+    )
   }
 
   override fun map(productCardModel: ProductCardModel, calendar: Calendar): ExpenseDto {

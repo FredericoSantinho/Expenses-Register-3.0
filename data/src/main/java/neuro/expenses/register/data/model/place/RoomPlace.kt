@@ -8,5 +8,5 @@ data class RoomPlace(
   val name: String,
   val latLng: LatLng,
   @PrimaryKey
-  val placeId: String
+  val placeId: String = name.lowercase()
 )

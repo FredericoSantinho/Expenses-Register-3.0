@@ -2,6 +2,7 @@ package neuro.expenses.register.viewmodel.home
 
 import androidx.compose.runtime.mutableStateOf
 import neuro.expenses.register.domain.dto.PlaceDto
+import neuro.expenses.register.domain.dto.ProductDto
 import neuro.expenses.register.domain.usecase.calendar.GetCalendarUseCase
 import neuro.expenses.register.domain.usecase.location.GetCurrentLocationUseCase
 import neuro.expenses.register.domain.usecase.place.ObserveNearestPlacesUseCase
@@ -13,7 +14,7 @@ import neuro.expenses.register.viewmodel.common.asLiveData
 import neuro.expenses.register.viewmodel.common.asState
 import neuro.expenses.register.viewmodel.common.livedata.SingleLiveEvent
 import neuro.expenses.register.viewmodel.common.schedulers.SchedulerProvider
-import neuro.expenses.register.viewmodel.edit.product.EditProductViewModel
+import neuro.expenses.register.viewmodel.edit.product.EditPlaceProductViewModel
 import neuro.expenses.register.viewmodel.home.factory.ProductCardViewModelFactoryImpl
 import neuro.expenses.register.viewmodel.home.mapper.LatLngModelMapper
 import neuro.expenses.register.viewmodel.home.mapper.ProductCardModelMapper
@@ -33,7 +34,7 @@ class HomeViewModel(
   private val latLngModelMapper: LatLngModelMapper,
   private val productCardModelMapper: ProductCardModelMapper,
   override val billViewModel: BillViewModel,
-  override val editProductViewModel: EditProductViewModel,
+  override val editPlaceProductViewModel: EditPlaceProductViewModel,
   schedulerProvider: SchedulerProvider,
   private val nearestPlacesLimit: Int = 5,
   private val zoom: Float = 19.0f,
@@ -44,6 +45,7 @@ class HomeViewModel(
 
   override val calendar = mutableStateOf(getCalendarUseCase.getCalendar())
   override val productsListViewModel: ProductsListViewModel = newProductsListViewModel()
+  private lateinit var placeDto: PlaceDto
 
   val selectedPlaceIndex = mutableStateOf(0)
 
@@ -63,9 +65,10 @@ class HomeViewModel(
       .baseSubscribe { nearestPlaces ->
         places.value = nearestPlaces
         placesNames.value = nearestPlaces.map { placeDto -> placeDto.name }
-        productsListViewModel.setProducts(nearestPlaces.get(selectedPlaceIndex.value))
+        placeDto = nearestPlaces.get(selectedPlaceIndex.value)
+        productsListViewModel.setProducts(placeDto)
         val latLngModel =
-          latLngModelMapper.map(nearestPlaces.get(selectedPlaceIndex.value).latLngDto)
+          latLngModelMapper.map(placeDto.latLngDto)
         _uiState.value = UiState.Ready
         _uiEvent.value = UiEvent.MoveCamera(latLngModel, zoom)
       }
@@ -78,6 +81,7 @@ class HomeViewModel(
     _uiState.value = UiState.Ready
     _uiEvent.value = UiEvent.MoveCamera(latLngModel, zoom)
     productsListViewModel.setProducts(placeDto)
+    this.placeDto = placeDto
   }
 
   override fun onModalBottomSheetStateNotVisible() {
@@ -94,8 +98,24 @@ class HomeViewModel(
   }
 
   override fun onProductCardLongClick(productCardModel: ProductCardModel, calendar: Calendar) {
+    setEditProductViewModel(productCardModel)
+
     _uiEvent.value = UiEvent.OpenEditMode()
     _uiState.value = UiState.Editing
+  }
+
+  private fun setEditProductViewModel(productCardModel: ProductCardModel) {
+    val productDto = getProduct(productCardModel.id)
+    editPlaceProductViewModel.place.value = placeDto.name
+    editPlaceProductViewModel.productId.value = productDto.id
+    editPlaceProductViewModel.description.value = productDto.description
+    editPlaceProductViewModel.category.value = productDto.category
+    editPlaceProductViewModel.price.value = productDto.price.toString()
+    editPlaceProductViewModel.iconUrl.value = productDto.iconUrl
+  }
+
+  private fun getProduct(productId: Long): ProductDto {
+    return placeDto.products.first { it.id == productId }
   }
 
   private fun newProductsListViewModel() =

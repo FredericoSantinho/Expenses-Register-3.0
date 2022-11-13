@@ -23,21 +23,19 @@ class PrePopulateDatabase(
       ).blockingGet()
 
       val placeDao = expensesRegisterDatabase.placeDao
-      val bitoque = "Bitoque"
-      val vizinha = "Vizinha"
+      val bitoque = "bitoque"
+      val vizinha = "vizinha"
 
       placeDao.insert(
         RoomPlace(
           bitoque.replaceFirstChar { it.uppercase() },
-          LatLng(37.091495, -8.2475677),
-          bitoque
+          LatLng(37.091495, -8.2475677)
         )
       ).blockingGet()
       placeDao.insert(
         RoomPlace(
           vizinha.replaceFirstChar { it.uppercase() },
-          LatLng(37.098297, -8.2514809),
-          vizinha
+          LatLng(37.098297, -8.2514809)
         )
       ).blockingGet()
 

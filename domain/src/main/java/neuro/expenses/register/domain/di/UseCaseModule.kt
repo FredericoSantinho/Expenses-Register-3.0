@@ -45,5 +45,9 @@ val useCaseModule = module {
   single<ObserveNearestPlacesUseCase> { ObserveNearestPlacesUseCaseImpl(get(), get(), get()) }
   single<GetCurrentLocationUseCase> { GetCurrentLocationUseCaseImpl(get()) }
   single<SavePlaceUseCase> { SavePlaceUseCaseImpl(get()) }
-  single<SaveExpensePlace> { SaveExpensePlaceImpl(get(), get(), get(), get()) }
+  single<SaveExpensePlaceUseCase> { SaveExpensePlaceUseCaseImpl(get(), get(), get(), get(), get()) }
+  single<GetPlaceUseCase> { GetPlaceUseCaseImpl(get()) }
+  single<UpdatePlaceProductUseCase> { UpdatePlaceProductUseCaseImpl(get(), get(), get(), get()) }
+  single<AddPlaceProductUseCase> { AddPlaceProductUseCaseImpl(get(), get(), get(), get()) }
+  single<RemovePlaceProductUseCase> { RemovePlaceProductUseCaseImpl(get()) }
 }

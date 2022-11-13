@@ -117,7 +117,7 @@ fun PreviewDateTimeComposable() {
   val amount = 1.0
   val iconUrl =
     "https://www.iguaria.com/wp-content/uploads/2016/03/Iguaria_Tosta-de-Bacon-Queijo-Fiambre.jpg"
-  val productCardModel = ProductCardModel(description, category, place, price, amount, iconUrl)
+  val productCardModel = ProductCardModel(0, description, category, place, price, iconUrl, amount)
   val calendar = remember { mutableStateOf(Calendar.getInstance()) }
 
   ExpensesRegisterTheme {
