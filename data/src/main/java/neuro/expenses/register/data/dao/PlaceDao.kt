@@ -20,8 +20,8 @@ interface PlaceDao {
   fun observeAll(): Observable<List<RoomPlaceWithPlaceProducts>>
 
   @Transaction
-  @Query("select * from place_table where name=:name")
-  fun getPlace(name: String): Maybe<RoomPlaceWithPlaceProducts>
+  @Query("select * from place_table where placeId=:placeId")
+  fun getPlace(placeId: String): Maybe<RoomPlaceWithPlaceProducts>
 
   @Insert(onConflict = OnConflictStrategy.IGNORE)
   fun insert(roomPlace: RoomPlace): Single<Long>

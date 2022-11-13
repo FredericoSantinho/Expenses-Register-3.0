@@ -10,7 +10,7 @@ data class RoomPlaceWithPlaceProducts(
   @Embedded val roomPlace: RoomPlace,
   @Relation(
     entity = RoomPlaceProduct::class,
-    parentColumn = "name",
+    parentColumn = "placeId",
     entityColumn = "placeProductId",
     associateBy = Junction(PlacePlaceProductCrossRef::class)
   )

@@ -4,10 +4,14 @@ import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "product_table", indices = [Index(value = ["description"], unique = true)])
+@Entity(
+  tableName = "product_table",
+  indices = [Index(value = ["descriptionLowercase"], unique = true)]
+)
 data class RoomProduct(
   @PrimaryKey(autoGenerate = true)
   var productId: Long,
   val description: String,
-  val iconUrl: String = ""
+  val iconUrl: String = "",
+  val descriptionLowercase: String = description.lowercase()
 )

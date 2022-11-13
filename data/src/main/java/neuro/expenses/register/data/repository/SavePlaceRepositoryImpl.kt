@@ -24,7 +24,7 @@ class SavePlaceRepositoryImpl(
       }.flatMapSingle { productId ->
         placeDao.insert(
           PlacePlaceProductCrossRef(
-            placeDto.name,
+            placeDto.name.lowercase(),
             productId
           )
         )

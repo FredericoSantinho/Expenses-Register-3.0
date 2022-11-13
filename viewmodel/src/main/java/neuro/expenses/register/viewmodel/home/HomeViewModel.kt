@@ -46,6 +46,7 @@ class HomeViewModel(
   override val productsListViewModel: ProductsListViewModel = newProductsListViewModel()
 
   val selectedPlaceIndex = mutableStateOf(0)
+
   private val _uiState = mutableStateOf<UiState>(UiState.Loading)
   override val uiState = _uiState.asState()
   private val _uiEvent = SingleLiveEvent<UiEvent>()

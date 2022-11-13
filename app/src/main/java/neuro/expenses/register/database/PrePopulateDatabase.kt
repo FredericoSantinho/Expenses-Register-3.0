@@ -26,8 +26,20 @@ class PrePopulateDatabase(
       val bitoque = "Bitoque"
       val vizinha = "Vizinha"
 
-      placeDao.insert(RoomPlace(bitoque, LatLng(37.091495, -8.2475677))).blockingGet()
-      placeDao.insert(RoomPlace(vizinha, LatLng(37.098297, -8.2514809))).blockingGet()
+      placeDao.insert(
+        RoomPlace(
+          bitoque.replaceFirstChar { it.uppercase() },
+          LatLng(37.091495, -8.2475677),
+          bitoque
+        )
+      ).blockingGet()
+      placeDao.insert(
+        RoomPlace(
+          vizinha.replaceFirstChar { it.uppercase() },
+          LatLng(37.098297, -8.2514809),
+          vizinha
+        )
+      ).blockingGet()
 
       var placeProductId: Long
       placeProductId =
