@@ -35,9 +35,8 @@ class BackNavElement private constructor(
     if (child?.tryGoBack() == Result.CANNOT_GO_BACK) {
       return Result.CANNOT_GO_BACK
     } else {
-      Result.CANNOT_GO_BACK
+      return handler()
     }
-    return handler()
   }
 
   companion object {

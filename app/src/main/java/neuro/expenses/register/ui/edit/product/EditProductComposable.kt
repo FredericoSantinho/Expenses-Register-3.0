@@ -2,8 +2,10 @@ package neuro.expenses.register.ui.edit.product
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
@@ -41,7 +43,8 @@ fun EditProductComposable(
   Column(
     modifier = Modifier
       .background(Color.White)
-      .padding(8.dp),
+      .padding(8.dp)
+      .verticalScroll(rememberScrollState()),
     horizontalAlignment = Alignment.CenterHorizontally
   ) {
     Text(

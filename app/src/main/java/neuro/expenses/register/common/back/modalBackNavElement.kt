@@ -12,7 +12,7 @@ fun modalBackNavElement(
   coroutineScope: CoroutineScope,
   callback: (() -> Unit)? = null
 ) = BackNavElement.needsProcessing {
-  if (state.isVisible && !state.isAnimationRunning) {
+  if (state.isVisible) {
     state.hideAnd(coroutineScope) { callback?.invoke() }
     BackNavElement.Result.CANNOT_GO_BACK
   } else {
