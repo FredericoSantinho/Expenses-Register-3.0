@@ -1,6 +1,6 @@
 package neuro.expenses.register.ui.settings
 
-import neuro.expenses.register.common.android.activity.BaseActivity
+import neuro.expenses.register.common.activity.BaseActivity
 import neuro.expenses.register.databinding.ActivitySettingsBinding
 
 class SettingsActivity : BaseActivity<ActivitySettingsBinding>() {

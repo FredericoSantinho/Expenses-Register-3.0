@@ -1,4 +1,4 @@
-package neuro.expenses.register.common.android.fragment
+package neuro.expenses.register.common.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater

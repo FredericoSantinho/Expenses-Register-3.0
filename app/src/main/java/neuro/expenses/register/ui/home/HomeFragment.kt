@@ -1,7 +1,7 @@
 package neuro.expenses.register.ui.home
 
 import androidx.compose.runtime.Composable
-import neuro.expenses.register.common.android.fragment.BaseComposeFragment
+import neuro.expenses.register.common.fragment.BaseComposeFragment
 import neuro.expenses.register.ui.home.composable.HomeComposable
 import neuro.expenses.register.viewmodel.home.HomeViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel

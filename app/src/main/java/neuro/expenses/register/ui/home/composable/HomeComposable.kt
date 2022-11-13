@@ -1,5 +1,6 @@
 package neuro.expenses.register.ui.home.composable
 
+import android.app.Activity
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -9,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -17,7 +19,12 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.fragment.app.FragmentActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import neuro.expenses.register.*
 import neuro.expenses.register.R
+import neuro.expenses.register.common.back.BackNavElement
+import neuro.expenses.register.common.back.DefaultBackHandler
+import neuro.expenses.register.common.back.FinishActivityHandler
+import neuro.expenses.register.common.back.modalBackNavElement
 import neuro.expenses.register.ui.bill.BillComposableContainer
 import neuro.expenses.register.ui.common.composables.datetime.DateTimeComposable
 import neuro.expenses.register.ui.common.composables.dropdown.DropDownTextField
@@ -51,14 +58,13 @@ fun HomeComposable(
     if (uiState == UiState.Editing) ModalBottomSheetValue.Expanded else ModalBottomSheetValue.Hidden
   }
   val modalBottomSheetState = rememberModalBottomSheetState(
-    modalBottomSheetInitialValue,
-    confirmStateChange = {
+    modalBottomSheetInitialValue, confirmStateChange = {
       it != ModalBottomSheetValue.HalfExpanded
-    }, skipHalfExpanded = true)
+    }, skipHalfExpanded = true
+  )
 
   ConstraintLayout(
-    modifier = Modifier
-      .fillMaxWidth()
+    modifier = Modifier.fillMaxWidth()
   ) {
     val (mainC, billC) = createRefs()
 
@@ -98,20 +104,35 @@ fun HomeComposable(
       onUiState(uiState, homeViewModel, loading)
     }
   }
-  ModalBottomSheetLayout(
-    sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
+  ModalBottomSheetLayout(sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
     sheetBackgroundColor = Color.Transparent,
     sheetState = modalBottomSheetState,
     sheetContent = {
       EditProductComposable(homeViewModel.editPlaceProductViewModel)
-    }
-  ) {}
+    }) {}
 
   onUiEvent(uiEvent, coroutineScope, modalBottomSheetState)
 
   if (!modalBottomSheetState.isVisible) {
     homeViewModel.onModalBottomSheetStateNotVisible()
   }
+
+  addBackHandler(modalBottomSheetState, coroutineScope)
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+private fun addBackHandler(
+  modalBottomSheetState: ModalBottomSheetState,
+  coroutineScope: CoroutineScope
+) {
+  val activity = LocalContext.current as? Activity
+  DefaultBackHandler(
+    BackNavElement.default(
+      modalBackNavElement(modalBottomSheetState, coroutineScope),
+      FinishActivityHandler(activity)
+    )
+  )
 }
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -124,9 +145,7 @@ fun onUiEvent(
   if (uiEvent.value != null) {
     when (uiEvent.value) {
       is UiEvent.OpenEditMode -> onOpenEditMode(
-        uiEvent.value as UiEvent.OpenEditMode,
-        coroutineScope,
-        modalBottomSheetState
+        uiEvent.value as UiEvent.OpenEditMode, coroutineScope, modalBottomSheetState
       )
       is UiEvent.MoveCamera -> {}
       null -> {}
@@ -137,9 +156,7 @@ fun onUiEvent(
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun onOpenEditMode(
-  uiEvent: UiEvent,
-  coroutineScope: CoroutineScope,
-  modalBottomSheetState: ModalBottomSheetState
+  uiEvent: UiEvent, coroutineScope: CoroutineScope, modalBottomSheetState: ModalBottomSheetState
 ) {
   LaunchedEffect(uiEvent) {
     coroutineScope.launch {
@@ -150,9 +167,7 @@ fun onOpenEditMode(
 
 @Composable
 private fun onUiState(
-  uiState: UiState,
-  homeViewModel: IHomeViewModel,
-  loading: MutableState<Boolean>
+  uiState: UiState, homeViewModel: IHomeViewModel, loading: MutableState<Boolean>
 ) {
   if (uiState is UiState.Loading) {
     onUiLoading()

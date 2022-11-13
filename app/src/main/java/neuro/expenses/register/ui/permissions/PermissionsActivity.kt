@@ -6,7 +6,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import neuro.expenses.register.R
-import neuro.expenses.register.common.android.activity.BaseActivity
+import neuro.expenses.register.common.activity.BaseActivity
 import neuro.expenses.register.databinding.ActivityPermissionsBinding
 import neuro.expenses.register.viewmodel.permissions.PermissionsViewModel
 import neuro.expenses.register.viewmodel.permissions.UiEvent

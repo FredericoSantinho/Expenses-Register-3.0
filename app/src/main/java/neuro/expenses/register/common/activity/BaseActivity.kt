@@ -1,4 +1,4 @@
-package neuro.expenses.register.common.android.activity
+package neuro.expenses.register.common.activity
 
 import android.os.Bundle
 import androidx.viewbinding.ViewBinding

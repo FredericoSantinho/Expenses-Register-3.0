@@ -10,7 +10,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import neuro.expenses.register.common.android.activity.BaseActivity
+import neuro.expenses.register.common.activity.BaseActivity
 import neuro.expenses.register.databinding.ActivityMainBinding
 import neuro.expenses.register.ui.settings.SettingsActivity
 import neuro.expenses.register.viewmodel.main.MainViewModel

@@ -1,7 +1,6 @@
 package neuro.expenses.register.viewmodel.edit.product
 
 import androidx.compose.runtime.mutableStateOf
-import io.reactivex.rxjava3.core.Completable
 import neuro.expenses.register.domain.dto.ProductDto
 import neuro.expenses.register.domain.usecase.category.ObserveCategoriesUseCase
 import neuro.expenses.register.domain.usecase.place.RemovePlaceProductUseCase
@@ -34,9 +33,6 @@ class EditPlaceProductViewModel(
   fun onSaveButton() {
     updatePlaceProductUseCase.updatePlaceProduct(buildProductDto(), placeId.value)
       .subscribeOn(schedulerProvider.io())
-      .andThen(Completable.fromAction {
-        println("")
-      })
       .subscribe()
   }
 

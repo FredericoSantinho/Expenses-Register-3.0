@@ -2,7 +2,7 @@ package neuro.expenses.register.ui.permissions
 
 import androidx.annotation.LayoutRes
 import neuro.expenses.register.R
-import neuro.expenses.register.common.android.fragment.BaseFragment
+import neuro.expenses.register.common.fragment.BaseFragment
 
 class PermissionsFragment : BaseFragment() {
 
