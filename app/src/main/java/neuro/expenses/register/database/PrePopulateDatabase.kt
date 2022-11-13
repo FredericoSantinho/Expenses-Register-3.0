@@ -25,8 +25,10 @@ class PrePopulateDatabase(
       val placeDao = expensesRegisterDatabase.placeDao
       val bitoque = "Bitoque"
       val vizinha = "Vizinha"
+      val longo = "Longo Bar"
       val bitoqueId = 1L
       val vizinhaId = 2L
+      val longoId = 3L
 
       placeDao.insert(
         RoomPlace(
@@ -158,6 +160,28 @@ class PrePopulateDatabase(
       expensesRegisterDatabase.placeDao.insert(
         PlacePlaceProductCrossRef(
           bitoqueId,
+          placeProductId
+        )
+      ).blockingGet()
+
+      placeDao.insert(
+        RoomPlace(
+          longoId,
+          longo,
+          LatLng(37.0975346, -8.2283147)
+        )
+      ).blockingGet()
+      placeProductId =
+        expensesRegisterDatabase.productDao.insert(
+          "Caneca 50cl",
+          "Borga",
+          2.5,
+          1.0,
+          "https://www1.tescoma.com/images/zbozi/hires/309024.jpg?1"
+        )
+      expensesRegisterDatabase.placeDao.insert(
+        PlacePlaceProductCrossRef(
+          longoId,
           placeProductId
         )
       ).blockingGet()
