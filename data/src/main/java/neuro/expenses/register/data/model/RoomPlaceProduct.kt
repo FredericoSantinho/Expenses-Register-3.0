@@ -24,10 +24,10 @@ import androidx.room.PrimaryKey
   )]
 )
 data class RoomPlaceProduct(
+  @PrimaryKey
+  var placeProductId: Long = 0,
   val productId: Long,
   val categoryId: Long,
   val price: Double,
-  val defaultAmount: Double,
-  @PrimaryKey(autoGenerate = true)
-  var placeProductId: Long = 0
+  val defaultAmount: Double
 )

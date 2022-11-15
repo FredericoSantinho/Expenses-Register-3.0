@@ -15,8 +15,8 @@ interface ProductDao {
   @Query("select * from product_table where productId=:productId")
   fun getProduct(productId: Long): Maybe<RoomProduct>
 
-  @Query("select * from product_table where description=:description")
-  fun getProduct(description: String): Maybe<RoomProduct>
+  @Query("select * from product_table where descriptionLowercase=:descriptionLowercase")
+  fun getProduct(descriptionLowercase: String): Maybe<RoomProduct>
 
   @Insert(onConflict = OnConflictStrategy.IGNORE)
   fun insert(roomProduct: RoomProduct): Single<Long>
@@ -26,6 +26,9 @@ interface ProductDao {
 
   @Delete()
   fun delete(roomProduct: RoomProduct): Completable
+
+  @Query("SELECT MAX(placeProductId) FROM place_product_table")
+  fun getLastId(): Maybe<Long>
 
   @Transaction
   @Query("select * from place_product_table where placeProductId=:placeProductId")
@@ -59,23 +62,25 @@ interface ProductDao {
    */
   @Transaction
   fun insert(
+    placeProductId: Long,
     description: String,
     categoryId: Long,
     price: Double,
     defaultAmount: Double,
     iconUrl: String = ""
   ): Long {
-    return getProduct(description).defaultIfEmpty(RoomProduct(0, description, iconUrl))
+    return getProduct(description.lowercase()).defaultIfEmpty(RoomProduct(0, description, iconUrl))
       .flatMap { roomProduct ->
         insert(roomProduct).flatMap { productId ->
           if (productId == -1L) {
-            getProduct(description).map { it.productId }.toSingle()
+            getProduct(description.lowercase()).map { it.productId }.toSingle()
           } else {
             Single.just(productId)
           }
         }.flatMap { productId ->
           getPlaceProduct(productId, categoryId, price).defaultIfEmpty(
             RoomPlaceProduct(
+              placeProductId,
               productId,
               categoryId,
               price,

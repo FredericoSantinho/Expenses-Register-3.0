@@ -51,6 +51,7 @@ class PrePopulateDatabase(
       var placeProductId: Long
       placeProductId =
         expensesRegisterDatabase.productDao.insert(
+          1,
           "Sagres Média 0,33cl",
           borgaId,
           1.1,
@@ -66,6 +67,7 @@ class PrePopulateDatabase(
 
       placeProductId =
         expensesRegisterDatabase.productDao.insert(
+          2,
           "Sagres Média 0,33cl",
           borgaId,
           1.3,
@@ -81,6 +83,7 @@ class PrePopulateDatabase(
 
       placeProductId =
         expensesRegisterDatabase.productDao.insert(
+          3,
           "Super Bock Média 0,33cl",
           borgaId,
           1.3,
@@ -96,6 +99,7 @@ class PrePopulateDatabase(
 
       placeProductId =
         expensesRegisterDatabase.productDao.insert(
+          4,
           "Mini Cristal 0,20cl",
           borgaId,
           1.1,
@@ -111,6 +115,7 @@ class PrePopulateDatabase(
 
       placeProductId =
         expensesRegisterDatabase.productDao.insert(
+          5,
           "Mini Sagres 0,25cl",
           borgaId,
           1.1,
@@ -125,6 +130,7 @@ class PrePopulateDatabase(
       ).blockingGet()
 
       placeProductId = expensesRegisterDatabase.productDao.insert(
+        6,
         "Chicharricos",
         restauId,
         1.5,
@@ -139,6 +145,7 @@ class PrePopulateDatabase(
       ).blockingGet()
 
       placeProductId = expensesRegisterDatabase.productDao.insert(
+        7,
         "Twix 50g",
         restauId,
         1.5,
@@ -154,6 +161,7 @@ class PrePopulateDatabase(
 
       placeProductId =
         expensesRegisterDatabase.productDao.insert(
+          8,
           "Tosta Mista Pâo Caseiro",
           restauId,
           3.0,
@@ -176,6 +184,7 @@ class PrePopulateDatabase(
       ).blockingGet()
       placeProductId =
         expensesRegisterDatabase.productDao.insert(
+          9,
           "Caneca 50cl",
           borgaId,
           2.5,

@@ -6,10 +6,11 @@ import neuro.expenses.register.entity.*
 class BillController(
   private val getProductId: GetProductId,
   private val getCategoryId: GetCategoryId,
-  private val calculateBillTotal: CalculateBillTotal
+  private val calculateBillTotal: CalculateBillTotal,
+  private val generateProductId: GenerateProductId
 ) {
   fun contains(bill: Bill, productDescription: String): Boolean {
-    return bill.billItems.find { it.product.description == productDescription } != null
+    return bill.billItems.find { it.product.description.lowercase() == productDescription.lowercase() } != null
   }
 
   fun add(bill: Bill, expense: Expense): Single<Bill> {
@@ -35,7 +36,7 @@ class BillController(
           expense.description.lowercase(),
           expense.category.lowercase(),
           expense.price
-        )
+        ).switchIfEmpty(generateProductId.newId())
           .flatMap { productId ->
             getCategoryId.getCategoryId(expense.category.lowercase()).map { categoryId ->
               val product = Product(
@@ -61,36 +62,33 @@ class BillController(
   }
 
   private fun buildList(bill: Bill, newBillItem: BillItem): List<BillItem> {
-    val description = newBillItem.product.description
-    val list = mutableListOf<BillItem>()
-
-    if (contains(bill, newBillItem.product.description)) {
-      addExistent(bill, description, list, newBillItem)
+    return if (contains(bill, newBillItem.product.description)) {
+      addExistent(bill, newBillItem)
     } else {
-      addNonExistent(bill, list, newBillItem)
+      addNonExistent(bill, newBillItem)
     }
-
-    return list
   }
 
   private fun addExistent(
     bill: Bill,
-    description: String,
-    list: MutableList<BillItem>,
     newBillItem: BillItem
-  ) {
+  ): MutableList<BillItem> {
+    val list = mutableListOf<BillItem>()
     bill.billItems.forEach {
-      if (it.product.description == description) {
+      if (it.product.id == newBillItem.product.id) {
         list.add(newBillItem)
       } else {
         list.add(it)
       }
     }
+    return list
   }
 
-  private fun addNonExistent(bill: Bill, list: MutableList<BillItem>, newBillItem: BillItem) {
+  private fun addNonExistent(bill: Bill, newBillItem: BillItem): MutableList<BillItem> {
+    val list = mutableListOf<BillItem>()
     list.addAll(bill.billItems)
     list.add(newBillItem)
+    return list
   }
 
   private fun getBillItem(bill: Bill, productDescription: String) =

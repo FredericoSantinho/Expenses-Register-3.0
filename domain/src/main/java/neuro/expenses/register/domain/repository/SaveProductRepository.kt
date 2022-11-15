@@ -8,6 +8,7 @@ interface SaveProductRepository {
    * @return productId
    */
   fun saveProduct(
+    productId: Long,
     description: String,
     categoryId: Long,
     price: Double,
@@ -20,6 +21,7 @@ interface SaveProductRepository {
    */
   fun saveProduct(productDto: ProductDto): Long {
     return saveProduct(
+      productDto.id,
       productDto.description,
       productDto.category.id,
       productDto.price,

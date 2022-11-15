@@ -1,4 +1,4 @@
-package neuro.expenses.register.domain.usecase.category
+package neuro.expenses.register.domain.entity
 
 import io.reactivex.rxjava3.core.Single
 import neuro.expenses.register.domain.repository.GetCategoryRepository
