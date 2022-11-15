@@ -6,5 +6,5 @@ import androidx.room.Index
 @Entity(primaryKeys = ["placeProductId", "categoryId"], indices = [Index(value = ["categoryId"])])
 data class PlaceProductCategoryCrossRef(
   val placeProductId: Long,
-  val categoryId: String
+  val categoryId: Long
 )

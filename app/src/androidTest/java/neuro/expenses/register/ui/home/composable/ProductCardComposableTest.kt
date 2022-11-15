@@ -26,7 +26,7 @@ internal class ProductCardComposableTest {
     val productCardViewModel = mock<IProductCardViewModel>()
 
     whenever(productCardViewModel.description).doReturn(mutableStateOf(description))
-    whenever(productCardViewModel.category).doReturn(mutableStateOf(category))
+    whenever(productCardViewModel.categoryName).doReturn(mutableStateOf(category))
     whenever(productCardViewModel.price).doReturn(mutableStateOf(price))
     whenever(productCardViewModel.iconUrl).doReturn(mutableStateOf(iconUrl))
 

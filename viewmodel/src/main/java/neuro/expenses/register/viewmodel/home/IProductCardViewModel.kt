@@ -5,7 +5,8 @@ import androidx.compose.runtime.MutableState
 interface IProductCardViewModel {
   val productId: MutableState<Long>
   val description: MutableState<String>
-  val category: MutableState<String>
+  val categoryName: MutableState<String>
+  val categoryId: MutableState<Long>
   val price: MutableState<String>
   val iconUrl: MutableState<String>
 

@@ -5,5 +5,5 @@ import neuro.expenses.register.entity.converter.ExpenseConverterImpl
 import org.koin.dsl.module
 
 val entityConverterModule = module {
-  single<ExpenseConverter> { ExpenseConverterImpl() }
+  single<ExpenseConverter> { ExpenseConverterImpl(get()) }
 }

@@ -14,20 +14,23 @@ internal class ProductCardViewModelTest {
   @Test
   fun test() {
     val onProductCardClick = mock<OnProductCardClick>()
+    val id = 1L
     val description = "desc"
+    val categoryId = 1L
     val category = "cat"
     val place = "place"
     val price = "1.00 €"
     val amount = 1.0
     val iconUrl = "url"
-    val productCardModel = ProductCardModel(description, category, place, price, amount, iconUrl)
+    val productCardModel =
+      ProductCardModel(id, description, categoryId, category, place, price, iconUrl)
     val calendar = mutableStateOf(Calendar.getInstance())
 
     val productCardViewModel = ProductCardViewModel(onProductCardClick, productCardModel, calendar)
 
     assertEquals(calendar, productCardViewModel.calendar)
     assertEquals(description, productCardViewModel.description.value)
-    assertEquals(category, productCardViewModel.category.value)
+    assertEquals(category, productCardViewModel.categoryName.value)
     assertEquals(place, productCardViewModel.place.value)
     assertEquals(price, productCardViewModel.price.value)
     assertEquals(amount, productCardViewModel.amount.value, 0.0)

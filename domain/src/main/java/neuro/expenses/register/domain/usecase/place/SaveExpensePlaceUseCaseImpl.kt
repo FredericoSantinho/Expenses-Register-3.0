@@ -19,11 +19,9 @@ class SaveExpensePlaceUseCaseImpl(
   private val placeController: PlaceController = PlaceControllerImpl()
 ) : SaveExpensePlaceUseCase {
   override fun saveExpensePlace(expenseDto: ExpenseDto): Completable {
-    return getPlaceUseCase.getPlace(expenseDto.place).map { placeDto ->
+    return getPlaceUseCase.getPlace(expenseDto.place).flatMapSingle { placeDto ->
       val expense = expenseMapper.map(expenseDto)
-      val product = expenseConverter.convertToProduct(expense)
-
-      addProduct(placeDto, product)
+      expenseConverter.convertToProduct(expense).map { product -> addProduct(placeDto, product) }
     }.flatMapCompletable { placeDto -> savePlaceUseCase.savePlace(placeDto) }
   }
 

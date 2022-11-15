@@ -14,7 +14,7 @@ class GetPlaceRepositoryImpl(
     return placeDao.getPlace(placeId).map { roomPlaceWithPlaceProductsMapper.map(it) }
   }
 
-  override fun getPlace(placeName: String): Maybe<PlaceDto> {
-    return placeDao.getPlace(placeName.lowercase()).map { roomPlaceWithPlaceProductsMapper.map(it) }
+  override fun getPlace(placeNameLowerCase: String): Maybe<PlaceDto> {
+    return placeDao.getPlace(placeNameLowerCase).map { roomPlaceWithPlaceProductsMapper.map(it) }
   }
 }

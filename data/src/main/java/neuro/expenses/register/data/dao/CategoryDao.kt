@@ -12,8 +12,8 @@ interface CategoryDao {
   @Query("select * from category_table")
   fun observeCategories(): Observable<List<RoomCategory>>
 
-  @Query("select * from category_table where categoryId=:key")
-  fun getCategory(key: String): Maybe<RoomCategory>
+  @Query("select * from category_table where nameLowercase=:nameLowercase")
+  fun getCategory(nameLowercase: String): Maybe<RoomCategory>
 
   @Insert(onConflict = OnConflictStrategy.ABORT)
   fun insert(category: RoomCategory): Single<Long>

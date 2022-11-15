@@ -36,16 +36,12 @@ class SavePlaceRepositoryImpl(
       }.ignoreElements().andThen(
         Observable.fromIterable(crossRefs).flatMapCompletable { placePlaceProductCrossRef ->
           getProductRepository.getProduct(placePlaceProductCrossRef.placeProductId)
-            .filter { !contains(placeDto.products, it) }.flatMapCompletable {
+            .filter { !contains(placeDto.products, it.id) }.flatMapCompletable {
               placeDao.delete(placePlaceProductCrossRef)
             }
 
         })
     }
-  }
-
-  private fun contains(products: List<ProductDto>, productDto: ProductDto): Boolean {
-    return products.any { it.equals(productDto) }
   }
 
   private fun contains(products: List<ProductDto>, placeProductId: Long): Boolean {

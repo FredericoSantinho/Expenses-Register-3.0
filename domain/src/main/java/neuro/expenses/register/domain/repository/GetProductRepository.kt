@@ -5,4 +5,5 @@ import neuro.expenses.register.domain.dto.ProductDto
 
 interface GetProductRepository {
   fun getProduct(productId: Long): Maybe<ProductDto>
+  fun getProduct(description: String, category: String, price: Double): Maybe<ProductDto>
 }

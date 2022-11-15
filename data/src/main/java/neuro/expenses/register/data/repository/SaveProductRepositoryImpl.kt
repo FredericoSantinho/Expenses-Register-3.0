@@ -6,10 +6,10 @@ import neuro.expenses.register.domain.repository.SaveProductRepository
 class SaveProductRepositoryImpl(private val productDao: ProductDao) : SaveProductRepository {
   override fun saveProduct(
     description: String,
-    category: String,
+    categoryId: Long,
     price: Double,
     defaultAmount: Double
   ): Long {
-    return productDao.insert(description, category, price, defaultAmount)
+    return productDao.insert(description, categoryId, price, defaultAmount)
   }
 }

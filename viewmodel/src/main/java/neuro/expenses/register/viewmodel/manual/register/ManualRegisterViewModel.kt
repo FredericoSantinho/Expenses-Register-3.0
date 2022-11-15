@@ -1,6 +1,7 @@
 package neuro.expenses.register.viewmodel.manual.register
 
 import androidx.compose.runtime.mutableStateOf
+import io.reactivex.rxjava3.core.Single
 import neuro.expenses.register.domain.dto.ExpenseDto
 import neuro.expenses.register.domain.usecase.calendar.GetCalendarUseCase
 import neuro.expenses.register.domain.usecase.category.ObserveCategoriesUseCase
@@ -42,6 +43,8 @@ class ManualRegisterViewModel(
 
   val calendar = mutableStateOf(getCalendarUseCase.getCalendar())
   val categories = observeCategoriesUseCase.observeCategories()
+  val categoriesNames =
+    categories.flatMapSingle { Single.just(it).flattenAsObservable { it }.map { it.name }.toList() }
 
   private val _uiState = mutableStateOf<UiState>(UiState.Ready)
   val uiState = _uiState.asState()
@@ -64,8 +67,12 @@ class ManualRegisterViewModel(
       .baseSubscribe(
         onComplete = { publishAndReset() },
         onError = {
-          _uiState.value =
-            UiState.Error(registerExpenseErrorMapper.map((it as RegisterExpenseException).errors))
+          if (it is RegisterExpenseException) {
+            _uiState.value =
+              UiState.Error(registerExpenseErrorMapper.map(it.errors))
+          } else {
+            throw it
+          }
         })
   }
 

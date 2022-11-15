@@ -68,11 +68,11 @@ fun EditProductComposable(
       textStyle = ExpensesRegisterTypography.body2
     )
     TextFieldWithDropdown(
-      dataIn = editPlaceProductViewModel.categories.subscribeAsState(initial = emptyList()),
+      dataIn = editPlaceProductViewModel.categoriesNames.subscribeAsState(initial = emptyList()),
       label = stringResource(R.string.category),
       keyboardOptions = keyboardOptionsText,
       onValueChange = { editPlaceProductViewModel.onCategoryChange() },
-      value = editPlaceProductViewModel.category,
+      value = editPlaceProductViewModel.categoryName,
       isError = categoryIsError,
       textStyle = ExpensesRegisterTypography.body2
     )

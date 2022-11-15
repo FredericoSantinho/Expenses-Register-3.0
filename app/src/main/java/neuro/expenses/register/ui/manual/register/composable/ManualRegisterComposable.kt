@@ -109,7 +109,7 @@ fun ManualRegisterComposable(
     )
     TextFieldWithDropdown(
       modifier = Modifier.padding(start = 8.dp, end = 8.dp),
-      dataIn = manualRegisterViewModel.categories.subscribeAsState(initial = emptyList()),
+      dataIn = manualRegisterViewModel.categoriesNames.subscribeAsState(initial = emptyList()),
       label = stringResource(R.string.category),
       keyboardOptions = keyboardOptionsText,
       onValueChange = { manualRegisterViewModel.onCategoryChange() },

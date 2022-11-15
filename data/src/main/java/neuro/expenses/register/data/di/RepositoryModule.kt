@@ -13,7 +13,7 @@ val repositoryModule = module {
   single<GetLastBillRepository> { GetLastBillRepositoryImpl(get(), get()) }
   single<SaveBillRepository> { SaveBillRepositoryImpl(get(), get(), get()) }
   single<SaveProductRepository> { SaveProductRepositoryImpl(get()) }
-  single<GetProductRepository> { GetProductRepositoryImpl(get(), get()) }
+  single<GetProductRepository> { GetProductRepositoryImpl(get(), get(), get()) }
   single<GetPlacesRepository> { GetPlacesRepositoryImpl(get(), get()) }
   single<ObservePlacesRepository> { ObservePlacesRepositoryImpl(get(), get()) }
   single<GetPlaceRepository> { GetPlaceRepositoryImpl(get(), get()) }

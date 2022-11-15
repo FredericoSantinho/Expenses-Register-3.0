@@ -10,18 +10,15 @@ import neuro.expenses.register.domain.usecase.bill.SaveBillUseCase
 import neuro.expenses.register.domain.usecase.register.validator.ExpenseValidator
 import neuro.expenses.register.entity.Bill
 import neuro.expenses.register.entity.controller.BillController
-import neuro.expenses.register.entity.controller.CalculateBillTotal
-import neuro.expenses.register.entity.converter.ExpenseConverter
 import java.util.*
 
 class RegisterExpenseUseCaseImpl(
+  private val billController: BillController,
   private val getLastBillUseCase: GetLastBillUseCase,
   private val saveBillUseCase: SaveBillUseCase,
   private val expenseValidator: ExpenseValidator,
   private val billMapper: BillMapper,
-  private val expenseConverter: ExpenseConverter,
-  private val expenseMapper: ExpenseMapper,
-  private val calculateBillTotal: CalculateBillTotal
+  private val expenseMapper: ExpenseMapper
 ) : RegisterExpenseUseCase {
   private val defaultBillDto = BillDto(0, "N/A", Calendar.getInstance(), 0.0, isOpen = false)
 
@@ -41,14 +38,9 @@ class RegisterExpenseUseCaseImpl(
         }
 
         return@flatMapCompletable expenseValidator.validate(expense).andThen(Completable.defer {
-          val lastBillController =
-            BillController(calculateBillTotal, expenseConverter, lastBill)
-
-          return@defer lastBillController.add(expense).doOnComplete {
-            saveBillUseCase.save(
-              lastBillController.bill
-            )
-          }
+          return@defer billController.add(lastBill, expense).doOnSuccess { bill ->
+            saveBillUseCase.save(bill)
+          }.ignoreElement()
         })
       }
   }

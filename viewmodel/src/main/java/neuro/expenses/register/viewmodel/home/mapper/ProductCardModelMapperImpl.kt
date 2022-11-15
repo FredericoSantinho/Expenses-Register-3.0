@@ -20,7 +20,8 @@ class ProductCardModelMapperImpl(
     return ProductCardModel(
       productId,
       description,
-      category,
+      category.id,
+      category.name,
       place,
       price,
       productDto.iconUrl
@@ -30,7 +31,7 @@ class ProductCardModelMapperImpl(
   override fun map(productCardModel: ProductCardModel, calendar: Calendar): ExpenseDto {
     return ExpenseDto(
       productCardModel.description,
-      productCardModel.category,
+      productCardModel.categoryName,
       productCardModel.place,
       productCardModel.price.substring(0, productCardModel.price.length - 2).toDouble(),
       productCardModel.amount,

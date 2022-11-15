@@ -10,6 +10,6 @@ class GetPlaceUseCaseImpl(private val getPlaceRepository: GetPlaceRepository) : 
   }
 
   override fun getPlace(placeName: String): Maybe<PlaceDto> {
-    return getPlaceRepository.getPlace(placeName)
+    return getPlaceRepository.getPlace(placeName.lowercase())
   }
 }

@@ -109,7 +109,8 @@ class HomeViewModel(
     editPlaceProductViewModel.placeId.value = placeDto.id
     editPlaceProductViewModel.productId.value = productDto.id
     editPlaceProductViewModel.description.value = productDto.description
-    editPlaceProductViewModel.category.value = productDto.category
+    editPlaceProductViewModel.categoryId.value = productDto.category.id
+    editPlaceProductViewModel.categoryName.value = productDto.category.name
     editPlaceProductViewModel.price.value = productDto.price.toString()
     editPlaceProductViewModel.iconUrl.value = productDto.iconUrl
   }

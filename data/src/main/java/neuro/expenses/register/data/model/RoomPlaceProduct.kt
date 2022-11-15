@@ -25,7 +25,7 @@ import androidx.room.PrimaryKey
 )
 data class RoomPlaceProduct(
   val productId: Long,
-  val categoryId: String,
+  val categoryId: Long,
   val price: Double,
   val defaultAmount: Double,
   @PrimaryKey(autoGenerate = true)

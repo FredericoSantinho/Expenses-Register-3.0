@@ -9,7 +9,7 @@ interface SaveProductRepository {
    */
   fun saveProduct(
     description: String,
-    category: String,
+    categoryId: Long,
     price: Double,
     defaultAmount: Double
   ): Long
@@ -21,7 +21,7 @@ interface SaveProductRepository {
   fun saveProduct(productDto: ProductDto): Long {
     return saveProduct(
       productDto.description,
-      productDto.category,
+      productDto.category.id,
       productDto.price,
       productDto.defaultAmount
     )

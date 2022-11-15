@@ -14,11 +14,14 @@ class PrePopulateDatabase(
     return Completable.fromAction {
       val categoryDao = expensesRegisterDatabase.categoryDao
 
+      val cafeId = 1L
+      val borgaId = 2L
+      val restauId = 3L
       categoryDao.insert(
         listOf(
-          RoomCategory("Café"),
-          RoomCategory("Borga"),
-          RoomCategory("Restau")
+          RoomCategory(cafeId, "Café"),
+          RoomCategory(borgaId, "Borga"),
+          RoomCategory(restauId, "Restau")
         )
       ).blockingGet()
 
@@ -49,7 +52,7 @@ class PrePopulateDatabase(
       placeProductId =
         expensesRegisterDatabase.productDao.insert(
           "Sagres Média 0,33cl",
-          "Borga",
+          borgaId,
           1.1,
           1.0,
           "https://thexicos-wp.ams3.digitaloceanspaces.com/uploads/sites/5/2022/07/sagr.png"
@@ -64,7 +67,7 @@ class PrePopulateDatabase(
       placeProductId =
         expensesRegisterDatabase.productDao.insert(
           "Sagres Média 0,33cl",
-          "Borga",
+          borgaId,
           1.3,
           1.0,
           "https://thexicos-wp.ams3.digitaloceanspaces.com/uploads/sites/5/2022/07/sagr.png"
@@ -79,7 +82,7 @@ class PrePopulateDatabase(
       placeProductId =
         expensesRegisterDatabase.productDao.insert(
           "Super Bock Média 0,33cl",
-          "Borga",
+          borgaId,
           1.3,
           1.0,
           "https://media.recheio.pt/catalogo/media/catalog/product/cache/1/image/900x900/9df78eab33525d08d6e5fb8d27136e95/6/0/60710_1.jpg"
@@ -94,7 +97,7 @@ class PrePopulateDatabase(
       placeProductId =
         expensesRegisterDatabase.productDao.insert(
           "Mini Cristal 0,20cl",
-          "Borga",
+          borgaId,
           1.1,
           1.0,
           "https://www.apolonia.com/fotos/produtos/706574_01_14.05.18_g.jpg"
@@ -109,7 +112,7 @@ class PrePopulateDatabase(
       placeProductId =
         expensesRegisterDatabase.productDao.insert(
           "Mini Sagres 0,25cl",
-          "Borga",
+          borgaId,
           1.1,
           1.0,
           "https://www.n9v.pt/media/catalog/product/9/7/97fed08c9e16c6ff96434828b726d804447674cf_sagres_mini_pp7dowcqz4ocqjmc.png?quality=80&bg-color=255,255,255&fit=bounds&height=759&width=759&canvas=759:759&format=jpeg"
@@ -123,7 +126,7 @@ class PrePopulateDatabase(
 
       placeProductId = expensesRegisterDatabase.productDao.insert(
         "Chicharricos",
-        "Restau",
+        restauId,
         1.5,
         1.0,
         "https://www.reinobrilhante.pt/imagens/produtos/PastedGraphic_6.png"
@@ -137,7 +140,7 @@ class PrePopulateDatabase(
 
       placeProductId = expensesRegisterDatabase.productDao.insert(
         "Twix 50g",
-        "Restau",
+        restauId,
         1.5,
         1.0,
         "https://www.spar.pt/images/thumbs/0000488_choc-twix-single-50gr_550.jpeg"
@@ -152,7 +155,7 @@ class PrePopulateDatabase(
       placeProductId =
         expensesRegisterDatabase.productDao.insert(
           "Tosta Mista Pâo Caseiro",
-          "Restau",
+          restauId,
           3.0,
           1.0,
           "https://www.iguaria.com/wp-content/uploads/2016/03/Iguaria_Tosta-de-Bacon-Queijo-Fiambre.jpg"
@@ -174,7 +177,7 @@ class PrePopulateDatabase(
       placeProductId =
         expensesRegisterDatabase.productDao.insert(
           "Caneca 50cl",
-          "Borga",
+          borgaId,
           2.5,
           1.0,
           "https://www1.tescoma.com/images/zbozi/hires/309024.jpg?1"

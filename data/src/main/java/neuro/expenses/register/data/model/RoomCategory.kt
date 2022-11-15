@@ -1,11 +1,13 @@
 package neuro.expenses.register.data.model
 
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "category_table")
+@Entity(tableName = "category_table", indices = [Index(value = ["nameLowercase"], unique = true)])
 data class RoomCategory(
+  @PrimaryKey(autoGenerate = true)
+  val categoryId: Long,
   val name: String,
-  @PrimaryKey
-  val categoryId: String = name.lowercase()
+  val nameLowercase: String = name.lowercase()
 )

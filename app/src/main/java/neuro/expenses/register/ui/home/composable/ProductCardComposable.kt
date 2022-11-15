@@ -77,7 +77,7 @@ fun ProductCardComposable(productCardViewModel: IProductCardViewModel) {
           .clip(RoundedCornerShape(corner = CornerSize(8.dp))),
           productCardViewModel.iconUrl.value)
         Text(
-          text = productCardViewModel.category.value,
+          text = productCardViewModel.categoryName.value,
           modifier = Modifier
             .semantics { testTag = ProductCardTags.CATEGORY }
             .constrainAs(categoryC) {
@@ -111,13 +111,15 @@ fun ProductCardComposable(productCardViewModel: IProductCardViewModel) {
 @Composable
 fun PreviewDateTimeComposable() {
   val description = "Tosta Mista Pâo Caseiro"
-  val category = "Restau"
+  val categoryId = 1L
+  val categoryName = "Restau"
   val place = "Riviera"
   val price = "4.20 €"
   val amount = 1.0
   val iconUrl =
     "https://www.iguaria.com/wp-content/uploads/2016/03/Iguaria_Tosta-de-Bacon-Queijo-Fiambre.jpg"
-  val productCardModel = ProductCardModel(0, description, category, place, price, iconUrl, amount)
+  val productCardModel =
+    ProductCardModel(0, description, categoryId, categoryName, place, price, iconUrl, amount)
   val calendar = remember { mutableStateOf(Calendar.getInstance()) }
 
   ExpensesRegisterTheme {
