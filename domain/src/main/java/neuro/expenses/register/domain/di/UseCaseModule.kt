@@ -6,8 +6,6 @@ import neuro.expenses.register.domain.usecase.bill.ObserveLastBillUseCase
 import neuro.expenses.register.domain.usecase.bill.ObserveLastBillUseCaseImpl
 import neuro.expenses.register.domain.usecase.calendar.GetCalendarUseCase
 import neuro.expenses.register.domain.usecase.calendar.GetCalendarUseCaseImpl
-import neuro.expenses.register.domain.usecase.category.IsValidCategoryUseCase
-import neuro.expenses.register.domain.usecase.category.IsValidCategoryUseCaseImpl
 import neuro.expenses.register.domain.usecase.category.ObserveCategoriesUseCase
 import neuro.expenses.register.domain.usecase.category.ObserveCategoriesUseCaseImpl
 import neuro.expenses.register.domain.usecase.expense.RegisterExpenseUseCase
@@ -25,7 +23,6 @@ val useCaseModule = module {
   }
   single<ObserveLastBillUseCase> { ObserveLastBillUseCaseImpl(get(), get()) }
   single<GetLastBillUseCase> { GetLastBillUseCaseImpl(get()) }
-  single<IsValidCategoryUseCase> { IsValidCategoryUseCaseImpl(get()) }
   single<ObserveCategoriesUseCase> { ObserveCategoriesUseCaseImpl(get()) }
   single<GetCalendarUseCase> { GetCalendarUseCaseImpl() }
   single<GetNearestPlaceUseCase> { GetNearestPlaceUseCaseImpl(get(), get()) }

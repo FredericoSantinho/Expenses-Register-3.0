@@ -20,15 +20,15 @@ class RegisterExpenseImpl(
   override fun registerExpense(expense: Expense): Completable {
     return getLastBill.getLastBill().defaultIfEmpty(defaultBillDto)
       .flatMapCompletable { lastStoredBill ->
-        val place = expense.place
-        val calendar = expense.calendar
-        val lastBill = if (!lastStoredBill.isOpen || lastStoredBill.place != place) {
-          Bill(0, place, calendar)
-        } else {
-          lastStoredBill
-        }
-
         return@flatMapCompletable expenseValidator.validate(expense).andThen(Completable.defer {
+          val place = expense.place
+          val calendar = expense.calendar
+          val lastBill = if (!lastStoredBill.isOpen || lastStoredBill.place != place) {
+            Bill(0, place, calendar)
+          } else {
+            lastStoredBill
+          }
+
           return@defer billController.add(lastBill, expense).doOnSuccess { bill ->
             saveBill.save(bill)
           }.ignoreElement()
