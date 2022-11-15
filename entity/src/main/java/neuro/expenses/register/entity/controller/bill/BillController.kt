@@ -1,7 +1,10 @@
-package neuro.expenses.register.entity.controller
+package neuro.expenses.register.entity.controller.bill
 
 import io.reactivex.rxjava3.core.Single
 import neuro.expenses.register.entity.*
+import neuro.expenses.register.entity.controller.category.GetCategoryId
+import neuro.expenses.register.entity.controller.product.GenerateProductId
+import neuro.expenses.register.entity.controller.product.GetProductId
 
 class BillController(
   private val getProductId: GetProductId,

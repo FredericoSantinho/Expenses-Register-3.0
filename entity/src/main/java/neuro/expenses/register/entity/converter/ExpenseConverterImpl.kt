@@ -4,7 +4,7 @@ import io.reactivex.rxjava3.core.Single
 import neuro.expenses.register.entity.Category
 import neuro.expenses.register.entity.Expense
 import neuro.expenses.register.entity.Product
-import neuro.expenses.register.entity.controller.GetCategoryId
+import neuro.expenses.register.entity.controller.category.GetCategoryId
 
 class ExpenseConverterImpl(private val getCategoryId: GetCategoryId) : ExpenseConverter {
   override fun convertToProduct(expense: Expense, productId: Long): Single<Product> {

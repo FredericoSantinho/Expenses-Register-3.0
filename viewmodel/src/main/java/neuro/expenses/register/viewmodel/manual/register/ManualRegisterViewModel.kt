@@ -5,10 +5,10 @@ import io.reactivex.rxjava3.core.Single
 import neuro.expenses.register.domain.dto.ExpenseDto
 import neuro.expenses.register.domain.usecase.calendar.GetCalendarUseCase
 import neuro.expenses.register.domain.usecase.category.ObserveCategoriesUseCase
+import neuro.expenses.register.domain.usecase.expense.RegisterExpenseException
+import neuro.expenses.register.domain.usecase.expense.RegisterExpenseUseCase
 import neuro.expenses.register.domain.usecase.near.GetNearestPlaceUseCase
 import neuro.expenses.register.domain.usecase.place.SaveExpensePlaceUseCase
-import neuro.expenses.register.domain.usecase.register.RegisterExpenseUseCase
-import neuro.expenses.register.domain.usecase.register.validator.RegisterExpenseException
 import neuro.expenses.register.viewmodel.bill.BillViewModel
 import neuro.expenses.register.viewmodel.bill.FeedLastBillViewModel
 import neuro.expenses.register.viewmodel.common.BaseViewModel

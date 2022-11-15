@@ -5,8 +5,8 @@ import neuro.expenses.register.domain.dto.PlaceDto
 import neuro.expenses.register.domain.dto.ProductDto
 import neuro.expenses.register.domain.mapper.PlaceMapper
 import neuro.expenses.register.domain.mapper.ProductMapper
-import neuro.expenses.register.entity.controller.PlaceController
-import neuro.expenses.register.entity.controller.PlaceControllerImpl
+import neuro.expenses.register.entity.controller.place.PlaceController
+import neuro.expenses.register.entity.controller.place.PlaceControllerImpl
 
 class AddPlaceProductUseCaseImpl(
   private val getPlaceUseCase: GetPlaceUseCase,

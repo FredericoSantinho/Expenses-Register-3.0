@@ -4,9 +4,9 @@ import androidx.compose.runtime.mutableStateOf
 import neuro.expenses.register.domain.dto.PlaceDto
 import neuro.expenses.register.domain.dto.ProductDto
 import neuro.expenses.register.domain.usecase.calendar.GetCalendarUseCase
+import neuro.expenses.register.domain.usecase.expense.RegisterExpenseUseCase
 import neuro.expenses.register.domain.usecase.location.GetCurrentLocationUseCase
 import neuro.expenses.register.domain.usecase.place.ObserveNearestPlacesUseCase
-import neuro.expenses.register.domain.usecase.register.RegisterExpenseUseCase
 import neuro.expenses.register.viewmodel.bill.BillViewModel
 import neuro.expenses.register.viewmodel.bill.FeedLastBillViewModel
 import neuro.expenses.register.viewmodel.common.BaseViewModel

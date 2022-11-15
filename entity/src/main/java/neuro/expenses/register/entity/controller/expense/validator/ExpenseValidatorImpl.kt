@@ -1,11 +1,10 @@
-package neuro.expenses.register.domain.usecase.register.validator
+package neuro.expenses.register.entity.controller.expense.validator
 
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
-import neuro.expenses.register.domain.usecase.category.IsValidCategoryUseCase
 import neuro.expenses.register.entity.Expense
 
-class ExpenseValidatorImpl(val isValidCategoryUseCase: IsValidCategoryUseCase) : ExpenseValidator {
+class ExpenseValidatorImpl(val isValidCategory: IsValidCategory) : ExpenseValidator {
   override fun validate(expense: Expense): Completable {
     return Single.fromCallable { mutableListOf<RegisterExpenseError>() }
       .flatMapCompletable { errors ->
@@ -18,7 +17,7 @@ class ExpenseValidatorImpl(val isValidCategoryUseCase: IsValidCategoryUseCase) :
         if (expense.amount <= 0) {
           errors.add(RegisterExpenseError.INVALID_AMOUNT)
         }
-        isValidCategoryUseCase.isValidCategory(expense.category).doOnSuccess { isValidCategory ->
+        isValidCategory.isValidCategory(expense.category).doOnSuccess { isValidCategory ->
           if (!isValidCategory) {
             errors.add(RegisterExpenseError.INVALID_CATEGORY)
           }

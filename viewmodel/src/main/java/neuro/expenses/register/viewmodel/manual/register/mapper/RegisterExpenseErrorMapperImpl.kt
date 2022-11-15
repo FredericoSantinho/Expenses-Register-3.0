@@ -1,7 +1,6 @@
 package neuro.expenses.register.viewmodel.manual.register.mapper
 
-import neuro.expenses.register.domain.usecase.register.validator.RegisterExpenseError
-import neuro.expenses.register.domain.usecase.register.validator.RegisterExpenseError.*
+import neuro.expenses.register.domain.usecase.expense.RegisterExpenseError
 import neuro.expenses.register.viewmodel.manual.register.Message
 import neuro.expenses.register.viewmodel.manual.register.UiStateError
 
@@ -11,12 +10,13 @@ class RegisterExpenseErrorMapperImpl : RegisterExpenseErrorMapper {
     errors.forEach {
       val error: UiStateError
       when (it) {
-        EMPTY_DESCRIPTION -> {
+        RegisterExpenseError.EMPTY_DESCRIPTION -> {
           error = UiStateError.ShowDescriptionError(Message.EMPTY_DESCRIPTION)
         }
-        INVALID_CATEGORY -> error = UiStateError.ShowCategoryError
-        EMPTY_PLACE -> error = UiStateError.ShowPlaceError(Message.EMPTY_PLACE)
-        INVALID_AMOUNT -> error = UiStateError.ShowAmountError(Message.INVALID_AMOUNT)
+        RegisterExpenseError.INVALID_CATEGORY -> error = UiStateError.ShowCategoryError
+        RegisterExpenseError.EMPTY_PLACE -> error = UiStateError.ShowPlaceError(Message.EMPTY_PLACE)
+        RegisterExpenseError.INVALID_AMOUNT -> error =
+          UiStateError.ShowAmountError(Message.INVALID_AMOUNT)
       }
       list.add(error)
     }

@@ -1,4 +1,4 @@
-package neuro.expenses.register.domain.usecase.register.validator
+package neuro.expenses.register.entity.controller.expense.validator
 
 enum class RegisterExpenseError {
   EMPTY_DESCRIPTION,

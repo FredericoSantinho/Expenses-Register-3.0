@@ -1,4 +1,4 @@
-package neuro.expenses.register.entity.controller
+package neuro.expenses.register.entity.controller.place
 
 import neuro.expenses.register.entity.Place
 import neuro.expenses.register.entity.Product

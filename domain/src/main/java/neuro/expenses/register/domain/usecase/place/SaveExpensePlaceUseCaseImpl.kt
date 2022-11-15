@@ -6,8 +6,8 @@ import neuro.expenses.register.domain.dto.PlaceDto
 import neuro.expenses.register.domain.mapper.ExpenseMapper
 import neuro.expenses.register.domain.mapper.PlaceMapper
 import neuro.expenses.register.entity.Product
-import neuro.expenses.register.entity.controller.PlaceController
-import neuro.expenses.register.entity.controller.PlaceControllerImpl
+import neuro.expenses.register.entity.controller.place.PlaceController
+import neuro.expenses.register.entity.controller.place.PlaceControllerImpl
 import neuro.expenses.register.entity.converter.ExpenseConverter
 
 class SaveExpensePlaceUseCaseImpl(

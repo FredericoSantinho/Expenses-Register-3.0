@@ -1,4 +1,4 @@
-package neuro.expenses.register.entity.controller
+package neuro.expenses.register.entity.controller.category
 
 import io.reactivex.rxjava3.core.Single
 

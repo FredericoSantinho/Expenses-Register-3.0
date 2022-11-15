@@ -6,6 +6,7 @@ import org.koin.dsl.module
 val mapperModule = module {
   single<CategoryMapper> { CategoryMapperImpl() }
   single<ExpenseMapper> { ExpenseMapperImpl() }
+  single<RegisterExpenseErrorMapper> { RegisterExpenseErrorMapperImpl() }
   single<ProductMapper> { ProductMapperImpl(get()) }
   single<BillMapper> { BillMapperImpl(get()) }
   single<BillItemMapper> { BillItemMapperImpl(get()) }
