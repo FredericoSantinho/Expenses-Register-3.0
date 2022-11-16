@@ -49,7 +49,7 @@ class ManualRegisterViewModel(
   val uiEvent = _uiEvent.asLiveData()
 
   init {
-    disposable.add(feedLastBillViewModel.subscribe())
+    feedLastBillViewModel.observe().baseSubscribe { }
   }
 
   fun onNearestPlaceButton() {

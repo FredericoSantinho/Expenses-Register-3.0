@@ -71,7 +71,7 @@ class HomeViewModel(
         _uiState.value = UiState.Ready
         _uiEvent.value = UiEvent.MoveCamera(latLngModel, zoom)
       }
-    disposable.add(feedLastBillViewModel.subscribe())
+    feedLastBillViewModel.observe().baseSubscribe { }
   }
 
   override fun onSelectedPlace(index: Int) {
