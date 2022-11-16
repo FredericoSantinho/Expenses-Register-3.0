@@ -6,4 +6,5 @@ import neuro.expenses.register.entity.Product
 
 interface GetOrCreateProduct {
   fun getOrCreateProduct(expense: Expense): Single<Product>
+  fun getOrCreateProduct(product: Product, place: String): Single<Product>
 }

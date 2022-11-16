@@ -39,12 +39,10 @@ interface ProductDao {
 
   @Query("select * from place_product_table where productId=:productId and categoryId=:categoryId and price=:price")
   fun getPlaceProductWithProductAndCategory(
-    productId: Long,
-    categoryId: Long,
-    price: Double
+    productId: Long, categoryId: Long, price: Double
   ): Maybe<RoomPlaceProductWithProductAndCategory>
 
-  @Insert(onConflict = OnConflictStrategy.IGNORE)
+  @Insert(onConflict = OnConflictStrategy.REPLACE)
   fun insert(roomPlaceProduct: RoomPlaceProduct): Single<Long>
 
   /**
@@ -69,49 +67,43 @@ interface ProductDao {
   ): Long {
     return getProduct(description.lowercase()).defaultIfEmpty(
       RoomProduct(
-        0,
-        description,
-        iconUrl,
-        variableAmount
+        0, description, iconUrl, variableAmount
       )
-    )
-      .flatMap { roomProduct ->
-        insert(roomProduct).flatMap { productId ->
-          if (productId == -1L) {
-            getProduct(description.lowercase()).map { it.productId }.toSingle()
-          } else {
-            Single.just(productId)
-          }
-        }.flatMap { productId ->
-          getPlaceProduct(productId, categoryId, price).defaultIfEmpty(
-            RoomPlaceProduct(
-              placeProductId,
-              productId,
-              categoryId,
-              price,
-              1,
-              // TODO: fazer
-            )
-          ).flatMap { roomPlaceProduct ->
-            insert(roomPlaceProduct)
-          }.flatMap {
-            if (it == -1L) getPlaceProduct(
-              roomProduct.productId,
-              categoryId,
-              price
-            ).map { it.placeProductId }.toSingle() else Single.just(it)
-          }
-            .flatMap { placeProductId ->
-              insert(PlaceProductCategoryCrossRef(placeProductId, categoryId))
-                .flatMap {
-                  insert(PlaceProductProductCrossRef(placeProductId, productId))
-                }
-                .map { placeProductId }
-            }
+    ).flatMap { roomProduct ->
+      insert(roomProduct).flatMap { productId ->
+        if (productId == -1L) {
+          getProduct(description.lowercase()).map { it.productId }.toSingle()
+        } else {
+          Single.just(productId)
         }
-      }.blockingGet()
+      }.flatMap { productId ->
+        getPlaceProduct(productId, categoryId, price).defaultIfEmpty(
+          RoomPlaceProduct(
+            placeProductId,
+            productId,
+            categoryId,
+            price,
+            1,
+            // TODO: fazer
+          )
+        ).flatMap { roomPlaceProduct ->
+          insert(roomPlaceProduct)
+        }.flatMap {
+          if (it == -1L) getPlaceProduct(
+            roomProduct.productId, categoryId, price
+          ).map { it.placeProductId }.toSingle() else Single.just(it)
+        }.flatMap { placeProductId ->
+          insert(PlaceProductCategoryCrossRef(placeProductId, categoryId)).flatMap {
+            insert(PlaceProductProductCrossRef(placeProductId, productId))
+          }.map { placeProductId }
+        }
+      }
+    }.blockingGet()
   }
 
+  /**
+   *
+   */
   @Transaction
   fun insert(
     description: String,
@@ -124,46 +116,27 @@ interface ProductDao {
   ): Long {
     return getProduct(description.lowercase()).defaultIfEmpty(
       RoomProduct(
-        0,
-        description,
-        iconUrl,
-        variableAmount
+        0, description, iconUrl, variableAmount
       )
-    )
-      .flatMap { roomProduct ->
-        insert(roomProduct).flatMap { productId ->
-          if (productId == -1L) {
-            getProduct(description.lowercase()).map { it.productId }.toSingle()
-          } else {
-            Single.just(productId)
-          }
-        }.flatMap { productId ->
-          getPlaceProduct(productId, categoryId, price).defaultIfEmpty(
-            RoomPlaceProduct(
-              placeProductId,
-              productId,
-              categoryId,
-              price,
-              placeId
-            )
-          ).flatMap { roomPlaceProduct ->
-            insert(roomPlaceProduct)
-          }.flatMap {
-            if (it == -1L) getPlaceProduct(
-              roomProduct.productId,
-              categoryId,
-              price
-            ).map { it.placeProductId }.toSingle() else Single.just(it)
-          }
-            .flatMap { placeProductId ->
-              insert(PlaceProductCategoryCrossRef(placeProductId, categoryId))
-                .flatMap {
-                  insert(PlaceProductProductCrossRef(placeProductId, productId))
-                }
-                .map { placeProductId }
-            }
+    ).flatMap { roomProduct ->
+      insert(roomProduct).flatMap { productId ->
+        if (productId == -1L) {
+          getProduct(description.lowercase()).map { it.productId }.toSingle()
+        } else {
+          Single.just(productId)
         }
-      }.blockingGet()
+      }.flatMap { productId ->
+        insert(
+          RoomPlaceProduct(
+            placeProductId, productId, categoryId, price, placeId
+          )
+        ).flatMap { placeProductId ->
+          insert(PlaceProductCategoryCrossRef(placeProductId, categoryId)).flatMap {
+            insert(PlaceProductProductCrossRef(placeProductId, productId))
+          }.map { placeProductId }
+        }
+      }
+    }.blockingGet()
   }
 
   @Delete()

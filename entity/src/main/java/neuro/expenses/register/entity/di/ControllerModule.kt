@@ -26,6 +26,6 @@ val controllerModule = module {
   single<GetBillIconUrl> { GetBillIconUrlImpl() }
   single<CalculateBillTotal> { CalculateBillTotalImpl() }
   single<GetOrCreateProduct> { GetOrCreateProductImpl(get(), get(), get(), get(), get()) }
-  single<PlaceController> { PlaceControllerImpl() }
+  single<PlaceController> { PlaceControllerImpl(get()) }
   single<GetOrCreatePlace> { GetOrCreatePlaceImpl(get(), get(), get()) }
 }

@@ -12,4 +12,8 @@ class GetProductImpl(
   override fun getProduct(description: String, category: String, price: Double): Maybe<Product> {
     return getProductRepository.getProduct(description, category, price).map { it.toEntity() }
   }
+
+  override fun getProduct(productId: Long): Maybe<Product> {
+    return getProductRepository.getProduct(productId).map { it.toEntity() }
+  }
 }

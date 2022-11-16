@@ -35,4 +35,24 @@ class GetOrCreateProductImpl(
     }
     )
   }
+
+  override fun getOrCreateProduct(product: Product, place: String): Single<Product> {
+    return getProduct.getProduct(product.id)
+      .switchIfEmpty(generateProductId.newId().flatMap { productId ->
+        getCategory.getCategory(product.category.name.lowercase()).toSingle().flatMap { category ->
+          getPlace.getPlace(place.lowercase()).toSingle().flatMap { place ->
+            val newProduct = Product(
+              productId,
+              product.description,
+              category,
+              product.price,
+              place.id,
+              product.variableAmount
+            )
+            saveProduct.saveProduct(newProduct).andThen(Single.just(newProduct))
+          }
+        }
+      }
+      )
+  }
 }
