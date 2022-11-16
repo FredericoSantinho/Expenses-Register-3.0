@@ -9,6 +9,9 @@ import neuro.expenses.register.data.model.bill.*
 
 @Dao
 interface BillDao {
+  @Query("SELECT MAX(billId) FROM bill_table")
+  fun getLastBillId(): Maybe<Long>
+
   @Transaction
   @Query("select * from bill_table order by billId desc limit 1")
   fun observeLastBill(): Observable<RoomBillWithBillItemsAndPlace>
@@ -20,6 +23,9 @@ interface BillDao {
   @Transaction
   @Query("select * from bill_table order by billId asc")
   fun observeBills(): Observable<List<RoomBillWithBillItemsAndPlace>>
+
+  @Query("SELECT MAX(billItemId) FROM bill_item_table")
+  fun getLastBillItemId(): Maybe<Long>
 
   @Transaction
   fun insert(roomBill: RoomBill, roomBillItems: List<RoomBillItem>) {

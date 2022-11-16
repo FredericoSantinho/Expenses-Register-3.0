@@ -18,6 +18,8 @@ class BillController(
   private val saveBill: SaveBill,
   private val getOrCreateProduct: GetOrCreateProduct,
   private val getOrCreatePlace: GetOrCreatePlace,
+  private val generateBillId: GenerateBillId,
+  private val generateBillItemId: GenerateBillItemId
 ) {
   fun add(expense: Expense): Single<Bill> {
     return getLastBill(expense).flatMap { bill ->
@@ -39,16 +41,19 @@ class BillController(
             Bill(billId, bill.calendar, bill.place, total, billItems, iconUrl)
           }
         } else {
-          getOrCreateProduct.getOrCreateProduct(expense).map { product ->
-            val newBillItem = BillItem(
-              0, product,
-              expense.amount,
-              expense.price * expense.amount
-            )
-            val billItems = buildList(bill, newBillItem)
-            val total = calculateBillTotal.getTotal(billItems)
-            val iconUrl = getBillIconUrl.getIconUrl(billItems)
-            Bill(0, bill.calendar, bill.place, total, billItems, iconUrl)
+          getOrCreateProduct.getOrCreateProduct(expense).flatMap { product ->
+            generateBillItemId.newId().map { billItemId ->
+              val newBillItem = BillItem(
+                billItemId, product,
+                expense.amount,
+                expense.price * expense.amount
+              )
+              buildList(bill, newBillItem)
+            }.map { billItems ->
+              val total = calculateBillTotal.getTotal(billItems)
+              val iconUrl = getBillIconUrl.getIconUrl(billItems)
+              Bill(bill.id, bill.calendar, bill.place, total, billItems, iconUrl)
+            }
           }
         }
       }
@@ -96,12 +101,12 @@ class BillController(
 
   private fun getLastBill(expense: Expense): Single<Bill> {
     return getOrCreatePlace.getOrCreatePlace(expense.place).flatMap { place ->
-      getLastBill.getLastBill().defaultIfEmpty(defaultBillDto).map { lastStoredBill ->
+      getLastBill.getLastBill().defaultIfEmpty(defaultBillDto).flatMap { lastStoredBill ->
         val calendar = expense.calendar
         if (!lastStoredBill.isOpen || lastStoredBill.place.id != place.id) {
           newBill(calendar, place)
         } else {
-          lastStoredBill
+          Single.just(lastStoredBill)
         }
       }
     }
@@ -110,5 +115,7 @@ class BillController(
   private fun newBill(
     calendar: Calendar,
     place: Place
-  ) = Bill(0, calendar, place)
+  ): Single<Bill> {
+    return generateBillId.newId().map { billId -> Bill(billId, calendar, place) }
+  }
 }

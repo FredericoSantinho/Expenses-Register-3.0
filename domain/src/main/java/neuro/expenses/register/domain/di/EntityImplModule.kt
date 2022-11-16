@@ -1,8 +1,9 @@
 package neuro.expenses.register.domain.di
 
 import neuro.expenses.register.domain.entity.*
-import neuro.expenses.register.entity.controller.bill.GetLastBill
-import neuro.expenses.register.entity.controller.bill.SaveBill
+import neuro.expenses.register.entity.controller.bill.*
+import neuro.expenses.register.entity.controller.bill.GenerateBillIdImpl
+import neuro.expenses.register.entity.controller.bill.GenerateBillItemIdImpl
 import neuro.expenses.register.entity.controller.category.GetCategory
 import neuro.expenses.register.entity.controller.category.GetCategoryId
 import neuro.expenses.register.entity.controller.place.GeneratePlaceId
@@ -20,6 +21,8 @@ val entityImplModule = module {
   single<GetCategory> { GetCategoryImpl(get(), get()) }
   single<GenerateProductId> { GenerateProductIdImpl(get()) }
   single<GeneratePlaceId> { GeneratePlaceIdImpl(get()) }
+  single<GenerateBillId> { GenerateBillIdImpl() }
+  single<GenerateBillItemId> { GenerateBillItemIdImpl() }
   single<GetLastBill> { GetLastBillImpl(get(), get()) }
   single<SaveBill> { SaveBillImpl(get(), get()) }
   single<GetPlace> { GetPlaceImpl(get(), get()) }
