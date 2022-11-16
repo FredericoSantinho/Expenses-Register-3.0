@@ -26,8 +26,8 @@ class GetOrCreateProductImpl(
             expense.description,
             category,
             expense.price,
-            expense.amount,
-            place.id
+            place.id,
+            expense.amount != 1.0
           )
           saveProduct.saveProduct(product).andThen(Single.just(product))
         }

@@ -22,6 +22,7 @@ class EditPlaceProductViewModel(
   val categoryModel = mutableStateOf(CategoryModel(-1L, ""))
   val price = mutableStateOf("")
   val iconUrl = mutableStateOf("")
+  val variableAmount = mutableStateOf(false)
 
   val categories = observeCategoriesUseCase.observeCategories()
   val categoriesNames =
@@ -53,9 +54,9 @@ class EditPlaceProductViewModel(
         description.value,
         categoryDto,
         price.value.toDouble(),
-        0.0,
         iconUrl.value,
-        placeId.value
+        placeId.value,
+        variableAmount.value
       )
     }
   }

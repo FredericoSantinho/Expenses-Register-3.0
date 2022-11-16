@@ -55,8 +55,8 @@ class PrePopulateDatabase(
           "Sagres Média 0,33cl",
           borgaId,
           1.1,
-          1.0,
-          "https://thexicos-wp.ams3.digitaloceanspaces.com/uploads/sites/5/2022/07/sagr.png"
+          "https://thexicos-wp.ams3.digitaloceanspaces.com/uploads/sites/5/2022/07/sagr.png",
+          false
         )
       expensesRegisterDatabase.placeDao.insert(
         PlacePlaceProductCrossRef(
@@ -71,8 +71,8 @@ class PrePopulateDatabase(
           "Sagres Média 0,33cl",
           borgaId,
           1.3,
-          1.0,
-          "https://thexicos-wp.ams3.digitaloceanspaces.com/uploads/sites/5/2022/07/sagr.png"
+          "https://thexicos-wp.ams3.digitaloceanspaces.com/uploads/sites/5/2022/07/sagr.png",
+          false
         )
       expensesRegisterDatabase.placeDao.insert(
         PlacePlaceProductCrossRef(
@@ -87,8 +87,8 @@ class PrePopulateDatabase(
           "Super Bock Média 0,33cl",
           borgaId,
           1.3,
-          1.0,
-          "https://media.recheio.pt/catalogo/media/catalog/product/cache/1/image/900x900/9df78eab33525d08d6e5fb8d27136e95/6/0/60710_1.jpg"
+          "https://media.recheio.pt/catalogo/media/catalog/product/cache/1/image/900x900/9df78eab33525d08d6e5fb8d27136e95/6/0/60710_1.jpg",
+          false
         )
       expensesRegisterDatabase.placeDao.insert(
         PlacePlaceProductCrossRef(
@@ -103,8 +103,8 @@ class PrePopulateDatabase(
           "Mini Cristal 0,20cl",
           borgaId,
           1.1,
-          1.0,
-          "https://www.apolonia.com/fotos/produtos/706574_01_14.05.18_g.jpg"
+          "https://www.apolonia.com/fotos/produtos/706574_01_14.05.18_g.jpg",
+          false
         )
       expensesRegisterDatabase.placeDao.insert(
         PlacePlaceProductCrossRef(
@@ -119,8 +119,8 @@ class PrePopulateDatabase(
           "Mini Sagres 0,25cl",
           borgaId,
           1.1,
-          1.0,
-          "https://www.n9v.pt/media/catalog/product/9/7/97fed08c9e16c6ff96434828b726d804447674cf_sagres_mini_pp7dowcqz4ocqjmc.png?quality=80&bg-color=255,255,255&fit=bounds&height=759&width=759&canvas=759:759&format=jpeg"
+          "https://www.n9v.pt/media/catalog/product/9/7/97fed08c9e16c6ff96434828b726d804447674cf_sagres_mini_pp7dowcqz4ocqjmc.png?quality=80&bg-color=255,255,255&fit=bounds&height=759&width=759&canvas=759:759&format=jpeg",
+          false
         )
       expensesRegisterDatabase.placeDao.insert(
         PlacePlaceProductCrossRef(
@@ -134,8 +134,8 @@ class PrePopulateDatabase(
         "Chicharricos",
         restauId,
         1.5,
-        1.0,
-        "https://www.reinobrilhante.pt/imagens/produtos/PastedGraphic_6.png"
+        "https://www.reinobrilhante.pt/imagens/produtos/PastedGraphic_6.png",
+        false
       )
       expensesRegisterDatabase.placeDao.insert(
         PlacePlaceProductCrossRef(
@@ -149,8 +149,8 @@ class PrePopulateDatabase(
         "Twix 50g",
         restauId,
         1.5,
-        1.0,
-        "https://www.spar.pt/images/thumbs/0000488_choc-twix-single-50gr_550.jpeg"
+        "https://www.spar.pt/images/thumbs/0000488_choc-twix-single-50gr_550.jpeg",
+        false
       )
       expensesRegisterDatabase.placeDao.insert(
         PlacePlaceProductCrossRef(
@@ -165,8 +165,8 @@ class PrePopulateDatabase(
           "Tosta Mista Pâo Caseiro",
           restauId,
           3.0,
-          1.0,
-          "https://www.iguaria.com/wp-content/uploads/2016/03/Iguaria_Tosta-de-Bacon-Queijo-Fiambre.jpg"
+          "https://www.iguaria.com/wp-content/uploads/2016/03/Iguaria_Tosta-de-Bacon-Queijo-Fiambre.jpg",
+          false
         )
       expensesRegisterDatabase.placeDao.insert(
         PlacePlaceProductCrossRef(
@@ -188,8 +188,8 @@ class PrePopulateDatabase(
           "Caneca 50cl",
           borgaId,
           2.5,
-          1.0,
-          "https://www1.tescoma.com/images/zbozi/hires/309024.jpg?1"
+          "https://www1.tescoma.com/images/zbozi/hires/309024.jpg?1",
+          false
         )
       expensesRegisterDatabase.placeDao.insert(
         PlacePlaceProductCrossRef(

@@ -5,7 +5,7 @@ data class Product(
   val description: String,
   val category: Category,
   val price: Double,
-  val defaultAmount: Double,
   val placeId: Long,
+  val variableAmount: Boolean,
   val iconUrl: String = ""
 )

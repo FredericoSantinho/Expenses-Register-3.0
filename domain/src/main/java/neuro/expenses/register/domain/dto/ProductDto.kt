@@ -5,7 +5,7 @@ data class ProductDto(
   val description: String,
   val category: CategoryDto,
   val price: Double,
-  val defaultAmount: Double,
-  val iconUrl: String = "",
-  val placeId: Long
+  val iconUrl: String,
+  val placeId: Long,
+  val variableAmount: Boolean
 )

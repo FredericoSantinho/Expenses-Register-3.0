@@ -41,7 +41,7 @@ fun EditProductComposable(
   val categoryIsError = remember { mutableStateOf(false) }
 
   Column(
-    modifier = Modifier
+    modifier = modifier
       .background(Color.White)
       .padding(8.dp)
       .verticalScroll(rememberScrollState()),

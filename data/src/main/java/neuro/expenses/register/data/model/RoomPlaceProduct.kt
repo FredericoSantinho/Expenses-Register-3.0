@@ -35,6 +35,5 @@ data class RoomPlaceProduct(
   val productId: Long,
   val categoryId: Long,
   val price: Double,
-  val defaultAmount: Double,
   val placeId: Long
 )

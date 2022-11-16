@@ -18,7 +18,7 @@ class SaveProductRepositoryImpl(
       productDto.category.id,
       productDto.price,
       productDto.placeId,
-      productDto.defaultAmount
+      productDto.variableAmount
     )
     placeDao.insert(PlacePlaceProductCrossRef(productDto.placeId, productDto.id)).blockingGet()
   }

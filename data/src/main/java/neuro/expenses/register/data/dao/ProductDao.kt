@@ -52,9 +52,6 @@ interface ProductDao {
    *
    * If any of the referred entities already exists in the database, it will not be rewritten.
    *
-   * @param defaultAmount default amount to be used when creating the RoomPlaceProduct.
-   * @param iconUrl iconUrl to be used when creating the RoomProduct.
-   *
    * **Both these parameters will be ignored in case the respective entities already exist in the
    * database. As such this shall not be used to update those attributes.**
    *
@@ -67,10 +64,17 @@ interface ProductDao {
     description: String,
     categoryId: Long,
     price: Double,
-    defaultAmount: Double,
-    iconUrl: String = ""
+    iconUrl: String = "",
+    variableAmount: Boolean
   ): Long {
-    return getProduct(description.lowercase()).defaultIfEmpty(RoomProduct(0, description, iconUrl))
+    return getProduct(description.lowercase()).defaultIfEmpty(
+      RoomProduct(
+        0,
+        description,
+        iconUrl,
+        variableAmount
+      )
+    )
       .flatMap { roomProduct ->
         insert(roomProduct).flatMap { productId ->
           if (productId == -1L) {
@@ -85,9 +89,8 @@ interface ProductDao {
               productId,
               categoryId,
               price,
-              defaultAmount,
+              1,
               // TODO: fazer
-              1
             )
           ).flatMap { roomPlaceProduct ->
             insert(roomPlaceProduct)
@@ -117,9 +120,16 @@ interface ProductDao {
     categoryId: Long,
     price: Double,
     placeId: Long,
-    defaultAmount: Double
+    variableAmount: Boolean
   ): Long {
-    return getProduct(description.lowercase()).defaultIfEmpty(RoomProduct(0, description, iconUrl))
+    return getProduct(description.lowercase()).defaultIfEmpty(
+      RoomProduct(
+        0,
+        description,
+        iconUrl,
+        variableAmount
+      )
+    )
       .flatMap { roomProduct ->
         insert(roomProduct).flatMap { productId ->
           if (productId == -1L) {
@@ -134,7 +144,6 @@ interface ProductDao {
               productId,
               categoryId,
               price,
-              defaultAmount,
               placeId
             )
           ).flatMap { roomPlaceProduct ->

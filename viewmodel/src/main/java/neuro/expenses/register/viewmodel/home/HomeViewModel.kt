@@ -111,6 +111,7 @@ class HomeViewModel(
     editPlaceProductViewModel.categoryModel.value = productDto.category.toViewmodel()
     editPlaceProductViewModel.price.value = productDto.price.toString()
     editPlaceProductViewModel.iconUrl.value = productDto.iconUrl
+    editPlaceProductViewModel.variableAmount.value = productDto.variableAmount
   }
 
   private fun getProduct(productId: Long): ProductDto {

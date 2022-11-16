@@ -12,6 +12,7 @@ data class RoomProduct(
   @PrimaryKey(autoGenerate = true)
   var productId: Long,
   val description: String,
-  val iconUrl: String = "",
+  val iconUrl: String,
+  val variableAmount: Boolean,
   val descriptionLowercase: String = description.lowercase()
 )
