@@ -61,6 +61,7 @@ interface ProductDao {
    * @return placeProductId.
    */
   @Transaction
+  @Deprecated("only to keep legacy database pre populate")
   fun insert(
     placeProductId: Long,
     description: String,

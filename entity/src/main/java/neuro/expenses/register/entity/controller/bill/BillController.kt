@@ -1,25 +1,22 @@
 package neuro.expenses.register.entity.controller.bill
 
 import io.reactivex.rxjava3.core.Single
-import neuro.expenses.register.entity.*
-import neuro.expenses.register.entity.controller.category.GetCategoryId
+import neuro.expenses.register.entity.Bill
+import neuro.expenses.register.entity.BillItem
+import neuro.expenses.register.entity.Expense
+import neuro.expenses.register.entity.Place
 import neuro.expenses.register.entity.controller.place.GetOrCreatePlace
-import neuro.expenses.register.entity.controller.product.GenerateProductId
-import neuro.expenses.register.entity.controller.product.GetProduct
-import neuro.expenses.register.entity.controller.product.SaveProduct
+import neuro.expenses.register.entity.controller.product.GetOrCreateProduct
 import java.util.*
 
 private val defaultBillDto = Bill(0, Calendar.getInstance(), isOpen = false)
 
 class BillController(
-  private val getProduct: GetProduct,
-  private val getCategoryId: GetCategoryId,
   private val calculateBillTotal: CalculateBillTotal,
-  private val generateProductId: GenerateProductId,
-  private val saveProduct: SaveProduct,
   private val getBillIconUrl: GetBillIconUrl,
   private val getLastBill: GetLastBill,
   private val saveBill: SaveBill,
+  private val getOrCreateProduct: GetOrCreateProduct,
   private val getOrCreatePlace: GetOrCreatePlace,
 ) {
   fun add(expense: Expense): Single<Bill> {
@@ -42,25 +39,7 @@ class BillController(
             Bill(billId, bill.calendar, bill.place, total, billItems, iconUrl)
           }
         } else {
-          getProduct.getProduct(
-            expense.description.lowercase(),
-            expense.category.lowercase(),
-            expense.price
-          ).switchIfEmpty(generateProductId.newId().flatMap { productId ->
-            println("loosing ids $productId")
-            getCategoryId.getCategoryId(expense.category.lowercase()).flatMap { categoryId ->
-              val product = Product(
-                productId,
-                expense.description,
-                Category(categoryId, expense.category),
-                expense.price,
-                expense.amount,
-                bill.place.id
-              )
-              saveProduct.saveProduct(product).andThen(Single.just(product))
-            }
-          }
-          ).map { product ->
+          getOrCreateProduct.getOrCreateProduct(expense).map { product ->
             val newBillItem = BillItem(
               0, product,
               expense.amount,
