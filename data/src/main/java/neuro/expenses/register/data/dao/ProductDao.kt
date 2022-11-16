@@ -37,9 +37,9 @@ interface ProductDao {
   @Query("select * from place_product_table where productId=:productId and categoryId=:categoryId and price=:price")
   fun getPlaceProduct(productId: Long, categoryId: Long, price: Double): Maybe<RoomPlaceProduct>
 
-  @Query("select * from place_product_table where productId=:productId and categoryId=:categoryId and price=:price")
+  @Query("select * from place_product_table where productId=:productId and categoryId=:categoryId and price=:price and placeId=:placeId")
   fun getPlaceProductWithProductAndCategory(
-    productId: Long, categoryId: Long, price: Double
+    productId: Long, categoryId: Long, price: Double, placeId: Long
   ): Maybe<RoomPlaceProductWithProductAndCategory>
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -63,7 +63,8 @@ interface ProductDao {
     categoryId: Long,
     price: Double,
     iconUrl: String = "",
-    variableAmount: Boolean
+    variableAmount: Boolean,
+    placeId: Long
   ): Long {
     return getProduct(description.lowercase()).defaultIfEmpty(
       RoomProduct(
@@ -83,8 +84,7 @@ interface ProductDao {
             productId,
             categoryId,
             price,
-            1,
-            // TODO: fazer
+            placeId
           )
         ).flatMap { roomPlaceProduct ->
           insert(roomPlaceProduct)

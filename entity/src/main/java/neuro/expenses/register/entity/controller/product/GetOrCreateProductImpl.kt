@@ -20,25 +20,26 @@ class GetOrCreateProductImpl(
     variableAmount: Boolean,
     place: String
   ): Single<Product> {
-    return getProduct.getProduct(
-      description.lowercase(),
-      category.lowercase(),
-      price
-    ).switchIfEmpty(generateProductId.newId().flatMap { productId ->
-      getCategory.getCategory(category.lowercase()).toSingle().flatMap { category ->
-        getPlace.getPlace(place.lowercase()).toSingle().flatMap { place ->
+    return getPlace.getPlace(place.lowercase()).toSingle().flatMap { loadedPlace ->
+      getCategory.getCategory(category.lowercase()).toSingle().flatMap { loadedCategory ->
+        getProduct.getProduct(
+          description.lowercase(),
+          loadedCategory.name,
+          price,
+          loadedPlace
+        ).switchIfEmpty(generateProductId.newId().flatMap { productId ->
           val product = Product(
             productId,
             description,
-            category,
+            loadedCategory,
             price,
-            place.id,
+            loadedPlace.id,
             variableAmount
           )
           saveProduct.saveProduct(product).andThen(Single.just(product))
         }
+        )
       }
     }
-    )
   }
 }

@@ -56,7 +56,8 @@ class PrePopulateDatabase(
           borgaId,
           1.1,
           "https://thexicos-wp.ams3.digitaloceanspaces.com/uploads/sites/5/2022/07/sagr.png",
-          false
+          false,
+          vizinhaId
         )
       expensesRegisterDatabase.placeDao.insert(
         PlacePlaceProductCrossRef(
@@ -72,7 +73,8 @@ class PrePopulateDatabase(
           borgaId,
           1.3,
           "https://thexicos-wp.ams3.digitaloceanspaces.com/uploads/sites/5/2022/07/sagr.png",
-          false
+          false,
+          bitoqueId
         )
       expensesRegisterDatabase.placeDao.insert(
         PlacePlaceProductCrossRef(
@@ -88,7 +90,8 @@ class PrePopulateDatabase(
           borgaId,
           1.3,
           "https://media.recheio.pt/catalogo/media/catalog/product/cache/1/image/900x900/9df78eab33525d08d6e5fb8d27136e95/6/0/60710_1.jpg",
-          false
+          false,
+          bitoqueId
         )
       expensesRegisterDatabase.placeDao.insert(
         PlacePlaceProductCrossRef(
@@ -104,7 +107,8 @@ class PrePopulateDatabase(
           borgaId,
           1.1,
           "https://www.apolonia.com/fotos/produtos/706574_01_14.05.18_g.jpg",
-          false
+          false,
+          bitoqueId
         )
       expensesRegisterDatabase.placeDao.insert(
         PlacePlaceProductCrossRef(
@@ -120,7 +124,8 @@ class PrePopulateDatabase(
           borgaId,
           1.1,
           "https://www.n9v.pt/media/catalog/product/9/7/97fed08c9e16c6ff96434828b726d804447674cf_sagres_mini_pp7dowcqz4ocqjmc.png?quality=80&bg-color=255,255,255&fit=bounds&height=759&width=759&canvas=759:759&format=jpeg",
-          false
+          false,
+          bitoqueId
         )
       expensesRegisterDatabase.placeDao.insert(
         PlacePlaceProductCrossRef(
@@ -135,7 +140,8 @@ class PrePopulateDatabase(
         restauId,
         1.5,
         "https://www.reinobrilhante.pt/imagens/produtos/PastedGraphic_6.png",
-        false
+        false,
+        bitoqueId
       )
       expensesRegisterDatabase.placeDao.insert(
         PlacePlaceProductCrossRef(
@@ -150,7 +156,8 @@ class PrePopulateDatabase(
         restauId,
         1.5,
         "https://www.spar.pt/images/thumbs/0000488_choc-twix-single-50gr_550.jpeg",
-        false
+        false,
+        bitoqueId
       )
       expensesRegisterDatabase.placeDao.insert(
         PlacePlaceProductCrossRef(
@@ -166,7 +173,8 @@ class PrePopulateDatabase(
           restauId,
           3.0,
           "https://www.iguaria.com/wp-content/uploads/2016/03/Iguaria_Tosta-de-Bacon-Queijo-Fiambre.jpg",
-          false
+          false,
+          bitoqueId
         )
       expensesRegisterDatabase.placeDao.insert(
         PlacePlaceProductCrossRef(
@@ -189,7 +197,8 @@ class PrePopulateDatabase(
           borgaId,
           2.5,
           "https://www1.tescoma.com/images/zbozi/hires/309024.jpg?1",
-          false
+          false,
+          longoId
         )
       expensesRegisterDatabase.placeDao.insert(
         PlacePlaceProductCrossRef(

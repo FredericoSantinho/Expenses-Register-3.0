@@ -9,7 +9,7 @@ import neuro.expenses.register.data.model.place.RoomPlace
 @Entity(
   tableName = "place_product_table",
   indices = [Index(
-    value = ["productId", "categoryId", "price"],
+    value = ["productId", "categoryId", "price", "placeId"],
     unique = true
   ), Index(value = ["categoryId"])],
   foreignKeys = [ForeignKey(
