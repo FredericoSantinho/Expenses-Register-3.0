@@ -7,7 +7,13 @@ import neuro.expenses.register.entity.controller.product.GetOrCreateProduct
 
 class PlaceControllerImpl(private val getOrCreateProduct: GetOrCreateProduct) : PlaceController {
   override fun addProduct(place: Place, product: Product): Single<Place> {
-    return getOrCreateProduct.getOrCreateProduct(product, place.name).map { savedProduct ->
+    return getOrCreateProduct.getOrCreateProduct(
+      product.description,
+      product.category.name,
+      product.price,
+      product.variableAmount,
+      place.name
+    ).map { savedProduct ->
       val products = mutableListOf<Product>()
       products.addAll(place.products)
       products.add(savedProduct)

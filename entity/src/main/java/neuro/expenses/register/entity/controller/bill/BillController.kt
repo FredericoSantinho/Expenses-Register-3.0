@@ -41,7 +41,13 @@ class BillController(
             Bill(billId, bill.calendar, bill.place, total, billItems, iconUrl)
           }
         } else {
-          getOrCreateProduct.getOrCreateProduct(expense).flatMap { product ->
+          getOrCreateProduct.getOrCreateProduct(
+            expense.description,
+            expense.category,
+            expense.price,
+            expense.amount != 1.0,
+            expense.place
+          ).flatMap { product ->
             generateBillItemId.newId().map { billItemId ->
               val newBillItem = BillItem(
                 billItemId, product,

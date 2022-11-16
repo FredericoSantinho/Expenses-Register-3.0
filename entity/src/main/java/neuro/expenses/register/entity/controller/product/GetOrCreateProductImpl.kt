@@ -1,7 +1,6 @@
 package neuro.expenses.register.entity.controller.product
 
 import io.reactivex.rxjava3.core.Single
-import neuro.expenses.register.entity.Expense
 import neuro.expenses.register.entity.Product
 import neuro.expenses.register.entity.controller.category.GetCategory
 import neuro.expenses.register.entity.controller.place.GetPlace
@@ -13,46 +12,33 @@ class GetOrCreateProductImpl(
   private val getCategory: GetCategory,
   private val getPlace: GetPlace
 ) : GetOrCreateProduct {
-  override fun getOrCreateProduct(expense: Expense): Single<Product> {
+
+  override fun getOrCreateProduct(
+    description: String,
+    category: String,
+    price: Double,
+    variableAmount: Boolean,
+    place: String
+  ): Single<Product> {
     return getProduct.getProduct(
-      expense.description.lowercase(),
-      expense.category.lowercase(),
-      expense.price
+      description.lowercase(),
+      category.lowercase(),
+      price
     ).switchIfEmpty(generateProductId.newId().flatMap { productId ->
-      getCategory.getCategory(expense.category.lowercase()).toSingle().flatMap { category ->
-        getPlace.getPlace(expense.place.lowercase()).toSingle().flatMap { place ->
+      getCategory.getCategory(category.lowercase()).toSingle().flatMap { category ->
+        getPlace.getPlace(place.lowercase()).toSingle().flatMap { place ->
           val product = Product(
             productId,
-            expense.description,
+            description,
             category,
-            expense.price,
+            price,
             place.id,
-            expense.amount != 1.0
+            variableAmount
           )
           saveProduct.saveProduct(product).andThen(Single.just(product))
         }
       }
     }
     )
-  }
-
-  override fun getOrCreateProduct(product: Product, place: String): Single<Product> {
-    return getProduct.getProduct(product.id)
-      .switchIfEmpty(generateProductId.newId().flatMap { productId ->
-        getCategory.getCategory(product.category.name.lowercase()).toSingle().flatMap { category ->
-          getPlace.getPlace(place.lowercase()).toSingle().flatMap { place ->
-            val newProduct = Product(
-              productId,
-              product.description,
-              category,
-              product.price,
-              place.id,
-              product.variableAmount
-            )
-            saveProduct.saveProduct(newProduct).andThen(Single.just(newProduct))
-          }
-        }
-      }
-      )
   }
 }
