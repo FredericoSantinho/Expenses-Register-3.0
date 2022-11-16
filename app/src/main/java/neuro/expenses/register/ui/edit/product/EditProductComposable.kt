@@ -72,7 +72,7 @@ fun EditProductComposable(
       label = stringResource(R.string.category),
       keyboardOptions = keyboardOptionsText,
       onValueChange = { editPlaceProductViewModel.onCategoryChange() },
-      value = editPlaceProductViewModel.categoryName,
+      value = editPlaceProductViewModel.categoryModel.value.name,
       isError = categoryIsError,
       textStyle = ExpensesRegisterTypography.body2
     )

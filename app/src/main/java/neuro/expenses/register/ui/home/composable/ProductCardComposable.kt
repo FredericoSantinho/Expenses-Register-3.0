@@ -24,6 +24,7 @@ import androidx.constraintlayout.compose.Dimension
 import neuro.expenses.register.ui.common.composables.image.AsyncImage
 import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.ui.theme.ExpensesRegisterTypography
+import neuro.expenses.register.viewmodel.common.model.CategoryModel
 import neuro.expenses.register.viewmodel.home.IProductCardViewModel
 import neuro.expenses.register.viewmodel.home.OnProductCardClick
 import neuro.expenses.register.viewmodel.home.ProductCardViewModel
@@ -77,7 +78,7 @@ fun ProductCardComposable(productCardViewModel: IProductCardViewModel) {
           .clip(RoundedCornerShape(corner = CornerSize(8.dp))),
           productCardViewModel.iconUrl.value)
         Text(
-          text = productCardViewModel.categoryName.value,
+          text = productCardViewModel.categoryModel.value.name.value,
           modifier = Modifier
             .semantics { testTag = ProductCardTags.CATEGORY }
             .constrainAs(categoryC) {
@@ -111,15 +112,14 @@ fun ProductCardComposable(productCardViewModel: IProductCardViewModel) {
 @Composable
 fun PreviewDateTimeComposable() {
   val description = "Tosta Mista Pâo Caseiro"
-  val categoryId = 1L
-  val categoryName = "Restau"
+  val categoryModel = CategoryModel(1L, "Restau")
   val place = "Riviera"
   val price = "4.20 €"
   val amount = 1.0
   val iconUrl =
     "https://www.iguaria.com/wp-content/uploads/2016/03/Iguaria_Tosta-de-Bacon-Queijo-Fiambre.jpg"
   val productCardModel =
-    ProductCardModel(0, description, categoryId, categoryName, place, price, iconUrl, amount)
+    ProductCardModel(0, description, categoryModel, place, price, iconUrl, amount)
   val calendar = remember { mutableStateOf(Calendar.getInstance()) }
 
   ExpensesRegisterTheme {

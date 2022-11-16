@@ -1,10 +1,11 @@
 package neuro.expenses.register.viewmodel.home.model
 
+import neuro.expenses.register.viewmodel.common.model.CategoryModel
+
 data class ProductCardModel(
   val id: Long,
   val description: String,
-  val categoryId: Long,
-  val categoryName: String,
+  val categoryModel: CategoryModel,
   val place: String,
   val price: String,
   val iconUrl: String,

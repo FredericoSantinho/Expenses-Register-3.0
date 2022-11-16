@@ -7,6 +7,7 @@ import neuro.expenses.register.domain.dto.ProductDto
 import neuro.expenses.register.domain.usecase.category.ObserveCategoriesUseCase
 import neuro.expenses.register.domain.usecase.place.RemovePlaceProductUseCase
 import neuro.expenses.register.domain.usecase.place.UpdatePlaceProductUseCase
+import neuro.expenses.register.viewmodel.common.model.CategoryModel
 import neuro.expenses.register.viewmodel.common.schedulers.SchedulerProvider
 
 class EditPlaceProductViewModel(
@@ -18,8 +19,7 @@ class EditPlaceProductViewModel(
   val placeId = mutableStateOf(0L)
   val productId = mutableStateOf(0L)
   val description = mutableStateOf("")
-  val categoryId = mutableStateOf(-1L)
-  val categoryName = mutableStateOf("")
+  val categoryModel = mutableStateOf(CategoryModel(-1L, ""))
   val price = mutableStateOf("")
   val iconUrl = mutableStateOf("")
 
@@ -37,12 +37,8 @@ class EditPlaceProductViewModel(
 
   fun onSaveButton() {
     buildProductDto().flatMapCompletable { productDto ->
-      updatePlaceProductUseCase.updatePlaceProduct(
-        productDto,
-        placeId.value
-      )
-    }
-      .subscribeOn(schedulerProvider.io()).subscribe()
+      updatePlaceProductUseCase.updatePlaceProduct(productDto)
+    }.subscribeOn(schedulerProvider.io()).subscribe()
   }
 
   fun onDeleteButton() {
@@ -51,11 +47,11 @@ class EditPlaceProductViewModel(
   }
 
   private fun buildProductDto(): Single<ProductDto> {
-    return getCategoryId().map { categoryId ->
+    return getCategory().map { categoryDto ->
       ProductDto(
         productId.value,
         description.value,
-        CategoryDto(categoryId, categoryName.value),
+        categoryDto,
         price.value.toDouble(),
         0.0,
         iconUrl.value,
@@ -64,8 +60,8 @@ class EditPlaceProductViewModel(
     }
   }
 
-  private fun getCategoryId(): Single<Long> {
-    return categories.flatMapIterable { it }.filter { it.name == categoryName.value }.firstOrError()
-      .map { it.id }
+  private fun getCategory(): Single<CategoryDto> {
+    return categories.flatMapIterable { it }.filter { it.name == categoryModel.value.name.value }
+      .firstOrError()
   }
 }

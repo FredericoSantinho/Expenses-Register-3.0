@@ -1,6 +1,7 @@
 package neuro.expenses.register.viewmodel.home
 
 import androidx.compose.runtime.mutableStateOf
+import neuro.expenses.register.viewmodel.common.model.CategoryModel
 import neuro.expenses.register.viewmodel.home.model.ProductCardModel
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -16,21 +17,20 @@ internal class ProductCardViewModelTest {
     val onProductCardClick = mock<OnProductCardClick>()
     val id = 1L
     val description = "desc"
-    val categoryId = 1L
-    val category = "cat"
+    val categoryModel = CategoryModel(1L, "cat")
     val place = "place"
     val price = "1.00 €"
     val amount = 1.0
     val iconUrl = "url"
     val productCardModel =
-      ProductCardModel(id, description, categoryId, category, place, price, iconUrl)
+      ProductCardModel(id, description, categoryModel, place, price, iconUrl)
     val calendar = mutableStateOf(Calendar.getInstance())
 
     val productCardViewModel = ProductCardViewModel(onProductCardClick, productCardModel, calendar)
 
     assertEquals(calendar, productCardViewModel.calendar)
     assertEquals(description, productCardViewModel.description.value)
-    assertEquals(category, productCardViewModel.categoryName.value)
+    assertEquals(categoryModel, productCardViewModel.categoryModel.value)
     assertEquals(place, productCardViewModel.place.value)
     assertEquals(price, productCardViewModel.price.value)
     assertEquals(amount, productCardViewModel.amount.value, 0.0)
