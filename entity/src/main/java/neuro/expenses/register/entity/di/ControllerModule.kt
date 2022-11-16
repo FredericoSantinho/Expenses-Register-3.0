@@ -12,8 +12,8 @@ import neuro.expenses.register.entity.controller.place.GetOrCreatePlace
 import neuro.expenses.register.entity.controller.place.GetOrCreatePlaceImpl
 import neuro.expenses.register.entity.controller.place.PlaceController
 import neuro.expenses.register.entity.controller.place.PlaceControllerImpl
-import neuro.expenses.register.entity.controller.product.GetOrCreateProduct
-import neuro.expenses.register.entity.controller.product.GetOrCreateProductImpl
+import neuro.expenses.register.entity.controller.product.GetOrCreatePlaceProduct
+import neuro.expenses.register.entity.controller.product.GetOrCreatePlaceProductImpl
 import org.koin.dsl.module
 
 val controllerModule = module {
@@ -25,7 +25,16 @@ val controllerModule = module {
   }
   single<GetBillIconUrl> { GetBillIconUrlImpl() }
   single<CalculateBillTotal> { CalculateBillTotalImpl() }
-  single<GetOrCreateProduct> { GetOrCreateProductImpl(get(), get(), get(), get(), get()) }
+  single<GetOrCreatePlaceProduct> {
+    GetOrCreatePlaceProductImpl(
+      get(),
+      get(),
+      get(),
+      get(),
+      get(),
+      get()
+    )
+  }
   single<PlaceController> { PlaceControllerImpl(get()) }
   single<GetOrCreatePlace> { GetOrCreatePlaceImpl(get(), get(), get()) }
 }

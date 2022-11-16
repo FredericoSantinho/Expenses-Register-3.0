@@ -5,7 +5,7 @@ import neuro.expenses.register.domain.repository.*
 import org.koin.dsl.module
 
 val repositoryModule = module {
-  single<GenerateProductIdRepository> { GenerateProductIdRepositoryImpl(get()) }
+  single<GeneratePlaceProductIdRepository> { GeneratePlaceProductIdRepositoryImpl(get()) }
   single<ObserveCategoriesRepository> { ObserveCategoriesRepositoryImpl(get()) }
   single<GetCategoryRepository> { GetCategoryRepositoryImpl(get()) }
   single<ObserveLastBillRepository> { ObserveLastBillRepositoryImpl(get()) }
@@ -13,6 +13,7 @@ val repositoryModule = module {
   single<SaveBillRepository> { SaveBillRepositoryImpl(get()) }
   single<SaveProductRepository> { SaveProductRepositoryImpl(get(), get()) }
   single<GetProductRepository> { GetProductRepositoryImpl(get(), get()) }
+  single<GenerateProductIdRepository> { GenerateProductIdRepositoryImpl(get()) }
   single<GeneratePlaceIdRepository> { GeneratePlaceIdRepositoryImpl(get()) }
   single<GetPlacesRepository> { GetPlacesRepositoryImpl(get()) }
   single<ObservePlacesRepository> { ObservePlacesRepositoryImpl(get()) }

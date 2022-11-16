@@ -7,7 +7,7 @@ import neuro.expenses.register.data.dao.PlaceDao
 import neuro.expenses.register.data.mapper.place.toData
 import neuro.expenses.register.data.model.place.PlacePlaceProductCrossRef
 import neuro.expenses.register.domain.dto.PlaceDto
-import neuro.expenses.register.domain.dto.ProductDto
+import neuro.expenses.register.domain.dto.PlaceProductDto
 import neuro.expenses.register.domain.repository.SavePlaceRepository
 
 class SavePlaceRepositoryImpl(private val placeDao: PlaceDao) : SavePlaceRepository {
@@ -39,7 +39,7 @@ class SavePlaceRepositoryImpl(private val placeDao: PlaceDao) : SavePlaceReposit
     }
   }
 
-  private fun contains(products: List<ProductDto>, placeProductId: Long): Boolean {
+  private fun contains(products: List<PlaceProductDto>, placeProductId: Long): Boolean {
     return products.any { it.id == placeProductId }
   }
 }

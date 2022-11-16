@@ -1,8 +1,8 @@
 package neuro.expenses.register.entity.controller.product
 
 import io.reactivex.rxjava3.core.Completable
-import neuro.expenses.register.entity.Product
+import neuro.expenses.register.entity.PlaceProduct
 
 interface SaveProduct {
-  fun saveProduct(product: Product): Completable
+  fun saveProduct(placeProduct: PlaceProduct): Completable
 }

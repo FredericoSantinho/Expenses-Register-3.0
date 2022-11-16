@@ -7,6 +7,6 @@ import neuro.expenses.register.domain.repository.GenerateProductIdRepository
 class GenerateProductIdRepositoryImpl(private val productDao: ProductDao) :
   GenerateProductIdRepository {
   override fun newId(): Single<Long> {
-    return productDao.getLastId().defaultIfEmpty(0).map { it + 1 }
+    return productDao.getLastProductId().defaultIfEmpty(0).map { it + 1 }
   }
 }

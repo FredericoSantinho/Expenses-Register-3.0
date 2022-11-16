@@ -2,7 +2,7 @@ package neuro.expenses.register.viewmodel.home
 
 import androidx.compose.runtime.mutableStateOf
 import neuro.expenses.register.domain.dto.PlaceDto
-import neuro.expenses.register.domain.dto.ProductDto
+import neuro.expenses.register.domain.dto.PlaceProductDto
 import neuro.expenses.register.domain.usecase.calendar.GetCalendarUseCase
 import neuro.expenses.register.domain.usecase.expense.RegisterExpenseUseCase
 import neuro.expenses.register.domain.usecase.location.GetCurrentLocationUseCase
@@ -104,17 +104,17 @@ class HomeViewModel(
   }
 
   private fun setEditProductViewModel(productCardModel: ProductCardModel) {
-    val productDto = getProduct(productCardModel.id)
+    val placeProductDto = getPlaceProduct(productCardModel.id)
     editPlaceProductViewModel.placeId.value = placeDto.id
-    editPlaceProductViewModel.productId.value = productDto.id
-    editPlaceProductViewModel.description.value = productDto.description
-    editPlaceProductViewModel.categoryModel.value = productDto.category.toViewmodel()
-    editPlaceProductViewModel.price.value = productDto.price.toString()
-    editPlaceProductViewModel.iconUrl.value = productDto.iconUrl
-    editPlaceProductViewModel.variableAmount.value = productDto.variableAmount
+    editPlaceProductViewModel.placeProductId.value = placeProductDto.id
+    editPlaceProductViewModel.description.value = placeProductDto.productDto.description
+    editPlaceProductViewModel.categoryModel.value = placeProductDto.category.toViewmodel()
+    editPlaceProductViewModel.price.value = placeProductDto.price.toString()
+    editPlaceProductViewModel.iconUrl.value = placeProductDto.productDto.iconUrl
+    editPlaceProductViewModel.variableAmount.value = placeProductDto.productDto.variableAmount
   }
 
-  private fun getProduct(productId: Long): ProductDto {
+  private fun getPlaceProduct(productId: Long): PlaceProductDto {
     return placeDto.products.first { it.id == productId }
   }
 

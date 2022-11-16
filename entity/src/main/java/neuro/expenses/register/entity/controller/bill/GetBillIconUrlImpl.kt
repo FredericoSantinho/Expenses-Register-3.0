@@ -4,6 +4,6 @@ import neuro.expenses.register.entity.BillItem
 
 class GetBillIconUrlImpl : GetBillIconUrl {
   override fun getIconUrl(billItems: List<BillItem>): String {
-    return billItems.get(0).product.iconUrl
+    return billItems.get(0).placeProduct.product.iconUrl
   }
 }

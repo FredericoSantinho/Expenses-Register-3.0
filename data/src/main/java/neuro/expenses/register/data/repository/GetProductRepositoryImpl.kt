@@ -3,7 +3,7 @@ package neuro.expenses.register.data.repository
 import io.reactivex.rxjava3.core.Maybe
 import neuro.expenses.register.data.dao.ProductDao
 import neuro.expenses.register.data.mapper.product.toDomain
-import neuro.expenses.register.domain.dto.ProductDto
+import neuro.expenses.register.domain.dto.PlaceProductDto
 import neuro.expenses.register.domain.repository.GetCategoryRepository
 import neuro.expenses.register.domain.repository.GetProductRepository
 
@@ -11,7 +11,7 @@ class GetProductRepositoryImpl(
   private val productDao: ProductDao,
   private val getCategoryRepository: GetCategoryRepository
 ) : GetProductRepository {
-  override fun getProduct(productId: Long): Maybe<ProductDto> {
+  override fun getProduct(productId: Long): Maybe<PlaceProductDto> {
     return productDao.getPlaceProduct(productId)
       .map { roomPlaceProductWithProductAndCategory -> roomPlaceProductWithProductAndCategory.toDomain() }
   }
@@ -21,7 +21,7 @@ class GetProductRepositoryImpl(
     category: String,
     price: Double,
     placeId: Long
-  ): Maybe<ProductDto> {
+  ): Maybe<PlaceProductDto> {
     return getCategoryRepository.getCategory(category.lowercase()).flatMap { categoryDto ->
       productDao.getProduct(description)
         .flatMap { roomProduct ->

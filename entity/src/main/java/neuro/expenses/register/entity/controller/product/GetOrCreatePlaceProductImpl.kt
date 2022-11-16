@@ -1,17 +1,19 @@
 package neuro.expenses.register.entity.controller.product
 
 import io.reactivex.rxjava3.core.Single
+import neuro.expenses.register.entity.PlaceProduct
 import neuro.expenses.register.entity.Product
 import neuro.expenses.register.entity.controller.category.GetCategory
 import neuro.expenses.register.entity.controller.place.GetPlace
 
-class GetOrCreateProductImpl(
+class GetOrCreatePlaceProductImpl(
   private val getProduct: GetProduct,
   private val saveProduct: SaveProduct,
   private val generateProductId: GenerateProductId,
+  private val generatePlaceProductId: GeneratePlaceProductId,
   private val getCategory: GetCategory,
   private val getPlace: GetPlace
-) : GetOrCreateProduct {
+) : GetOrCreatePlaceProduct {
 
   override fun getOrCreateProduct(
     description: String,
@@ -19,7 +21,7 @@ class GetOrCreateProductImpl(
     price: Double,
     variableAmount: Boolean,
     place: String
-  ): Single<Product> {
+  ): Single<PlaceProduct> {
     return getPlace.getPlace(place.lowercase()).toSingle().flatMap { loadedPlace ->
       getCategory.getCategory(category.lowercase()).toSingle().flatMap { loadedCategory ->
         getProduct.getProduct(
@@ -27,17 +29,19 @@ class GetOrCreateProductImpl(
           loadedCategory.name,
           price,
           loadedPlace
-        ).switchIfEmpty(generateProductId.newId().flatMap { productId ->
-          val product = Product(
-            productId,
-            description,
-            loadedCategory,
-            price,
-            loadedPlace.id,
-            variableAmount
-          )
-          saveProduct.saveProduct(product).andThen(Single.just(product))
-        }
+        ).switchIfEmpty(
+          generateProductId.newId().flatMap { productId ->
+            generatePlaceProductId.newId().flatMap { placeProductId ->
+              val placeProduct = PlaceProduct(
+                placeProductId,
+                Product(productId, description, variableAmount),
+                loadedCategory,
+                price,
+                loadedPlace.id
+              )
+              saveProduct.saveProduct(placeProduct).andThen(Single.just(placeProduct))
+            }
+          }
         )
       }
     }

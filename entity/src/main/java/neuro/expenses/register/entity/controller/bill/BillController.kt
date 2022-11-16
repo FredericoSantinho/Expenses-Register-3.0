@@ -6,7 +6,7 @@ import neuro.expenses.register.entity.BillItem
 import neuro.expenses.register.entity.Expense
 import neuro.expenses.register.entity.Place
 import neuro.expenses.register.entity.controller.place.GetOrCreatePlace
-import neuro.expenses.register.entity.controller.product.GetOrCreateProduct
+import neuro.expenses.register.entity.controller.product.GetOrCreatePlaceProduct
 import java.util.*
 
 private val defaultBillDto = Bill(0, Calendar.getInstance(), isOpen = false)
@@ -16,7 +16,7 @@ class BillController(
   private val getBillIconUrl: GetBillIconUrl,
   private val getLastBill: GetLastBill,
   private val saveBill: SaveBill,
-  private val getOrCreateProduct: GetOrCreateProduct,
+  private val getOrCreatePlaceProduct: GetOrCreatePlaceProduct,
   private val getOrCreatePlace: GetOrCreatePlace,
   private val generateBillId: GenerateBillId,
   private val generateBillItemId: GenerateBillItemId
@@ -30,7 +30,7 @@ class BillController(
             val billItem = getBillItem(bill, productDescription)
             val billId = bill.id
             val billItemId = billItem.id
-            val product = billItem.product
+            val product = billItem.placeProduct
             val oldAmount = billItem.amount
             val newAmount = oldAmount + expense.amount
             val newBillItem = BillItem(billItemId, product, newAmount, newAmount * product.price)
@@ -41,7 +41,7 @@ class BillController(
             Bill(billId, bill.calendar, bill.place, total, billItems, iconUrl)
           }
         } else {
-          getOrCreateProduct.getOrCreateProduct(
+          getOrCreatePlaceProduct.getOrCreateProduct(
             expense.description,
             expense.category,
             expense.price,
@@ -69,11 +69,11 @@ class BillController(
   }
 
   private fun contains(bill: Bill, productDescription: String): Boolean {
-    return bill.billItems.find { it.product.description.lowercase() == productDescription.lowercase() } != null
+    return bill.billItems.find { it.placeProduct.product.description.lowercase() == productDescription.lowercase() } != null
   }
 
   private fun buildList(bill: Bill, newBillItem: BillItem): List<BillItem> {
-    return if (contains(bill, newBillItem.product.description)) {
+    return if (contains(bill, newBillItem.placeProduct.product.description)) {
       addExistent(bill, newBillItem)
     } else {
       addNonExistent(bill, newBillItem)
@@ -86,7 +86,7 @@ class BillController(
   ): MutableList<BillItem> {
     val list = mutableListOf<BillItem>()
     bill.billItems.forEach {
-      if (it.product.id == newBillItem.product.id) {
+      if (it.placeProduct.id == newBillItem.placeProduct.id) {
         list.add(newBillItem)
       } else {
         list.add(it)
@@ -103,7 +103,7 @@ class BillController(
   }
 
   private fun getBillItem(bill: Bill, productDescription: String) =
-    bill.billItems.find { it.product.description == productDescription }!!
+    bill.billItems.find { it.placeProduct.product.description == productDescription }!!
 
   private fun getLastBill(expense: Expense): Single<Bill> {
     return getOrCreatePlace.getOrCreatePlace(expense.place).flatMap { place ->

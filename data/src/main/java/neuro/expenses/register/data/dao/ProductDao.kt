@@ -12,6 +12,9 @@ import neuro.expenses.register.data.model.product.RoomPlaceProductWithProductAnd
 
 @Dao
 interface ProductDao {
+  @Query("SELECT MAX(productId) FROM product_table")
+  fun getLastProductId(): Maybe<Long>
+
   @Query("select * from product_table where productId=:productId")
   fun getProduct(productId: Long): Maybe<RoomProduct>
 
@@ -28,7 +31,7 @@ interface ProductDao {
   fun delete(roomProduct: RoomProduct): Completable
 
   @Query("SELECT MAX(placeProductId) FROM place_product_table")
-  fun getLastId(): Maybe<Long>
+  fun getLastPlaceProductId(): Maybe<Long>
 
   @Transaction
   @Query("select * from place_product_table where placeProductId=:placeProductId")
@@ -79,13 +82,7 @@ interface ProductDao {
         }
       }.flatMap { productId ->
         getPlaceProduct(productId, categoryId, price).defaultIfEmpty(
-          RoomPlaceProduct(
-            placeProductId,
-            productId,
-            categoryId,
-            price,
-            placeId
-          )
+          RoomPlaceProduct(placeProductId, productId, categoryId, price, placeId)
         ).flatMap { roomPlaceProduct ->
           insert(roomPlaceProduct)
         }.flatMap {
@@ -107,7 +104,7 @@ interface ProductDao {
   @Transaction
   fun insert(
     description: String,
-    iconUrl: String = "",
+    iconUrl: String,
     placeProductId: Long,
     categoryId: Long,
     price: Double,
@@ -115,9 +112,7 @@ interface ProductDao {
     variableAmount: Boolean
   ): Long {
     return getProduct(description.lowercase()).defaultIfEmpty(
-      RoomProduct(
-        0, description, iconUrl, variableAmount
-      )
+      RoomProduct(0, description, iconUrl, variableAmount)
     ).flatMap { roomProduct ->
       insert(roomProduct).flatMap { productId ->
         if (productId == -1L) {

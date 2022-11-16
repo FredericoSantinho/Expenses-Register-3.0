@@ -2,7 +2,7 @@ package neuro.expenses.register.domain.dto
 
 data class BillItemDto(
   val id: Long,
-  val product: ProductDto,
+  val placeProduct: PlaceProductDto,
   val amount: Double,
-  val total: Double = product.price * amount
+  val total: Double = placeProduct.price * amount
 )

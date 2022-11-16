@@ -1,7 +1,7 @@
 package neuro.expenses.register.viewmodel.home.mapper
 
 import neuro.expenses.register.domain.dto.ExpenseDto
-import neuro.expenses.register.domain.dto.ProductDto
+import neuro.expenses.register.domain.dto.PlaceProductDto
 import neuro.expenses.register.viewmodel.common.formatter.DecimalFormatter
 import neuro.expenses.register.viewmodel.common.mapper.toViewmodel
 import neuro.expenses.register.viewmodel.home.model.ProductCardModel
@@ -11,11 +11,12 @@ class ProductCardModelMapperImpl(
   private val decimalFormatter: DecimalFormatter,
   private val currency: String
 ) : ProductCardModelMapper {
-  override fun map(productDto: ProductDto, place: String): ProductCardModel {
-    val productId = productDto.id
-    val description = productDto.description
-    val category = productDto.category
-    val price = decimalFormatter.format(productDto.price) + ' ' + currency
+  override fun map(placeProductDto: PlaceProductDto, place: String): ProductCardModel {
+    val productId = placeProductDto.id
+    val description = placeProductDto.productDto.description
+    val category = placeProductDto.category
+    val price = decimalFormatter.format(placeProductDto.price) + ' ' + currency
+    val iconUrl = placeProductDto.productDto.iconUrl
 
     return ProductCardModel(
       productId,
@@ -23,7 +24,7 @@ class ProductCardModelMapperImpl(
       category.toViewmodel(),
       place,
       price,
-      productDto.iconUrl
+      iconUrl
     )
   }
 

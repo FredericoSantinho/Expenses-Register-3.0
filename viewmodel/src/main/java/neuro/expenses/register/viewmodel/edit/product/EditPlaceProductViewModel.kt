@@ -3,6 +3,7 @@ package neuro.expenses.register.viewmodel.edit.product
 import androidx.compose.runtime.mutableStateOf
 import io.reactivex.rxjava3.core.Single
 import neuro.expenses.register.domain.dto.CategoryDto
+import neuro.expenses.register.domain.dto.PlaceProductDto
 import neuro.expenses.register.domain.dto.ProductDto
 import neuro.expenses.register.domain.usecase.category.ObserveCategoriesUseCase
 import neuro.expenses.register.domain.usecase.place.RemovePlaceProductUseCase
@@ -18,6 +19,7 @@ class EditPlaceProductViewModel(
 ) {
   val placeId = mutableStateOf(0L)
   val productId = mutableStateOf(0L)
+  val placeProductId = mutableStateOf(0L)
   val description = mutableStateOf("")
   val categoryModel = mutableStateOf(CategoryModel(-1L, ""))
   val price = mutableStateOf("")
@@ -43,20 +45,18 @@ class EditPlaceProductViewModel(
   }
 
   fun onDeleteButton() {
-    removePlaceProductUseCase.removePlaceProduct(placeId.value, productId.value)
+    removePlaceProductUseCase.removePlaceProduct(placeId.value, placeProductId.value)
       .subscribeOn(schedulerProvider.io()).subscribe()
   }
 
-  private fun buildProductDto(): Single<ProductDto> {
+  private fun buildProductDto(): Single<PlaceProductDto> {
     return getCategory().map { categoryDto ->
-      ProductDto(
-        productId.value,
-        description.value,
+      PlaceProductDto(
+        placeProductId.value,
+        ProductDto(productId.value, description.value, variableAmount.value, iconUrl.value),
         categoryDto,
         price.value.toDouble(),
-        iconUrl.value,
-        placeId.value,
-        variableAmount.value
+        placeId.value
       )
     }
   }
