@@ -6,17 +6,17 @@ import org.koin.dsl.module
 
 val repositoryModule = module {
   single<GenerateProductIdRepository> { GenerateProductIdRepositoryImpl(get()) }
-  single<ObserveCategoriesRepository> { ObserveCategoriesRepositoryImpl(get(), get()) }
-  single<GetCategoryRepository> { GetCategoryRepositoryImpl(get(), get()) }
-  single<ObserveLastBillRepository> { ObserveLastBillRepositoryImpl(get(), get()) }
-  single<GetLastBillRepository> { GetLastBillRepositoryImpl(get(), get()) }
-  single<SaveBillRepository> { SaveBillRepositoryImpl(get(), get(), get()) }
+  single<ObserveCategoriesRepository> { ObserveCategoriesRepositoryImpl(get()) }
+  single<GetCategoryRepository> { GetCategoryRepositoryImpl(get()) }
+  single<ObserveLastBillRepository> { ObserveLastBillRepositoryImpl(get()) }
+  single<GetLastBillRepository> { GetLastBillRepositoryImpl(get()) }
+  single<SaveBillRepository> { SaveBillRepositoryImpl(get()) }
   single<SaveProductRepository> { SaveProductRepositoryImpl(get(), get()) }
-  single<GetProductRepository> { GetProductRepositoryImpl(get(), get(), get()) }
+  single<GetProductRepository> { GetProductRepositoryImpl(get(), get()) }
   single<GeneratePlaceIdRepository> { GeneratePlaceIdRepositoryImpl(get()) }
-  single<GetPlacesRepository> { GetPlacesRepositoryImpl(get(), get()) }
-  single<ObservePlacesRepository> { ObservePlacesRepositoryImpl(get(), get()) }
-  single<GetPlaceRepository> { GetPlaceRepositoryImpl(get(), get()) }
-  single<SavePlaceRepository> { SavePlaceRepositoryImpl(get(), get()) }
+  single<GetPlacesRepository> { GetPlacesRepositoryImpl(get()) }
+  single<ObservePlacesRepository> { ObservePlacesRepositoryImpl(get()) }
+  single<GetPlaceRepository> { GetPlaceRepositoryImpl(get()) }
+  single<SavePlaceRepository> { SavePlaceRepositoryImpl(get()) }
   single<RemovePlaceProductRepository> { RemovePlaceProductRepositoryImpl(get()) }
 }

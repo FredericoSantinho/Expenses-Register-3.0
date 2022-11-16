@@ -1,7 +1,10 @@
 package neuro.expenses.register
 
 import android.app.Application
-import neuro.expenses.register.data.di.*
+import neuro.expenses.register.data.di.daoModule
+import neuro.expenses.register.data.di.dataServiceModule
+import neuro.expenses.register.data.di.databaseModule
+import neuro.expenses.register.data.di.repositoryModule
 import neuro.expenses.register.database.PrePopulateDatabase
 import neuro.expenses.register.di.*
 import neuro.expenses.register.first.run.FirstRun
@@ -25,8 +28,8 @@ class ExpensesRegisterApplication : Application() {
         registerExpensesModule,
         androidModule,
         schedulersModule,
-        viewModelModule
-            useCaseModule,
+        viewModelModule,
+        useCaseModule,
         entityModule,
         entityImplModule,
         controllerModule,
@@ -34,7 +37,6 @@ class ExpensesRegisterApplication : Application() {
         repositoryModule,
         dataServiceModule,
         databaseModule,
-        databaseMapperModule,
         uiMapperModule,
         daoModule,
         initModule

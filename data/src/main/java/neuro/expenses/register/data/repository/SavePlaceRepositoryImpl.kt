@@ -4,18 +4,15 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import neuro.expenses.register.data.dao.PlaceDao
-import neuro.expenses.register.data.mapper.place.RoomPlaceMapper
+import neuro.expenses.register.data.mapper.place.toData
 import neuro.expenses.register.data.model.place.PlacePlaceProductCrossRef
 import neuro.expenses.register.domain.dto.PlaceDto
 import neuro.expenses.register.domain.dto.ProductDto
 import neuro.expenses.register.domain.repository.SavePlaceRepository
 
-class SavePlaceRepositoryImpl(
-  private val placeDao: PlaceDao,
-  private val roomPlaceMapper: RoomPlaceMapper
-) : SavePlaceRepository {
+class SavePlaceRepositoryImpl(private val placeDao: PlaceDao) : SavePlaceRepository {
   override fun savePlace(placeDto: PlaceDto): Completable {
-    return Single.just(roomPlaceMapper.map(placeDto)).flatMapCompletable { roomPlace ->
+    return Single.just(placeDto.toData()).flatMapCompletable { roomPlace ->
       placeDao.insert(roomPlace).flatMapObservable {
         Observable.fromIterable(placeDto.products).flatMapSingle { productDto ->
           placeDao.insert(

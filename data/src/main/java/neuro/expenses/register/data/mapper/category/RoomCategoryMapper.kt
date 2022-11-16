@@ -3,7 +3,6 @@ package neuro.expenses.register.data.mapper.category
 import neuro.expenses.register.data.model.RoomCategory
 import neuro.expenses.register.domain.dto.CategoryDto
 
-interface RoomCategoryMapper {
-  fun map(categories: List<RoomCategory>): List<CategoryDto>
-  fun map(category: RoomCategory): CategoryDto
-}
+fun RoomCategory.toDomain(): CategoryDto = CategoryDto(categoryId, name)
+
+fun List<RoomCategory>.toDomain(): List<CategoryDto> = map { it.toDomain() }

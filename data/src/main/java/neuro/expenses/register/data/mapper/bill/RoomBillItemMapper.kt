@@ -1,10 +1,8 @@
 package neuro.expenses.register.data.mapper.bill
 
 import neuro.expenses.register.data.model.bill.RoomBillItem
-import neuro.expenses.register.domain.dto.BillDto
 import neuro.expenses.register.domain.dto.BillItemDto
 
-interface RoomBillItemMapper {
-  fun map(billItemDto: BillItemDto, billId: Long, placeProductId: Long): RoomBillItem
-  fun map(billDto: BillDto): List<RoomBillItem>
-}
+fun BillItemDto.toData(billId: Long): RoomBillItem = RoomBillItem(id, amount, product.id, billId)
+
+fun List<BillItemDto>.toData(billId: Long): List<RoomBillItem> = map { it.toData(billId) }
