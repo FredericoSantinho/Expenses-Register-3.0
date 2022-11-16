@@ -37,8 +37,7 @@ import neuro.expenses.register.ui.common.composables.text.TextFieldWithDropdown
 import neuro.expenses.register.ui.common.composables.text.TextFieldWithError
 import neuro.expenses.register.ui.common.keyboard.keyboardOptionsNumeric
 import neuro.expenses.register.ui.common.keyboard.keyboardOptionsText
-import neuro.expenses.register.ui.manual.register.mapper.ManualRegisterMessageMapper
-import neuro.expenses.register.ui.manual.register.mapper.ManualRegisterMessageMapperImpl
+import neuro.expenses.register.ui.manual.register.mapper.toPresentation
 import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.ui.theme.ExpensesRegisterTypography
 import neuro.expenses.register.viewmodel.manual.register.ManualRegisterViewModel
@@ -54,8 +53,7 @@ fun ManualRegisterComposable(
   showTimePicker: ShowTimePicker = DefaultShowTimePicker(),
   showDatePicker: ShowDatePicker = ShowMaterialDatePicker(),
   timeTextMapper: TimeTextMapper = TimeTextMapperImpl(),
-  dateTextMapper: DateTextMapper = DateTextMapperImpl(),
-  messageMapper: ManualRegisterMessageMapper = ManualRegisterMessageMapperImpl()
+  dateTextMapper: DateTextMapper = DateTextMapperImpl()
 ) {
   val uiEvent by manualRegisterViewModel.uiEvent.observeAsState(null)
   val uiState by manualRegisterViewModel.uiState
@@ -223,8 +221,7 @@ fun ManualRegisterComposable(
     placeIsError,
     placeErrorMessage,
     amountIsError,
-    amountErrorMessage,
-    messageMapper
+    amountErrorMessage
   )
   onUiEvent(uiEvent)
 }
@@ -253,8 +250,7 @@ private fun onUiState(
   placeIsError: MutableState<Boolean>,
   placeErrorMessage: MutableState<String>,
   amountIsError: MutableState<Boolean>,
-  amountErrorMessage: MutableState<String>,
-  messageMapper: ManualRegisterMessageMapper
+  amountErrorMessage: MutableState<String>
 ) {
   when (uiState) {
     UiState.Ready -> {}
@@ -265,8 +261,7 @@ private fun onUiState(
       placeIsError,
       placeErrorMessage,
       amountIsError,
-      amountErrorMessage,
-      messageMapper
+      amountErrorMessage
     )
   }
 }
@@ -280,24 +275,23 @@ private fun onUiError(
   placeIsError: MutableState<Boolean>,
   placeErrorMessage: MutableState<String>,
   amountIsError: MutableState<Boolean>,
-  amountErrorMessage: MutableState<String>,
-  messageMapper: ManualRegisterMessageMapper
+  amountErrorMessage: MutableState<String>
 ) {
   errors.forEach { error ->
     when (error) {
       is UiStateError.ShowPlaceError -> showPlaceError(
-        stringResource(messageMapper.map(error.message)),
+        stringResource(error.message.toPresentation()),
         placeIsError,
         placeErrorMessage
       )
       is UiStateError.ShowCategoryError -> showCategoryError(categoryIsError)
       is UiStateError.ShowDescriptionError -> showDescriptionError(
-        stringResource(messageMapper.map(error.message)),
+        stringResource(error.message.toPresentation()),
         descriptionIsError,
         descriptionErrorMessage
       )
       is UiStateError.ShowAmountError -> showAmountError(
-        stringResource(messageMapper.map(error.message)), amountIsError, amountErrorMessage
+        stringResource(error.message.toPresentation()), amountIsError, amountErrorMessage
       )
     }
   }

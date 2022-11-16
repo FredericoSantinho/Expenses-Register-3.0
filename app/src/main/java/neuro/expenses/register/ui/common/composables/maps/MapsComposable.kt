@@ -15,20 +15,19 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.*
 import kotlinx.coroutines.launch
 import neuro.expenses.register.ui.common.composables.google.ScaleBar
-import neuro.expenses.register.ui.common.composables.maps.mapper.CameraPositionViewMapper
+import neuro.expenses.register.ui.common.composables.maps.mapper.toPresentation
 import neuro.expenses.register.viewmodel.home.model.CameraPositionModel
 
 @Composable
 fun MapsComposable(
   initialCameraPosition: CameraPositionModel,
-  cameraPositionViewMapper: CameraPositionViewMapper,
   event: MapsMoveCameraEvent?,
   height: Dp = 240.dp
 ) {
   val mapLoaded = remember { mutableStateOf(false) }
   val bitoque = LatLng(37.091495, -8.2475677)
   val cameraPositionState = rememberCameraPositionState {
-    position = cameraPositionViewMapper.map(initialCameraPosition)
+    position = initialCameraPosition.toPresentation()
   }
   val mapProperties by remember {
     mutableStateOf(

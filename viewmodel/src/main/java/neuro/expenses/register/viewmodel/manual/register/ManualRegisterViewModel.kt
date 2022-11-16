@@ -16,7 +16,7 @@ import neuro.expenses.register.viewmodel.common.asState
 import neuro.expenses.register.viewmodel.common.formatter.DecimalFormatter
 import neuro.expenses.register.viewmodel.common.livedata.SingleLiveEvent
 import neuro.expenses.register.viewmodel.common.schedulers.SchedulerProvider
-import neuro.expenses.register.viewmodel.manual.register.mapper.RegisterExpenseErrorMapper
+import neuro.expenses.register.viewmodel.manual.register.mapper.toPresentation
 
 
 class ManualRegisterViewModel(
@@ -25,7 +25,6 @@ class ManualRegisterViewModel(
   private val registerExpenseUseCase: RegisterExpenseUseCase,
   private val getNearestPlaceUseCase: GetNearestPlaceUseCase,
   private val feedLastBillViewModel: FeedLastBillViewModel,
-  private val registerExpenseErrorMapper: RegisterExpenseErrorMapper,
   private val decimalFormatter: DecimalFormatter,
   val billViewModel: BillViewModel,
   schedulerProvider: SchedulerProvider,
@@ -65,8 +64,7 @@ class ManualRegisterViewModel(
         onComplete = { publishAndReset() },
         onError = {
           if (it is RegisterExpenseException) {
-            _uiState.value =
-              UiState.Error(registerExpenseErrorMapper.map(it.errors))
+            _uiState.value = UiState.Error(it.errors.toPresentation())
           } else {
             throw it
           }

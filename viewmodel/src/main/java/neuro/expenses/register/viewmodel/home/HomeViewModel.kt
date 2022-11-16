@@ -16,8 +16,8 @@ import neuro.expenses.register.viewmodel.common.livedata.SingleLiveEvent
 import neuro.expenses.register.viewmodel.common.schedulers.SchedulerProvider
 import neuro.expenses.register.viewmodel.edit.product.EditPlaceProductViewModel
 import neuro.expenses.register.viewmodel.home.factory.ProductCardViewModelFactoryImpl
-import neuro.expenses.register.viewmodel.home.mapper.LatLngModelMapper
 import neuro.expenses.register.viewmodel.home.mapper.ProductCardModelMapper
+import neuro.expenses.register.viewmodel.home.mapper.toViewModel
 import neuro.expenses.register.viewmodel.home.model.CameraPositionModel
 import neuro.expenses.register.viewmodel.home.model.LatLngModel
 import neuro.expenses.register.viewmodel.home.model.ProductCardModel
@@ -31,7 +31,6 @@ class HomeViewModel(
   private val getCalendarUseCase: GetCalendarUseCase,
   private val registerExpenseUseCase: RegisterExpenseUseCase,
   private val feedLastBillViewModel: FeedLastBillViewModel,
-  private val latLngModelMapper: LatLngModelMapper,
   private val productCardModelMapper: ProductCardModelMapper,
   override val billViewModel: BillViewModel,
   override val editPlaceProductViewModel: EditPlaceProductViewModel,
@@ -67,8 +66,7 @@ class HomeViewModel(
         placesNames.value = nearestPlaces.map { placeDto -> placeDto.name }
         placeDto = nearestPlaces.get(selectedPlaceIndex.value)
         productsListViewModel.setProducts(placeDto)
-        val latLngModel =
-          latLngModelMapper.map(placeDto.latLngDto)
+        val latLngModel = placeDto.latLngDto.toViewModel()
         _uiState.value = UiState.Ready
         _uiEvent.value = UiEvent.MoveCamera(latLngModel, zoom)
       }
@@ -77,7 +75,7 @@ class HomeViewModel(
 
   override fun onSelectedPlace(index: Int) {
     val placeDto = places.value.get(index)
-    val latLngModel = latLngModelMapper.map(placeDto.latLngDto)
+    val latLngModel = placeDto.latLngDto.toViewModel()
     _uiState.value = UiState.Ready
     _uiEvent.value = UiEvent.MoveCamera(latLngModel, zoom)
     productsListViewModel.setProducts(placeDto)

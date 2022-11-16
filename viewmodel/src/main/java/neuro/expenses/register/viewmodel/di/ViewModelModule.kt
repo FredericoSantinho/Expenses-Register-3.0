@@ -18,8 +18,6 @@ import neuro.expenses.register.viewmodel.edit.product.EditProductsViewModel
 import neuro.expenses.register.viewmodel.home.HomeViewModel
 import neuro.expenses.register.viewmodel.main.MainViewModel
 import neuro.expenses.register.viewmodel.manual.register.ManualRegisterViewModel
-import neuro.expenses.register.viewmodel.manual.register.mapper.RegisterExpenseErrorMapper
-import neuro.expenses.register.viewmodel.manual.register.mapper.RegisterExpenseErrorMapperImpl
 import neuro.expenses.register.viewmodel.permissions.PermissionsViewModel
 import neuro.expenses.register.viewmodel.settings.SettingsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -32,11 +30,10 @@ val viewModelModule = module {
   viewModel { PermissionsViewModel(get()) }
   viewModel { MainViewModel() }
   viewModel { SettingsViewModel() }
-  viewModel { HomeViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) }
+  viewModel { HomeViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
   single { EditPlaceProductViewModel(get(), get(), get(), get()) }
   viewModel {
     ManualRegisterViewModel(
-      get(),
       get(),
       get(),
       get(),
@@ -53,7 +50,6 @@ val viewModelModule = module {
   single<DateTimeMapper> { DateTimeMapperImpl(get()) }
   single<NumberFormater> { NumberFormaterImpl() }
   single<DecimalFormatter> { DecimalFormatterImpl(2) }
-  single<RegisterExpenseErrorMapper> { RegisterExpenseErrorMapperImpl() }
   viewModel { BillsViewModel() }
   viewModel { EditViewModel() }
   viewModel { EditProductsViewModel() }
