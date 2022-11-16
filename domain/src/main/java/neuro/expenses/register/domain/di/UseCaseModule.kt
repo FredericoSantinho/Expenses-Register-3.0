@@ -18,19 +18,17 @@ import neuro.expenses.register.domain.usecase.place.*
 import org.koin.dsl.module
 
 val useCaseModule = module {
-  single<RegisterExpenseUseCase> {
-    RegisterExpenseUseCaseImpl(get(), get(), get())
-  }
+  single<RegisterExpenseUseCase> { RegisterExpenseUseCaseImpl(get()) }
   single<ObserveLastBillUseCase> { ObserveLastBillUseCaseImpl(get(), get()) }
   single<GetLastBillUseCase> { GetLastBillUseCaseImpl(get()) }
   single<ObserveCategoriesUseCase> { ObserveCategoriesUseCaseImpl(get()) }
   single<GetCalendarUseCase> { GetCalendarUseCaseImpl() }
   single<GetNearestPlaceUseCase> { GetNearestPlaceUseCaseImpl(get(), get()) }
   single<GetNearestPlacesUseCase> { GetNearestPlacesUseCaseImpl(get()) }
-  single<ObserveNearestPlacesUseCase> { ObserveNearestPlacesUseCaseImpl(get(), get(), get()) }
+  single<ObserveNearestPlacesUseCase> { ObserveNearestPlacesUseCaseImpl(get(), get()) }
   single<GetCurrentLocationUseCase> { GetCurrentLocationUseCaseImpl(get()) }
   single<GetPlaceUseCase> { GetPlaceUseCaseImpl(get()) }
-  single<UpdatePlaceProductUseCase> { UpdatePlaceProductUseCaseImpl(get(), get(), get(), get()) }
-  single<AddPlaceProductUseCase> { AddPlaceProductUseCaseImpl(get(), get(), get(), get()) }
+  single<UpdatePlaceProductUseCase> { UpdatePlaceProductUseCaseImpl(get(), get()) }
+  single<AddPlaceProductUseCase> { AddPlaceProductUseCaseImpl(get(), get()) }
   single<RemovePlaceProductUseCase> { RemovePlaceProductUseCaseImpl(get()) }
 }

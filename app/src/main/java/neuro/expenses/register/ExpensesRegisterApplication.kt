@@ -28,7 +28,6 @@ class ExpensesRegisterApplication : Application() {
         viewModelModule,
         viewmodelMapperModule,
         useCaseModule,
-        dtoMapperModule,
         entityModule,
         entityImplModule,
         controllerModule,

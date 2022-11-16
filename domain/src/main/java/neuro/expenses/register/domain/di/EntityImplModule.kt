@@ -15,16 +15,16 @@ import neuro.expenses.register.entity.controller.product.SaveProduct
 import org.koin.dsl.module
 
 val entityImplModule = module {
-  single<GetProduct> { GetProductImpl(get(), get()) }
-  single<SaveProduct> { SaveProductImpl(get(), get()) }
+  single<GetProduct> { GetProductImpl(get()) }
+  single<SaveProduct> { SaveProductImpl(get()) }
   single<GetCategoryId> { GetCategoryIdImpl(get()) }
-  single<GetCategory> { GetCategoryImpl(get(), get()) }
+  single<GetCategory> { GetCategoryImpl(get()) }
   single<GenerateProductId> { GenerateProductIdImpl(get()) }
   single<GeneratePlaceId> { GeneratePlaceIdImpl(get()) }
   single<GenerateBillId> { GenerateBillIdImpl() }
   single<GenerateBillItemId> { GenerateBillItemIdImpl() }
-  single<GetLastBill> { GetLastBillImpl(get(), get()) }
-  single<SaveBill> { SaveBillImpl(get(), get()) }
-  single<GetPlace> { GetPlaceImpl(get(), get()) }
-  single<SavePlace> { SavePlaceImpl(get(), get()) }
+  single<GetLastBill> { GetLastBillImpl(get()) }
+  single<SaveBill> { SaveBillImpl(get()) }
+  single<GetPlace> { GetPlaceImpl(get()) }
+  single<SavePlace> { SavePlaceImpl(get()) }
 }

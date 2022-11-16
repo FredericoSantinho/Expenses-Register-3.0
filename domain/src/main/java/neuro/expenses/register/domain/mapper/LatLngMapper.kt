@@ -3,7 +3,6 @@ package neuro.expenses.register.domain.mapper
 import neuro.expenses.register.domain.dto.LatLngDto
 import neuro.expenses.register.entity.LatLng
 
-interface LatLngMapper {
-  fun map(latLng: LatLng): LatLngDto
-  fun map(latLngDto: LatLngDto): LatLng
-}
+fun LatLng.toDomain(): LatLngDto = LatLngDto(latitude, longitude)
+
+fun LatLngDto.toEntity(): LatLng = LatLng(latitude, longitude)
