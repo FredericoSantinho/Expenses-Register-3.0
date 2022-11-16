@@ -5,24 +5,21 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
-import neuro.expenses.register.data.model.bill.BillItemPlaceProductCrossRef
-import neuro.expenses.register.data.model.bill.RoomBill
-import neuro.expenses.register.data.model.bill.RoomBillItem
-import neuro.expenses.register.data.model.bill.RoomBillWithBillItems
+import neuro.expenses.register.data.model.bill.*
 
 @Dao
 interface BillDao {
   @Transaction
   @Query("select * from bill_table order by billId desc limit 1")
-  fun observeLastBill(): Observable<RoomBillWithBillItems>
+  fun observeLastBill(): Observable<RoomBillWithBillItemsAndPlace>
 
   @Transaction
   @Query("select * from bill_table order by billId desc limit 1")
-  fun getLastBill(): Maybe<RoomBillWithBillItems>
+  fun getLastBill(): Maybe<RoomBillWithBillItemsAndPlace>
 
   @Transaction
   @Query("select * from bill_table order by billId asc")
-  fun observeBills(): Observable<List<RoomBillWithBillItems>>
+  fun observeBills(): Observable<List<RoomBillWithBillItemsAndPlace>>
 
   @Transaction
   fun insert(roomBill: RoomBill, roomBillItems: List<RoomBillItem>) {
@@ -31,15 +28,14 @@ interface BillDao {
         RoomBillItem(it.billItemId, it.amount, it.placeProductId, billId)
       }
         .flatMapSingle { roomBillItem ->
-          insert(roomBillItem)
-            .flatMap { billItemId ->
-              insert(
-                BillItemPlaceProductCrossRef(
-                  billItemId,
-                  roomBillItem.placeProductId
-                )
+          insert(roomBillItem).flatMap { billItemId ->
+            insert(
+              BillItemPlaceProductCrossRef(
+                billItemId,
+                roomBillItem.placeProductId
               )
-            }
+            ).flatMap { insert(BillPlaceCrossRef(billId, roomBill.placeId)) }
+          }
         }
     }.ignoreElements().blockingAwait()
   }
@@ -68,4 +64,7 @@ interface BillDao {
 
   @Insert(onConflict = OnConflictStrategy.IGNORE)
   fun insert(billItemPlaceProductCrossRef: BillItemPlaceProductCrossRef): Single<Long>
+
+  @Insert(onConflict = OnConflictStrategy.IGNORE)
+  fun insert(billPlaceCrossRef: BillPlaceCrossRef): Single<Long>
 }

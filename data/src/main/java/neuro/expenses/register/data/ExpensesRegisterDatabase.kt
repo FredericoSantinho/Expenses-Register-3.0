@@ -12,6 +12,7 @@ import neuro.expenses.register.data.model.RoomCategory
 import neuro.expenses.register.data.model.RoomPlaceProduct
 import neuro.expenses.register.data.model.RoomProduct
 import neuro.expenses.register.data.model.bill.BillItemPlaceProductCrossRef
+import neuro.expenses.register.data.model.bill.BillPlaceCrossRef
 import neuro.expenses.register.data.model.bill.RoomBill
 import neuro.expenses.register.data.model.bill.RoomBillItem
 import neuro.expenses.register.data.model.place.PlacePlaceProductCrossRef
@@ -21,7 +22,7 @@ import neuro.expenses.register.data.model.product.PlaceProductProductCrossRef
 
 @Database(
   entities = [RoomProduct::class, RoomPlaceProduct::class, RoomCategory::class, RoomBill::class,
-    RoomBillItem::class, BillItemPlaceProductCrossRef::class, PlaceProductCategoryCrossRef::class,
+    RoomBillItem::class, BillItemPlaceProductCrossRef::class, BillPlaceCrossRef::class, PlaceProductCategoryCrossRef::class,
     PlaceProductProductCrossRef::class, RoomPlace::class, PlacePlaceProductCrossRef::class],
   version = 1
 )

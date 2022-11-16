@@ -3,6 +3,8 @@ package neuro.expenses.register.domain.usecase.bill
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import neuro.expenses.register.domain.dto.BillDto
+import neuro.expenses.register.domain.dto.LatLngDto
+import neuro.expenses.register.domain.dto.PlaceDto
 import neuro.expenses.register.domain.repository.ObserveLastBillRepository
 import java.util.*
 
@@ -33,5 +35,6 @@ private fun newDefaultBillDto(): BillDto {
   calendar.set(Calendar.DAY_OF_MONTH, 1)
   calendar.set(Calendar.MONTH, 0)
   calendar.set(Calendar.YEAR, 1970)
-  return BillDto(-1L, "N/A", calendar, 0.0, emptyList(), false)
+  val place = PlaceDto(-1, "", emptyList(), LatLngDto(0.0, 0.0))
+  return BillDto(-1L, place, calendar, 0.0, isOpen = false)
 }

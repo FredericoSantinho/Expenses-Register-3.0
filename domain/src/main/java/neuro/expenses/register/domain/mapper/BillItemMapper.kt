@@ -5,6 +5,6 @@ import neuro.expenses.register.entity.BillItem
 import java.util.*
 
 interface BillItemMapper {
-  fun map(billItem: BillItem, place: String, calendar: Calendar): BillItemDto
+  fun map(billItem: BillItem, calendar: Calendar): BillItemDto
   fun map(billItemDto: BillItemDto): BillItem
 }

@@ -15,7 +15,6 @@ class ProductCardModelMapperImpl(
     val description = productDto.description
     val category = productDto.category
     val price = decimalFormatter.format(productDto.price) + ' ' + currency
-    val amount = productDto.defaultAmount
 
     return ProductCardModel(
       productId,

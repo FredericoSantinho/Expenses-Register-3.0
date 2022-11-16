@@ -1,16 +1,25 @@
 package neuro.expenses.register.data.repository
 
+import neuro.expenses.register.data.dao.PlaceDao
 import neuro.expenses.register.data.dao.ProductDao
+import neuro.expenses.register.data.model.place.PlacePlaceProductCrossRef
+import neuro.expenses.register.domain.dto.ProductDto
 import neuro.expenses.register.domain.repository.SaveProductRepository
 
-class SaveProductRepositoryImpl(private val productDao: ProductDao) : SaveProductRepository {
-  override fun saveProduct(
-    productId: Long,
-    description: String,
-    categoryId: Long,
-    price: Double,
-    defaultAmount: Double
-  ): Long {
-    return productDao.insert(productId, description, categoryId, price, defaultAmount)
+class SaveProductRepositoryImpl(
+  private val productDao: ProductDao,
+  private val placeDao: PlaceDao
+) : SaveProductRepository {
+  override fun saveProduct(productDto: ProductDto) {
+    productDao.insert(
+      productDto.description,
+      productDto.iconUrl,
+      productDto.id,
+      productDto.category.id,
+      productDto.price,
+      productDto.placeId,
+      productDto.defaultAmount
+    )
+    placeDao.insert(PlacePlaceProductCrossRef(productDto.placeId, productDto.id)).blockingGet()
   }
 }

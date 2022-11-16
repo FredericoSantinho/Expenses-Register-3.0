@@ -5,15 +5,23 @@ import neuro.expenses.register.entity.controller.bill.GetLastBill
 import neuro.expenses.register.entity.controller.bill.SaveBill
 import neuro.expenses.register.entity.controller.category.GetCategory
 import neuro.expenses.register.entity.controller.category.GetCategoryId
+import neuro.expenses.register.entity.controller.place.GeneratePlaceId
+import neuro.expenses.register.entity.controller.place.GetPlace
+import neuro.expenses.register.entity.controller.place.SavePlace
 import neuro.expenses.register.entity.controller.product.GenerateProductId
-import neuro.expenses.register.entity.controller.product.GetProductId
+import neuro.expenses.register.entity.controller.product.GetProduct
+import neuro.expenses.register.entity.controller.product.SaveProduct
 import org.koin.dsl.module
 
 val entityImplModule = module {
-  single<GetProductId> { GetProductIdImpl(get()) }
+  single<GetProduct> { GetProductImpl(get(), get()) }
+  single<SaveProduct> { SaveProductImpl(get(), get()) }
   single<GetCategoryId> { GetCategoryIdImpl(get()) }
   single<GetCategory> { GetCategoryImpl(get(), get()) }
   single<GenerateProductId> { GenerateProductIdImpl(get()) }
+  single<GeneratePlaceId> { GeneratePlaceIdImpl(get()) }
   single<GetLastBill> { GetLastBillImpl(get(), get()) }
   single<SaveBill> { SaveBillImpl(get(), get()) }
+  single<GetPlace> { GetPlaceImpl(get(), get()) }
+  single<SavePlace> { SavePlaceImpl(get(), get()) }
 }

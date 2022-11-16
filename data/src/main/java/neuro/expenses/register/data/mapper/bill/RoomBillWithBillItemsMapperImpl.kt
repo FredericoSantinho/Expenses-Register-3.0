@@ -1,17 +1,21 @@
 package neuro.expenses.register.data.mapper.bill
 
-import neuro.expenses.register.data.model.bill.RoomBillWithBillItems
+import neuro.expenses.register.data.mapper.place.RoomPlaceWithPlaceProductsMapper
+import neuro.expenses.register.data.model.bill.RoomBillWithBillItemsAndPlace
 import neuro.expenses.register.domain.dto.BillDto
 
-class RoomBillWithBillItemsMapperImpl(private val roomBillItemWithPlaceProductMapper: RoomBillItemWithPlaceProductMapper) :
+class RoomBillWithBillItemsMapperImpl(
+  private val roomBillItemWithPlaceProductMapper: RoomBillItemWithPlaceProductMapper,
+  private val roomPlaceWithPlaceProductsMapper: RoomPlaceWithPlaceProductsMapper
+) :
   RoomBillWithBillItemsMapper {
-  override fun map(roomBillWithBillItems: RoomBillWithBillItems): BillDto {
-    val roomBill = roomBillWithBillItems.roomBill
+  override fun map(roomBillWithBillItemsAndPlace: RoomBillWithBillItemsAndPlace): BillDto {
+    val roomBill = roomBillWithBillItemsAndPlace.roomBill
     val billItemDtoList =
-      roomBillWithBillItems.billItems.map { roomBillItemWithPlaceProductMapper.map(it) }
+      roomBillWithBillItemsAndPlace.billItems.map { roomBillItemWithPlaceProductMapper.map(it) }
 
     val id = roomBill.billId
-    val place = roomBill.place
+    val place = roomPlaceWithPlaceProductsMapper.map(roomBillWithBillItemsAndPlace.place.get(0))
     val timestamp = roomBill.calendar
     val total = roomBill.total
     val billItems = billItemDtoList

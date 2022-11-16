@@ -8,7 +8,7 @@ val mapperModule = module {
   single<ExpenseMapper> { ExpenseMapperImpl() }
   single<RegisterExpenseErrorMapper> { RegisterExpenseErrorMapperImpl() }
   single<ProductMapper> { ProductMapperImpl(get()) }
-  single<BillMapper> { BillMapperImpl(get()) }
+  single<BillMapper> { BillMapperImpl(get(), get()) }
   single<BillItemMapper> { BillItemMapperImpl(get()) }
   single<PlaceMapper> { PlaceMapperImpl(get(), get()) }
   single<LatLngMapper> { LatLngMapperImpl() }

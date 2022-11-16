@@ -5,7 +5,7 @@ import neuro.expenses.register.entity.BillItem
 import java.util.*
 
 class BillItemMapperImpl(private val productMapper: ProductMapper) : BillItemMapper {
-  override fun map(billItem: BillItem, place: String, calendar: Calendar): BillItemDto {
+  override fun map(billItem: BillItem, calendar: Calendar): BillItemDto {
     return BillItemDto(
       billItem.id,
       productMapper.map(billItem.product),

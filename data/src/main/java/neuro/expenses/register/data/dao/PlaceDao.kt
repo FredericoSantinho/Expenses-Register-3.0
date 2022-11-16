@@ -11,6 +11,9 @@ import neuro.expenses.register.data.model.place.RoomPlaceWithPlaceProducts
 
 @Dao
 interface PlaceDao {
+  @Query("SELECT MAX(placeId) FROM place_table")
+  fun getLastId(): Maybe<Long>
+
   @Transaction
   @Query("select * from place_table")
   fun getAll(): Single<List<RoomPlaceWithPlaceProducts>>

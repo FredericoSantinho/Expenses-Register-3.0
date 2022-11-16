@@ -84,7 +84,57 @@ interface ProductDao {
               productId,
               categoryId,
               price,
-              defaultAmount
+              defaultAmount,
+              // TODO: fazer
+              1
+            )
+          ).flatMap { roomPlaceProduct ->
+            insert(roomPlaceProduct)
+          }.flatMap {
+            if (it == -1L) getPlaceProduct(
+              roomProduct.productId,
+              categoryId,
+              price
+            ).map { it.placeProductId }.toSingle() else Single.just(it)
+          }
+            .flatMap { placeProductId ->
+              insert(PlaceProductCategoryCrossRef(placeProductId, categoryId))
+                .flatMap {
+                  insert(PlaceProductProductCrossRef(placeProductId, productId))
+                }
+                .map { placeProductId }
+            }
+        }
+      }.blockingGet()
+  }
+
+  @Transaction
+  fun insert(
+    description: String,
+    iconUrl: String = "",
+    placeProductId: Long,
+    categoryId: Long,
+    price: Double,
+    placeId: Long,
+    defaultAmount: Double
+  ): Long {
+    return getProduct(description.lowercase()).defaultIfEmpty(RoomProduct(0, description, iconUrl))
+      .flatMap { roomProduct ->
+        insert(roomProduct).flatMap { productId ->
+          if (productId == -1L) {
+            getProduct(description.lowercase()).map { it.productId }.toSingle()
+          } else {
+            Single.just(productId)
+          }
+        }.flatMap { productId ->
+          getPlaceProduct(productId, categoryId, price).defaultIfEmpty(
+            RoomPlaceProduct(
+              placeProductId,
+              productId,
+              categoryId,
+              price,
+              defaultAmount,
+              placeId
             )
           ).flatMap { roomPlaceProduct ->
             insert(roomPlaceProduct)

@@ -4,7 +4,7 @@ import java.util.*
 
 data class BillDto(
   val id: Long,
-  val place: String,
+  val place: PlaceDto,
   val calendar: Calendar,
   val total: Double,
   val billItems: List<BillItemDto> = emptyList(),

@@ -15,7 +15,8 @@ class RoomPlaceProductWithProductAndCategoryMapperImpl(private val roomCategoryM
       roomCategoryMapper.map(roomPlaceProductWithProductAndCategory.category.get(0)),
       roomPlaceProductWithProductAndCategory.roomPlaceProduct.price,
       roomPlaceProductWithProductAndCategory.roomPlaceProduct.defaultAmount,
-      roomPlaceProductWithProductAndCategory.roomProduct.get(0).iconUrl
+      roomPlaceProductWithProductAndCategory.roomProduct.get(0).iconUrl,
+      roomPlaceProductWithProductAndCategory.roomPlaceProduct.placeId
     )
   }
 }

@@ -8,7 +8,7 @@ import java.util.*
 data class RoomBill(
   @PrimaryKey(autoGenerate = true)
   var billId: Long = 0,
-  val place: String,
+  val placeId: Long,
   val calendar: Calendar,
   val total: Double,
   val isOpen: Boolean,

@@ -8,39 +8,37 @@ import neuro.expenses.register.data.mapper.place.RoomPlaceMapper
 import neuro.expenses.register.data.model.place.PlacePlaceProductCrossRef
 import neuro.expenses.register.domain.dto.PlaceDto
 import neuro.expenses.register.domain.dto.ProductDto
-import neuro.expenses.register.domain.repository.GetProductRepository
 import neuro.expenses.register.domain.repository.SavePlaceRepository
-import neuro.expenses.register.domain.repository.SaveProductRepository
 
 class SavePlaceRepositoryImpl(
   private val placeDao: PlaceDao,
-  private val saveProductRepository: SaveProductRepository,
-  private val getProductRepository: GetProductRepository,
   private val roomPlaceMapper: RoomPlaceMapper
 ) : SavePlaceRepository {
   override fun savePlace(placeDto: PlaceDto): Completable {
-    return placeDao.getAllCrossRef(placeDto.id).flatMapCompletable { crossRefs ->
-      Single.just(roomPlaceMapper.map(placeDto)).flatMapObservable { roomPlace ->
-        placeDao.insert(roomPlace).flatMapObservable {
-          Observable.fromIterable(placeDto.products).map { productDto ->
-            saveProductRepository.saveProduct(productDto)
-          }
-        }.flatMapSingle { productId ->
+    return Single.just(roomPlaceMapper.map(placeDto)).flatMapCompletable { roomPlace ->
+      placeDao.insert(roomPlace).flatMapObservable {
+        Observable.fromIterable(placeDto.products).flatMapSingle { productDto ->
           placeDao.insert(
             PlacePlaceProductCrossRef(
               placeDto.id,
-              productId
+              productDto.id
             )
           )
         }
       }.ignoreElements().andThen(
-        Observable.fromIterable(crossRefs).flatMapCompletable { placePlaceProductCrossRef ->
-          getProductRepository.getProduct(placePlaceProductCrossRef.placeProductId)
-            .filter { !contains(placeDto.products, it.id) }.flatMapCompletable {
-              placeDao.delete(placePlaceProductCrossRef)
-            }
-
-        })
+        placeDao.getAllCrossRef(placeDto.id)
+          .flattenAsObservable { placePlaceProductCrossRefs -> placePlaceProductCrossRefs }
+          .filter { placePlaceProductCrossRef ->
+            !contains(
+              placeDto.products,
+              placePlaceProductCrossRef.placeProductId
+            )
+          }
+          .flatMapCompletable { placePlaceProductCrossRef ->
+            placeDao.delete(
+              placePlaceProductCrossRef
+            )
+          })
     }
   }
 

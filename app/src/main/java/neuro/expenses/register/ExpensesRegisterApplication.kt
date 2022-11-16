@@ -32,7 +32,6 @@ class ExpensesRegisterApplication : Application() {
         entityModule,
         entityImplModule,
         controllerModule,
-        entityConverterModule,
         serviceModule,
         repositoryModule,
         dataServiceModule,

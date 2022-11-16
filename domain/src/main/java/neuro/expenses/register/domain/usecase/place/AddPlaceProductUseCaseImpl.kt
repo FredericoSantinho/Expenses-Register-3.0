@@ -7,10 +7,11 @@ import neuro.expenses.register.domain.mapper.PlaceMapper
 import neuro.expenses.register.domain.mapper.ProductMapper
 import neuro.expenses.register.entity.controller.place.PlaceController
 import neuro.expenses.register.entity.controller.place.PlaceControllerImpl
+import neuro.expenses.register.entity.controller.place.SavePlace
 
 class AddPlaceProductUseCaseImpl(
   private val getPlaceUseCase: GetPlaceUseCase,
-  private val savePlaceUseCase: SavePlaceUseCase,
+  private val savePlace: SavePlace,
   private val placeMapper: PlaceMapper,
   private val productMapper: ProductMapper,
   private val placeController: PlaceController = PlaceControllerImpl()
@@ -18,7 +19,7 @@ class AddPlaceProductUseCaseImpl(
   override fun addPlaceProduct(placeId: Long, productDto: ProductDto): Completable {
     return getPlaceUseCase.getPlace(placeId)
       .map { placeDto -> addProduct(placeDto, productDto) }
-      .flatMapCompletable { savePlaceUseCase.savePlace(it) }
+      .flatMapCompletable { savePlace.savePlace(placeMapper.map(it)) }
   }
 
   private fun addProduct(placeDto: PlaceDto, productDto: ProductDto): PlaceDto {

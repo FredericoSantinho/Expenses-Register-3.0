@@ -58,7 +58,8 @@ class EditPlaceProductViewModel(
         CategoryDto(categoryId, categoryName.value),
         price.value.toDouble(),
         0.0,
-        iconUrl.value
+        iconUrl.value,
+        placeId.value
       )
     }
   }

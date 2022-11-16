@@ -11,7 +11,8 @@ class ProductMapperImpl(private val categoryMapper: CategoryMapper) : ProductMap
       categoryMapper.map(product.category),
       product.price,
       product.defaultAmount,
-      product.iconUrl
+      product.iconUrl,
+      product.placeId
     )
   }
 
@@ -22,6 +23,7 @@ class ProductMapperImpl(private val categoryMapper: CategoryMapper) : ProductMap
       categoryMapper.map(productDto.category),
       productDto.price,
       productDto.defaultAmount,
+      productDto.placeId,
       productDto.iconUrl
     )
   }

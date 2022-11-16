@@ -13,6 +13,14 @@ class BillModelMapperImpl(
     val date = dateTimeMapper.mapDate(billDto.calendar)
     val total = decimalFormatter.format(billDto.total)
 
-    return BillModel(billDto.id, billDto.iconUrl, billDto.place, time, date, total, billDto.isOpen)
+    return BillModel(
+      billDto.id,
+      billDto.iconUrl,
+      billDto.place.name,
+      time,
+      date,
+      total,
+      billDto.isOpen
+    )
   }
 }

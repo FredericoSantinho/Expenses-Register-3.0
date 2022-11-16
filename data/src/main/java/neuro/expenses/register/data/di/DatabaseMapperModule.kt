@@ -10,7 +10,7 @@ import org.koin.dsl.module
 
 val databaseMapperModule = module {
   single<RoomCategoryMapper> { RoomCategoryMapperImpl() }
-  single<RoomBillWithBillItemsMapper> { RoomBillWithBillItemsMapperImpl(get()) }
+  single<RoomBillWithBillItemsMapper> { RoomBillWithBillItemsMapperImpl(get(), get()) }
   single<RoomBillItemWithPlaceProductMapper> { RoomBillItemWithPlaceProductMapperImpl(get()) }
   single<RoomPlaceProductWithProductAndCategoryMapper> {
     RoomPlaceProductWithProductAndCategoryMapperImpl(
