@@ -42,6 +42,7 @@ lib.google = ["androidx.core:core-ktx:$ver.ktx",
               "$lib.compose_runtime",
               "androidx.compose.runtime:runtime-livedata:$ver.compose",
               "androidx.compose.runtime:runtime-rxjava3:$ver.compose",
+              "androidx.navigation:navigation-compose:$ver.composeNavigation",
               "androidx.compose.ui:ui:$ver.compose",
               "androidx.compose.material:material:$ver.compose",
               "androidx.compose.ui:ui-tooling:$ver.compose",]

@@ -13,7 +13,7 @@ class ManualRegisterFragment : BaseComposeFragment() {
   @Composable
   override fun getComposable() {
     return ManualRegisterComposable(
-      manualRegisterViewModel, requireActivity()
+      requireActivity(), manualRegisterViewModel
     )
   }
 }

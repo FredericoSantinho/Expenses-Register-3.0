@@ -20,7 +20,7 @@ fun ProductsListComposable(
     items(productsListViewModel.products.value, key = {
       it.description
     }) { productCardViewModel ->
-      ProductCardComposable(productCardViewModel)
+      PlaceProductCardComposable(productCardViewModel)
     }
   }
 }

@@ -4,7 +4,7 @@ import androidx.compose.ui.graphics.Color
 
 val primaryColor = Color(android.graphics.Color.parseColor("#00796b"))
 val primaryLightColor = Color(android.graphics.Color.parseColor("#48a999"))
-val primaryDarkColor = Color(android.graphics.Color.parseColor("#004c40"))
+val primaryDarkColor = Color.White
 val secondaryColor = Color(android.graphics.Color.parseColor("#00796b"))
 val secondaryLightColor = Color(android.graphics.Color.parseColor("#67daff"))
 val secondaryDarkColor = Color(android.graphics.Color.parseColor("#007ac1"))

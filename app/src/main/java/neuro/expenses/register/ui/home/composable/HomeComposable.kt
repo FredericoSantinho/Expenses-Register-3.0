@@ -62,7 +62,7 @@ fun HomeComposable(
   )
 
   ConstraintLayout(
-    modifier = Modifier.fillMaxWidth()
+    modifier = Modifier.fillMaxSize()
   ) {
     val (mainC, billC) = createRefs()
 

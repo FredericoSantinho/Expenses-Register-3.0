@@ -40,7 +40,7 @@ internal class ProductCardComposableTest {
 
     composeTestRule.setContent {
       ExpensesRegisterTheme {
-        ProductCardComposable(productCardViewModel)
+        PlaceProductCardComposable(productCardViewModel)
       }
     }
 

@@ -48,8 +48,8 @@ import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun ManualRegisterComposable(
-  manualRegisterViewModel: ManualRegisterViewModel = getViewModel(),
   fragmentActivity: FragmentActivity,
+  manualRegisterViewModel: ManualRegisterViewModel = getViewModel(),
   showTimePicker: ShowTimePicker = DefaultShowTimePicker(),
   showDatePicker: ShowDatePicker = ShowMaterialDatePicker(),
   timeTextMapper: TimeTextMapper = TimeTextMapperImpl(),

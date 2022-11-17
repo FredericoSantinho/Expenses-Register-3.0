@@ -27,8 +27,8 @@ import org.koin.androidx.compose.getViewModel
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun BillsComposable(
-  billsViewModel: BillsViewModel = getViewModel(),
-  fragmentActivity: FragmentActivity
+  fragmentActivity: FragmentActivity,
+  billsViewModel: BillsViewModel = getViewModel()
 ) {
   val coroutineScope = rememberCoroutineScope()
 
