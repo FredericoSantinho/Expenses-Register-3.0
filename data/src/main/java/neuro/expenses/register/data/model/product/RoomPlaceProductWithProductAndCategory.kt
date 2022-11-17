@@ -14,11 +14,11 @@ data class RoomPlaceProductWithProductAndCategory(
     entityColumn = "productId",
     associateBy = Junction(PlaceProductProductCrossRef::class)
   )
-  val roomProduct: List<RoomProduct>,
+  val roomProduct: RoomProduct,
   @Relation(
     parentColumn = "placeProductId",
     entityColumn = "categoryId",
     associateBy = Junction(PlaceProductCategoryCrossRef::class)
   )
-  val category: List<RoomCategory>
+  val category: RoomCategory
 )

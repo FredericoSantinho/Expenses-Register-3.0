@@ -8,7 +8,7 @@ fun RoomBillWithBillItemsAndPlace.toDomain(): BillDto {
   val roomBill = roomBill
 
   val id = roomBill.billId
-  val place = place.get(0).toDomain()
+  val place = place.toDomain()
   val timestamp = roomBill.calendar
   val total = roomBill.total
   val billItems = billItems.toDomain()
