@@ -126,17 +126,16 @@ fun PreviewDateTimeComposable() {
     ProductCardComposable(
       ProductCardViewModel(
         MockedOnProductCardClick(),
-        productCardModel,
-        calendar
+        productCardModel
       )
     )
   }
 }
 
 private class MockedOnProductCardClick : OnProductCardClick {
-  override fun onProductCardClick(productCardModel: ProductCardModel, calendar: Calendar) {}
+  override fun onProductCardClick(productCardModel: ProductCardModel) {}
 
-  override fun onProductCardLongClick(productCardModel: ProductCardModel, calendar: Calendar) {}
+  override fun onProductCardLongClick(productCardModel: ProductCardModel) {}
 }
 
 class ProductCardTags {

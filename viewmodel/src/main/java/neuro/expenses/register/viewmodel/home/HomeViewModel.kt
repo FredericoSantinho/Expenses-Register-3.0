@@ -22,7 +22,6 @@ import neuro.expenses.register.viewmodel.home.mapper.toViewModel
 import neuro.expenses.register.viewmodel.home.model.CameraPositionModel
 import neuro.expenses.register.viewmodel.home.model.LatLngModel
 import neuro.expenses.register.viewmodel.home.model.ProductCardModel
-import java.util.*
 
 private val lisbon = CameraPositionModel(LatLngModel(38.722252, -9.139337), 7.0f)
 
@@ -84,13 +83,13 @@ class HomeViewModel(
     }
   }
 
-  override fun onProductCardClick(productCardModel: ProductCardModel, calendar: Calendar) {
+  override fun onProductCardClick(productCardModel: ProductCardModel) {
     registerExpenseUseCase.registerExpense(
-      productCardModelMapper.map(productCardModel, calendar)
+      productCardModelMapper.map(productCardModel, calendar.value)
     ).baseSubscribe {}
   }
 
-  override fun onProductCardLongClick(productCardModel: ProductCardModel, calendar: Calendar) {
+  override fun onProductCardLongClick(productCardModel: ProductCardModel) {
     setEditProductViewModel(productCardModel)
 
     _uiEvent.value = UiEvent.OpenEditMode()
@@ -115,7 +114,7 @@ class HomeViewModel(
   }
 
   private fun newProductsListViewModel() = ProductsListViewModel(
-    ProductCardViewModelFactoryImpl(this), productCardModelMapper, calendar
+    ProductCardViewModelFactoryImpl(this), productCardModelMapper
   )
 }
 

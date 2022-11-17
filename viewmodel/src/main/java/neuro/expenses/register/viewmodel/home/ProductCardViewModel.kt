@@ -1,15 +1,12 @@
 package neuro.expenses.register.viewmodel.home
 
-import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import neuro.expenses.register.viewmodel.common.model.CategoryModel
 import neuro.expenses.register.viewmodel.home.model.ProductCardModel
-import java.util.*
 
 class ProductCardViewModel(
   private val onProductCardClick: OnProductCardClick,
-  productCardModel: ProductCardModel,
-  val calendar: State<Calendar>
+  productCardModel: ProductCardModel
 ) : IProductCardViewModel {
   override val productId = mutableStateOf(productCardModel.id)
   override val description = mutableStateOf(productCardModel.description)
@@ -27,12 +24,12 @@ class ProductCardViewModel(
 
   override fun onCardClick() {
     val productCardModel = buildProductCardModel()
-    onProductCardClick.onProductCardClick(productCardModel, calendar.value)
+    onProductCardClick.onProductCardClick(productCardModel)
   }
 
   override fun onCardLongClick() {
     val productCardModel = buildProductCardModel()
-    onProductCardClick.onProductCardLongClick(productCardModel, calendar.value)
+    onProductCardClick.onProductCardLongClick(productCardModel)
   }
 
   private fun buildProductCardModel(): ProductCardModel {

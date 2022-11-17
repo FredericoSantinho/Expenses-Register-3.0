@@ -14,6 +14,7 @@ import neuro.expenses.register.viewmodel.edit.EditViewModel
 import neuro.expenses.register.viewmodel.edit.category.EditCategoriesViewModel
 import neuro.expenses.register.viewmodel.edit.place.EditPlacesViewModel
 import neuro.expenses.register.viewmodel.edit.placeproduct.EditPlaceProductViewModel
+import neuro.expenses.register.viewmodel.edit.placeproduct.EditPlaceProductsViewModel
 import neuro.expenses.register.viewmodel.edit.product.EditProductsViewModel
 import neuro.expenses.register.viewmodel.home.HomeViewModel
 import neuro.expenses.register.viewmodel.main.MainViewModel
@@ -54,6 +55,7 @@ val viewModelModule = module {
   viewModel { BillsViewModel(get(), get()) }
   viewModel { EditViewModel() }
   viewModel { EditProductsViewModel() }
+  viewModel { EditPlaceProductsViewModel(get(), get(), get(), get()) }
   viewModel { EditCategoriesViewModel() }
   viewModel { EditPlacesViewModel() }
 }

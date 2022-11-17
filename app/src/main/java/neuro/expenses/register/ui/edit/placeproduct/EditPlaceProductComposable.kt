@@ -17,7 +17,9 @@ import androidx.compose.runtime.rxjava3.subscribeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
@@ -39,6 +41,8 @@ fun EditPlaceProductComposable(
   val descriptionIsError = remember { mutableStateOf(false) }
   val descriptionErrorMessage = remember { mutableStateOf("") }
   val categoryIsError = remember { mutableStateOf(false) }
+
+  val focusManager = LocalFocusManager.current
 
   Column(
     modifier = modifier
@@ -74,7 +78,8 @@ fun EditPlaceProductComposable(
       onValueChange = { editPlaceProductViewModel.onCategoryChange() },
       value = editPlaceProductViewModel.categoryModel.value.name,
       isError = categoryIsError,
-      textStyle = ExpensesRegisterTypography.body2
+      textStyle = ExpensesRegisterTypography.body2,
+      onSelectOption = { focusManager.moveFocus(FocusDirection.Next) }
     )
     TextFieldWithError(
       label = stringResource(R.string.icon_url),

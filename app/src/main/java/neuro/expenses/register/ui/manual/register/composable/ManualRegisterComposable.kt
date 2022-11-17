@@ -111,7 +111,8 @@ fun ManualRegisterComposable(
         onValueChange = { manualRegisterViewModel.onCategoryChange() },
         value = manualRegisterViewModel.category,
         isError = categoryIsError,
-        textStyle = ExpensesRegisterTypography.body2
+        textStyle = ExpensesRegisterTypography.body2,
+        onSelectOption = { focusManager.moveFocus(FocusDirection.Next) }
       )
       ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
         val (place, placeAuto) = createRefs()

@@ -7,10 +7,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusDirection
-import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
@@ -28,6 +25,7 @@ fun TextFieldWithDropdown(
   take: Int = 3,
   keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
   onValueChange: (String) -> Unit = { },
+  onSelectOption: () -> Unit = { },
   value: MutableState<String> = mutableStateOf(""),
   isError: MutableState<Boolean> = mutableStateOf(false),
   textStyle: TextStyle = TextStyle.Default
@@ -43,23 +41,22 @@ fun TextFieldWithDropdown(
   fun onValueChanged(value: String) {
     dropDownExpanded.value = value.isNotBlank()
     dropDownOptions.value = dataIn.value.filter {
-      it.lowercase().startsWith(value.lowercase()) && it != value
+      it.lowercase().contains(value.lowercase()) && it != value
     }.take(take)
   }
 
-  val focusManager = LocalFocusManager.current
   InternalTextFieldWithDropdown(
     modifier = modifier,
     setValue = { onValueChanged(it) },
     onDismissRequest = ::onDropdownDismissRequest,
     onValueChange = onValueChange,
+    onSelectOption = onSelectOption,
     dropDownExpanded = dropDownExpanded.value,
     list = dropDownOptions.value,
     label = label,
     keyboardOptions,
     value,
     isError,
-    focusManager,
     textStyle
   )
 }
@@ -70,13 +67,13 @@ fun InternalTextFieldWithDropdown(
   setValue: (String) -> Unit,
   onDismissRequest: () -> Unit,
   onValueChange: (String) -> Unit,
+  onSelectOption: () -> Unit,
   dropDownExpanded: Boolean,
   list: List<String>,
   label: String = "",
   keyboardOptions: KeyboardOptions,
   value: MutableState<String>,
   isError: MutableState<Boolean>,
-  focusManager: FocusManager,
   textStyle: TextStyle
 ) {
   var isErrorVar by rememberSaveable { isError }
@@ -95,6 +92,7 @@ fun InternalTextFieldWithDropdown(
         isErrorVar = false
         value.value = it.text
         setValue.invoke(it.text)
+        onValueChange.invoke(value.value)
       },
       label = { Text(label) },
       colors = TextFieldDefaults.outlinedTextFieldColors(),
@@ -115,7 +113,7 @@ fun InternalTextFieldWithDropdown(
         DropdownMenuItem(onClick = {
           value.value = text
           onValueChange.invoke(value.value)
-          focusManager.moveFocus(FocusDirection.Next)
+          onSelectOption()
         }) {
           Text(text = text)
         }
