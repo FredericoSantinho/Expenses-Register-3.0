@@ -91,8 +91,7 @@ fun HomeComposable(
         bottom.linkTo(parent.bottom)
       })
       Column(modifier = Modifier.constrainAs(mainC) {
-        top.linkTo(parent.top)
-        bottom.linkTo(billC.top)
+        linkTo(top = parent.top, bottom = billC.top)
         height = Dimension.fillToConstraints
       }) {
         MapsComposable(

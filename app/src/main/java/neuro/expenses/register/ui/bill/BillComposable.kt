@@ -62,8 +62,7 @@ fun BillComposable(
         .semantics { testTag = billViewModel.iconUrl.value }
         .constrainAs(imageC) {
           start.linkTo(parent.start)
-          top.linkTo(parent.top)
-          bottom.linkTo(parent.bottom)
+          linkTo(top = parent.top, bottom = parent.bottom)
         }
         .size(64.dp)
         .clip(RoundedCornerShape(corner = CornerSize(8.dp)))
@@ -106,8 +105,7 @@ fun BillComposable(
         .semantics { testTag = BillTags.TOTAL }
         .constrainAs(totalC) {
           end.linkTo(closeBillC.start)
-          top.linkTo(parent.top)
-          bottom.linkTo(parent.bottom)
+          linkTo(top = parent.top, bottom = parent.bottom)
         }
         .widthIn(80.dp)
         .shimmerBackground(loading.value),
@@ -118,8 +116,7 @@ fun BillComposable(
         color = MaterialTheme.colors.primary)
       val iconConstraintModifier = Modifier.constrainAs(closeBillC) {
         end.linkTo(parent.end)
-        top.linkTo(parent.top)
-        bottom.linkTo(parent.bottom)
+        linkTo(top = parent.top, bottom = parent.bottom)
       }
       onUiState(uiState, billViewModel, iconConstraintModifier, loading)
     }

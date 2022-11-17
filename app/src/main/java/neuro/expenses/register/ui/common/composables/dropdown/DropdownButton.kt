@@ -42,13 +42,11 @@ fun DropdownButton(modifier: Modifier = Modifier, items: List<String>, onItemSel
 
         Text(modifier = Modifier.constrainAs(textC) {
           start.linkTo(parent.start)
-          top.linkTo(parent.top)
-          bottom.linkTo(parent.bottom)
+          linkTo(top = parent.top, bottom = parent.bottom)
         }, text = items[selectedIndex])
         Icon(arrowIcon, "contentDescription", Modifier.constrainAs(iconC) {
           end.linkTo(parent.end, margin = (-8).dp)
-          top.linkTo(parent.top)
-          bottom.linkTo(parent.bottom)
+          linkTo(top = parent.top, bottom = parent.bottom)
         })
       }
     }
