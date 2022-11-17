@@ -1,6 +1,7 @@
 package neuro.expenses.register.domain.entity
 
 import io.reactivex.rxjava3.core.Maybe
+import neuro.expenses.register.domain.dto.PlaceProductDto
 import neuro.expenses.register.domain.mapper.toEntity
 import neuro.expenses.register.domain.repository.GetProductRepository
 import neuro.expenses.register.entity.Place
@@ -14,6 +15,6 @@ class GetProductImpl(
     description: String, category: String, price: Double, place: Place
   ): Maybe<PlaceProduct> {
     return getProductRepository.getProduct(description, category, price, place.id)
-      .map { it.toEntity() }
+      .map(PlaceProductDto::toEntity)
   }
 }
