@@ -4,6 +4,8 @@ import android.app.Activity
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -17,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.fragment.app.FragmentActivity
+import androidx.navigation.NavHostController
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import neuro.expenses.register.*
@@ -43,6 +46,7 @@ import org.koin.androidx.compose.getViewModel
 @Composable
 fun HomeComposable(
   fragmentActivity: FragmentActivity,
+  navController: NavHostController,
   mapsEventMapper: HomeMapsEventMapper = get(),
   homeViewModel: HomeViewModel = getViewModel()
 ) {
@@ -61,54 +65,72 @@ fun HomeComposable(
     }, skipHalfExpanded = true
   )
 
-  ConstraintLayout(
-    modifier = Modifier.fillMaxSize()
-  ) {
-    val (mainC, billC) = createRefs()
-
-    BillComposableContainer(homeViewModel.billViewModel, Modifier.constrainAs(billC) {
-      bottom.linkTo(parent.bottom)
-    })
-    Column(modifier = Modifier.constrainAs(mainC) {
-      top.linkTo(parent.top)
-      bottom.linkTo(billC.top)
-      height = Dimension.fillToConstraints
-    }) {
-      MapsComposable(
-        homeViewModel.initialCameraPosition,
-        mapsEventMapper.map(uiEvent.value)
-      )
-      Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-        DateTimeComposable(
-          fragmentActivity = fragmentActivity,
-          modifier = Modifier
-            .align(CenterVertically)
-            .padding(start = 8.dp),
-          calendar = homeViewModel.calendar
-        )
-        DropDownTextField(
-          modifier = Modifier
-            .padding(start = 8.dp)
-            .requiredWidth(180.dp),
-          label = stringResource(id = R.string.home_place),
-          listItems = homeViewModel.placesNames,
-          onSelectedOption = { homeViewModel.onSelectedPlace(it) },
-          selectedItemIndex = homeViewModel.selectedPlaceIndex
-        )
-      }
-      Divider(thickness = 1.dp, color = Color.LightGray)
-
-      onUiState(uiState, homeViewModel, loading)
+  Scaffold(
+    topBar = {
+      TopAppBar(
+        title = { Text(text = stringResource(R.string.title_home)) },
+        navigationIcon =
+        {
+          IconButton(onClick = { navController.navigateUp() }) {
+            Icon(
+              imageVector = Icons.Filled.ArrowBack,
+              contentDescription = "Back"
+            )
+          }
+        })
     }
-  }
-  ModalBottomSheetLayout(sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
-    sheetBackgroundColor = Color.Transparent,
-    sheetState = modalBottomSheetState,
-    sheetContent = {
-      EditPlaceProductComposable(homeViewModel.editPlaceProductViewModel)
-    }) {}
+  ) {
+    ConstraintLayout(
+      modifier = Modifier
+        .fillMaxSize()
+        .padding(it)
+    ) {
+      val (mainC, billC) = createRefs()
 
-  onUiEvent(uiEvent, coroutineScope, modalBottomSheetState)
+      BillComposableContainer(homeViewModel.billViewModel, Modifier.constrainAs(billC) {
+        bottom.linkTo(parent.bottom)
+      })
+      Column(modifier = Modifier.constrainAs(mainC) {
+        top.linkTo(parent.top)
+        bottom.linkTo(billC.top)
+        height = Dimension.fillToConstraints
+      }) {
+        MapsComposable(
+          homeViewModel.initialCameraPosition,
+          mapsEventMapper.map(uiEvent.value)
+        )
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+          DateTimeComposable(
+            fragmentActivity = fragmentActivity,
+            modifier = Modifier
+              .align(CenterVertically)
+              .padding(start = 8.dp),
+            calendar = homeViewModel.calendar
+          )
+          DropDownTextField(
+            modifier = Modifier
+              .padding(start = 8.dp)
+              .requiredWidth(180.dp),
+            label = stringResource(id = R.string.home_place),
+            listItems = homeViewModel.placesNames,
+            onSelectedOption = { homeViewModel.onSelectedPlace(it) },
+            selectedItemIndex = homeViewModel.selectedPlaceIndex
+          )
+        }
+        Divider(thickness = 1.dp, color = Color.LightGray)
+
+        onUiState(uiState, homeViewModel, loading)
+      }
+    }
+    ModalBottomSheetLayout(sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
+      sheetBackgroundColor = Color.Transparent,
+      sheetState = modalBottomSheetState,
+      sheetContent = {
+        EditPlaceProductComposable(homeViewModel.editPlaceProductViewModel)
+      }) {}
+    onUiEvent(uiEvent, coroutineScope, modalBottomSheetState)
+  }
+
 
   if (!modalBottomSheetState.isVisible) {
     homeViewModel.onModalBottomSheetStateNotVisible()
@@ -208,9 +230,10 @@ private fun onUiReady(homeViewModel: IHomeViewModel, loading: MutableState<Boole
 @Preview
 @Composable
 fun PreviewHomeComposable() {
+  val fragmentActivity = FragmentActivity()
   ExpensesRegisterTheme {
     HomeComposable(
-      FragmentActivity()
+      fragmentActivity, NavHostController(fragmentActivity)
     )
   }
 }
