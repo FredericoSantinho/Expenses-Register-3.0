@@ -6,6 +6,7 @@ import neuro.expenses.register.entity.controller.bill.GenerateBillIdImpl
 import neuro.expenses.register.entity.controller.bill.GenerateBillItemIdImpl
 import neuro.expenses.register.entity.controller.category.GetCategory
 import neuro.expenses.register.entity.controller.category.GetCategoryId
+import neuro.expenses.register.entity.controller.location.GetCurrentLocation
 import neuro.expenses.register.entity.controller.place.GeneratePlaceId
 import neuro.expenses.register.entity.controller.place.GetPlace
 import neuro.expenses.register.entity.controller.place.SavePlace
@@ -28,4 +29,5 @@ val entityImplModule = module {
   single<SaveBill> { SaveBillImpl(get()) }
   single<GetPlace> { GetPlaceImpl(get()) }
   single<SavePlace> { SavePlaceImpl(get()) }
+  single<GetCurrentLocation> { GetCurrentLocationImpl(get()) }
 }

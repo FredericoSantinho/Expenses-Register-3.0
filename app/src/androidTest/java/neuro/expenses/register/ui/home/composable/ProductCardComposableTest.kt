@@ -6,6 +6,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.unit.dp
 import neuro.expenses.register.ui.performLongClick
 import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
+import neuro.expenses.register.viewmodel.common.model.CategoryModel
 import neuro.expenses.register.viewmodel.home.IProductCardViewModel
 import org.junit.Rule
 import org.junit.Test
@@ -26,7 +27,14 @@ internal class ProductCardComposableTest {
     val productCardViewModel = mock<IProductCardViewModel>()
 
     whenever(productCardViewModel.description).doReturn(mutableStateOf(description))
-    whenever(productCardViewModel.categoryName).doReturn(mutableStateOf(category))
+    whenever(productCardViewModel.categoryModel).doReturn(
+      mutableStateOf(
+        CategoryModel(
+          1,
+          category
+        )
+      )
+    )
     whenever(productCardViewModel.price).doReturn(mutableStateOf(price))
     whenever(productCardViewModel.iconUrl).doReturn(mutableStateOf(iconUrl))
 

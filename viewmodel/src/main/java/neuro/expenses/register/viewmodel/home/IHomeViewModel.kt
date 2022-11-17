@@ -3,7 +3,7 @@ package neuro.expenses.register.viewmodel.home
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import neuro.expenses.register.viewmodel.bill.BillViewModel
-import neuro.expenses.register.viewmodel.edit.product.EditPlaceProductViewModel
+import neuro.expenses.register.viewmodel.edit.placeproduct.EditPlaceProductViewModel
 import java.util.*
 
 interface IHomeViewModel : OnProductCardClick {

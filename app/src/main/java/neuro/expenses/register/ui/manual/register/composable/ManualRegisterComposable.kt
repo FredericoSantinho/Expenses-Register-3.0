@@ -78,136 +78,135 @@ fun ManualRegisterComposable(
   val focusManager = LocalFocusManager.current
   val placeHasFocus = remember { mutableStateOf(false) }
 
-  Column(
-    Modifier
-      .fillMaxSize()
-      .verticalScroll(rememberScrollState()),
-    verticalArrangement = Arrangement.Bottom
-  ) {
-    DateTimeComposable(
-      fragmentActivity,
-      modifier = Modifier
-        .fillMaxWidth()
-        .padding(bottom = 8.dp),
-      showTimePicker,
-      showDatePicker,
-      timeTextMapper,
-      dateTextMapper,
-      calendar = manualRegisterViewModel.calendar
-    )
-    TextFieldWithError(
-      label = stringResource(R.string.description),
-      keyboardOptions = keyboardOptionsText,
-      modifier = Modifier.padding(start = 8.dp, end = 8.dp),
-      value = manualRegisterViewModel.description,
-      isError = descriptionIsError,
-      errorMessage = descriptionErrorMessage,
-      onValueChange = { manualRegisterViewModel.onDescriptionChange() },
-      textStyle = ExpensesRegisterTypography.body2
-    )
-    TextFieldWithDropdown(
-      modifier = Modifier.padding(start = 8.dp, end = 8.dp),
-      dataIn = manualRegisterViewModel.categoriesNames.subscribeAsState(initial = emptyList()),
-      label = stringResource(R.string.category),
-      keyboardOptions = keyboardOptionsText,
-      onValueChange = { manualRegisterViewModel.onCategoryChange() },
-      value = manualRegisterViewModel.category,
-      isError = categoryIsError,
-      textStyle = ExpensesRegisterTypography.body2
-    )
-    ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
-      val (place, placeAuto) = createRefs()
-
-      TextFieldWithError(
-        label = stringResource(R.string.place),
+  Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.Bottom) {
+    Column(
+      Modifier
+        .padding(start = 8.dp, end = 8.dp)
+        .verticalScroll(rememberScrollState())
+    ) {
+      DateTimeComposable(
+        fragmentActivity,
         modifier = Modifier
-          .constrainAs(place) {
-            start.linkTo(parent.start, margin = 8.dp)
-            end.linkTo(placeAuto.start, margin = 8.dp)
-            width = Dimension.fillToConstraints
-          }
-          .onFocusEvent { placeHasFocus.value = it.isFocused },
+          .fillMaxWidth()
+          .padding(bottom = 8.dp),
+        showTimePicker,
+        showDatePicker,
+        timeTextMapper,
+        dateTextMapper,
+        calendar = manualRegisterViewModel.calendar
+      )
+      TextFieldWithError(
+        label = stringResource(R.string.description),
         keyboardOptions = keyboardOptionsText,
-        value = manualRegisterViewModel.place,
-        isError = placeIsError,
-        errorMessage = placeErrorMessage,
-        onValueChange = {
-          manualRegisterViewModel.onPlaceChange()
-        },
+        value = manualRegisterViewModel.description,
+        isError = descriptionIsError,
+        errorMessage = descriptionErrorMessage,
+        onValueChange = { manualRegisterViewModel.onDescriptionChange() },
         textStyle = ExpensesRegisterTypography.body2
       )
-      IconButton(onClick = {
-        manualRegisterViewModel.onNearestPlaceButton()
-        if (placeHasFocus.value) {
-          focusManager.moveFocus(FocusDirection.Next)
+      TextFieldWithDropdown(
+        dataIn = manualRegisterViewModel.categoriesNames.subscribeAsState(initial = emptyList()),
+        label = stringResource(R.string.category),
+        keyboardOptions = keyboardOptionsText,
+        onValueChange = { manualRegisterViewModel.onCategoryChange() },
+        value = manualRegisterViewModel.category,
+        isError = categoryIsError,
+        textStyle = ExpensesRegisterTypography.body2
+      )
+      ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
+        val (place, placeAuto) = createRefs()
+
+        TextFieldWithError(
+          label = stringResource(R.string.place),
+          modifier = Modifier
+            .constrainAs(place) {
+              start.linkTo(parent.start)
+              end.linkTo(placeAuto.start, margin = 8.dp)
+              width = Dimension.fillToConstraints
+            }
+            .onFocusEvent { placeHasFocus.value = it.isFocused },
+          keyboardOptions = keyboardOptionsText,
+          value = manualRegisterViewModel.place,
+          isError = placeIsError,
+          errorMessage = placeErrorMessage,
+          onValueChange = {
+            manualRegisterViewModel.onPlaceChange()
+          },
+          textStyle = ExpensesRegisterTypography.body2
+        )
+        IconButton(onClick = {
+          manualRegisterViewModel.onNearestPlaceButton()
+          if (placeHasFocus.value) {
+            focusManager.moveFocus(FocusDirection.Next)
+          }
+        }, modifier = Modifier.constrainAs(placeAuto) {
+          end.linkTo(parent.end)
+          top.linkTo(place.top, margin = 8.dp)
+          bottom.linkTo(place.bottom)
+        }) {
+          Icon(
+            painter = painterResource(id = R.drawable.ic_edit_place_24),
+            contentDescription = null,
+            tint = MaterialTheme.colors.primary
+          )
         }
-      }, modifier = Modifier.constrainAs(placeAuto) {
-        end.linkTo(parent.end, margin = 8.dp)
-        top.linkTo(place.top, margin = 8.dp)
-        bottom.linkTo(place.bottom)
-      }) {
-        Icon(
-          painter = painterResource(id = R.drawable.ic_edit_place_24),
-          contentDescription = null,
-          tint = MaterialTheme.colors.primary
+      }
+      ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
+        val (priceC, amountC, totalLabelC, totalC) = createRefs()
+
+        CurrencyTextField(
+          label = stringResource(R.string.price),
+          modifier = Modifier.constrainAs(priceC) {
+            start.linkTo(parent.start)
+            width = Dimension.value(96.dp)
+          },
+          onValueChange = {
+            manualRegisterViewModel.onPriceChange()
+          },
+          value = manualRegisterViewModel.price,
+          textStyle = ExpensesRegisterTypography.body2
+        )
+        TextFieldWithError(
+          label = stringResource(R.string.amount),
+          modifier = Modifier.constrainAs(amountC) {
+            start.linkTo(priceC.end, margin = 8.dp)
+            width = Dimension.value(96.dp)
+          },
+          keyboardOptions = keyboardOptionsNumeric,
+          textStyle = ExpensesRegisterTypography.body2.copy(textAlign = TextAlign.End),
+          onValueChange = {
+            manualRegisterViewModel.amount.value = it
+            manualRegisterViewModel.onAmountChange()
+          },
+          value = manualRegisterViewModel.amount,
+          isError = amountIsError,
+          errorMessage = amountErrorMessage
+        )
+        Text(
+          text = stringResource(R.string.manual_register_total) + ':',
+          modifier = Modifier.constrainAs(totalLabelC) {
+            end.linkTo(totalC.start, margin = 8.dp)
+            top.linkTo(amountC.top, margin = 8.dp)
+            bottom.linkTo(amountC.bottom)
+          },
+          fontSize = 16.sp
+        )
+        Text(
+          text = manualRegisterViewModel.total.value,
+          modifier = Modifier.constrainAs(totalC) {
+            end.linkTo(parent.end, margin = 8.dp)
+            top.linkTo(amountC.top, margin = 8.dp)
+            bottom.linkTo(amountC.bottom)
+          },
+          fontSize = 16.sp
         )
       }
-    }
-    ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
-      val (priceC, amountC, totalLabelC, totalC) = createRefs()
-
-      CurrencyTextField(
-        label = stringResource(R.string.price),
-        modifier = Modifier.constrainAs(priceC) {
-          start.linkTo(parent.start, margin = 8.dp)
-          width = Dimension.value(96.dp)
-        },
-        onValueChange = {
-          manualRegisterViewModel.onPriceChange()
-        },
-        value = manualRegisterViewModel.price,
-        textStyle = ExpensesRegisterTypography.body2
-      )
-      TextFieldWithError(
-        label = stringResource(R.string.amount),
-        modifier = Modifier.constrainAs(amountC) {
-          start.linkTo(priceC.end, margin = 8.dp)
-          width = Dimension.value(96.dp)
-        },
-        keyboardOptions = keyboardOptionsNumeric,
-        textStyle = ExpensesRegisterTypography.body2.copy(textAlign = TextAlign.End),
-        onValueChange = {
-          manualRegisterViewModel.amount.value = it
-          manualRegisterViewModel.onAmountChange()
-        },
-        value = manualRegisterViewModel.amount,
-        isError = amountIsError,
-        errorMessage = amountErrorMessage
-      )
-      Text(
-        text = stringResource(R.string.manual_register_total) + ':',
-        modifier = Modifier.constrainAs(totalLabelC) {
-          end.linkTo(totalC.start, margin = 8.dp)
-          top.linkTo(amountC.top, margin = 8.dp)
-          bottom.linkTo(amountC.bottom)
-        },
-        fontSize = 16.sp
-      )
-      Text(
-        text = manualRegisterViewModel.total.value,
-        modifier = Modifier.constrainAs(totalC) {
-          end.linkTo(parent.end, margin = 16.dp)
-          top.linkTo(amountC.top, margin = 8.dp)
-          bottom.linkTo(amountC.bottom)
-        },
-        fontSize = 16.sp
-      )
-    }
-    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-      Button(onClick = {
-        manualRegisterViewModel.onRegisterButton()
-      }, modifier = Modifier.padding(top = 8.dp, bottom = 16.dp)) {
-        Text(text = stringResource(R.string.manual_register_register))
+      Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+        Button(onClick = {
+          manualRegisterViewModel.onRegisterButton()
+        }, modifier = Modifier.padding(top = 8.dp, bottom = 16.dp)) {
+          Text(text = stringResource(R.string.manual_register_register))
+        }
       }
     }
     BillComposableContainer(manualRegisterViewModel.billViewModel)

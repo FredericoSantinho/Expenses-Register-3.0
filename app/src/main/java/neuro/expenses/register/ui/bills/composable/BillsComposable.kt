@@ -10,6 +10,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.*
+import androidx.compose.runtime.rxjava3.subscribeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
@@ -42,25 +43,25 @@ fun BillsComposable(
       }
     )
 
-  Column(
+  val bills = billsViewModel.bills.subscribeAsState(initial = emptyList())
+
+  LazyColumn(
     Modifier
       .background(color = grey_fog_lighter)
-      .fillMaxSize()
+      .fillMaxSize(),
+    verticalArrangement = Arrangement.spacedBy(8.dp)
   ) {
-    LazyColumn(
-      verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-      items(billsViewModel.bills, { listItem: BillViewModel -> listItem.id }) { item ->
-        var unread by remember { mutableStateOf(false) }
-        val dismissState = rememberDismissState(
-          confirmStateChange = {
-            if (it == DismissValue.DismissedToEnd) unread = !unread
-            true
-          }
-        )
-        if (dismissState.isDismissed(DismissDirection.EndToStart) ||
-          dismissState.isDismissed(DismissDirection.StartToEnd)
-        ) {
+    items(bills.value, { listItem: BillViewModel -> listItem.id }) { item ->
+      var unread by remember { mutableStateOf(false) }
+      val dismissState = rememberDismissState(
+        confirmStateChange = {
+          if (it == DismissValue.DismissedToEnd) unread = !unread
+          true
+        }
+      )
+      if (dismissState.isDismissed(DismissDirection.EndToStart) ||
+        dismissState.isDismissed(DismissDirection.StartToEnd)
+      ) {
           billsViewModel.onBillSwipe(item)
         }
         SwipeToDismiss(
@@ -113,7 +114,6 @@ fun BillsComposable(
           }
         )
       }
-    }
   }
   ModalBottomSheetLayout(
     sheetBackgroundColor = Color.Transparent,

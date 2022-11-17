@@ -13,19 +13,15 @@ class SuffixTransformation(private val suffix: String) : VisualTransformation {
 
 fun suffixFilter(number: AnnotatedString, suffix: String): TransformedText {
 
-  val isEmpty = number.text.isEmpty()
-
-  val out = if (isEmpty) "" else number.text + ' ' + suffix
-  val suffixOffset = if (isEmpty) 0 else suffix.length + 1
+  val out = number.text + ' ' + suffix
 
   val numberOffsetTranslator = object : OffsetMapping {
     override fun originalToTransformed(offset: Int): Int {
-      return offset + suffixOffset
+      return offset
     }
 
     override fun transformedToOriginal(offset: Int): Int {
-      if (offset <= suffixOffset - 1) return suffixOffset
-      return offset - suffixOffset
+      return offset
     }
   }
 

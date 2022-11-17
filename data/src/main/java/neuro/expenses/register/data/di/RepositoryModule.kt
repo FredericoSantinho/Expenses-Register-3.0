@@ -9,6 +9,7 @@ val repositoryModule = module {
   single<ObserveCategoriesRepository> { ObserveCategoriesRepositoryImpl(get()) }
   single<GetCategoryRepository> { GetCategoryRepositoryImpl(get()) }
   single<ObserveLastBillRepository> { ObserveLastBillRepositoryImpl(get()) }
+  single<ObserveBillsRepository> { ObserveBillsRepositoryImpl(get()) }
   single<GetLastBillRepository> { GetLastBillRepositoryImpl(get()) }
   single<SaveBillRepository> { SaveBillRepositoryImpl(get()) }
   single<SaveProductRepository> { SaveProductRepositoryImpl(get()) }

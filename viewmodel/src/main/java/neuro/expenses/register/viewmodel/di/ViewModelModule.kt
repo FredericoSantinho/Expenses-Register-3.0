@@ -13,7 +13,7 @@ import neuro.expenses.register.viewmodel.common.formatter.NumberFormaterImpl
 import neuro.expenses.register.viewmodel.edit.EditViewModel
 import neuro.expenses.register.viewmodel.edit.category.EditCategoriesViewModel
 import neuro.expenses.register.viewmodel.edit.place.EditPlacesViewModel
-import neuro.expenses.register.viewmodel.edit.product.EditPlaceProductViewModel
+import neuro.expenses.register.viewmodel.edit.placeproduct.EditPlaceProductViewModel
 import neuro.expenses.register.viewmodel.edit.product.EditProductsViewModel
 import neuro.expenses.register.viewmodel.home.HomeViewModel
 import neuro.expenses.register.viewmodel.main.MainViewModel
@@ -25,6 +25,7 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 const val CURRENCY = "currency"
+const val DECIMALS = 2
 
 val viewModelModule = module {
   viewModel { PermissionsViewModel(get()) }
@@ -49,8 +50,8 @@ val viewModelModule = module {
   single<FeedLastBillViewModel> { FeedLastBillViewModelImpl(get(), get(), get(), get()) }
   single<DateTimeMapper> { DateTimeMapperImpl(get()) }
   single<NumberFormater> { NumberFormaterImpl() }
-  single<DecimalFormatter> { DecimalFormatterImpl(2) }
-  viewModel { BillsViewModel() }
+  single<DecimalFormatter> { DecimalFormatterImpl(DECIMALS) }
+  viewModel { BillsViewModel(get(), get()) }
   viewModel { EditViewModel() }
   viewModel { EditProductsViewModel() }
   viewModel { EditCategoriesViewModel() }

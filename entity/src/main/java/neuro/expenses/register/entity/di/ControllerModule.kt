@@ -32,5 +32,5 @@ val controllerModule = module {
     GetOrCreatePlaceProductImpl(get(), get(), get(), get(), get(), get())
   }
   single<PlaceController> { PlaceControllerImpl(get()) }
-  single<GetOrCreatePlace> { GetOrCreatePlaceImpl(get(), get(), get()) }
+  single<GetOrCreatePlace> { GetOrCreatePlaceImpl(get(), get(), get(), get()) }
 }

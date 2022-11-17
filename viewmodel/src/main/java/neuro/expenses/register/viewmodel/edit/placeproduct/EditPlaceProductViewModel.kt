@@ -1,4 +1,4 @@
-package neuro.expenses.register.viewmodel.edit.product
+package neuro.expenses.register.viewmodel.edit.placeproduct
 
 import androidx.compose.runtime.mutableStateOf
 import io.reactivex.rxjava3.core.Single
@@ -25,6 +25,7 @@ class EditPlaceProductViewModel(
   val price = mutableStateOf("")
   val iconUrl = mutableStateOf("")
   val variableAmount = mutableStateOf(false)
+  val onFinishEditAction = mutableStateOf<OnFinishEditAction>(EmptyOnFinishEdit())
 
   val categories = observeCategoriesUseCase.observeCategories()
   val categoriesNames =
@@ -41,12 +42,14 @@ class EditPlaceProductViewModel(
   fun onSaveButton() {
     buildProductDto().flatMapCompletable { productDto ->
       updatePlaceProductUseCase.updatePlaceProduct(productDto)
-    }.subscribeOn(schedulerProvider.io()).subscribe()
+    }.subscribeOn(schedulerProvider.io()).observeOn(schedulerProvider.ui())
+      .subscribe { onFinishEditAction.value.onFinishEditAction() }
   }
 
   fun onDeleteButton() {
     removePlaceProductUseCase.removePlaceProduct(placeId.value, placeProductId.value)
-      .subscribeOn(schedulerProvider.io()).subscribe()
+      .subscribeOn(schedulerProvider.io()).observeOn(schedulerProvider.ui())
+      .subscribe { onFinishEditAction.value.onFinishEditAction() }
   }
 
   private fun buildProductDto(): Single<PlaceProductDto> {
@@ -65,4 +68,11 @@ class EditPlaceProductViewModel(
     return categories.flatMapIterable { it }.filter { it.name == categoryModel.value.name.value }
       .firstOrError()
   }
+}
+
+private class EmptyOnFinishEdit : OnFinishEditAction {
+  override fun onFinishEditAction() {
+
+  }
+
 }

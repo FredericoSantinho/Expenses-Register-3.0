@@ -6,12 +6,13 @@ import neuro.expenses.register.viewmodel.common.formatter.DecimalFormatter
 
 class BillModelMapperImpl(
   private val dateTimeMapper: DateTimeMapper,
-  private val decimalFormatter: DecimalFormatter
+  private val decimalFormatter: DecimalFormatter,
+  private val currency: String
 ) : BillModelMapper {
   override fun map(billDto: BillDto): BillModel {
     val time = dateTimeMapper.mapTime(billDto.calendar)
     val date = dateTimeMapper.mapDate(billDto.calendar)
-    val total = decimalFormatter.format(billDto.total)
+    val total = decimalFormatter.format(billDto.total) + " $currency"
 
     return BillModel(
       billDto.id,

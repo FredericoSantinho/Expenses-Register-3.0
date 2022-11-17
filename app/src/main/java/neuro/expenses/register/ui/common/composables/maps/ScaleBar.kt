@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package neuro.expenses.register.ui.common.composables.google
+package neuro.expenses.register.ui.common.composables.maps
 
 import android.graphics.Point
 import androidx.compose.animation.*

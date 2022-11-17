@@ -17,3 +17,5 @@ fun RoomBillWithBillItemsAndPlace.toDomain(): BillDto {
 
   return BillDto(id, place, timestamp, total, billItems, isOpen, iconUrl)
 }
+
+fun List<RoomBillWithBillItemsAndPlace>.toDomain(): List<BillDto> = map { it -> it.toDomain() }

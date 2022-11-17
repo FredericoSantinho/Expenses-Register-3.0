@@ -1,4 +1,4 @@
-package neuro.expenses.register.ui.edit.product
+package neuro.expenses.register.ui.edit.placeproduct
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -30,10 +30,10 @@ import neuro.expenses.register.ui.common.composables.text.TextFieldWithDropdown
 import neuro.expenses.register.ui.common.composables.text.TextFieldWithError
 import neuro.expenses.register.ui.common.keyboard.keyboardOptionsText
 import neuro.expenses.register.ui.theme.ExpensesRegisterTypography
-import neuro.expenses.register.viewmodel.edit.product.EditPlaceProductViewModel
+import neuro.expenses.register.viewmodel.edit.placeproduct.EditPlaceProductViewModel
 
 @Composable
-fun EditProductComposable(
+fun EditPlaceProductComposable(
   editPlaceProductViewModel: EditPlaceProductViewModel, modifier: Modifier = Modifier
 ) {
   val descriptionIsError = remember { mutableStateOf(false) }

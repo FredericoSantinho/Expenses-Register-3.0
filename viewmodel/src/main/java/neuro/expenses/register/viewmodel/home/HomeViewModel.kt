@@ -15,7 +15,7 @@ import neuro.expenses.register.viewmodel.common.asState
 import neuro.expenses.register.viewmodel.common.livedata.SingleLiveEvent
 import neuro.expenses.register.viewmodel.common.mapper.toViewmodel
 import neuro.expenses.register.viewmodel.common.schedulers.SchedulerProvider
-import neuro.expenses.register.viewmodel.edit.product.EditPlaceProductViewModel
+import neuro.expenses.register.viewmodel.edit.placeproduct.EditPlaceProductViewModel
 import neuro.expenses.register.viewmodel.home.factory.ProductCardViewModelFactoryImpl
 import neuro.expenses.register.viewmodel.home.mapper.ProductCardModelMapper
 import neuro.expenses.register.viewmodel.home.mapper.toViewModel
@@ -55,22 +55,17 @@ class HomeViewModel(
   val uiEvent = _uiEvent.asLiveData()
 
   init {
-    getCurrentLocationUseCase.getCurrentLocation()
-      .flatMapObservable {
-        observeNearestPlacesUseCase.observeNearestPlaces(
-          it,
-          nearestPlacesLimit
-        )
-      }
-      .baseSubscribe { nearestPlaces ->
-        places.value = nearestPlaces
-        placesNames.value = nearestPlaces.map { placeDto -> placeDto.name }
-        placeDto = nearestPlaces.get(selectedPlaceIndex.value)
-        productsListViewModel.setProducts(placeDto)
-        val latLngModel = placeDto.latLngDto.toViewModel()
-        _uiState.value = UiState.Ready
-        _uiEvent.value = UiEvent.MoveCamera(latLngModel, zoom)
-      }
+    getCurrentLocationUseCase.getCurrentLocation().flatMapObservable {
+      observeNearestPlacesUseCase.observeNearestPlaces(it, nearestPlacesLimit)
+    }.baseSubscribe { nearestPlaces ->
+      places.value = nearestPlaces
+      placesNames.value = nearestPlaces.map { placeDto -> placeDto.name }
+      placeDto = nearestPlaces.get(selectedPlaceIndex.value)
+      productsListViewModel.setProducts(placeDto)
+      val latLngModel = placeDto.latLngDto.toViewModel()
+      _uiState.value = UiState.Ready
+      _uiEvent.value = UiEvent.MoveCamera(latLngModel, zoom)
+    }
     feedLastBillViewModel.observe().baseSubscribe { }
   }
 
@@ -92,8 +87,7 @@ class HomeViewModel(
   override fun onProductCardClick(productCardModel: ProductCardModel, calendar: Calendar) {
     registerExpenseUseCase.registerExpense(
       productCardModelMapper.map(productCardModel, calendar)
-    ).baseSubscribe {
-    }
+    ).baseSubscribe {}
   }
 
   override fun onProductCardLongClick(productCardModel: ProductCardModel, calendar: Calendar) {
@@ -112,23 +106,23 @@ class HomeViewModel(
     editPlaceProductViewModel.price.value = placeProductDto.price.toString()
     editPlaceProductViewModel.iconUrl.value = placeProductDto.productDto.iconUrl
     editPlaceProductViewModel.variableAmount.value = placeProductDto.productDto.variableAmount
+    editPlaceProductViewModel.onFinishEditAction.value =
+      HomeOnFinishEditAction { _uiEvent.value = UiEvent.CloseEditMode() }
   }
 
   private fun getPlaceProduct(productId: Long): PlaceProductDto {
     return placeDto.products.first { it.id == productId }
   }
 
-  private fun newProductsListViewModel() =
-    ProductsListViewModel(
-      ProductCardViewModelFactoryImpl(this),
-      productCardModelMapper,
-      calendar
-    )
+  private fun newProductsListViewModel() = ProductsListViewModel(
+    ProductCardViewModelFactoryImpl(this), productCardModelMapper, calendar
+  )
 }
 
 sealed class UiEvent {
   class MoveCamera(val latLngModel: LatLngModel, val zoom: Float) : UiEvent()
   class OpenEditMode : UiEvent()
+  class CloseEditMode : UiEvent()
 }
 
 sealed class UiState {

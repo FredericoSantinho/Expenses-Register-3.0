@@ -29,7 +29,7 @@ import neuro.expenses.register.ui.bill.BillComposableContainer
 import neuro.expenses.register.ui.common.composables.datetime.DateTimeComposable
 import neuro.expenses.register.ui.common.composables.dropdown.DropDownTextField
 import neuro.expenses.register.ui.common.composables.maps.MapsComposable
-import neuro.expenses.register.ui.edit.product.EditProductComposable
+import neuro.expenses.register.ui.edit.placeproduct.EditPlaceProductComposable
 import neuro.expenses.register.ui.home.mapper.HomeMapsEventMapper
 import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.viewmodel.home.HomeViewModel
@@ -105,7 +105,7 @@ fun HomeComposable(
     sheetBackgroundColor = Color.Transparent,
     sheetState = modalBottomSheetState,
     sheetContent = {
-      EditProductComposable(homeViewModel.editPlaceProductViewModel)
+      EditPlaceProductComposable(homeViewModel.editPlaceProductViewModel)
     }) {}
 
   onUiEvent(uiEvent, coroutineScope, modalBottomSheetState)
@@ -144,6 +144,9 @@ fun onUiEvent(
       is UiEvent.OpenEditMode -> onOpenEditMode(
         uiEvent.value as UiEvent.OpenEditMode, coroutineScope, modalBottomSheetState
       )
+      is UiEvent.CloseEditMode -> onCloseEditMode(
+        uiEvent.value as UiEvent.CloseEditMode, coroutineScope, modalBottomSheetState
+      )
       is UiEvent.MoveCamera -> {}
       null -> {}
     }
@@ -158,6 +161,18 @@ fun onOpenEditMode(
   LaunchedEffect(uiEvent) {
     coroutineScope.launch {
       modalBottomSheetState.show()
+    }
+  }
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun onCloseEditMode(
+  uiEvent: UiEvent, coroutineScope: CoroutineScope, modalBottomSheetState: ModalBottomSheetState
+) {
+  LaunchedEffect(uiEvent) {
+    coroutineScope.launch {
+      modalBottomSheetState.hide()
     }
   }
 }

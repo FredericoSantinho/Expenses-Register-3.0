@@ -3,11 +3,6 @@
   <string name="title_home">Home</string>
   <string name="title_manual_register">Manual Register</string>
   <string name="title_bills">Bills</string>
-  <string name="title_edit">Edit</string>
-
-  <string name="title_edit_product">Product</string>
-  <string name="title_edit_category">Category</string>
-  <string name="title_edit_place">Place</string>
 
   <string name="title_settings">Settings</string>
 
@@ -50,4 +45,11 @@
 
   <!-- Edit Product -->
   <string name="edit_place_product_title">Edit Place Product</string>
+
+  <!-- Edit -->
+  <string name="title_edit">Edit</string>
+  <string name="title_edit_product">Product</string>
+  <string name="title_edit_place_product">Place Product</string>
+  <string name="title_edit_category">Category</string>
+  <string name="title_edit_place">Place</string>
 </resources>

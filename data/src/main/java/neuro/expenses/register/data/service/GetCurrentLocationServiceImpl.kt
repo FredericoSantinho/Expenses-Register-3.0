@@ -10,8 +10,8 @@ import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationToken
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.android.gms.tasks.OnTokenCanceledListener
+import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Scheduler
-import io.reactivex.rxjava3.core.Single
 import neuro.expenses.register.domain.dto.LatLngDto
 import neuro.expenses.register.domain.service.GetCurrentLocationService
 
@@ -19,8 +19,8 @@ class GetCurrentLocationServiceImpl(
   private val context: Context,
   private val scheduler: Scheduler
 ) : GetCurrentLocationService {
-  override fun getCurrentLocation(): Single<LatLngDto> {
-    return Single.create { subscriber ->
+  override fun getCurrentLocation(): Maybe<LatLngDto> {
+    return Maybe.create { subscriber ->
       val fusedLocationClient: FusedLocationProviderClient =
         LocationServices.getFusedLocationProviderClient(context)
 
@@ -45,7 +45,7 @@ class GetCurrentLocationServiceImpl(
         if (it != null) {
           subscriber.onSuccess(it)
         } else {
-          subscriber.onError(Exception("No location"))
+          subscriber.onComplete()
         }
       }
     }.map { LatLngDto(it.latitude, it.longitude) }.observeOn(scheduler)

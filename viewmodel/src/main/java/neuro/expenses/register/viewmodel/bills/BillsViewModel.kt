@@ -1,27 +1,25 @@
 package neuro.expenses.register.viewmodel.bills
 
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import neuro.expenses.register.domain.usecase.bill.ObserveBillsUseCase
 import neuro.expenses.register.viewmodel.bill.BillViewModel
+import neuro.expenses.register.viewmodel.bill.mapper.BillViewModelMapper
 
-class BillsViewModel : ViewModel() {
-  val bills = mutableStateListOf<BillViewModel>()
+class BillsViewModel(
+  private val observeBillsUseCase: ObserveBillsUseCase,
+  private val billViewModelMapper: BillViewModelMapper
+) : ViewModel() {
+  val bills = observeBillsUseCase.observeBills().map { billDtos ->
+    billDtos.map { billDto ->
+      val billViewModel = billViewModelMapper.map(billDto, false)
+      billViewModel.setClosedBillState()
+      billViewModel
+    }
+  }
   val isEditMode = mutableStateOf(false)
 
-  init {
-    bills.addAll(getList())
-  }
-
-  private fun getList(): List<BillViewModel> {
-    val list = mutableListOf<BillViewModel>()
-    for (i in 1..20) {
-      list.add(BillViewModel(true))
-    }
-    return list
-  }
-
   fun onBillSwipe(item: BillViewModel) {
-    bills.remove(item)
+    // TODO: remove bill
   }
 }

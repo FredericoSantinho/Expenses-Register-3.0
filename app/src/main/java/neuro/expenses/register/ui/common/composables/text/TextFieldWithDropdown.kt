@@ -12,7 +12,9 @@ import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.window.PopupProperties
 import neuro.expenses.register.R
@@ -43,7 +45,6 @@ fun TextFieldWithDropdown(
     dropDownOptions.value = dataIn.value.filter {
       it.lowercase().startsWith(value.lowercase()) && it != value
     }.take(take)
-    onValueChange.invoke(value)
   }
 
   val focusManager = LocalFocusManager.current
@@ -51,6 +52,7 @@ fun TextFieldWithDropdown(
     modifier = modifier,
     setValue = { onValueChanged(it) },
     onDismissRequest = ::onDropdownDismissRequest,
+    onValueChange = onValueChange,
     dropDownExpanded = dropDownExpanded.value,
     list = dropDownOptions.value,
     label = label,
@@ -67,6 +69,7 @@ fun InternalTextFieldWithDropdown(
   modifier: Modifier = Modifier,
   setValue: (String) -> Unit,
   onDismissRequest: () -> Unit,
+  onValueChange: (String) -> Unit,
   dropDownExpanded: Boolean,
   list: List<String>,
   label: String = "",
@@ -87,11 +90,11 @@ fun InternalTextFieldWithDropdown(
             onDismissRequest()
         },
       keyboardOptions = keyboardOptions,
-      value = value.value,
+      value = TextFieldValue(value.value, TextRange(value.value.length)),
       onValueChange = {
         isErrorVar = false
-        value.value = it
-        setValue.invoke(it)
+        value.value = it.text
+        setValue.invoke(it.text)
       },
       label = { Text(label) },
       colors = TextFieldDefaults.outlinedTextFieldColors(),
@@ -111,7 +114,7 @@ fun InternalTextFieldWithDropdown(
       list.forEach { text ->
         DropdownMenuItem(onClick = {
           value.value = text
-          setValue(value.value)
+          onValueChange.invoke(value.value)
           focusManager.moveFocus(FocusDirection.Next)
         }) {
           Text(text = text)

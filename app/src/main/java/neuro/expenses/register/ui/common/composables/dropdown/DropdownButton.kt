@@ -21,15 +21,14 @@ import androidx.compose.ui.unit.toSize
 import androidx.constraintlayout.compose.ConstraintLayout
 
 @Composable
-fun DropdownButton(items: List<String>, onItemSelect: OnItemSelect) {
+fun DropdownButton(modifier: Modifier = Modifier, items: List<String>, onItemSelect: OnItemSelect) {
   var expanded by remember { mutableStateOf(false) }
   var selectedIndex by remember { mutableStateOf(0) }
   var textFieldSize by remember { mutableStateOf(Size.Zero) }
   val arrowIcon = if (expanded) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown
 
   Box(modifier = Modifier.wrapContentSize(Alignment.TopEnd)) {
-    Button(modifier = Modifier
-      .width(120.dp)
+    Button(modifier = modifier
       .onGloballyPositioned { coordinates ->
         textFieldSize = coordinates.size.toSize()
       }, onClick = {

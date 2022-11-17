@@ -1,9 +1,6 @@
 package neuro.expenses.register.domain.di
 
-import neuro.expenses.register.domain.usecase.bill.GetLastBillUseCase
-import neuro.expenses.register.domain.usecase.bill.GetLastBillUseCaseImpl
-import neuro.expenses.register.domain.usecase.bill.ObserveLastBillUseCase
-import neuro.expenses.register.domain.usecase.bill.ObserveLastBillUseCaseImpl
+import neuro.expenses.register.domain.usecase.bill.*
 import neuro.expenses.register.domain.usecase.calendar.GetCalendarUseCase
 import neuro.expenses.register.domain.usecase.calendar.GetCalendarUseCaseImpl
 import neuro.expenses.register.domain.usecase.category.ObserveCategoriesUseCase
@@ -21,11 +18,13 @@ val useCaseModule = module {
   single<RegisterExpenseUseCase> { RegisterExpenseUseCaseImpl(get()) }
   single<ObserveLastBillUseCase> { ObserveLastBillUseCaseImpl(get(), get()) }
   single<GetLastBillUseCase> { GetLastBillUseCaseImpl(get()) }
+  single<ObserveBillsUseCase> { ObserveBillsUseCaseImpl(get()) }
   single<ObserveCategoriesUseCase> { ObserveCategoriesUseCaseImpl(get()) }
   single<GetCalendarUseCase> { GetCalendarUseCaseImpl() }
   single<GetNearestPlaceUseCase> { GetNearestPlaceUseCaseImpl(get(), get()) }
   single<GetNearestPlacesUseCase> { GetNearestPlacesUseCaseImpl(get()) }
-  single<ObserveNearestPlacesUseCase> { ObserveNearestPlacesUseCaseImpl(get(), get()) }
+  single<ObserveNearestPlacesUseCase> { ObserveNearestPlacesUseCaseImpl(get(), get(), get()) }
+  single<SortPlaceProducts> { SortPlaceProductsImpl() }
   single<GetCurrentLocationUseCase> { GetCurrentLocationUseCaseImpl(get()) }
   single<GetPlaceUseCase> { GetPlaceUseCaseImpl(get()) }
   single<UpdatePlaceProductUseCase> { UpdatePlaceProductUseCaseImpl(get(), get(), get()) }

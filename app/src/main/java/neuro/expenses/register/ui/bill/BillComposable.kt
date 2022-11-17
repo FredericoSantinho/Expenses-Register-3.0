@@ -32,22 +32,20 @@ import neuro.expenses.register.viewmodel.bill.UiState
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BillComposable(
-  billViewModel: IBillViewModel,
-  modifier: Modifier = Modifier
+  billViewModel: IBillViewModel, modifier: Modifier = Modifier
 ) {
   val uiState by billViewModel.uiState
 
   val loading = remember { mutableStateOf(billViewModel.uiState.value == UiState.Loading) }
 
-  Card(
-    modifier = modifier
-      .semantics { testTag = BillTags.CARD }
-      .requiredHeight(80.dp)
-      .fillMaxWidth()
-      .combinedClickable(
-        onClick = { billViewModel.onCardClick() },
-        onLongClick = { billViewModel.onCardLongClick() },
-      ),
+  Card(modifier = modifier
+    .semantics { testTag = BillTags.CARD }
+    .requiredHeight(80.dp)
+    .fillMaxWidth()
+    .combinedClickable(
+      onClick = { billViewModel.onCardClick() },
+      onLongClick = { billViewModel.onCardLongClick() },
+    ),
     elevation = 2.dp,
     backgroundColor = Color.White,
     shape = RoundedCornerShape(corner = CornerSize(8.dp))
@@ -60,83 +58,69 @@ fun BillComposable(
     ) {
       val (imageC, placeC, dateC, totalC, closeBillC) = createRefs()
 
-      AsyncImage(
-        modifier = Modifier
-          .semantics { testTag = billViewModel.iconUrl.value }
-          .padding(start = 8.dp)
-          .constrainAs(imageC) {
-            start.linkTo(parent.start)
-            top.linkTo(parent.top)
-            bottom.linkTo(parent.bottom)
-          }
-          .size(64.dp)
-          .clip(RoundedCornerShape(corner = CornerSize(8.dp)))
-          .shimmerBackground(loading.value),
-        billViewModel.iconUrl.value,
-        loading
-      )
-      Text(
-        modifier = Modifier
-          .semantics { testTag = BillTags.PLACE }
-          .constrainAs(placeC) {
-            start.linkTo(imageC.end)
-            end.linkTo(totalC.start)
-            top.linkTo(parent.top)
-          }
-          .widthIn(160.dp)
-          .shimmerBackground(loading.value),
+      AsyncImage(modifier = Modifier
+        .semantics { testTag = billViewModel.iconUrl.value }
+        .constrainAs(imageC) {
+          start.linkTo(parent.start)
+          top.linkTo(parent.top)
+          bottom.linkTo(parent.bottom)
+        }
+        .size(64.dp)
+        .clip(RoundedCornerShape(corner = CornerSize(8.dp)))
+        .shimmerBackground(loading.value), billViewModel.iconUrl.value, loading)
+      Text(modifier = Modifier
+        .semantics { testTag = BillTags.PLACE }
+        .constrainAs(placeC) {
+          start.linkTo(imageC.end)
+          end.linkTo(totalC.start)
+          top.linkTo(parent.top)
+        }
+        .widthIn(160.dp)
+        .shimmerBackground(loading.value),
         textAlign = TextAlign.Center,
         text = billViewModel.place.value,
         style = typography.h5,
-        fontWeight = FontWeight.Bold
-      )
+        fontWeight = FontWeight.Bold)
       Row(modifier = Modifier.constrainAs(dateC) {
         start.linkTo(imageC.end)
         end.linkTo(totalC.start)
         bottom.linkTo(parent.bottom)
       }) {
-        Text(
-          modifier = Modifier
-            .semantics { testTag = BillTags.TIME }
-            .widthIn(48.dp)
-            .shimmerBackground(loading.value),
+        Text(modifier = Modifier
+          .semantics { testTag = BillTags.TIME }
+          .widthIn(48.dp)
+          .shimmerBackground(loading.value),
           textAlign = TextAlign.Center,
           text = billViewModel.time.value,
-          style = typography.body2
-        )
-        Text(
-          modifier = Modifier
-            .semantics { testTag = BillTags.DATE }
-            .padding(start = 8.dp)
-            .widthIn(80.dp)
-            .shimmerBackground(loading.value),
-          textAlign = TextAlign.Center,
-          text = billViewModel.date.value,
-          style = typography.body2
-        )
-      }
-      Text(
-        modifier = Modifier
-          .semantics { testTag = BillTags.TOTAL }
-          .constrainAs(totalC) {
-            end.linkTo(closeBillC.start)
-            top.linkTo(parent.top)
-            bottom.linkTo(parent.bottom)
-          }
+          style = typography.body2)
+        Text(modifier = Modifier
+          .semantics { testTag = BillTags.DATE }
+          .padding(start = 8.dp)
           .widthIn(80.dp)
           .shimmerBackground(loading.value),
+          textAlign = TextAlign.Center,
+          text = billViewModel.date.value,
+          style = typography.body2)
+      }
+      Text(modifier = Modifier
+        .semantics { testTag = BillTags.TOTAL }
+        .constrainAs(totalC) {
+          end.linkTo(closeBillC.start)
+          top.linkTo(parent.top)
+          bottom.linkTo(parent.bottom)
+        }
+        .widthIn(80.dp)
+        .shimmerBackground(loading.value),
         textAlign = TextAlign.End,
         text = billViewModel.total.value,
         fontSize = 26.sp,
         fontWeight = FontWeight.Bold,
-        color = MaterialTheme.colors.primary
-      )
-      val iconConstraintModifier = Modifier
-        .constrainAs(closeBillC) {
-          end.linkTo(parent.end)
-          top.linkTo(parent.top)
-          bottom.linkTo(parent.bottom)
-        }
+        color = MaterialTheme.colors.primary)
+      val iconConstraintModifier = Modifier.constrainAs(closeBillC) {
+        end.linkTo(parent.end)
+        top.linkTo(parent.top)
+        bottom.linkTo(parent.bottom)
+      }
       onUiState(uiState, billViewModel, iconConstraintModifier, loading)
     }
   }
@@ -180,13 +164,12 @@ private fun guideDivider(iconConstraintModifier: Modifier) {
 
 @Composable
 private fun closeBillIcon(imageConstraintModifier: Modifier) {
-  IconButton(
-    onClick = {
+  IconButton(onClick = {
 
-    }, modifier = imageConstraintModifier
+  },
+    modifier = imageConstraintModifier
       .semantics { testTag = BillTags.CLOSE_BILL_ICON }
-      .padding(start = 8.dp)
-  ) {
+      .padding(start = 8.dp)) {
     Icon(
       painter = painterResource(id = R.drawable.ic_close_bill_24),
       contentDescription = null,
@@ -197,13 +180,11 @@ private fun closeBillIcon(imageConstraintModifier: Modifier) {
 
 @Composable
 private fun editBillIcon(modifier: Modifier, billViewModel: IBillViewModel) {
-  IconButton(
-    onClick = {
-      billViewModel.onEditClick()
-    }, modifier = modifier
-      .semantics { testTag = BillTags.EDIT_BILL_ICON }
-      .padding(start = 8.dp)
-  ) {
+  IconButton(onClick = {
+    billViewModel.onEditClick()
+  }, modifier = modifier
+    .semantics { testTag = BillTags.EDIT_BILL_ICON }
+    .padding(start = 8.dp)) {
     Icon(
       painter = painterResource(id = R.drawable.ic_edit_24),
       contentDescription = null,
