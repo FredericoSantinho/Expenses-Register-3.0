@@ -41,11 +41,11 @@ class BillController(
             Bill(billId, bill.calendar, bill.place, total, billItems, iconUrl)
           }
         } else {
-          getOrCreatePlaceProduct.getOrCreateProduct(
+          getOrCreatePlaceProduct.getOrCreatePlaceProduct(
             expense.description,
             expense.category,
             expense.price,
-            expense.amount != 1.0,
+            expense.amount % (expense.amount.toInt()) != 0.0,
             expense.place
           ).flatMap { product ->
             generateBillItemId.newId().map { billItemId ->

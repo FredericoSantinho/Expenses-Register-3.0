@@ -14,5 +14,5 @@ data class RoomPlaceWithPlaceProducts(
     entityColumn = "placeProductId",
     associateBy = Junction(PlacePlaceProductCrossRef::class)
   )
-  val PlaceProducts: List<RoomPlaceProductWithProductAndCategory>,
+  val placeProducts: List<RoomPlaceProductWithProductAndCategory>,
 )

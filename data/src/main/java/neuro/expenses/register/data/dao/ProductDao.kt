@@ -46,7 +46,18 @@ interface ProductDao {
   ): Maybe<RoomPlaceProductWithProductAndCategory>
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
-  fun insert(roomPlaceProduct: RoomPlaceProduct): Single<Long>
+  fun insert(roomPlaceProduct: RoomPlaceProduct): Long
+
+  @Transaction
+  fun insert(
+    roomPlaceProduct: RoomPlaceProduct,
+    placeProductProductCrossRef: PlaceProductProductCrossRef,
+    placeProductCategoryCrossRef: PlaceProductCategoryCrossRef
+  ) {
+    insert(roomPlaceProduct)
+    insert(placeProductProductCrossRef)
+    insert(placeProductCategoryCrossRef)
+  }
 
   /**
    * Insert a RoomProduct, RoomPlaceProduct, PlaceProductCategoryCrossRef and PlaceProductProductCrossRef if needed.
@@ -83,52 +94,16 @@ interface ProductDao {
       }.flatMap { productId ->
         getPlaceProduct(productId, categoryId, price).defaultIfEmpty(
           RoomPlaceProduct(placeProductId, productId, categoryId, price, placeId)
-        ).flatMap { roomPlaceProduct ->
+        ).map { roomPlaceProduct ->
           insert(roomPlaceProduct)
         }.flatMap {
           if (it == -1L) getPlaceProduct(
             roomProduct.productId, categoryId, price
           ).map { it.placeProductId }.toSingle() else Single.just(it)
-        }.flatMap { placeProductId ->
-          insert(PlaceProductCategoryCrossRef(placeProductId, categoryId)).flatMap {
-            insert(PlaceProductProductCrossRef(placeProductId, productId))
-          }.map { placeProductId }
-        }
-      }
-    }.blockingGet()
-  }
-
-  /**
-   *
-   */
-  @Transaction
-  fun insert(
-    description: String,
-    iconUrl: String,
-    placeProductId: Long,
-    categoryId: Long,
-    price: Double,
-    placeId: Long,
-    variableAmount: Boolean
-  ): Long {
-    return getProduct(description.lowercase()).defaultIfEmpty(
-      RoomProduct(0, description, iconUrl, variableAmount)
-    ).flatMap { roomProduct ->
-      insert(roomProduct).flatMap { productId ->
-        if (productId == -1L) {
-          getProduct(description.lowercase()).map { it.productId }.toSingle()
-        } else {
-          Single.just(productId)
-        }
-      }.flatMap { productId ->
-        insert(
-          RoomPlaceProduct(
-            placeProductId, productId, categoryId, price, placeId
-          )
-        ).flatMap { placeProductId ->
-          insert(PlaceProductCategoryCrossRef(placeProductId, categoryId)).flatMap {
-            insert(PlaceProductProductCrossRef(placeProductId, productId))
-          }.map { placeProductId }
+        }.map { placeProductId ->
+          insert(PlaceProductCategoryCrossRef(placeProductId, categoryId))
+          insert(PlaceProductProductCrossRef(placeProductId, productId))
+          placeProductId
         }
       }
     }.blockingGet()
@@ -138,8 +113,8 @@ interface ProductDao {
   fun delete(roomPlaceProduct: RoomPlaceProduct): Completable
 
   @Insert(onConflict = OnConflictStrategy.IGNORE)
-  fun insert(productCategoryCrossRef: PlaceProductCategoryCrossRef): Single<Long>
+  fun insert(productCategoryCrossRef: PlaceProductCategoryCrossRef): Long
 
   @Insert(onConflict = OnConflictStrategy.IGNORE)
-  fun insert(placeProductProductCrossRef: PlaceProductProductCrossRef): Single<Long>
+  fun insert(placeProductProductCrossRef: PlaceProductProductCrossRef): Long
 }

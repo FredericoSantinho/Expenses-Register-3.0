@@ -1,11 +1,12 @@
 package neuro.expenses.register.domain.repository
 
-import neuro.expenses.register.domain.dto.PlaceProductDto
+import io.reactivex.rxjava3.core.Completable
+import neuro.expenses.register.domain.dto.ProductDto
 
 interface SaveProductRepository {
 
   /**
    * Save a product in database.
    */
-  fun saveProduct(placeProductDto: PlaceProductDto)
+  fun saveProduct(productDto: ProductDto): Completable
 }

@@ -7,7 +7,7 @@ import neuro.expenses.register.domain.dto.PlaceDto
 fun RoomPlaceWithPlaceProducts.toDomain(): PlaceDto = PlaceDto(
   roomPlace.placeId,
   roomPlace.name,
-  PlaceProducts.map { it.toDomain() },
+  placeProducts.map { it.toDomain() },
   roomPlace.latLng.toDomain()
 )
 

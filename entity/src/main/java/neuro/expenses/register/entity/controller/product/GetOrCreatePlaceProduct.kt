@@ -4,7 +4,7 @@ import io.reactivex.rxjava3.core.Single
 import neuro.expenses.register.entity.PlaceProduct
 
 interface GetOrCreatePlaceProduct {
-  fun getOrCreateProduct(
+  fun getOrCreatePlaceProduct(
     description: String,
     category: String,
     price: Double,

@@ -8,7 +8,7 @@ import neuro.expenses.register.entity.controller.product.GetOrCreatePlaceProduct
 class PlaceControllerImpl(private val getOrCreatePlaceProduct: GetOrCreatePlaceProduct) :
   PlaceController {
   override fun addProduct(place: Place, placeProduct: PlaceProduct): Single<Place> {
-    return getOrCreatePlaceProduct.getOrCreateProduct(
+    return getOrCreatePlaceProduct.getOrCreatePlaceProduct(
       placeProduct.product.description,
       placeProduct.category.name,
       placeProduct.price,
