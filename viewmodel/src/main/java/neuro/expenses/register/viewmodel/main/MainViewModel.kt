@@ -1,12 +1,13 @@
 package neuro.expenses.register.viewmodel.main
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import neuro.expenses.register.viewmodel.common.asLiveData
-import neuro.expenses.register.viewmodel.common.livedata.SingleLiveEvent
+import neuro.expenses.register.viewmodel.appbar.UiEvent
+import neuro.expenses.register.viewmodel.common.asState
 
 class MainViewModel : ViewModel() {
-  private val _uiEvent = SingleLiveEvent<UiEvent>()
-  val uiEvent = _uiEvent.asLiveData()
+  private val _uiEvent = mutableStateOf<UiEvent?>(null)
+  val uiEvent = _uiEvent.asState()
 
   fun onConfigButton() {
     _uiEvent.value = UiEvent.NavigateToSettings
