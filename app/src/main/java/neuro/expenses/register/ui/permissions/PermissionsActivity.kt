@@ -26,13 +26,13 @@ class PermissionsActivity : BaseActivity<ActivityPermissionsBinding>() {
   }
 
   private fun onUiEvent(uiEvent: UiEvent?) {
+    permissionsViewModel.eventConsumed()
     when (uiEvent) {
       is UiEvent.CheckPermissions -> checkPermissions()
       is UiEvent.RequestPermissions -> showPermissionsDialog()
       is UiEvent.NavigateToMainActivity -> navigateToMainActivity()
-      null -> TODO()
+      null -> {}
     }
-    permissionsViewModel.eventConsumed()
   }
 
   private fun checkPermissions() {

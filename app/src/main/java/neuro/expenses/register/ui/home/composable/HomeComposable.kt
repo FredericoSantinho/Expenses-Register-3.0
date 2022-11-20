@@ -143,19 +143,17 @@ fun onUiEvent(
   modalBottomSheetState: ModalBottomSheetState,
   homeViewModel: HomeViewModel
 ) {
-  if (uiEvent.value != null) {
-    when (uiEvent.value) {
-      is UiEvent.OpenEditMode -> onOpenEditMode(
-        uiEvent.value as UiEvent.OpenEditMode, coroutineScope, modalBottomSheetState
-      )
-      is UiEvent.CloseEditMode -> onCloseEditMode(
-        uiEvent.value as UiEvent.CloseEditMode, coroutineScope, modalBottomSheetState
-      )
-      is UiEvent.MoveCamera -> {}
-      null -> {}
-    }
-    homeViewModel.eventConsumed()
+  when (uiEvent.value) {
+    is UiEvent.OpenEditMode -> onOpenEditMode(
+      uiEvent.value as UiEvent.OpenEditMode, coroutineScope, modalBottomSheetState
+    )
+    is UiEvent.CloseEditMode -> onCloseEditMode(
+      uiEvent.value as UiEvent.CloseEditMode, coroutineScope, modalBottomSheetState
+    )
+    is UiEvent.MoveCamera -> {}
+    null -> {}
   }
+  homeViewModel.eventConsumed()
 }
 
 @OptIn(ExperimentalMaterialApi::class)
