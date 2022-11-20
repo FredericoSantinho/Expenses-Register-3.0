@@ -1,7 +1,6 @@
 package neuro.expenses.register.ui.common.composables.search
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.requiredHeightIn
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -33,7 +32,7 @@ import org.koin.androidx.compose.get
 @Composable
 fun SearchWithDropdown(
   modifier: Modifier = Modifier,
-  dataIn: State<List<String>>,
+  dataIn: State<List<SearchSuggestion>>,
   take: Int = 30,
   keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
   onValueChange: (String) -> Unit = { },
@@ -41,7 +40,7 @@ fun SearchWithDropdown(
   isError: MutableState<Boolean> = mutableStateOf(false),
   searchViewModel: SearchViewModel = get()
 ) {
-  val dropDownOptions = remember { mutableStateOf(listOf<String>()) }
+  val dropDownOptions = remember { mutableStateOf(listOf<SearchSuggestion>()) }
   val dropDownExpanded = remember { mutableStateOf(false) }
   val onDismissRequest = { dropDownExpanded.value = false }
 
@@ -53,7 +52,7 @@ fun SearchWithDropdown(
   fun onValueChanged(value: String) {
     dropDownExpanded.value = value.isNotBlank()
     dropDownOptions.value = dataIn.value.filter {
-      it.lowercase().contains(value.lowercase()) && it != value
+      it.filter(value)
     }.take(take)
   }
 
@@ -124,18 +123,20 @@ fun SearchWithDropdown(
         ),
         onDismissRequest = onDismissRequest
       ) {
-        dropDownOptions.value.forEach { text ->
+        var currentItemClass: Class<Any> = Unit.javaClass
+        dropDownOptions.value.forEach { searchSuggestion ->
+          if (currentItemClass != searchSuggestion.javaClass) {
+            searchSuggestion.titleComposable()
+            currentItemClass = searchSuggestion.javaClass
+          }
           DropdownMenuItem(onClick = {
             focusManager.clearFocus()
-            searchViewModel.query.value = text
+            searchViewModel.query.value = searchSuggestion.text()
             onValueChange.invoke(searchViewModel.query.value)
             onSelectOption()
           }) {
-            Column {
-              Text(text = text)
-            }
+            searchSuggestion.composable()
           }
-          Text("teste")
         }
       }
     }
@@ -145,7 +146,7 @@ fun SearchWithDropdown(
 @Preview
 @Composable
 fun PreviewSearchWithDropdown() {
-  val dataIn = remember { mutableStateOf(listOf("aaa", "abb", "abc")) }
+  val dataIn = remember { mutableStateOf(emptyList<SearchSuggestion>()) }
 
   ExpensesRegisterTheme {
     SearchWithDropdown(

@@ -16,10 +16,12 @@ class AppBarViewModel(val searchViewModel: SearchViewModel) {
   }
 
   fun onSearchButton() {
+    _uiEvent.value = UiEvent.FocusSearch()
     searchViewModel.showSearch.value = true
   }
 }
 
 sealed class UiEvent {
   class NavigateToSettings : UiEvent()
+  class FocusSearch : UiEvent()
 }

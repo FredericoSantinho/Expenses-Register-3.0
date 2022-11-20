@@ -49,7 +49,7 @@ fun SearchAppBar(
           Icon(Icons.Filled.ArrowBack, null, tint = Color.White)
         }
       }, actions = {
-        val dataIn = remember { mutableStateOf(strings()) }
+        val dataIn = remember { mutableStateOf(MockedSuggestions().create()) }
 
         ConstraintLayout(Modifier.fillMaxSize()) {
           val (searchC, searchIconC, configIconC) = createRefs()
@@ -92,38 +92,31 @@ fun SearchAppBar(
             Icon(Icons.Filled.Settings, null, tint = Color.White)
           }
         }
-
-
       })
-    if (appBarViewModel.searchViewModel.showSearch.value) {
-      LaunchedEffect(Unit) {
-        focusRequester.requestFocus()
-      }
-    }
   }
-  onUiEvent(uiEvent, navigateToSettings, fragmentActivity)
-}
-
-private fun strings(): List<String> {
-  val list: MutableList<String> = mutableListOf()
-  val s = "aab"
-  for (i in 1..10) {
-    list.add(s.replace('b', Char('b'.code + i)))
-  }
-  return list
+  onUiEvent(uiEvent, navigateToSettings, fragmentActivity, focusRequester)
 }
 
 @Composable
 private fun onUiEvent(
   uiEvent: UiEvent?,
   navigateToSettings: NavigateToSettings,
-  context: Context
+  context: Context,
+  focusRequester: FocusRequester
 ) {
   when (uiEvent) {
     is UiEvent.NavigateToSettings -> {
       navigateToSettings(navigateToSettings, context)
     }
+    is UiEvent.FocusSearch -> focusSearch(uiEvent, focusRequester)
     else -> {}
+  }
+}
+
+@Composable
+fun focusSearch(uiEvent: UiEvent, focusRequester: FocusRequester) {
+  LaunchedEffect(uiEvent) {
+    focusRequester.requestFocus()
   }
 }
 
