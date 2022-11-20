@@ -1,8 +1,8 @@
 package neuro.expenses.register.viewmodel.edit
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import neuro.expenses.register.viewmodel.common.asLiveData
-import neuro.expenses.register.viewmodel.common.livedata.SingleLiveEvent
+import neuro.expenses.register.viewmodel.common.asState
 
 private val items = listOf(
   EditNavigationModel(Directions.product, UiEvent.NavigateToEditProduct),
@@ -13,8 +13,8 @@ private val items = listOf(
 
 class EditViewModel : ViewModel() {
 
-  private val _uiEvent = SingleLiveEvent<UiEvent>()
-  val uiEvent = _uiEvent.asLiveData()
+  private val _uiEvent = mutableStateOf<UiEvent?>(null)
+  val uiEvent = _uiEvent.asState()
 
   fun onOptionSelected(index: Int) {
     _uiEvent.value = items[index].uiEvent
@@ -22,6 +22,10 @@ class EditViewModel : ViewModel() {
 
   fun getItems(): List<Directions> {
     return items.map { it.directions }
+  }
+
+  fun eventConsumed() {
+    _uiEvent.value = null
   }
 }
 

@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -29,11 +28,11 @@ import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun EditComposable(editViewModel: EditViewModel = getViewModel()) {
-  val uiEvent by editViewModel.uiEvent.observeAsState(null)
+  val uiEvent by editViewModel.uiEvent
 
   val navController = rememberNavController()
 
-  onUiEvent(uiEvent, navController)
+  onUiEvent(uiEvent, navController, editViewModel)
 
   Column(horizontalAlignment = Alignment.End, modifier = Modifier.padding(end = 4.dp)) {
     DropdownButton(
@@ -58,7 +57,11 @@ fun EditComposable(editViewModel: EditViewModel = getViewModel()) {
 }
 
 @Composable
-private fun onUiEvent(uiEvent: UiEvent?, navController: NavController) {
+private fun onUiEvent(
+  uiEvent: UiEvent?,
+  navController: NavController,
+  editViewModel: EditViewModel
+) {
   when (uiEvent) {
     UiEvent.NavigateToEditProduct -> navigate(navController, Directions.product)
     UiEvent.NavigateToEditPlaceProduct -> navigate(navController, Directions.placeProduct)
@@ -66,6 +69,7 @@ private fun onUiEvent(uiEvent: UiEvent?, navController: NavController) {
     UiEvent.NavigateToEditPlace -> navigate(navController, Directions.place)
     null -> {}
   }
+  editViewModel.eventConsumed()
 }
 
 @Composable
