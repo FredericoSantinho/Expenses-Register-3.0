@@ -4,8 +4,8 @@ import neuro.expenses.register.common.shared.preferences.SecureSharedPreferences
 import neuro.expenses.register.common.shared.preferences.SecureSharedPreferencesCreatorImpl
 import neuro.expenses.register.first.run.FirstRun
 import neuro.expenses.register.first.run.FirstRunImpl
-import neuro.expenses.register.ui.common.composables.search.NavigateToSettings
-import neuro.expenses.register.ui.common.composables.search.NavigateToSettingsImpl
+import neuro.expenses.register.ui.common.composables.appbar.NavigateToSettings
+import neuro.expenses.register.ui.common.composables.appbar.NavigateToSettingsImpl
 import org.koin.dsl.module
 
 private const val SECURE_PREFERENCES_NAME = "expensesRegisterPreferences"

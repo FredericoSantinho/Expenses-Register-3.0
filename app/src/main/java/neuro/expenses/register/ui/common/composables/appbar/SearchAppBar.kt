@@ -20,7 +20,6 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavController
-import neuro.expenses.register.ui.common.composables.search.NavigateToSettings
 import neuro.expenses.register.ui.common.composables.search.SearchWithDropdown
 import neuro.expenses.register.viewmodel.appbar.AppBarViewModel
 import neuro.expenses.register.viewmodel.appbar.UiEvent
