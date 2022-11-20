@@ -1,6 +1,7 @@
 package neuro.expenses.register.ui.common.composables.search
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.requiredHeightIn
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -114,7 +115,7 @@ fun SearchWithDropdown(
         .requiredHeightIn(max = 400.dp)
         .width(with(LocalDensity.current) { textFieldSize.width.toDp() })
       DropdownMenu(
-        modifier = modifierDropMenu,
+        modifier = modifierDropMenu.heightIn(max = 300.dp),
         expanded = dropDownExpanded.value,
         properties = PopupProperties(
           focusable = false,
