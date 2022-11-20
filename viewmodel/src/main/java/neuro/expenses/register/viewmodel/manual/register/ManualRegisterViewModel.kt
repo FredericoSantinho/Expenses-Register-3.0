@@ -11,10 +11,8 @@ import neuro.expenses.register.domain.usecase.near.GetNearestPlaceUseCase
 import neuro.expenses.register.viewmodel.bill.BillViewModel
 import neuro.expenses.register.viewmodel.bill.FeedLastBillViewModel
 import neuro.expenses.register.viewmodel.common.BaseViewModel
-import neuro.expenses.register.viewmodel.common.asLiveData
 import neuro.expenses.register.viewmodel.common.asState
 import neuro.expenses.register.viewmodel.common.formatter.DecimalFormatter
-import neuro.expenses.register.viewmodel.common.livedata.SingleLiveEvent
 import neuro.expenses.register.viewmodel.common.schedulers.SchedulerProvider
 import neuro.expenses.register.viewmodel.manual.register.mapper.toPresentation
 
@@ -45,8 +43,8 @@ class ManualRegisterViewModel(
 
   private val _uiState = mutableStateOf<UiState>(UiState.Ready)
   val uiState = _uiState.asState()
-  private val _uiEvent = SingleLiveEvent<UiEvent>()
-  val uiEvent = _uiEvent.asLiveData()
+  private val _uiEvent = mutableStateOf<UiEvent?>(null)
+  val uiEvent = _uiEvent.asState()
 
   init {
     feedLastBillViewModel.observe().baseSubscribe { }
@@ -154,6 +152,10 @@ class ManualRegisterViewModel(
         _uiState.value = UiState.Error(errors)
       }
     }
+  }
+
+  fun eventConsumed() {
+    _uiEvent.value = null
   }
 }
 

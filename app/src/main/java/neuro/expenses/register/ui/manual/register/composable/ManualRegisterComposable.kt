@@ -5,7 +5,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rxjava3.subscribeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
@@ -57,7 +56,7 @@ fun ManualRegisterComposable(
   timeTextMapper: TimeTextMapper = TimeTextMapperImpl(),
   dateTextMapper: DateTextMapper = DateTextMapperImpl()
 ) {
-  val uiEvent by manualRegisterViewModel.uiEvent.observeAsState(null)
+  val uiEvent by manualRegisterViewModel.uiEvent
   val uiState by manualRegisterViewModel.uiState
 
   val descriptionIsError = remember { mutableStateOf(false) }
@@ -228,17 +227,18 @@ fun ManualRegisterComposable(
     amountIsError,
     amountErrorMessage
   )
-  onUiEvent(uiEvent)
+  onUiEvent(uiEvent, manualRegisterViewModel)
 }
 
 @Composable
-private fun onUiEvent(uiEvent: UiEvent?) {
+private fun onUiEvent(uiEvent: UiEvent?, manualRegisterViewModel: ManualRegisterViewModel) {
   when (uiEvent) {
     is UiEvent.ShowRegisterSuccess -> {
       showSuccessSnackbar(uiEvent)
     }
     null -> {}
   }
+  manualRegisterViewModel.eventConsumed()
 }
 
 @Composable
