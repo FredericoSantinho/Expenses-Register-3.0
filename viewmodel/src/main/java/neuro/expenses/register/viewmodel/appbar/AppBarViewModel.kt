@@ -1,13 +1,12 @@
 package neuro.expenses.register.viewmodel.appbar
 
 import androidx.compose.runtime.mutableStateOf
-import neuro.expenses.register.viewmodel.common.asLiveData
-import neuro.expenses.register.viewmodel.common.livedata.SingleLiveEvent
+import neuro.expenses.register.viewmodel.common.asState
 import neuro.expenses.register.viewmodel.search.SearchViewModel
 
 class AppBarViewModel(val searchViewModel: SearchViewModel) {
-  private val _uiEvent = SingleLiveEvent<UiEvent>()
-  val uiEvent = _uiEvent.asLiveData()
+  private val _uiEvent = mutableStateOf<UiEvent?>(null)
+  val uiEvent = _uiEvent.asState()
 
   val title = mutableStateOf("Take")
 
@@ -18,6 +17,10 @@ class AppBarViewModel(val searchViewModel: SearchViewModel) {
   fun onSearchButton() {
     _uiEvent.value = UiEvent.FocusSearch()
     searchViewModel.showSearch.value = true
+  }
+
+  fun eventConsumed() {
+    _uiEvent.value = null
   }
 }
 

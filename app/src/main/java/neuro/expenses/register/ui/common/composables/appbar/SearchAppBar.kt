@@ -9,7 +9,6 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -35,7 +34,7 @@ fun SearchAppBar(
   navigateToSettings: NavigateToSettings = get(),
   appBarViewModel: AppBarViewModel = get()
 ) {
-  val uiEvent by appBarViewModel.uiEvent.observeAsState(null)
+  val uiEvent by appBarViewModel.uiEvent
 
   val focusRequester = remember { FocusRequester() }
 
@@ -94,7 +93,7 @@ fun SearchAppBar(
         }
       })
   }
-  onUiEvent(uiEvent, navigateToSettings, fragmentActivity, focusRequester)
+  onUiEvent(uiEvent, navigateToSettings, fragmentActivity, focusRequester, appBarViewModel)
 }
 
 @Composable
@@ -102,7 +101,8 @@ private fun onUiEvent(
   uiEvent: UiEvent?,
   navigateToSettings: NavigateToSettings,
   context: Context,
-  focusRequester: FocusRequester
+  focusRequester: FocusRequester,
+  appBarViewModel: AppBarViewModel
 ) {
   when (uiEvent) {
     is UiEvent.NavigateToSettings -> {
@@ -111,6 +111,7 @@ private fun onUiEvent(
     is UiEvent.FocusSearch -> focusSearch(uiEvent, focusRequester)
     else -> {}
   }
+  appBarViewModel.eventConsumed()
 }
 
 @Composable
