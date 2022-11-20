@@ -4,12 +4,11 @@ import android.app.Activity
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -29,6 +28,7 @@ import neuro.expenses.register.common.back.DefaultBackHandler
 import neuro.expenses.register.common.back.FinishActivityHandler
 import neuro.expenses.register.common.back.modalBackNavElement
 import neuro.expenses.register.ui.bill.BillComposableContainer
+import neuro.expenses.register.ui.common.composables.appbar.SearchAppBar
 import neuro.expenses.register.ui.common.composables.datetime.DateTimeComposable
 import neuro.expenses.register.ui.common.composables.dropdown.DropDownTextField
 import neuro.expenses.register.ui.common.composables.maps.MapsComposable
@@ -42,7 +42,7 @@ import neuro.expenses.register.viewmodel.home.UiState
 import org.koin.androidx.compose.get
 import org.koin.androidx.compose.getViewModel
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class)
 @Composable
 fun HomeComposable(
   fragmentActivity: FragmentActivity,
@@ -65,21 +65,7 @@ fun HomeComposable(
     }, skipHalfExpanded = true
   )
 
-  Scaffold(
-    topBar = {
-      TopAppBar(
-        title = { Text(text = stringResource(R.string.title_home)) },
-        navigationIcon =
-        {
-          IconButton(onClick = { navController.navigateUp() }) {
-            Icon(
-              imageVector = Icons.Filled.ArrowBack,
-              contentDescription = "Back"
-            )
-          }
-        })
-    }
-  ) {
+  Scaffold(topBar = { SearchAppBar(navController, fragmentActivity) }) {
     ConstraintLayout(
       modifier = Modifier
         .fillMaxSize()
@@ -95,8 +81,7 @@ fun HomeComposable(
         height = Dimension.fillToConstraints
       }) {
         MapsComposable(
-          homeViewModel.initialCameraPosition,
-          mapsEventMapper.map(uiEvent.value)
+          homeViewModel.initialCameraPosition, mapsEventMapper.map(uiEvent.value)
         )
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
           DateTimeComposable(
@@ -141,14 +126,12 @@ fun HomeComposable(
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun addBackHandler(
-  modalBottomSheetState: ModalBottomSheetState,
-  coroutineScope: CoroutineScope
+  modalBottomSheetState: ModalBottomSheetState, coroutineScope: CoroutineScope
 ) {
   val activity = LocalContext.current as? Activity
   DefaultBackHandler(
     BackNavElement.default(
-      modalBackNavElement(modalBottomSheetState, coroutineScope),
-      FinishActivityHandler(activity)
+      modalBackNavElement(modalBottomSheetState, coroutineScope), FinishActivityHandler(activity)
     )
   )
 }

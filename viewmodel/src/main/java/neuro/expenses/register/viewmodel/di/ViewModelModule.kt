@@ -1,5 +1,6 @@
 package neuro.expenses.register.viewmodel.di
 
+import neuro.expenses.register.viewmodel.appbar.AppBarViewModel
 import neuro.expenses.register.viewmodel.bill.BillViewModel
 import neuro.expenses.register.viewmodel.bill.FeedLastBillViewModel
 import neuro.expenses.register.viewmodel.bill.FeedLastBillViewModelImpl
@@ -20,6 +21,7 @@ import neuro.expenses.register.viewmodel.home.HomeViewModel
 import neuro.expenses.register.viewmodel.main.MainViewModel
 import neuro.expenses.register.viewmodel.manual.register.ManualRegisterViewModel
 import neuro.expenses.register.viewmodel.permissions.PermissionsViewModel
+import neuro.expenses.register.viewmodel.search.SearchViewModel
 import neuro.expenses.register.viewmodel.settings.SettingsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
@@ -29,6 +31,8 @@ const val CURRENCY = "currency"
 const val DECIMALS = 2
 
 val viewModelModule = module {
+  single { AppBarViewModel(get()) }
+  single { SearchViewModel() }
   viewModel { PermissionsViewModel(get()) }
   viewModel { MainViewModel() }
   viewModel { SettingsViewModel() }

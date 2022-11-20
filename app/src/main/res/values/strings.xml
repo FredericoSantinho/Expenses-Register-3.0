@@ -30,6 +30,7 @@
   <string name="icon_url">Icon Url</string>
   <string name="save">Save</string>
   <string name="delete">Delete</string>
+  <string name="search">Search</string>
 
   <!-- Manual Register Screen -->
   <string name="manual_register_total">Total</string>

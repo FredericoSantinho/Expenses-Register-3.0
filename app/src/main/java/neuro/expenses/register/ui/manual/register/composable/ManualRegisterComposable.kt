@@ -31,6 +31,7 @@ import neuro.expenses.register.ui.common.composables.datetime.mapper.DateTextMap
 import neuro.expenses.register.ui.common.composables.datetime.mapper.DateTextMapperImpl
 import neuro.expenses.register.ui.common.composables.datetime.mapper.TimeTextMapper
 import neuro.expenses.register.ui.common.composables.datetime.mapper.TimeTextMapperImpl
+import neuro.expenses.register.ui.common.composables.search.SearchWithDropdown
 import neuro.expenses.register.ui.common.composables.snackbar.showSnackbar
 import neuro.expenses.register.ui.common.composables.text.CurrencyTextField
 import neuro.expenses.register.ui.common.composables.text.TextFieldWithDropdown
@@ -104,6 +105,9 @@ fun ManualRegisterComposable(
         onValueChange = { manualRegisterViewModel.onDescriptionChange() },
         textStyle = ExpensesRegisterTypography.body2
       )
+      val dataIn = remember { mutableStateOf(listOf("aaa", "aab", "aac")) }
+
+      SearchWithDropdown(dataIn = dataIn)
       TextFieldWithDropdown(
         dataIn = manualRegisterViewModel.categoriesNames.subscribeAsState(initial = emptyList()),
         label = stringResource(R.string.category),
