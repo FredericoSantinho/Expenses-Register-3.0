@@ -1,8 +1,8 @@
 package neuro.expenses.register.viewmodel.permissions
 
+import androidx.lifecycle.MutableLiveData
 import neuro.expenses.register.viewmodel.common.BaseViewModel
 import neuro.expenses.register.viewmodel.common.asLiveData
-import neuro.expenses.register.viewmodel.common.livedata.SingleLiveEvent
 import neuro.expenses.register.viewmodel.common.schedulers.SchedulerProvider
 
 
@@ -10,7 +10,7 @@ class PermissionsViewModel(
   schedulerProvider: SchedulerProvider
 ) : BaseViewModel(schedulerProvider) {
 
-  private val _uiEvent = SingleLiveEvent<UiEvent>()
+  private val _uiEvent = MutableLiveData<UiEvent?>(null)
   val uiEvent = _uiEvent.asLiveData()
 
   init {
@@ -23,6 +23,10 @@ class PermissionsViewModel(
 
   fun onPermissionsNotGranted() {
     _uiEvent.value = UiEvent.RequestPermissions
+  }
+
+  fun eventConsumed() {
+    _uiEvent.value = null
   }
 }
 
