@@ -17,4 +17,5 @@ interface IHomeViewModel : OnProductCardClick {
 
   fun onSelectedPlace(index: Int)
   fun onModalBottomSheetStateNotVisible()
+  fun eventConsumed()
 }

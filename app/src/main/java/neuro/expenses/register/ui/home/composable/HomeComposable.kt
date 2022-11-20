@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -51,7 +50,7 @@ fun HomeComposable(
   homeViewModel: HomeViewModel = getViewModel()
 ) {
   val uiState by homeViewModel.uiState
-  val uiEvent = homeViewModel.uiEvent.observeAsState(null)
+  val uiEvent = homeViewModel.uiEvent
 
   val loading = remember { mutableStateOf(true) }
 
@@ -112,7 +111,7 @@ fun HomeComposable(
       sheetContent = {
         EditPlaceProductComposable(homeViewModel.editPlaceProductViewModel)
       }) {}
-    onUiEvent(uiEvent, coroutineScope, modalBottomSheetState)
+    onUiEvent(uiEvent, coroutineScope, modalBottomSheetState, homeViewModel)
   }
 
 
@@ -141,7 +140,8 @@ private fun addBackHandler(
 fun onUiEvent(
   uiEvent: State<UiEvent?>,
   coroutineScope: CoroutineScope,
-  modalBottomSheetState: ModalBottomSheetState
+  modalBottomSheetState: ModalBottomSheetState,
+  homeViewModel: HomeViewModel
 ) {
   if (uiEvent.value != null) {
     when (uiEvent.value) {
@@ -154,6 +154,7 @@ fun onUiEvent(
       is UiEvent.MoveCamera -> {}
       null -> {}
     }
+    homeViewModel.eventConsumed()
   }
 }
 

@@ -10,9 +10,7 @@ import neuro.expenses.register.domain.usecase.place.ObserveNearestPlacesUseCase
 import neuro.expenses.register.viewmodel.bill.BillViewModel
 import neuro.expenses.register.viewmodel.bill.FeedLastBillViewModel
 import neuro.expenses.register.viewmodel.common.BaseViewModel
-import neuro.expenses.register.viewmodel.common.asLiveData
 import neuro.expenses.register.viewmodel.common.asState
-import neuro.expenses.register.viewmodel.common.livedata.SingleLiveEvent
 import neuro.expenses.register.viewmodel.common.mapper.toViewmodel
 import neuro.expenses.register.viewmodel.common.schedulers.SchedulerProvider
 import neuro.expenses.register.viewmodel.edit.placeproduct.EditPlaceProductViewModel
@@ -50,8 +48,8 @@ class HomeViewModel(
 
   private val _uiState = mutableStateOf<UiState>(UiState.Loading)
   override val uiState = _uiState.asState()
-  private val _uiEvent = SingleLiveEvent<UiEvent>()
-  val uiEvent = _uiEvent.asLiveData()
+  private val _uiEvent = mutableStateOf<UiEvent?>(null)
+  val uiEvent = _uiEvent.asState()
 
   init {
     getCurrentLocationUseCase.getCurrentLocation().flatMapObservable {
@@ -94,6 +92,10 @@ class HomeViewModel(
 
     _uiEvent.value = UiEvent.OpenEditMode()
     _uiState.value = UiState.Editing
+  }
+
+  override fun eventConsumed() {
+    _uiEvent.value = null
   }
 
   private fun setEditProductViewModel(productCardModel: ProductCardModel) {
