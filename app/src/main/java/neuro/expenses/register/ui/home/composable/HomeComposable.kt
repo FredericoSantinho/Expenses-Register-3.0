@@ -55,9 +55,7 @@ fun HomeComposable(
   val loading = remember { mutableStateOf(true) }
 
   val coroutineScope = rememberCoroutineScope()
-  val modalBottomSheetInitialValue = remember {
-    if (uiState == UiState.Editing) ModalBottomSheetValue.Expanded else ModalBottomSheetValue.Hidden
-  }
+  val modalBottomSheetInitialValue = remember { ModalBottomSheetValue.Hidden }
   val modalBottomSheetState = rememberModalBottomSheetState(
     modalBottomSheetInitialValue, confirmStateChange = {
       it != ModalBottomSheetValue.HalfExpanded
@@ -113,11 +111,6 @@ fun HomeComposable(
         EditPlaceProductComposable(homeViewModel.editPlaceProductViewModel)
       }) {}
     onUiEvent(uiEvent, coroutineScope, modalBottomSheetState, homeViewModel)
-  }
-
-
-  if (!modalBottomSheetState.isVisible) {
-    homeViewModel.onModalBottomSheetStateNotVisible()
   }
 
   addBackHandler(modalBottomSheetState, coroutineScope)

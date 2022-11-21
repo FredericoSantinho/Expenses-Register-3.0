@@ -73,12 +73,6 @@ class HomeViewModel(
     onSelectedPlace(places.value.get(index))
   }
 
-  override fun onModalBottomSheetStateNotVisible() {
-    if (_uiState.value == UiState.Editing) {
-      _uiState.value = UiState.Ready
-    }
-  }
-
   override fun onProductCardClick(productCardModel: ProductCardModel) {
     registerExpenseUseCase.registerExpense(
       productCardModelMapper.map(productCardModel, calendar.value)
@@ -89,7 +83,6 @@ class HomeViewModel(
     setEditProductViewModel(productCardModel)
 
     _uiEvent.value = UiEvent.OpenEditMode()
-    _uiState.value = UiState.Editing
   }
 
   override fun eventConsumed() {
@@ -156,5 +149,4 @@ sealed class UiEvent {
 sealed class UiState {
   object Loading : UiState()
   object Ready : UiState()
-  object Editing : UiState()
 }

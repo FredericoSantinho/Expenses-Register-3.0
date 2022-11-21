@@ -16,6 +16,5 @@ interface IHomeViewModel : OnProductCardClick {
   val uiState: State<UiState>
 
   fun onSelectedPlace(index: Int)
-  fun onModalBottomSheetStateNotVisible()
   fun eventConsumed()
 }
