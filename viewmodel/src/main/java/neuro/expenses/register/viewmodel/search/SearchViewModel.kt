@@ -7,9 +7,13 @@ class SearchViewModel(
   val query: MutableState<String> = mutableStateOf(""),
   val showSearch: MutableState<Boolean> = mutableStateOf(false)
 ) {
+  fun closeSearch() {
+    showSearch.value = false
+  }
+
   fun onCloseSearchButton() {
     if (query.value.isEmpty()) {
-      showSearch.value = false
+      closeSearch()
     } else {
       query.value = ""
     }

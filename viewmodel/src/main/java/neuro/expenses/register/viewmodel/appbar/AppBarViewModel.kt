@@ -30,6 +30,11 @@ class AppBarViewModel(val searchViewModel: SearchViewModel) {
     this.title.value = title
     dataIn.value = emptyList()
   }
+
+  fun clearSearch() {
+    searchViewModel.query.value = ""
+    searchViewModel.onCloseSearchButton()
+  }
 }
 
 sealed class UiEvent {

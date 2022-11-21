@@ -118,6 +118,7 @@ class HomeViewModel(
 
   private fun onPlaceSearchSuggestion(placeId: Long) {
     onSelectedPlace(places.value.first { it.id == placeId })
+    appBarViewModel.clearSearch()
   }
 
   private fun setEditProductViewModel(productCardModel: ProductCardModel) {
