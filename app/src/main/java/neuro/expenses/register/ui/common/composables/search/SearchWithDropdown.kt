@@ -2,12 +2,14 @@ package neuro.expenses.register.ui.common.composables.search
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.geometry.Size
@@ -15,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -51,6 +54,7 @@ fun SearchWithDropdown(
   )
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SearchWithDropdown(
   modifier: Modifier = Modifier,
@@ -69,7 +73,7 @@ fun SearchWithDropdown(
   var isErrorVar by rememberSaveable { isError }
   var textFieldSize by remember { mutableStateOf(Size.Zero) }
   val focusManager = LocalFocusManager.current
-
+  val keyboardController = LocalSoftwareKeyboardController.current
 
   fun onValueChanged(value: String) {
     dropDownExpanded.value = true
@@ -126,7 +130,8 @@ fun SearchWithDropdown(
             tint = Color.LightGray
           )
         }
-      }
+      },
+      keyboardActions = KeyboardActions({ keyboardController?.hide() })
     )
 
     MaterialTheme(
