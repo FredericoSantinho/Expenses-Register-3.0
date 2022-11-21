@@ -97,7 +97,8 @@ fun HomeComposable(
             label = stringResource(id = R.string.home_place),
             listItems = homeViewModel.placesNames,
             onSelectedOption = { homeViewModel.onSelectedPlace(it) },
-            selectedItemIndex = homeViewModel.selectedPlaceIndex
+            selectedItemIndex = homeViewModel.selectedPlaceIndex,
+            value = homeViewModel.selectedPlace
           )
         }
         Divider(thickness = 1.dp, color = Color.LightGray)

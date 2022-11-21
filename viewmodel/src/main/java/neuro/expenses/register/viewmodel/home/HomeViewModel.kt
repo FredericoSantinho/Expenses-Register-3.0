@@ -7,6 +7,7 @@ import neuro.expenses.register.domain.usecase.calendar.GetCalendarUseCase
 import neuro.expenses.register.domain.usecase.expense.RegisterExpenseUseCase
 import neuro.expenses.register.domain.usecase.location.GetCurrentLocationUseCase
 import neuro.expenses.register.domain.usecase.place.ObserveNearestPlacesUseCase
+import neuro.expenses.register.viewmodel.appbar.AppBarViewModel
 import neuro.expenses.register.viewmodel.bill.BillViewModel
 import neuro.expenses.register.viewmodel.bill.FeedLastBillViewModel
 import neuro.expenses.register.viewmodel.common.BaseViewModel
@@ -15,10 +16,12 @@ import neuro.expenses.register.viewmodel.common.schedulers.SchedulerProvider
 import neuro.expenses.register.viewmodel.edit.placeproduct.EditPlaceProductViewModel
 import neuro.expenses.register.viewmodel.home.factory.ProductCardViewModelFactoryImpl
 import neuro.expenses.register.viewmodel.home.mapper.ProductCardModelMapper
+import neuro.expenses.register.viewmodel.home.mapper.SearchSuggestionModelMapper
 import neuro.expenses.register.viewmodel.home.mapper.toViewModel
 import neuro.expenses.register.viewmodel.home.model.CameraPositionModel
 import neuro.expenses.register.viewmodel.home.model.LatLngModel
 import neuro.expenses.register.viewmodel.home.model.ProductCardModel
+import neuro.expenses.register.viewmodel.model.search.SearchSuggestionModel
 
 private val lisbon = CameraPositionModel(LatLngModel(38.722252, -9.139337), 7.0f)
 
@@ -29,12 +32,14 @@ class HomeViewModel(
   private val registerExpenseUseCase: RegisterExpenseUseCase,
   private val feedLastBillViewModel: FeedLastBillViewModel,
   private val productCardModelMapper: ProductCardModelMapper,
+  private val searchSuggestionModelMapper: SearchSuggestionModelMapper,
+  private val appBarViewModel: AppBarViewModel,
   override val billViewModel: BillViewModel,
   override val editPlaceProductViewModel: EditPlaceProductViewModel,
   schedulerProvider: SchedulerProvider,
-  private val nearestPlacesLimit: Int = 5,
   private val zoom: Float = 19.0f,
-  val initialCameraPosition: CameraPositionModel = lisbon
+  val initialCameraPosition: CameraPositionModel = lisbon,
+  title: String = "Home"
 ) : BaseViewModel(schedulerProvider), IHomeViewModel {
   private val places = mutableStateOf(emptyList<PlaceDto>())
   override val placesNames = mutableStateOf(emptyList<String>())
@@ -44,6 +49,7 @@ class HomeViewModel(
   private lateinit var placeDto: PlaceDto
 
   val selectedPlaceIndex = mutableStateOf(0)
+  val selectedPlace = mutableStateOf("")
 
   private val _uiState = mutableStateOf<UiState>(UiState.Loading)
   override val uiState = _uiState.asState()
@@ -51,27 +57,20 @@ class HomeViewModel(
   val uiEvent = _uiEvent.asState()
 
   init {
+    appBarViewModel.reset(title)
     getCurrentLocationUseCase.getCurrentLocation().flatMapObservable {
-      observeNearestPlacesUseCase.observeNearestPlaces(it, nearestPlacesLimit)
+      observeNearestPlacesUseCase.observeNearestPlaces(it, Int.MAX_VALUE)
     }.baseSubscribe { nearestPlaces ->
       places.value = nearestPlaces
       placesNames.value = nearestPlaces.map { placeDto -> placeDto.name }
-      placeDto = nearestPlaces.get(selectedPlaceIndex.value)
-      productsListViewModel.setProducts(placeDto)
-      val latLngModel = placeDto.latLngDto.toViewModel()
-      _uiState.value = UiState.Ready
-      _uiEvent.value = UiEvent.MoveCamera(latLngModel, zoom)
+      onSelectedPlace(nearestPlaces.get(selectedPlaceIndex.value))
+      setupSearch()
     }
     feedLastBillViewModel.observe().baseSubscribe { }
   }
 
   override fun onSelectedPlace(index: Int) {
-    val placeDto = places.value.get(index)
-    val latLngModel = placeDto.latLngDto.toViewModel()
-    _uiState.value = UiState.Ready
-    _uiEvent.value = UiEvent.MoveCamera(latLngModel, zoom)
-    productsListViewModel.setProducts(placeDto)
-    this.placeDto = placeDto
+    onSelectedPlace(places.value.get(index))
   }
 
   override fun onModalBottomSheetStateNotVisible() {
@@ -95,6 +94,30 @@ class HomeViewModel(
 
   override fun eventConsumed() {
     _uiEvent.value = null
+  }
+
+  private fun onSelectedPlace(placeDto: PlaceDto) {
+    val latLngModel = placeDto.latLngDto.toViewModel()
+    _uiState.value = UiState.Ready
+    _uiEvent.value = UiEvent.MoveCamera(latLngModel, zoom)
+    productsListViewModel.setProducts(placeDto)
+    this.placeDto = placeDto
+    selectedPlace.value = placeDto.name
+  }
+
+  private fun setupSearch() {
+    val productSearchSuggestionModels =
+      placeDto.products.map { searchSuggestionModelMapper.map(it) }
+    val placeSearchSuggestionModels =
+      places.value.map { searchSuggestionModelMapper.map(it, { onPlaceSearchSuggestion(it) }) }
+    val list = mutableListOf<SearchSuggestionModel>()
+    list.addAll(placeSearchSuggestionModels)
+    list.addAll(productSearchSuggestionModels)
+    appBarViewModel.dataIn.value = list
+  }
+
+  private fun onPlaceSearchSuggestion(placeId: Long) {
+    onSelectedPlace(places.value.first { it.id == placeId })
   }
 
   private fun setEditProductViewModel(productCardModel: ProductCardModel) {

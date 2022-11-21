@@ -13,12 +13,9 @@ fun DropDownTextField(
   label: String = "",
   listItems: State<List<String>>,
   onSelectedOption: (Int) -> (Unit),
-  selectedItemIndex: MutableState<Int>
+  selectedItemIndex: MutableState<Int>,
+  value: MutableState<String>
 ) {
-  var selectedItem by remember {
-    mutableStateOf(if (listItems.value.isNotEmpty()) listItems.value[selectedItemIndex.value] else "")
-  }
-
   var expanded by remember {
     mutableStateOf(false)
   }
@@ -30,7 +27,7 @@ fun DropDownTextField(
     }, modifier = modifier
   ) {
     TextField(
-      value = selectedItem,
+      value = value.value,
       onValueChange = {},
       readOnly = true,
       label = { Text(text = label) },
@@ -63,5 +60,4 @@ fun DropDownTextField(
       }
     }
   }
-  selectedItem = if (listItems.value.isNotEmpty()) listItems.value[selectedItemIndex.value] else ""
 }

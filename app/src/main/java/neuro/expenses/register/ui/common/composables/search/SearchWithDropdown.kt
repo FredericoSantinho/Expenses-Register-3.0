@@ -73,7 +73,7 @@ fun SearchWithDropdown(
 
 
   fun onValueChanged(value: String) {
-    dropDownExpanded.value = value.isNotBlank()
+    dropDownExpanded.value = true
     dropDownOptions.value = dataIn.value.filter {
       it.filter(value)
     }.take(take)

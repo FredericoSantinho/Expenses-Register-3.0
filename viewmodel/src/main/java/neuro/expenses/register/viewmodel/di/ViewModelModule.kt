@@ -36,7 +36,21 @@ val viewModelModule = module {
   viewModel { PermissionsViewModel(get()) }
   viewModel { MainViewModel() }
   viewModel { SettingsViewModel() }
-  viewModel { HomeViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
+  viewModel {
+    HomeViewModel(
+      get(),
+      get(),
+      get(),
+      get(),
+      get(),
+      get(),
+      get(),
+      get(),
+      get(),
+      get(),
+      get()
+    )
+  }
   single { EditPlaceProductViewModel(get(), get(), get(), get()) }
   viewModel {
     ManualRegisterViewModel(

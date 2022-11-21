@@ -4,4 +4,4 @@ data class ProductSearchSuggestionModel(
   val description: String,
   val price: String,
   val iconUrl: String
-) : SearchSuggestion
+) : SearchSuggestionModel

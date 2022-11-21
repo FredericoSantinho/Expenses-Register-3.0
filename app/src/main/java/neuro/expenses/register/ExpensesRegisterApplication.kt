@@ -29,6 +29,7 @@ class ExpensesRegisterApplication : Application() {
         androidModule,
         schedulersModule,
         viewModelModule,
+        viewModelMapperModule,
         useCaseModule,
         entityModule,
         entityImplModule,
