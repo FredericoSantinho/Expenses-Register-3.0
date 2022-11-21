@@ -1,23 +1,14 @@
 package neuro.expenses.register.ui.edit
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import neuro.expenses.register.ui.common.composables.dropdown.DropdownButton
-import neuro.expenses.register.ui.common.composables.dropdown.OnItemSelect
 import neuro.expenses.register.ui.edit.category.EditCategoriesComposable
-import neuro.expenses.register.ui.edit.mapper.toPresentation
 import neuro.expenses.register.ui.edit.place.EditPlacesComposable
 import neuro.expenses.register.ui.edit.placeproduct.EditPlaceProductsComposable
 import neuro.expenses.register.ui.edit.product.EditProductsComposable
@@ -74,7 +65,7 @@ private fun onUiEvent(
 
 @Composable
 private fun navigate(navController: NavController, directions: Directions) {
-  navController.navigate(directions.toString()) {
+  navController.navigate(directions.screenRoute) {
     popUpTo(0)
   }
 }

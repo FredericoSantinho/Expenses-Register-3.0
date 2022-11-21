@@ -3,15 +3,15 @@ package neuro.expenses.register.ui.common.composables.appbar
 import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -29,6 +29,7 @@ import neuro.expenses.register.ui.common.composables.search.SearchWithDropdown
 import neuro.expenses.register.ui.common.mapper.toPresentation
 import neuro.expenses.register.viewmodel.appbar.AppBarViewModel
 import neuro.expenses.register.viewmodel.appbar.UiEvent
+import neuro.expenses.register.viewmodel.edit.mapper.toPresentation
 import neuro.expenses.register.viewmodel.main.MainViewModel
 import org.koin.androidx.compose.get
 import org.koin.androidx.compose.getViewModel
@@ -44,6 +45,8 @@ fun SearchAppBar(
   val appBarViewModel = mainViewModel.appBarViewModelState.value
   val uiEvent by appBarViewModel.uiEvent
 
+  var menuExpanded by remember { mutableStateOf(false) }
+
   val focusRequester = remember { FocusRequester() }
 
   Column {
@@ -58,7 +61,7 @@ fun SearchAppBar(
       },
       actions = {
         ConstraintLayout(Modifier.fillMaxSize()) {
-          val (searchC, searchIconC, configIconC) = createRefs()
+          val (searchC, searchIconC, configIconC, moreIconC) = createRefs()
 
           if (appBarViewModel.searchViewModel.showSearch.value) {
             SearchWithDropdown(
@@ -95,11 +98,46 @@ fun SearchAppBar(
             }
           }
           IconButton(modifier = Modifier.constrainAs(configIconC) {
-            end.linkTo(parent.end)
             linkTo(top = parent.top, bottom = parent.bottom)
+            end.linkTo(moreIconC.start)
           }, onClick = { appBarViewModel.onSettingsButton() }) {
             Icon(Icons.Filled.Settings, null, tint = Color.White)
           }
+          val moreItemList = appBarViewModel.moreItems.value
+          if (moreItemList.isEmpty()) {
+            Divider(modifier = Modifier
+              .constrainAs(moreIconC) {
+                end.linkTo(parent.end)
+              }
+              .width(0.dp))
+          } else {
+            IconButton(modifier = Modifier.constrainAs(moreIconC) {
+              end.linkTo(parent.end)
+              linkTo(top = parent.top, bottom = parent.bottom)
+            }, onClick = { menuExpanded = !menuExpanded }) {
+              Icon(Icons.Default.MoreVert, "")
+
+              MaterialTheme(
+                colors = MaterialTheme.colors.copy(surface = Color.White),
+                shapes = MaterialTheme.shapes.copy(medium = RoundedCornerShape(0))
+              ) {
+                DropdownMenu(
+                  expanded = menuExpanded,
+                  onDismissRequest = { menuExpanded = false }
+                ) {
+                  moreItemList.forEach {
+                    DropdownMenuItem(onClick = {
+                      it.onClick()
+                      menuExpanded = false
+                    }) {
+                      Text(text = stringResource(it.text().toPresentation()))
+                    }
+                  }
+                }
+              }
+            }
+          }
+
         }
       })
   }

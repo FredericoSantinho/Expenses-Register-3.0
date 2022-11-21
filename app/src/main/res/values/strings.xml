@@ -54,8 +54,8 @@
 
   <!-- Edit -->
   <string name="title_edit">Edit</string>
-  <string name="title_edit_product">Product</string>
-  <string name="title_edit_place_product">Place Product</string>
-  <string name="title_edit_category">Category</string>
-  <string name="title_edit_place">Place</string>
+  <string name="title_edit_products">Products</string>
+  <string name="title_edit_place_products">Place Products</string>
+  <string name="title_edit_categories">Categories</string>
+  <string name="title_edit_places">Places</string>
 </resources>
