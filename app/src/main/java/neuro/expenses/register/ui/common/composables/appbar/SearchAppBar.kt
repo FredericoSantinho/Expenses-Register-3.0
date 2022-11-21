@@ -17,12 +17,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavController
+import neuro.expenses.register.ui.common.composables.appbar.mapper.toPresentation
 import neuro.expenses.register.ui.common.composables.search.SearchWithDropdown
 import neuro.expenses.register.ui.common.mapper.toPresentation
 import neuro.expenses.register.viewmodel.appbar.AppBarViewModel
@@ -68,7 +70,8 @@ fun SearchAppBar(
                 .focusRequester(focusRequester),
               dataIn = appBarViewModel.dataIn.value.map { it.toPresentation() },
               onValueChange = { appBarViewModel.onValueChange(it) },
-              searchViewModel = appBarViewModel.searchViewModel
+              searchViewModel = appBarViewModel.searchViewModel,
+              hint = stringResource(appBarViewModel.searchHint.value.toPresentation())
             )
           } else {
             Text(

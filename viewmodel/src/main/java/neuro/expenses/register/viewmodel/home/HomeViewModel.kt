@@ -8,6 +8,7 @@ import neuro.expenses.register.domain.usecase.expense.RegisterExpenseUseCase
 import neuro.expenses.register.domain.usecase.location.GetCurrentLocationUseCase
 import neuro.expenses.register.domain.usecase.place.ObserveNearestPlacesUseCase
 import neuro.expenses.register.viewmodel.appbar.AppBarViewModel
+import neuro.expenses.register.viewmodel.appbar.SearchHint
 import neuro.expenses.register.viewmodel.bill.BillViewModel
 import neuro.expenses.register.viewmodel.bill.FeedLastBillViewModel
 import neuro.expenses.register.viewmodel.common.BaseViewModel
@@ -76,6 +77,7 @@ class HomeViewModel(
       placesNames.value = nearestPlaces.map { placeDto -> placeDto.name }
       onSelectedPlace(nearestPlaces.get(selectedPlaceIndex.value))
 
+      appBarViewModel.searchHint.value = SearchProductsAndPlaces
       appBarViewModel.enableSearch()
       setupSearchSuggestions()
     }
@@ -159,3 +161,5 @@ sealed class UiState {
   object Loading : UiState()
   object Ready : UiState()
 }
+
+object SearchProductsAndPlaces : SearchHint()

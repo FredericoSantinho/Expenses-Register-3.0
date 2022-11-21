@@ -10,6 +10,7 @@ import neuro.expenses.register.viewmodel.search.SearchViewModel
 
 class AppBarViewModel() {
   val searchViewModel: SearchViewModel = SearchViewModel(onCloseButton = { onCloseSearchButton() })
+  val searchHint = mutableStateOf<SearchHint>(SearchHint.Search)
 
   val dataIn: MutableState<List<SearchSuggestionModel>> = mutableStateOf(emptyList())
   val searchEnabled = mutableStateOf(false)
@@ -66,4 +67,8 @@ class AppBarViewModel() {
 sealed class UiEvent {
   class NavigateToSettings : UiEvent()
   class FocusSearch : UiEvent()
+}
+
+abstract class SearchHint() {
+  object Search : SearchHint()
 }

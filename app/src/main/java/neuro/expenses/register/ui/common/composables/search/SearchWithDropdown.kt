@@ -38,7 +38,8 @@ fun SearchWithDropdown(
   onValueChange: (String) -> Unit = { },
   onSelectOption: () -> Unit = { },
   isError: MutableState<Boolean> = mutableStateOf(false),
-  searchViewModel: SearchViewModel
+  searchViewModel: SearchViewModel,
+  hint: String
 ) {
   val mutableDataIn = remember { mutableStateOf(dataIn) }
 
@@ -50,7 +51,8 @@ fun SearchWithDropdown(
     onValueChange,
     onSelectOption,
     isError,
-    searchViewModel
+    searchViewModel,
+    hint
   )
 }
 
@@ -64,7 +66,8 @@ fun SearchWithDropdown(
   onValueChange: (String) -> Unit = { },
   onSelectOption: () -> Unit = { },
   isError: MutableState<Boolean> = mutableStateOf(false),
-  searchViewModel: SearchViewModel
+  searchViewModel: SearchViewModel,
+  hint: String
 ) {
   val dropDownOptions = remember { mutableStateOf(listOf<SearchSuggestion>()) }
   val dropDownExpanded = remember { mutableStateOf(false) }
@@ -115,7 +118,7 @@ fun SearchWithDropdown(
       ),
       placeholder = {
         Text(
-          text = stringResource(R.string.search),
+          text = hint,
           color = Color.LightGray,
           fontSize = MaterialTheme.typography.body1.fontSize
         )
@@ -186,7 +189,8 @@ fun PreviewSearchWithDropdown() {
   ExpensesRegisterTheme {
     SearchWithDropdown(
       dataIn = dataIn,
-      searchViewModel = SearchViewModel()
+      searchViewModel = SearchViewModel(),
+      hint = stringResource(R.string.search)
     )
   }
 }

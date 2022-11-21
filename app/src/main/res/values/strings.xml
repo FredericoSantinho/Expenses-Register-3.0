@@ -31,6 +31,7 @@
   <string name="save">Save</string>
   <string name="delete">Delete</string>
   <string name="search">Search</string>
+  <string name="search_products_and_places">Search products and places</string>
 
   <!-- Search -->
   <string name="search_products_title">Products</string>
