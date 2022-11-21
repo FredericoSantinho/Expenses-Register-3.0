@@ -34,6 +34,7 @@
 
   <!-- Search -->
   <string name="search_products_title">Products</string>
+  <string name="search_place_title">Places</string>
 
   <!-- Manual Register Screen -->
   <string name="manual_register_total">Total</string>

@@ -130,7 +130,8 @@ fun SearchWithDropdown(
           DropdownMenuItem(onClick = {
             focusManager.clearFocus()
             searchViewModel.query.value = searchSuggestion.text()
-            onValueChange.invoke(searchViewModel.query.value)
+            onValueChange(searchViewModel.query.value)
+            searchSuggestion.onClick()
             onSelectOption()
           }, contentPadding = PaddingValues()) {
             Column(

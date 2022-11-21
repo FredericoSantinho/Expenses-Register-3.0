@@ -9,4 +9,5 @@ interface SearchSuggestion {
   fun composable()
   @Composable
   fun titleComposable()
+  fun onClick() {}
 }
