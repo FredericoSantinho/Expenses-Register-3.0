@@ -17,11 +17,16 @@ class AppBarViewModel() {
   val uiEvent = _uiEvent.asState()
 
   val title = mutableStateOf("")
-  private val _query: BehaviorRelay<String> = BehaviorRelay.create()
-  val query: Observable<String> = _query
+  private val _queryObservable: BehaviorRelay<String> = BehaviorRelay.create()
+  private val queryObservable: Observable<String> = _queryObservable
+  val query: MutableState<String> = mutableStateOf("")
 
   init {
-    searchViewModel = SearchViewModel(onClearQuery = { onCloseSearchButton() })
+    searchViewModel = SearchViewModel(onCloseButton = { onCloseSearchButton() })
+  }
+
+  fun query(): Observable<String> {
+    return queryObservable
   }
 
   fun onSettingsButton() {
@@ -31,6 +36,7 @@ class AppBarViewModel() {
   fun onSearchButton() {
     _uiEvent.value = UiEvent.FocusSearch()
     searchViewModel.showSearch.value = true
+    searchEnabled.value = false
   }
 
   fun eventConsumed() {
@@ -53,11 +59,16 @@ class AppBarViewModel() {
   }
 
   fun onValueChange(query: String) {
-    _query.accept(query)
+    _queryObservable.accept(query)
+    this.query.value = query
   }
 
   fun onCloseSearchButton() {
-    _query.accept("")
+    if (searchViewModel.showSearch.value) {
+      onValueChange("")
+    } else {
+      enableSearch()
+    }
   }
 }
 

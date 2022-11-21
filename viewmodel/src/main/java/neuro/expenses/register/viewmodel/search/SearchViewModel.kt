@@ -6,7 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 class SearchViewModel(
   val query: MutableState<String> = mutableStateOf(""),
   val showSearch: MutableState<Boolean> = mutableStateOf(false),
-  val onClearQuery: () -> (Unit) = { }
+  val onCloseButton: () -> (Unit) = { }
 ) {
   fun closeSearch() {
     showSearch.value = false
@@ -17,7 +17,7 @@ class SearchViewModel(
       closeSearch()
     } else {
       query.value = ""
-      onClearQuery()
     }
+    onCloseButton()
   }
 }

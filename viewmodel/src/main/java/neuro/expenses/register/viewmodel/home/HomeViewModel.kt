@@ -93,7 +93,7 @@ class HomeViewModel(
     val latLngModel = placeDto.latLngDto.toViewModel()
     _uiState.value = UiState.Ready
     _uiEvent.value = UiEvent.MoveCamera(latLngModel, zoom)
-    productsListViewModel.setProducts(placeDto)
+    productsListViewModel.setProducts(placeDto, appBarViewModel.query.value)
     this.placeDto = placeDto
     selectedPlace.value = placeDto.name
   }
@@ -108,7 +108,7 @@ class HomeViewModel(
     list.addAll(productSearchSuggestionModels)
     appBarViewModel.dataIn.value = list
     appBarViewModel.enableSearch()
-    appBarViewModel.query.baseSubscribe { query ->
+    appBarViewModel.query().baseSubscribe { query ->
       productsListViewModel.setProducts(placeDto, query)
     }
   }

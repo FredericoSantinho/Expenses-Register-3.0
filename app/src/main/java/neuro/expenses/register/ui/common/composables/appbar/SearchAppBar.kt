@@ -54,7 +54,7 @@ fun SearchAppBar(
         ConstraintLayout(Modifier.fillMaxSize()) {
           val (searchC, searchIconC, configIconC) = createRefs()
 
-          if (appBarViewModel.searchEnabled.value && appBarViewModel.searchViewModel.showSearch.value) {
+          if (appBarViewModel.searchViewModel.showSearch.value) {
             SearchWithDropdown(
               Modifier
                 .constrainAs(searchC) {
