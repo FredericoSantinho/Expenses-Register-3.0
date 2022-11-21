@@ -1,8 +1,8 @@
 package neuro.expenses.register.viewmodel.home
 
 import androidx.compose.runtime.mutableStateOf
-import neuro.expenses.register.viewmodel.common.model.CategoryModel
 import neuro.expenses.register.viewmodel.home.model.ProductCardModel
+import neuro.expenses.register.viewmodel.model.CategoryModel
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.times

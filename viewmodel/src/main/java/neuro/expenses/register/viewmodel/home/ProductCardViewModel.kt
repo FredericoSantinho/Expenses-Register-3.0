@@ -1,8 +1,8 @@
 package neuro.expenses.register.viewmodel.home
 
 import androidx.compose.runtime.mutableStateOf
-import neuro.expenses.register.viewmodel.common.model.CategoryModel
 import neuro.expenses.register.viewmodel.home.model.ProductCardModel
+import neuro.expenses.register.viewmodel.model.CategoryModel
 
 class ProductCardViewModel(
   private val onProductCardClick: OnProductCardClick,
@@ -13,8 +13,8 @@ class ProductCardViewModel(
   override val categoryModel =
     mutableStateOf(
       CategoryModel(
-        productCardModel.categoryModel.id.value,
-        productCardModel.categoryModel.name.value
+        productCardModel.categoryModel.id,
+        productCardModel.categoryModel.name
       )
     )
   override val price = mutableStateOf(productCardModel.price)

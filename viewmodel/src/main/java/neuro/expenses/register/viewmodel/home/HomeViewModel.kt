@@ -11,7 +11,6 @@ import neuro.expenses.register.viewmodel.bill.BillViewModel
 import neuro.expenses.register.viewmodel.bill.FeedLastBillViewModel
 import neuro.expenses.register.viewmodel.common.BaseViewModel
 import neuro.expenses.register.viewmodel.common.asState
-import neuro.expenses.register.viewmodel.common.mapper.toViewmodel
 import neuro.expenses.register.viewmodel.common.schedulers.SchedulerProvider
 import neuro.expenses.register.viewmodel.edit.placeproduct.EditPlaceProductViewModel
 import neuro.expenses.register.viewmodel.home.factory.ProductCardViewModelFactoryImpl
@@ -103,7 +102,7 @@ class HomeViewModel(
     editPlaceProductViewModel.placeId.value = placeDto.id
     editPlaceProductViewModel.placeProductId.value = placeProductDto.id
     editPlaceProductViewModel.description.value = placeProductDto.productDto.description
-    editPlaceProductViewModel.categoryModel.value = placeProductDto.category.toViewmodel()
+    editPlaceProductViewModel.category.value = placeProductDto.category.name
     editPlaceProductViewModel.price.value = placeProductDto.price.toString()
     editPlaceProductViewModel.iconUrl.value = placeProductDto.productDto.iconUrl
     editPlaceProductViewModel.variableAmount.value = placeProductDto.productDto.variableAmount

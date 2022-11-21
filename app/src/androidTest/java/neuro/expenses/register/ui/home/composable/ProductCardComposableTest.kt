@@ -6,8 +6,8 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.unit.dp
 import neuro.expenses.register.ui.performLongClick
 import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
-import neuro.expenses.register.viewmodel.common.model.CategoryModel
 import neuro.expenses.register.viewmodel.home.IProductCardViewModel
+import neuro.expenses.register.viewmodel.model.CategoryModel
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.kotlin.*

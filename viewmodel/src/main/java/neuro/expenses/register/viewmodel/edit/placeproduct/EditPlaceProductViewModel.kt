@@ -8,7 +8,6 @@ import neuro.expenses.register.domain.dto.ProductDto
 import neuro.expenses.register.domain.usecase.category.ObserveCategoriesUseCase
 import neuro.expenses.register.domain.usecase.place.RemovePlaceProductUseCase
 import neuro.expenses.register.domain.usecase.place.UpdatePlaceProductUseCase
-import neuro.expenses.register.viewmodel.common.model.CategoryModel
 import neuro.expenses.register.viewmodel.common.schedulers.SchedulerProvider
 
 class EditPlaceProductViewModel(
@@ -21,7 +20,7 @@ class EditPlaceProductViewModel(
   val productId = mutableStateOf(0L)
   val placeProductId = mutableStateOf(0L)
   val description = mutableStateOf("")
-  val categoryModel = mutableStateOf(CategoryModel(-1L, ""))
+  val category = mutableStateOf("")
   val price = mutableStateOf("")
   val iconUrl = mutableStateOf("")
   val variableAmount = mutableStateOf(false)
@@ -65,7 +64,7 @@ class EditPlaceProductViewModel(
   }
 
   private fun getCategory(): Single<CategoryDto> {
-    return categories.flatMapIterable { it }.filter { it.name == categoryModel.value.name.value }
+    return categories.firstOrError().flattenAsObservable { it }.filter { it.name == category.value }
       .firstOrError()
   }
 }

@@ -24,11 +24,11 @@ import androidx.constraintlayout.compose.Dimension
 import neuro.expenses.register.ui.common.composables.image.AsyncImage
 import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.ui.theme.ExpensesRegisterTypography
-import neuro.expenses.register.viewmodel.common.model.CategoryModel
 import neuro.expenses.register.viewmodel.home.IProductCardViewModel
 import neuro.expenses.register.viewmodel.home.OnProductCardClick
 import neuro.expenses.register.viewmodel.home.ProductCardViewModel
 import neuro.expenses.register.viewmodel.home.model.ProductCardModel
+import neuro.expenses.register.viewmodel.model.CategoryModel
 import java.util.*
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -78,7 +78,7 @@ fun PlaceProductCardComposable(productCardViewModel: IProductCardViewModel) {
           .clip(RoundedCornerShape(corner = CornerSize(8.dp))),
           productCardViewModel.iconUrl.value)
         Text(
-          text = productCardViewModel.categoryModel.value.name.value,
+          text = productCardViewModel.categoryModel.value.name,
           modifier = Modifier
             .semantics { testTag = ProductCardTags.CATEGORY }
             .constrainAs(categoryC) {

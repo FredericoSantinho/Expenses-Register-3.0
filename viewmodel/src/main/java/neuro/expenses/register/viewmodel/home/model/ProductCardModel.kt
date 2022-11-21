@@ -1,6 +1,6 @@
 package neuro.expenses.register.viewmodel.home.model
 
-import neuro.expenses.register.viewmodel.common.model.CategoryModel
+import neuro.expenses.register.viewmodel.model.CategoryModel
 
 data class ProductCardModel(
   val id: Long,

@@ -3,8 +3,8 @@ package neuro.expenses.register.viewmodel.home.mapper
 import neuro.expenses.register.domain.dto.ExpenseDto
 import neuro.expenses.register.domain.dto.PlaceProductDto
 import neuro.expenses.register.viewmodel.common.formatter.DecimalFormatter
-import neuro.expenses.register.viewmodel.common.mapper.toViewmodel
 import neuro.expenses.register.viewmodel.home.model.ProductCardModel
+import neuro.expenses.register.viewmodel.mapper.toViewmodel
 import java.util.*
 
 class ProductCardModelMapperImpl(
@@ -31,7 +31,7 @@ class ProductCardModelMapperImpl(
   override fun map(productCardModel: ProductCardModel, calendar: Calendar): ExpenseDto {
     return ExpenseDto(
       productCardModel.description,
-      productCardModel.categoryModel.name.value,
+      productCardModel.categoryModel.name,
       productCardModel.place,
       productCardModel.price.substring(0, productCardModel.price.length - 2).toDouble(),
       productCardModel.amount,

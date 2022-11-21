@@ -1,7 +1,7 @@
 package neuro.expenses.register.viewmodel.home
 
 import androidx.compose.runtime.MutableState
-import neuro.expenses.register.viewmodel.common.model.CategoryModel
+import neuro.expenses.register.viewmodel.model.CategoryModel
 
 interface IProductCardViewModel {
   val productId: MutableState<Long>

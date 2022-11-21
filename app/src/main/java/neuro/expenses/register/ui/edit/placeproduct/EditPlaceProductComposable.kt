@@ -76,7 +76,7 @@ fun EditPlaceProductComposable(
       label = stringResource(R.string.category),
       keyboardOptions = keyboardOptionsText,
       onValueChange = { editPlaceProductViewModel.onCategoryChange() },
-      value = editPlaceProductViewModel.categoryModel.value.name,
+      value = editPlaceProductViewModel.category,
       isError = categoryIsError,
       textStyle = ExpensesRegisterTypography.body2,
       onSelectOption = { focusManager.moveFocus(FocusDirection.Next) }
