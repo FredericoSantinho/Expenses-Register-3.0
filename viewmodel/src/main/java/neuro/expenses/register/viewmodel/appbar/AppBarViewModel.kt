@@ -2,17 +2,27 @@ package neuro.expenses.register.viewmodel.appbar
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import com.jakewharton.rxrelay3.BehaviorRelay
+import io.reactivex.rxjava3.core.Observable
 import neuro.expenses.register.viewmodel.common.asState
 import neuro.expenses.register.viewmodel.model.search.SearchSuggestionModel
 import neuro.expenses.register.viewmodel.search.SearchViewModel
 
-class AppBarViewModel(val searchViewModel: SearchViewModel) {
+class AppBarViewModel() {
+  val searchViewModel: SearchViewModel
+
   val dataIn: MutableState<List<SearchSuggestionModel>> = mutableStateOf(emptyList())
   val searchEnabled = mutableStateOf(false)
   private val _uiEvent = mutableStateOf<UiEvent?>(null)
   val uiEvent = _uiEvent.asState()
 
   val title = mutableStateOf("")
+  private val _query: BehaviorRelay<String> = BehaviorRelay.create()
+  val query: Observable<String> = _query
+
+  init {
+    searchViewModel = SearchViewModel(onClearQuery = { onCloseSearchButton() })
+  }
 
   fun onSettingsButton() {
     _uiEvent.value = UiEvent.NavigateToSettings()
@@ -40,6 +50,14 @@ class AppBarViewModel(val searchViewModel: SearchViewModel) {
 
   fun enableSearch() {
     searchEnabled.value = true
+  }
+
+  fun onValueChange(query: String) {
+    _query.accept(query)
+  }
+
+  fun onCloseSearchButton() {
+    _query.accept("")
   }
 }
 

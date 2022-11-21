@@ -1,6 +1,6 @@
-package neuro.expenses.register.ui.common.composables.appbar.suggestions.filter
+package neuro.expenses.register.viewmodel.common.filter
 
-class DefaultStringFilter : StringFilter {
+class DefaultStringFilter() : StringFilter {
   override fun filter(query: String, s: String): Boolean {
     val querySplits = query.lowercase().split(' ')
     val sSplits = s.lowercase().split(' ')

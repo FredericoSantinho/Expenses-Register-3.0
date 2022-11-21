@@ -62,7 +62,9 @@ fun SearchAppBar(
                   width = Dimension.fillToConstraints
                 }
                 .focusRequester(focusRequester),
-              dataIn = appBarViewModel.dataIn.value.map { it.toPresentation() }
+              dataIn = appBarViewModel.dataIn.value.map { it.toPresentation() },
+              onValueChange = { appBarViewModel.onValueChange(it) },
+              searchViewModel = appBarViewModel.searchViewModel
             )
           } else {
             Text(

@@ -1,9 +1,9 @@
 package neuro.expenses.register.ui.common.composables.appbar.suggestions.place
 
 import androidx.compose.runtime.Composable
-import neuro.expenses.register.ui.common.composables.appbar.suggestions.filter.DefaultStringFilter
-import neuro.expenses.register.ui.common.composables.appbar.suggestions.filter.StringFilter
 import neuro.expenses.register.ui.common.composables.search.SearchSuggestion
+import neuro.expenses.register.viewmodel.common.filter.DefaultStringFilter
+import neuro.expenses.register.viewmodel.common.filter.StringFilter
 
 class PlaceSearchSuggestion(
   private val id: Long,

@@ -115,6 +115,9 @@ class HomeViewModel(
     list.addAll(productSearchSuggestionModels)
     appBarViewModel.dataIn.value = list
     appBarViewModel.enableSearch()
+    appBarViewModel.query.baseSubscribe { query ->
+      productsListViewModel.setProducts(placeDto, query)
+    }
   }
 
   private fun onPlaceSearchSuggestion(placeId: Long) {

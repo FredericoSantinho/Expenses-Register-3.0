@@ -25,7 +25,6 @@ import neuro.expenses.register.R
 import neuro.expenses.register.ui.common.composables.text.TextFieldWithoutPadding
 import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.viewmodel.search.SearchViewModel
-import org.koin.androidx.compose.get
 
 @Composable
 fun SearchWithDropdown(
@@ -36,7 +35,7 @@ fun SearchWithDropdown(
   onValueChange: (String) -> Unit = { },
   onSelectOption: () -> Unit = { },
   isError: MutableState<Boolean> = mutableStateOf(false),
-  searchViewModel: SearchViewModel = get()
+  searchViewModel: SearchViewModel
 ) {
   val mutableDataIn = remember { mutableStateOf(dataIn) }
 
@@ -61,7 +60,7 @@ fun SearchWithDropdown(
   onValueChange: (String) -> Unit = { },
   onSelectOption: () -> Unit = { },
   isError: MutableState<Boolean> = mutableStateOf(false),
-  searchViewModel: SearchViewModel = get()
+  searchViewModel: SearchViewModel
 ) {
   val dropDownOptions = remember { mutableStateOf(listOf<SearchSuggestion>()) }
   val dropDownExpanded = remember { mutableStateOf(false) }
@@ -95,6 +94,7 @@ fun SearchWithDropdown(
         isErrorVar = false
         searchViewModel.query.value = it
         onValueChanged(it)
+        onValueChange(searchViewModel.query.value)
       },
       colors = TextFieldDefaults.outlinedTextFieldColors(
         textColor = Color.White,
