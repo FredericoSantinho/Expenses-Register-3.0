@@ -58,13 +58,18 @@ class HomeViewModel(
 
   init {
     appBarViewModel.reset(title)
+    appBarViewModel.query().baseSubscribe { query ->
+      productsListViewModel.setProducts(placeDto, query)
+    }
     getCurrentLocationUseCase.getCurrentLocation().flatMapObservable {
       observeNearestPlacesUseCase.observeNearestPlaces(it, Int.MAX_VALUE)
     }.baseSubscribe { nearestPlaces ->
       places.value = nearestPlaces
       placesNames.value = nearestPlaces.map { placeDto -> placeDto.name }
       onSelectedPlace(nearestPlaces.get(selectedPlaceIndex.value))
-      setupSearch()
+
+      appBarViewModel.enableSearch()
+      setupSearchSuggestions()
     }
     feedLastBillViewModel.observe().baseSubscribe { }
   }
@@ -98,7 +103,7 @@ class HomeViewModel(
     selectedPlace.value = placeDto.name
   }
 
-  private fun setupSearch() {
+  private fun setupSearchSuggestions() {
     val productSearchSuggestionModels =
       placeDto.products.map { searchSuggestionModelMapper.map(it) }
     val placeSearchSuggestionModels =
@@ -107,10 +112,6 @@ class HomeViewModel(
     list.addAll(placeSearchSuggestionModels)
     list.addAll(productSearchSuggestionModels)
     appBarViewModel.dataIn.value = list
-    appBarViewModel.enableSearch()
-    appBarViewModel.query().baseSubscribe { query ->
-      productsListViewModel.setProducts(placeDto, query)
-    }
   }
 
   private fun onPlaceSearchSuggestion(placeId: Long) {
