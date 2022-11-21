@@ -8,6 +8,7 @@ import neuro.expenses.register.viewmodel.search.SearchViewModel
 
 class AppBarViewModel(val searchViewModel: SearchViewModel) {
   val dataIn: MutableState<List<SearchSuggestionModel>> = mutableStateOf(emptyList())
+  val searchEnabled = mutableStateOf(false)
   private val _uiEvent = mutableStateOf<UiEvent?>(null)
   val uiEvent = _uiEvent.asState()
 
@@ -29,11 +30,16 @@ class AppBarViewModel(val searchViewModel: SearchViewModel) {
   fun reset(title: String) {
     this.title.value = title
     dataIn.value = emptyList()
+    searchEnabled.value = false
   }
 
   fun clearSearch() {
     searchViewModel.query.value = ""
     searchViewModel.onCloseSearchButton()
+  }
+
+  fun enableSearch() {
+    searchEnabled.value = true
   }
 }
 

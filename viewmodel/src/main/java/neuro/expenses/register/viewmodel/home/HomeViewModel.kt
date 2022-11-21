@@ -114,6 +114,7 @@ class HomeViewModel(
     list.addAll(placeSearchSuggestionModels)
     list.addAll(productSearchSuggestionModels)
     appBarViewModel.dataIn.value = list
+    appBarViewModel.enableSearch()
   }
 
   private fun onPlaceSearchSuggestion(placeId: Long) {

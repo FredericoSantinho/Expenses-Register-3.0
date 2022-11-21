@@ -54,7 +54,7 @@ fun SearchAppBar(
         ConstraintLayout(Modifier.fillMaxSize()) {
           val (searchC, searchIconC, configIconC) = createRefs()
 
-          if (appBarViewModel.searchViewModel.showSearch.value) {
+          if (appBarViewModel.searchEnabled.value && appBarViewModel.searchViewModel.showSearch.value) {
             SearchWithDropdown(
               Modifier
                 .constrainAs(searchC) {
@@ -75,13 +75,15 @@ fun SearchAppBar(
               fontWeight = FontWeight.Bold
             )
           }
-          IconButton(modifier = Modifier.constrainAs(searchIconC) {
-            end.linkTo(configIconC.start)
-            linkTo(top = parent.top, bottom = parent.bottom)
-          }, onClick = {
-            appBarViewModel.onSearchButton()
-          }) {
-            Icon(Icons.Filled.Search, null, tint = Color.White)
+          if (appBarViewModel.searchEnabled.value) {
+            IconButton(modifier = Modifier.constrainAs(searchIconC) {
+              end.linkTo(configIconC.start)
+              linkTo(top = parent.top, bottom = parent.bottom)
+            }, onClick = {
+              appBarViewModel.onSearchButton()
+            }) {
+              Icon(Icons.Filled.Search, null, tint = Color.White)
+            }
           }
           IconButton(
             modifier = Modifier.constrainAs(configIconC) {
