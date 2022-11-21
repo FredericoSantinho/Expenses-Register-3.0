@@ -30,6 +30,31 @@ import org.koin.androidx.compose.get
 @Composable
 fun SearchWithDropdown(
   modifier: Modifier = Modifier,
+  dataIn: List<SearchSuggestion>,
+  take: Int = 30,
+  keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+  onValueChange: (String) -> Unit = { },
+  onSelectOption: () -> Unit = { },
+  isError: MutableState<Boolean> = mutableStateOf(false),
+  searchViewModel: SearchViewModel = get()
+) {
+  val mutableDataIn = remember { mutableStateOf(dataIn) }
+
+  SearchWithDropdown(
+    modifier,
+    mutableDataIn,
+    take,
+    keyboardOptions,
+    onValueChange,
+    onSelectOption,
+    isError,
+    searchViewModel
+  )
+}
+
+@Composable
+fun SearchWithDropdown(
+  modifier: Modifier = Modifier,
   dataIn: State<List<SearchSuggestion>>,
   take: Int = 30,
   keyboardOptions: KeyboardOptions = KeyboardOptions.Default,

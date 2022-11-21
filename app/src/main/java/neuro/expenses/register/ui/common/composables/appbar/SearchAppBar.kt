@@ -8,7 +8,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -21,6 +24,7 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavController
 import neuro.expenses.register.ui.common.composables.search.SearchWithDropdown
+import neuro.expenses.register.ui.common.mapper.toPresentation
 import neuro.expenses.register.viewmodel.appbar.AppBarViewModel
 import neuro.expenses.register.viewmodel.appbar.UiEvent
 import org.koin.androidx.compose.get
@@ -47,8 +51,6 @@ fun SearchAppBar(
           Icon(Icons.Filled.ArrowBack, null, tint = Color.White)
         }
       }, actions = {
-        val dataIn = remember { mutableStateOf(MockedSuggestions().create()) }
-
         ConstraintLayout(Modifier.fillMaxSize()) {
           val (searchC, searchIconC, configIconC) = createRefs()
 
@@ -60,7 +62,7 @@ fun SearchAppBar(
                   width = Dimension.fillToConstraints
                 }
                 .focusRequester(focusRequester),
-              dataIn = dataIn
+              dataIn = appBarViewModel.dataIn.value.map { it.toPresentation() }
             )
           } else {
             Text(

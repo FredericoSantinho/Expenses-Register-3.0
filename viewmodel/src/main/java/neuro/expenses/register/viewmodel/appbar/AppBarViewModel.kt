@@ -1,10 +1,13 @@
 package neuro.expenses.register.viewmodel.appbar
 
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import neuro.expenses.register.viewmodel.common.asState
+import neuro.expenses.register.viewmodel.model.search.SearchSuggestion
 import neuro.expenses.register.viewmodel.search.SearchViewModel
 
 class AppBarViewModel(val searchViewModel: SearchViewModel) {
+  val dataIn: MutableState<List<SearchSuggestion>> = mutableStateOf(emptyList())
   private val _uiEvent = mutableStateOf<UiEvent?>(null)
   val uiEvent = _uiEvent.asState()
 
