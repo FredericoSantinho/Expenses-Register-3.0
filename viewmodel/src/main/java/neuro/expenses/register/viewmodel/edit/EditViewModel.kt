@@ -2,16 +2,19 @@ package neuro.expenses.register.viewmodel.edit
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import neuro.expenses.register.viewmodel.appbar.AppBarViewModel
 import neuro.expenses.register.viewmodel.common.asState
+import neuro.expenses.register.viewmodel.main.MainViewModel
 
 private val items = listOf(
-  EditNavigationModel(Directions.product, UiEvent.NavigateToEditProduct),
-  EditNavigationModel(Directions.placeProduct, UiEvent.NavigateToEditPlaceProduct),
-  EditNavigationModel(Directions.category, UiEvent.NavigateToEditCategory),
-  EditNavigationModel(Directions.place, UiEvent.NavigateToEditPlace)
+  EditNavigationModel(UiEvent.NavigateTo(Directions.product)),
+  EditNavigationModel(UiEvent.NavigateTo(Directions.placeProduct)),
+  EditNavigationModel(UiEvent.NavigateTo(Directions.category)),
+  EditNavigationModel(UiEvent.NavigateTo(Directions.place))
 )
 
-class EditViewModel : ViewModel() {
+class EditViewModel(private val mainViewModel: MainViewModel) : ViewModel() {
+  private val appBarViewModel = AppBarViewModel()
 
   private val _uiEvent = mutableStateOf<UiEvent?>(null)
   val uiEvent = _uiEvent.asState()
@@ -21,19 +24,20 @@ class EditViewModel : ViewModel() {
   }
 
   fun getItems(): List<Directions> {
-    return items.map { it.directions }
+    return items.map { it.uiEvent.directions }
   }
 
   fun eventConsumed() {
     _uiEvent.value = null
   }
+
+  fun onComposition() {
+    mainViewModel.appBarViewModelState.value = appBarViewModel
+  }
 }
 
 sealed class UiEvent(val directions: Directions) {
-  object NavigateToEditProduct : UiEvent(Directions.product)
-  object NavigateToEditPlaceProduct : UiEvent(Directions.placeProduct)
-  object NavigateToEditCategory : UiEvent(Directions.category)
-  object NavigateToEditPlace : UiEvent(Directions.place)
+  class NavigateTo(directions: Directions) : UiEvent(directions)
 }
 
 enum class Directions {

@@ -39,13 +39,8 @@ class AppBarViewModel() {
     _uiEvent.value = null
   }
 
-  fun reset(title: String) {
-    this.title.value = title
-    dataIn.value = emptyList()
-    searchEnabled.value = false
-  }
-
   fun clearSearch() {
+    onValueChange("")
     searchViewModel.query.value = ""
     searchViewModel.onCloseSearchButton()
   }

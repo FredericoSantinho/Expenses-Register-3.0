@@ -21,6 +21,7 @@ import neuro.expenses.register.viewmodel.home.mapper.toViewModel
 import neuro.expenses.register.viewmodel.home.model.CameraPositionModel
 import neuro.expenses.register.viewmodel.home.model.LatLngModel
 import neuro.expenses.register.viewmodel.home.model.ProductCardModel
+import neuro.expenses.register.viewmodel.main.MainViewModel
 import neuro.expenses.register.viewmodel.model.search.SearchSuggestionModel
 
 private val lisbon = CameraPositionModel(LatLngModel(38.722252, -9.139337), 7.0f)
@@ -33,14 +34,16 @@ class HomeViewModel(
   private val feedLastBillViewModel: FeedLastBillViewModel,
   private val productCardModelMapper: ProductCardModelMapper,
   private val searchSuggestionModelMapper: SearchSuggestionModelMapper,
-  private val appBarViewModel: AppBarViewModel,
   override val billViewModel: BillViewModel,
   override val editPlaceProductViewModel: EditPlaceProductViewModel,
+  private val mainViewModel: MainViewModel,
   schedulerProvider: SchedulerProvider,
   private val zoom: Float = 19.0f,
   val initialCameraPosition: CameraPositionModel = lisbon,
-  title: String = "Home"
+  val title: String = "Home"
 ) : BaseViewModel(schedulerProvider), IHomeViewModel {
+  val appBarViewModel: AppBarViewModel = AppBarViewModel()
+
   private val places = mutableStateOf(emptyList<PlaceDto>())
   override val placesNames = mutableStateOf(emptyList<String>())
 
@@ -53,11 +56,16 @@ class HomeViewModel(
 
   private val _uiState = mutableStateOf<UiState>(UiState.Loading)
   override val uiState = _uiState.asState()
+
+  override fun onComposition() {
+    mainViewModel.appBarViewModelState.value = appBarViewModel
+  }
+
   private val _uiEvent = mutableStateOf<UiEvent?>(null)
   val uiEvent = _uiEvent.asState()
 
   init {
-    appBarViewModel.reset(title)
+    appBarViewModel.title.value = title
     appBarViewModel.query().baseSubscribe { query ->
       productsListViewModel.setProducts(placeDto, query)
     }
@@ -115,8 +123,8 @@ class HomeViewModel(
   }
 
   private fun onPlaceSearchSuggestion(placeId: Long) {
-    onSelectedPlace(places.value.first { it.id == placeId })
     appBarViewModel.clearSearch()
+    onSelectedPlace(places.value.first { it.id == placeId })
   }
 
   private fun setEditProductViewModel(productCardModel: ProductCardModel) {

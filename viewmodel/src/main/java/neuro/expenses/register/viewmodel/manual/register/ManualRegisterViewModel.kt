@@ -8,12 +8,14 @@ import neuro.expenses.register.domain.usecase.category.ObserveCategoriesUseCase
 import neuro.expenses.register.domain.usecase.expense.RegisterExpenseException
 import neuro.expenses.register.domain.usecase.expense.RegisterExpenseUseCase
 import neuro.expenses.register.domain.usecase.near.GetNearestPlaceUseCase
+import neuro.expenses.register.viewmodel.appbar.AppBarViewModel
 import neuro.expenses.register.viewmodel.bill.BillViewModel
 import neuro.expenses.register.viewmodel.bill.FeedLastBillViewModel
 import neuro.expenses.register.viewmodel.common.BaseViewModel
 import neuro.expenses.register.viewmodel.common.asState
 import neuro.expenses.register.viewmodel.common.formatter.DecimalFormatter
 import neuro.expenses.register.viewmodel.common.schedulers.SchedulerProvider
+import neuro.expenses.register.viewmodel.main.MainViewModel
 import neuro.expenses.register.viewmodel.manual.register.mapper.toViewmodel
 
 
@@ -25,9 +27,11 @@ class ManualRegisterViewModel(
   private val feedLastBillViewModel: FeedLastBillViewModel,
   private val decimalFormatter: DecimalFormatter,
   val billViewModel: BillViewModel,
+  private val mainViewModel: MainViewModel,
   schedulerProvider: SchedulerProvider,
   private val currency: String
 ) : BaseViewModel(schedulerProvider) {
+  val appBarViewModel: AppBarViewModel = AppBarViewModel()
 
   val description = mutableStateOf("")
   val category = mutableStateOf("")
@@ -156,6 +160,10 @@ class ManualRegisterViewModel(
 
   fun eventConsumed() {
     _uiEvent.value = null
+  }
+
+  fun onComposition() {
+    mainViewModel.appBarViewModelState.value = appBarViewModel
   }
 }
 

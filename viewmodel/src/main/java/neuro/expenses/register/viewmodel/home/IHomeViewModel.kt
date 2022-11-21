@@ -15,6 +15,7 @@ interface IHomeViewModel : OnProductCardClick {
 
   val uiState: State<UiState>
 
+  fun onComposition()
   fun onSelectedPlace(index: Int)
   fun eventConsumed()
 }

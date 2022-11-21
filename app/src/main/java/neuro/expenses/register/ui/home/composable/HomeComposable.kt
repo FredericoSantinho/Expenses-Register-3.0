@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.fragment.app.FragmentActivity
-import androidx.navigation.NavHostController
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import neuro.expenses.register.*
@@ -27,12 +26,12 @@ import neuro.expenses.register.common.back.DefaultBackHandler
 import neuro.expenses.register.common.back.FinishActivityHandler
 import neuro.expenses.register.common.back.modalBackNavElement
 import neuro.expenses.register.ui.bill.BillComposableContainer
-import neuro.expenses.register.ui.common.composables.appbar.SearchAppBar
 import neuro.expenses.register.ui.common.composables.datetime.DateTimeComposable
 import neuro.expenses.register.ui.common.composables.dropdown.DropDownTextField
 import neuro.expenses.register.ui.common.composables.maps.MapsComposable
 import neuro.expenses.register.ui.edit.placeproduct.EditPlaceProductComposable
 import neuro.expenses.register.ui.home.mapper.HomeMapsEventMapper
+import neuro.expenses.register.ui.manual.register.composable.rememberUnit
 import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.viewmodel.home.HomeViewModel
 import neuro.expenses.register.viewmodel.home.IHomeViewModel
@@ -45,10 +44,11 @@ import org.koin.androidx.compose.getViewModel
 @Composable
 fun HomeComposable(
   fragmentActivity: FragmentActivity,
-  navController: NavHostController,
   mapsEventMapper: HomeMapsEventMapper = get(),
   homeViewModel: HomeViewModel = getViewModel()
 ) {
+  rememberUnit { homeViewModel.onComposition() }
+
   val uiState by homeViewModel.uiState
   val uiEvent = homeViewModel.uiEvent
 
@@ -62,61 +62,57 @@ fun HomeComposable(
     }, skipHalfExpanded = true
   )
 
-  Scaffold(topBar = { SearchAppBar(navController, fragmentActivity) }) {
-    ConstraintLayout(
-      modifier = Modifier
-        .fillMaxSize()
-        .padding(it)
-    ) {
-      val (mainC, billC) = createRefs()
+  ConstraintLayout(
+    modifier = Modifier.fillMaxSize()
+  ) {
+    val (mainC, billC) = createRefs()
 
-      BillComposableContainer(homeViewModel.billViewModel, Modifier.constrainAs(billC) {
-        bottom.linkTo(parent.bottom)
-      })
-      Column(modifier = Modifier.constrainAs(mainC) {
-        linkTo(top = parent.top, bottom = billC.top)
-        height = Dimension.fillToConstraints
-      }) {
-        MapsComposable(
-          homeViewModel.initialCameraPosition, mapsEventMapper.map(uiEvent.value)
+    BillComposableContainer(homeViewModel.billViewModel, Modifier.constrainAs(billC) {
+      bottom.linkTo(parent.bottom)
+    })
+    Column(modifier = Modifier.constrainAs(mainC) {
+      linkTo(top = parent.top, bottom = billC.top)
+      height = Dimension.fillToConstraints
+    }) {
+      MapsComposable(
+        homeViewModel.initialCameraPosition, mapsEventMapper.map(uiEvent.value)
+      )
+      Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+        DateTimeComposable(
+          fragmentActivity = fragmentActivity,
+          modifier = Modifier
+            .align(CenterVertically)
+            .padding(start = 8.dp),
+          calendar = homeViewModel.calendar
         )
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-          DateTimeComposable(
-            fragmentActivity = fragmentActivity,
-            modifier = Modifier
-              .align(CenterVertically)
-              .padding(start = 8.dp),
-            calendar = homeViewModel.calendar
-          )
-          DropDownTextField(
-            modifier = Modifier
-              .padding(start = 8.dp)
-              .requiredWidth(180.dp),
-            label = stringResource(id = R.string.home_place),
-            listItems = homeViewModel.placesNames,
-            onSelectedOption = { homeViewModel.onSelectedPlace(it) },
-            selectedItemIndex = homeViewModel.selectedPlaceIndex,
-            value = homeViewModel.selectedPlace
-          )
-        }
-        Divider(thickness = 1.dp, color = Color.LightGray)
-
-        onUiState(uiState, homeViewModel, loading)
+        DropDownTextField(
+          modifier = Modifier
+            .padding(start = 8.dp)
+            .requiredWidth(180.dp),
+          label = stringResource(id = R.string.home_place),
+          listItems = homeViewModel.placesNames,
+          onSelectedOption = { homeViewModel.onSelectedPlace(it) },
+          selectedItemIndex = homeViewModel.selectedPlaceIndex,
+          value = homeViewModel.selectedPlace
+        )
       }
+      Divider(thickness = 1.dp, color = Color.LightGray)
+
+      onUiState(uiState, homeViewModel, loading)
     }
-    ModalBottomSheetLayout(sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
-      sheetBackgroundColor = Color.Transparent,
-      sheetState = modalBottomSheetState,
-      sheetContent = {
-        if (modalBottomSheetState.isVisible) {
-          EditPlaceProductComposable(homeViewModel.editPlaceProductViewModel)
-        } else {
-          // Needed to prevent EditPlaceProductComposable to be seen when keyboard is hidding as the recomposition only occurs afterwards.
-          Divider()
-        }
-      }) {}
-    onUiEvent(uiEvent, coroutineScope, modalBottomSheetState, homeViewModel)
   }
+  ModalBottomSheetLayout(sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
+    sheetBackgroundColor = Color.Transparent,
+    sheetState = modalBottomSheetState,
+    sheetContent = {
+      if (modalBottomSheetState.isVisible) {
+        EditPlaceProductComposable(homeViewModel.editPlaceProductViewModel)
+      } else {
+        // Needed to prevent EditPlaceProductComposable to be seen when keyboard is hidding as the recomposition only occurs afterwards.
+        Divider()
+      }
+    }) {}
+  onUiEvent(uiEvent, coroutineScope, modalBottomSheetState, homeViewModel)
 
   addBackHandler(modalBottomSheetState, coroutineScope)
 }
@@ -212,8 +208,6 @@ private fun onUiReady(homeViewModel: IHomeViewModel, loading: MutableState<Boole
 fun PreviewHomeComposable() {
   val fragmentActivity = FragmentActivity()
   ExpensesRegisterTheme {
-    HomeComposable(
-      fragmentActivity, NavHostController(fragmentActivity)
-    )
+    HomeComposable(fragmentActivity)
   }
 }

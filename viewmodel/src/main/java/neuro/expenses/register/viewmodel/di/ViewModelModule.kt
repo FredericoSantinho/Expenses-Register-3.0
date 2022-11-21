@@ -32,7 +32,7 @@ const val DECIMALS = 2
 val viewModelModule = module {
   single { AppBarViewModel() }
   viewModel { PermissionsViewModel(get()) }
-  viewModel { MainViewModel() }
+  single { MainViewModel() }
   viewModel { SettingsViewModel() }
   viewModel {
     HomeViewModel(
@@ -60,6 +60,7 @@ val viewModelModule = module {
       get(),
       get(),
       get(),
+      get(),
       get(named(CURRENCY))
     )
   }
@@ -68,8 +69,8 @@ val viewModelModule = module {
   single<DateTimeMapper> { DateTimeMapperImpl(get()) }
   single<NumberFormater> { NumberFormaterImpl() }
   single<DecimalFormatter> { DecimalFormatterImpl(DECIMALS) }
-  viewModel { BillsViewModel(get(), get()) }
-  viewModel { EditViewModel() }
+  viewModel { BillsViewModel(get(), get(), get()) }
+  viewModel { EditViewModel(get()) }
   viewModel { EditProductsViewModel() }
   viewModel { EditPlaceProductsViewModel(get(), get(), get(), get()) }
   viewModel { EditCategoriesViewModel() }

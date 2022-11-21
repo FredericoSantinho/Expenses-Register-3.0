@@ -27,7 +27,9 @@ import neuro.expenses.register.ui.common.composables.search.SearchWithDropdown
 import neuro.expenses.register.ui.common.mapper.toPresentation
 import neuro.expenses.register.viewmodel.appbar.AppBarViewModel
 import neuro.expenses.register.viewmodel.appbar.UiEvent
+import neuro.expenses.register.viewmodel.main.MainViewModel
 import org.koin.androidx.compose.get
+import org.koin.androidx.compose.getViewModel
 
 @ExperimentalComposeUiApi
 @Composable
@@ -35,8 +37,9 @@ fun SearchAppBar(
   navController: NavController,
   fragmentActivity: FragmentActivity,
   navigateToSettings: NavigateToSettings = get(),
-  appBarViewModel: AppBarViewModel = get()
+  mainViewModel: MainViewModel = getViewModel()
 ) {
+  val appBarViewModel = mainViewModel.appBarViewModelState.value
   val uiEvent by appBarViewModel.uiEvent
 
   val focusRequester = remember { FocusRequester() }
@@ -50,7 +53,8 @@ fun SearchAppBar(
         IconButton(onClick = { navController.navigateUp() }) {
           Icon(Icons.Filled.ArrowBack, null, tint = Color.White)
         }
-      }, actions = {
+      },
+      actions = {
         ConstraintLayout(Modifier.fillMaxSize()) {
           val (searchC, searchIconC, configIconC) = createRefs()
 
@@ -87,12 +91,10 @@ fun SearchAppBar(
               Icon(Icons.Filled.Search, null, tint = Color.White)
             }
           }
-          IconButton(
-            modifier = Modifier.constrainAs(configIconC) {
-              end.linkTo(parent.end)
-              linkTo(top = parent.top, bottom = parent.bottom)
-            },
-            onClick = { appBarViewModel.onSettingsButton() }) {
+          IconButton(modifier = Modifier.constrainAs(configIconC) {
+            end.linkTo(parent.end)
+            linkTo(top = parent.top, bottom = parent.bottom)
+          }, onClick = { appBarViewModel.onSettingsButton() }) {
             Icon(Icons.Filled.Settings, null, tint = Color.White)
           }
         }

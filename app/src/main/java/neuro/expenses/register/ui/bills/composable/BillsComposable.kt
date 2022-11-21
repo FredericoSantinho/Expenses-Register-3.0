@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentActivity
 import kotlinx.coroutines.launch
 import neuro.expenses.register.ui.bill.BillComposable
+import neuro.expenses.register.ui.manual.register.composable.rememberUnit
 import neuro.expenses.register.ui.theme.grey_fog_lighter
 import neuro.expenses.register.viewmodel.bill.BillViewModel
 import neuro.expenses.register.viewmodel.bills.BillsViewModel
@@ -30,6 +31,8 @@ fun BillsComposable(
   fragmentActivity: FragmentActivity,
   billsViewModel: BillsViewModel = getViewModel()
 ) {
+  rememberUnit { billsViewModel.onComposition() }
+
   val coroutineScope = rememberCoroutineScope()
 
   val modalBottomSheetValue = if (billsViewModel.isEditMode.value)

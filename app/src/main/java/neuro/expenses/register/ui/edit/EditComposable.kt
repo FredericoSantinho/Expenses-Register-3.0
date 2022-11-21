@@ -21,6 +21,7 @@ import neuro.expenses.register.ui.edit.mapper.toPresentation
 import neuro.expenses.register.ui.edit.place.EditPlacesComposable
 import neuro.expenses.register.ui.edit.placeproduct.EditPlaceProductsComposable
 import neuro.expenses.register.ui.edit.product.EditProductsComposable
+import neuro.expenses.register.ui.manual.register.composable.rememberUnit
 import neuro.expenses.register.viewmodel.edit.Directions
 import neuro.expenses.register.viewmodel.edit.EditViewModel
 import neuro.expenses.register.viewmodel.edit.UiEvent
@@ -28,6 +29,8 @@ import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun EditComposable(editViewModel: EditViewModel = getViewModel()) {
+  rememberUnit { editViewModel.onComposition() }
+
   val uiEvent by editViewModel.uiEvent
 
   val navController = rememberNavController()
@@ -63,10 +66,7 @@ private fun onUiEvent(
   editViewModel: EditViewModel
 ) {
   when (uiEvent) {
-    UiEvent.NavigateToEditProduct -> navigate(navController, Directions.product)
-    UiEvent.NavigateToEditPlaceProduct -> navigate(navController, Directions.placeProduct)
-    UiEvent.NavigateToEditCategory -> navigate(navController, Directions.category)
-    UiEvent.NavigateToEditPlace -> navigate(navController, Directions.place)
+    is UiEvent.NavigateTo -> navigate(navController, uiEvent.directions)
     null -> {}
   }
   editViewModel.eventConsumed()
