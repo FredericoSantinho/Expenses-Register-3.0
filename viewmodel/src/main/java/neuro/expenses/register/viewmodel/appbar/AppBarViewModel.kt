@@ -9,7 +9,7 @@ import neuro.expenses.register.viewmodel.model.search.SearchSuggestionModel
 import neuro.expenses.register.viewmodel.search.SearchViewModel
 
 class AppBarViewModel() {
-  val searchViewModel: SearchViewModel
+  val searchViewModel: SearchViewModel = SearchViewModel(onCloseButton = { onCloseSearchButton() })
 
   val dataIn: MutableState<List<SearchSuggestionModel>> = mutableStateOf(emptyList())
   val searchEnabled = mutableStateOf(false)
@@ -20,10 +20,6 @@ class AppBarViewModel() {
   private val _queryObservable: BehaviorRelay<String> = BehaviorRelay.create()
   private val queryObservable: Observable<String> = _queryObservable
   val query: MutableState<String> = mutableStateOf("")
-
-  init {
-    searchViewModel = SearchViewModel(onCloseButton = { onCloseSearchButton() })
-  }
 
   fun query(): Observable<String> {
     return queryObservable
