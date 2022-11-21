@@ -4,7 +4,7 @@ import neuro.expenses.register.domain.usecase.expense.RegisterExpenseError
 import neuro.expenses.register.viewmodel.manual.register.Message
 import neuro.expenses.register.viewmodel.manual.register.UiStateError
 
-fun RegisterExpenseError.toPresentation(): UiStateError {
+fun RegisterExpenseError.toViewmodel(): UiStateError {
   return when (this) {
     RegisterExpenseError.EMPTY_DESCRIPTION -> UiStateError.ShowDescriptionError(Message.EMPTY_DESCRIPTION)
     RegisterExpenseError.INVALID_CATEGORY -> UiStateError.ShowCategoryError
@@ -13,4 +13,4 @@ fun RegisterExpenseError.toPresentation(): UiStateError {
   }
 }
 
-fun List<RegisterExpenseError>.toPresentation(): List<UiStateError> = map { it.toPresentation() }
+fun List<RegisterExpenseError>.toViewmodel(): List<UiStateError> = map { it.toViewmodel() }

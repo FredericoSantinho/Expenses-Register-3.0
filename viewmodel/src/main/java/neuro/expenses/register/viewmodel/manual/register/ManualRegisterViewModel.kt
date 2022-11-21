@@ -14,7 +14,7 @@ import neuro.expenses.register.viewmodel.common.BaseViewModel
 import neuro.expenses.register.viewmodel.common.asState
 import neuro.expenses.register.viewmodel.common.formatter.DecimalFormatter
 import neuro.expenses.register.viewmodel.common.schedulers.SchedulerProvider
-import neuro.expenses.register.viewmodel.manual.register.mapper.toPresentation
+import neuro.expenses.register.viewmodel.manual.register.mapper.toViewmodel
 
 
 class ManualRegisterViewModel(
@@ -62,7 +62,7 @@ class ManualRegisterViewModel(
         onComplete = { publishAndReset() },
         onError = {
           if (it is RegisterExpenseException) {
-            _uiState.value = UiState.Error(it.errors.toPresentation())
+            _uiState.value = UiState.Error(it.errors.toViewmodel())
           } else {
             throw it
           }
