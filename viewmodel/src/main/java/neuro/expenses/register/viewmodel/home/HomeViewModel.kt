@@ -129,7 +129,7 @@ class HomeViewModel(
     editPlaceProductViewModel.iconUrl.value = placeProductDto.productDto.iconUrl
     editPlaceProductViewModel.variableAmount.value = placeProductDto.productDto.variableAmount
     editPlaceProductViewModel.onFinishEditAction.value =
-      HomeOnFinishEditAction { _uiEvent.value = UiEvent.CloseEditMode() }
+      { _uiEvent.value = UiEvent.CloseEditMode() }
   }
 
   private fun getPlaceProduct(productId: Long): PlaceProductDto {
