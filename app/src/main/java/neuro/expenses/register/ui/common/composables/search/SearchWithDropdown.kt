@@ -1,9 +1,6 @@
 package neuro.expenses.register.ui.common.composables.search
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.requiredHeightIn
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -112,10 +109,10 @@ fun SearchWithDropdown(
       shapes = MaterialTheme.shapes.copy(medium = RoundedCornerShape(0))
     ) {
       val modifierDropMenu = if (dropDownOptions.value.isEmpty()) Modifier else Modifier
-        .requiredHeightIn(max = 400.dp)
+        .heightIn(max = 300.dp)
         .width(with(LocalDensity.current) { textFieldSize.width.toDp() })
       DropdownMenu(
-        modifier = modifierDropMenu.heightIn(max = 300.dp),
+        modifier = modifierDropMenu,
         expanded = dropDownExpanded.value,
         properties = PopupProperties(
           focusable = false,
@@ -135,8 +132,14 @@ fun SearchWithDropdown(
             searchViewModel.query.value = searchSuggestion.text()
             onValueChange.invoke(searchViewModel.query.value)
             onSelectOption()
-          }) {
-            searchSuggestion.composable()
+          }, contentPadding = PaddingValues()) {
+            Column(
+              modifier = Modifier
+                .height(48.dp)
+                .width(with(LocalDensity.current) { textFieldSize.width.toDp() })
+            ) {
+              searchSuggestion.composable()
+            }
           }
         }
       }

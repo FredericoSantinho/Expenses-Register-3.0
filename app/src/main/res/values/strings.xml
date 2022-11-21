@@ -32,6 +32,9 @@
   <string name="delete">Delete</string>
   <string name="search">Search</string>
 
+  <!-- Search -->
+  <string name="search_products_title">Products</string>
+
   <!-- Manual Register Screen -->
   <string name="manual_register_total">Total</string>
   <string name="manual_register_register">Register</string>

@@ -11,13 +11,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import neuro.expenses.register.ui.common.composables.appbar.suggestions.product.ProductSearchSuggestion
 import neuro.expenses.register.ui.common.composables.search.SearchSuggestion
 
 class MockedSuggestions {
   fun create(): MutableList<SearchSuggestion> {
     val list = mutableListOf<SearchSuggestion>()
     for (i in 1..3) {
-      list.add(MockedSuggestion1(i))
+      list.add(
+        ProductSearchSuggestion(
+          "Cerveja Sagres 0,33cl",
+          "1.30 €",
+          "https://thexicos-wp.ams3.digitaloceanspaces.com/uploads/sites/5/2022/07/sagr.png"
+        )
+      )
     }
     for (i in 1..2) {
       list.add(MockedSuggestion2(i))
