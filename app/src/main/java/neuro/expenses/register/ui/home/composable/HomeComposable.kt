@@ -108,7 +108,12 @@ fun HomeComposable(
       sheetBackgroundColor = Color.Transparent,
       sheetState = modalBottomSheetState,
       sheetContent = {
-        EditPlaceProductComposable(homeViewModel.editPlaceProductViewModel)
+        if (modalBottomSheetState.isVisible) {
+          EditPlaceProductComposable(homeViewModel.editPlaceProductViewModel)
+        } else {
+          // Needed to prevent EditPlaceProductComposable to be seen when keyboard is hidding as the recomposition only occurs afterwards.
+          Divider()
+        }
       }) {}
     onUiEvent(uiEvent, coroutineScope, modalBottomSheetState, homeViewModel)
   }
