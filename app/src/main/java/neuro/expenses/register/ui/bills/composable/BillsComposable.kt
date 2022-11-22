@@ -52,7 +52,8 @@ fun BillsComposable(
     Modifier
       .background(color = grey_fog_lighter)
       .fillMaxSize(),
-    verticalArrangement = Arrangement.spacedBy(8.dp)
+    verticalArrangement = Arrangement.spacedBy(8.dp),
+    reverseLayout = true
   ) {
     items(bills.value, { listItem: BillViewModel -> listItem.id }) { item ->
       var unread by remember { mutableStateOf(false) }

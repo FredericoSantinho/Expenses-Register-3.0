@@ -72,7 +72,7 @@ val viewModelModule = module {
   single<DateTimeMapper> { DateTimeMapperImpl(get()) }
   single<NumberFormater> { NumberFormaterImpl() }
   single<DecimalFormatter> { DecimalFormatterImpl(DECIMALS) }
-  viewModel { BillsViewModel(get(), get(), get()) }
+  viewModel { BillsViewModel(get(), get(), get(), get()) }
   viewModel { EditViewModel(get()) }
   viewModel { EditProductsViewModel() }
   viewModel { EditPlaceProductsViewModel(get(), get(), get(), get()) }
