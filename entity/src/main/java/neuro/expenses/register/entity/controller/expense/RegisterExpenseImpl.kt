@@ -25,7 +25,7 @@ class RegisterExpenseImpl(
       .flatMapCompletable { placeProduct ->
         getOrCreatePlace.getOrCreatePlace(expense.place).flatMapCompletable { place ->
           if (!placeController.contains(place, placeProduct)) {
-            placeController.addProduct(place, placeProduct).ignoreElement()
+            placeController.addPlaceProduct(place, placeProduct).ignoreElement()
           } else {
             Completable.complete()
           }

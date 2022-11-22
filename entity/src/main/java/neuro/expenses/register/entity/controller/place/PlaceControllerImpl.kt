@@ -7,14 +7,15 @@ import neuro.expenses.register.entity.controller.product.GetOrCreatePlaceProduct
 
 class PlaceControllerImpl(
   private val getOrCreatePlaceProduct: GetOrCreatePlaceProduct,
-  private val savePlace: SavePlace
+  private val addPlaceProduct: AddPlaceProduct,
+  private val removePlaceProduct: RemovePlaceProduct
 ) :
   PlaceController {
   override fun contains(place: Place, placeProduct: PlaceProduct): Boolean {
     return place.placeProducts.contains(placeProduct)
   }
 
-  override fun addProduct(place: Place, placeProduct: PlaceProduct): Single<Place> {
+  override fun addPlaceProduct(place: Place, placeProduct: PlaceProduct): Single<Place> {
     return getOrCreatePlaceProduct.getOrCreatePlaceProduct(
       placeProduct.product.description,
       placeProduct.category.name,
@@ -25,18 +26,22 @@ class PlaceControllerImpl(
       placeProducts.addAll(place.placeProducts)
       placeProducts.add(savedProduct)
       Place(place.id, place.name, placeProducts, place.latLng)
-    }.flatMap { newPlace -> savePlace.savePlace(newPlace).toSingle { newPlace } }
+    }.flatMap { newPlace ->
+      addPlaceProduct.addPlaceProduct(place.id, placeProduct.id).toSingle { newPlace }
+    }
   }
 
-  override fun removeProduct(place: Place, placeProduct: PlaceProduct): Single<Place> {
-    return Single.fromCallable { place.placeProducts.filter { it.id != placeProduct.id } }
+  override fun removePlaceProduct(place: Place, placeProductId: Long): Single<Place> {
+    return Single.fromCallable { place.placeProducts.filter { it.id != placeProductId } }
       .map { products -> Place(place.id, place.name, products, place.latLng) }
-      .flatMap { newPlace -> savePlace.savePlace(newPlace).toSingle { newPlace } }
+      .flatMap { newPlace ->
+        removePlaceProduct.removePlaceProduct(place.id, placeProductId).toSingle { newPlace }
+      }
   }
 
-  override fun updateProduct(place: Place, placeProduct: PlaceProduct): Single<Place> {
-    return removeProduct(place, placeProduct).flatMap { newPlace ->
-      addProduct(
+  override fun updatePlaceProduct(place: Place, placeProduct: PlaceProduct): Single<Place> {
+    return removePlaceProduct(place, placeProduct.id).flatMap { newPlace ->
+      addPlaceProduct(
         newPlace,
         placeProduct
       )

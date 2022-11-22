@@ -134,7 +134,7 @@ class HomeViewModel(
 
   private fun setEditProductViewModel(productCardModel: ProductCardModel) {
     val placeProductDto = getPlaceProduct(productCardModel.id)
-    editPlaceProductViewModel.placeId.value = placeDto.id
+    editPlaceProductViewModel.placeDto.value = placeDto
     editPlaceProductViewModel.placeProductId.value = placeProductDto.id
     editPlaceProductViewModel.description.value = placeProductDto.productDto.description
     editPlaceProductViewModel.category.value = placeProductDto.category.name

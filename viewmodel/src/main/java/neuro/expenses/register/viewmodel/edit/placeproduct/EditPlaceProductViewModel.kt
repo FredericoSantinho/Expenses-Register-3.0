@@ -1,8 +1,10 @@
 package neuro.expenses.register.viewmodel.edit.placeproduct
 
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import io.reactivex.rxjava3.core.Single
 import neuro.expenses.register.domain.dto.CategoryDto
+import neuro.expenses.register.domain.dto.PlaceDto
 import neuro.expenses.register.domain.dto.PlaceProductDto
 import neuro.expenses.register.domain.dto.ProductDto
 import neuro.expenses.register.domain.usecase.category.ObserveCategoriesUseCase
@@ -16,7 +18,8 @@ class EditPlaceProductViewModel(
   private val removePlaceProductUseCase: RemovePlaceProductUseCase,
   private val schedulerProvider: SchedulerProvider
 ) {
-  val placeId = mutableStateOf(0L)
+  lateinit var placeDto: MutableState<PlaceDto>
+
   val productId = mutableStateOf(0L)
   val placeProductId = mutableStateOf(0L)
   val description = mutableStateOf("")
@@ -40,13 +43,13 @@ class EditPlaceProductViewModel(
 
   fun onSaveButton() {
     buildProductDto().flatMapCompletable { productDto ->
-      updatePlaceProductUseCase.updatePlaceProduct(placeId.value, productDto)
+      updatePlaceProductUseCase.updatePlaceProduct(placeDto.value, productDto)
     }.subscribeOn(schedulerProvider.io()).observeOn(schedulerProvider.ui())
       .subscribe { onFinishEditAction.value() }
   }
 
   fun onDeleteButton() {
-    removePlaceProductUseCase.removePlaceProduct(placeId.value, placeProductId.value)
+    removePlaceProductUseCase.removePlaceProduct(placeDto.value, placeProductId.value)
       .subscribeOn(schedulerProvider.io()).observeOn(schedulerProvider.ui())
       .subscribe { onFinishEditAction.value() }
   }

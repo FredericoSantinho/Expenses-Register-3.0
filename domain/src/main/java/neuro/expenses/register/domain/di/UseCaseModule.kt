@@ -37,7 +37,7 @@ val useCaseModule = module {
   single<SavePlaceUseCase> { SavePlaceUseCaseImpl(get()) }
   single<GetPlaceUseCase> { GetPlaceUseCaseImpl(get()) }
   single<GetOrCreatePlaceProductUseCase> { GetOrCreatePlaceProductUseCaseImpl(get()) }
-  single<UpdatePlaceProductUseCase> { UpdatePlaceProductUseCaseImpl(get(), get()) }
-  single<AddPlaceProductUseCase> { AddPlaceProductUseCaseImpl(get(), get(), get()) }
+  single<UpdatePlaceProductUseCase> { UpdatePlaceProductUseCaseImpl(get()) }
+  single<AddPlaceProductUseCase> { AddPlaceProductUseCaseImpl(get(), get()) }
   single<RemovePlaceProductUseCase> { RemovePlaceProductUseCaseImpl(get()) }
 }

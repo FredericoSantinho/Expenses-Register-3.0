@@ -39,7 +39,7 @@ interface PlaceDao {
   @Query("select * from placeplaceproductcrossref where placeId=:placeId")
   fun getAllCrossRef(placeId: Long): Single<List<PlacePlaceProductCrossRef>>
 
-  @Insert(onConflict = OnConflictStrategy.IGNORE)
+  @Insert(onConflict = OnConflictStrategy.ABORT)
   fun insert(placePlaceProductCrossRef: PlacePlaceProductCrossRef): Single<Long>
 
   @Delete()

@@ -6,7 +6,7 @@ import neuro.expenses.register.entity.PlaceProduct
 
 interface PlaceController {
   fun contains(place: Place, placeProduct: PlaceProduct): Boolean
-  fun addProduct(place: Place, placeProduct: PlaceProduct): Single<Place>
-  fun removeProduct(place: Place, placeProduct: PlaceProduct): Single<Place>
-  fun updateProduct(place: Place, placeProduct: PlaceProduct): Single<Place>
+  fun addPlaceProduct(place: Place, placeProduct: PlaceProduct): Single<Place>
+  fun removePlaceProduct(place: Place, placeProductId: Long): Single<Place>
+  fun updatePlaceProduct(place: Place, placeProduct: PlaceProduct): Single<Place>
 }

@@ -19,7 +19,7 @@ internal class ProductCardModelTest {
       ProductCardModel(id, description, categoryModel, place, price, iconUrl)
 
     Assertions.assertEquals(description, productCardModel.description)
-    Assertions.assertEquals("category", productCardModel.categoryModel.name.value)
+    Assertions.assertEquals("category", productCardModel.categoryModel.name)
     Assertions.assertEquals(place, productCardModel.place)
     Assertions.assertEquals(price, productCardModel.price)
     Assertions.assertEquals(amount, productCardModel.amount, 0.0)

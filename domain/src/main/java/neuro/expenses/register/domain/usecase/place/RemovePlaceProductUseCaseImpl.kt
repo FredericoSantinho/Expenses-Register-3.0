@@ -1,11 +1,13 @@
 package neuro.expenses.register.domain.usecase.place
 
 import io.reactivex.rxjava3.core.Completable
-import neuro.expenses.register.domain.repository.RemovePlaceProductRepository
+import neuro.expenses.register.domain.dto.PlaceDto
+import neuro.expenses.register.domain.mapper.toEntity
+import neuro.expenses.register.entity.controller.place.PlaceController
 
-class RemovePlaceProductUseCaseImpl(private val removePlaceProductRepository: RemovePlaceProductRepository) :
+class RemovePlaceProductUseCaseImpl(private val placeController: PlaceController) :
   RemovePlaceProductUseCase {
-  override fun removePlaceProduct(placeId: Long, productId: Long): Completable {
-    return removePlaceProductRepository.removePlaceProduct(placeId, productId)
+  override fun removePlaceProduct(placeDto: PlaceDto, placeProductId: Long): Completable {
+    return placeController.removePlaceProduct(placeDto.toEntity(), placeProductId).ignoreElement()
   }
 }
