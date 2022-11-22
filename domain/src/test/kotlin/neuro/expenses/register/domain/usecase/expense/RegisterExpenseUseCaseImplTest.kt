@@ -1,9 +1,7 @@
-package neuro.expenses.register.domain.usecase.register
+package neuro.expenses.register.domain.usecase.expense
 
-import org.koin.test.KoinTest
-
-internal class RegisterExpenseUseCaseImplTest : KoinTest {
-//  @get:Rule
+internal class RegisterExpenseUseCaseImplTest {
+  //  @get:Rule
 //  val koinTestRule = KoinTestRule.create {
 //    modules(useCaseModule)
 //  }

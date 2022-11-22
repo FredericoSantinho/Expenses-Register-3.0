@@ -8,8 +8,6 @@ plugins {
 
 apply from: "dependencies.gradle"
 
-dependencies {}
-
 android {
   namespace 'neuro.expenses.register.viewmodel'
   compileSdk project.compileSdkVersion
@@ -29,6 +27,15 @@ android {
     release {
       minifyEnabled false
       proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+    }
+  }
+
+  testOptions {
+    unitTests.all {
+      testLogging {
+        outputs.upToDateWhen { false }
+        showStandardStreams = true
+      }
     }
   }
 }

@@ -4,6 +4,7 @@ ext {
   lib = [:]
 }
 
+lib.reflections = "org.reflections:reflections:$ver.reflections"
 lib.kotlin = "org.jetbrains.kotlin:kotlin-stdlib:$ver.kotlin"
 
 lib.koin_core = "io.insert-koin:koin-core:$ver.koin"
@@ -11,6 +12,7 @@ lib.koin_android = "io.insert-koin:koin-android:$ver.koin_android"
 lib.koin_compose = "io.insert-koin:koin-androidx-compose:$ver.koin_android"
 lib.koin_test = "io.insert-koin:koin-test-junit4:$ver.koin_test"
 
+lib.slf4j_nop = "org.slf4j:slf4j-nop:$ver.slf4j_nop"
 lib.junit = "junit:junit:$ver.junit"
 lib.junit5 = ["org.junit.jupiter:junit-jupiter-api:$ver.junit5",
               "org.junit.jupiter:junit-jupiter-params:$ver.junit5"]

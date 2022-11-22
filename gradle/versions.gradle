@@ -2,7 +2,9 @@ ext {
   ver = [:]
 }
 
+ver.reflections = "0.10.2"
 ver.kotlin = "1.7.21"
+ver.slf4j_nop = "2.0.4"
 ver.junit = "4.13.2"
 ver.junit5 = "5.9.1"
 ver.mockito = "4.8.1"

@@ -1,6 +1,5 @@
 package neuro.expenses.register.viewmodel.home
 
-import androidx.compose.runtime.mutableStateOf
 import neuro.expenses.register.viewmodel.home.model.ProductCardModel
 import neuro.expenses.register.viewmodel.model.CategoryModel
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -11,7 +10,6 @@ import org.mockito.kotlin.any
 import org.mockito.kotlin.eq
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verifyNoInteractions
-import java.util.*
 
 internal class ProductCardViewModelTest {
 
@@ -27,7 +25,6 @@ internal class ProductCardViewModelTest {
     val iconUrl = "url"
     val productCardModel =
       ProductCardModel(id, description, categoryModel, place, price, iconUrl)
-    val calendar = mutableStateOf(Calendar.getInstance())
 
     val productCardViewModel = ProductCardViewModel(onProductCardClick, productCardModel)
 

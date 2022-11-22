@@ -28,25 +28,15 @@ fun EditComposable(editViewModel: EditViewModel = getViewModel()) {
 
   onUiEvent(uiEvent, navController, editViewModel)
 
-  Column(horizontalAlignment = Alignment.End, modifier = Modifier.padding(end = 4.dp)) {
-    DropdownButton(
-      modifier = Modifier.width(160.dp),
-      items = editViewModel.getItems().map { it.toPresentation() }.map { stringResource(it) },
-      onItemSelect = object : OnItemSelect {
-        override fun onItemSelect(index: Int) {
-          editViewModel.onOptionSelected(index)
-        }
-      })
-    NavHost(
-      navController = navController,
-      startDestination = Directions.product.toString(),
-      modifier = Modifier.fillMaxSize()
-    ) {
-      composable(Directions.product.toString()) { EditProductsComposable() }
-      composable(Directions.placeProduct.toString()) { EditPlaceProductsComposable() }
-      composable(Directions.category.toString()) { EditCategoriesComposable() }
-      composable(Directions.place.toString()) { EditPlacesComposable() }
-    }
+  NavHost(
+    navController = navController,
+    startDestination = Directions.product.screenRoute,
+    modifier = Modifier.fillMaxSize()
+  ) {
+    composable(Directions.product.screenRoute) { EditProductsComposable() }
+    composable(Directions.placeProduct.screenRoute) { EditPlaceProductsComposable() }
+    composable(Directions.category.screenRoute) { EditCategoriesComposable() }
+    composable(Directions.place.screenRoute) { EditPlacesComposable() }
   }
 }
 
