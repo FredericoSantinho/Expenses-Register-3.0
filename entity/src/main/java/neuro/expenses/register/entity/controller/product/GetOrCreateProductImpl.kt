@@ -9,11 +9,11 @@ class GetOrCreateProductImpl(
   private val saveProduct: SaveProduct
 ) : GetOrCreateProduct {
   override fun getOrCreateProduct(
-    description: String, variableAmount: Boolean
+    description: String, variableAmount: Boolean, iconUrl: String
   ): Single<Product> {
     return getProduct.getProduct(description)
       .switchIfEmpty(generateProductId.newId().flatMap { productId ->
-        val product = Product(productId, description, variableAmount)
+        val product = Product(productId, description, variableAmount, iconUrl)
         saveProduct.saveProduct(product).andThen(Single.just(product))
       })
   }

@@ -21,10 +21,11 @@ internal class PlaceControllerImplTest {
     val categoryName = "cat"
     val price = 1.0
     val variableAmount = false
+    val iconUrl = ""
     val placeId: Long = 0
     val placeProductId: Long = 1
 
-    val product = Product(0, description, variableAmount)
+    val product = Product(0, description, variableAmount, iconUrl)
     val category = Category(0, categoryName)
 
     val residualPlaceProduct = PlaceProduct(2, product, category, 0.0)
@@ -41,14 +42,14 @@ internal class PlaceControllerImplTest {
 
     whenever(
       getOrCreatePlaceProduct.getOrCreatePlaceProduct(
-        eq(description), eq(categoryName), eq(price), eq(variableAmount)
+        eq(description), eq(categoryName), eq(price), eq(variableAmount), eq(iconUrl)
       )
     ).doReturn(
       Single.just(placeProduct)
     )
     whenever(
       getOrCreatePlaceProduct.getOrCreatePlaceProduct(
-        eq(description), eq(categoryName), eq(newPrice), eq(variableAmount)
+        eq(description), eq(categoryName), eq(newPrice), eq(variableAmount), eq(iconUrl)
       )
     ).doReturn(
       Single.just(updatedPlaceProduct)
@@ -58,14 +59,16 @@ internal class PlaceControllerImplTest {
     assertFalse { placeController.contains(place, placeProduct) }
 
     //region Add a product
-    verify(getOrCreatePlaceProduct, times(0)).getOrCreatePlaceProduct(any(), any(), any(), any())
+    verify(getOrCreatePlaceProduct, times(0)).getOrCreatePlaceProduct(
+      any(), any(), any(), any(), any()
+    )
     verify(addPlaceProduct, times(0)).addPlaceProduct(any(), any())
 
     var newPlaceObservable = placeController.addPlaceProduct(place, placeProduct).test()
     var newPlace = newPlaceObservable.values().get(0)
 
     verify(getOrCreatePlaceProduct, times(1)).getOrCreatePlaceProduct(
-      eq(description), eq(categoryName), eq(price), eq(variableAmount)
+      eq(description), eq(categoryName), eq(price), eq(variableAmount), eq(iconUrl)
     )
     verify(addPlaceProduct, times(1)).addPlaceProduct(eq(placeId), eq(placeProductId))
 
@@ -89,7 +92,7 @@ internal class PlaceControllerImplTest {
     newPlace = newPlaceObservable.values().get(0)
 
     verify(getOrCreatePlaceProduct, times(1)).getOrCreatePlaceProduct(
-      eq(description), eq(categoryName), eq(price), eq(variableAmount)
+      eq(description), eq(categoryName), eq(price), eq(variableAmount), eq(iconUrl)
     )
     verify(addPlaceProduct, times(1)).addPlaceProduct(eq(placeId), eq(placeProductId))
     verify(removePlaceProduct, times(1)).removePlaceProduct(eq(placeId), eq(-1))
@@ -104,7 +107,7 @@ internal class PlaceControllerImplTest {
     newPlace = newPlaceObservable.values().get(0)
 
     verify(getOrCreatePlaceProduct, times(1)).getOrCreatePlaceProduct(
-      eq(description), eq(categoryName), eq(price), eq(variableAmount)
+      eq(description), eq(categoryName), eq(price), eq(variableAmount), eq(iconUrl)
     )
     verify(addPlaceProduct, times(1)).addPlaceProduct(eq(placeId), eq(placeProductId))
     verify(removePlaceProduct, times(1)).removePlaceProduct(eq(placeId), eq(placeProductId))
@@ -119,7 +122,7 @@ internal class PlaceControllerImplTest {
     newPlace = newPlaceObservable.values().get(0)
 
     verify(getOrCreatePlaceProduct, times(1)).getOrCreatePlaceProduct(
-      eq(description), eq(categoryName), eq(price), eq(variableAmount)
+      eq(description), eq(categoryName), eq(price), eq(variableAmount), eq(iconUrl)
     )
     verify(addPlaceProduct, times(2)).addPlaceProduct(eq(placeId), eq(placeProductId))
     verify(removePlaceProduct, times(2)).removePlaceProduct(eq(placeId), eq(placeProductId))

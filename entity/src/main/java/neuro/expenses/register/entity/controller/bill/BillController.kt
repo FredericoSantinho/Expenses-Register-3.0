@@ -46,7 +46,8 @@ class BillController(
               expense.description,
               expense.category,
               expense.price,
-              expense.amount % (expense.amount.toInt()) != 0.0
+              expense.amount % (expense.amount.toInt()) != 0.0,
+              ""
             ).flatMap { product ->
               generateBillItemId.newId().map { billItemId ->
                 val newBillItem = BillItem(

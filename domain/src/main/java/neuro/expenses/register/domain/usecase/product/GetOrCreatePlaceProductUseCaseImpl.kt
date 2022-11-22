@@ -13,6 +13,7 @@ class GetOrCreatePlaceProductUseCaseImpl(private val getOrCreatePlaceProduct: Ge
       placeProductDto.category.name,
       placeProductDto.price,
       placeProductDto.productDto.variableAmount,
+      placeProductDto.productDto.iconUrl
     ).map { it.toDomain() }
   }
 }

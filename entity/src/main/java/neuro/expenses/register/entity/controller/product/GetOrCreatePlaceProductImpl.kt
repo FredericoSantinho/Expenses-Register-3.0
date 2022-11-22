@@ -13,12 +13,12 @@ class GetOrCreatePlaceProductImpl(
 ) : GetOrCreatePlaceProduct {
 
   override fun getOrCreatePlaceProduct(
-    description: String, category: String, price: Double, variableAmount: Boolean
+    description: String, category: String, price: Double, variableAmount: Boolean, iconUrl: String
   ): Single<PlaceProduct> {
     return getCategory.getCategory(category.lowercase()).toSingle().flatMap { loadedCategory ->
       getPlaceProduct.getPlaceProduct(
         description.lowercase(), loadedCategory.name, price
-      ).switchIfEmpty(getOrCreateProduct.getOrCreateProduct(description, variableAmount)
+      ).switchIfEmpty(getOrCreateProduct.getOrCreateProduct(description, variableAmount, iconUrl)
         .flatMap { product ->
           generatePlaceProductId.newId().flatMap { placeProductId ->
             val placeProduct = PlaceProduct(placeProductId, product, loadedCategory, price)

@@ -8,6 +8,7 @@ interface GetOrCreatePlaceProduct {
     description: String,
     category: String,
     price: Double,
-    variableAmount: Boolean
+    variableAmount: Boolean,
+    iconUrl: String
   ): Single<PlaceProduct>
 }

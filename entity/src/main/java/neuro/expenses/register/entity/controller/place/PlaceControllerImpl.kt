@@ -22,7 +22,8 @@ class PlaceControllerImpl(
           placeProduct.product.description,
           placeProduct.category.name,
           placeProduct.price,
-          placeProduct.product.variableAmount
+          placeProduct.product.variableAmount,
+          placeProduct.product.iconUrl
         ).map { savedProduct ->
           val placeProducts = mutableListOf<PlaceProduct>()
           placeProducts.addAll(place.placeProducts)
