@@ -1,6 +1,7 @@
 package neuro.expenses.register.viewmodel.di
 
 import neuro.expenses.register.viewmodel.appbar.AppBarViewModel
+import neuro.expenses.register.viewmodel.application.ApplicationViewModel
 import neuro.expenses.register.viewmodel.bill.BillViewModel
 import neuro.expenses.register.viewmodel.bill.FeedLastBillViewModel
 import neuro.expenses.register.viewmodel.bill.FeedLastBillViewModelImpl
@@ -30,6 +31,7 @@ const val CURRENCY = "currency"
 const val DECIMALS = 2
 
 val viewModelModule = module {
+  single { ApplicationViewModel(get(), get(), get()) }
   single { AppBarViewModel() }
   viewModel { PermissionsViewModel(get()) }
   single { MainViewModel() }

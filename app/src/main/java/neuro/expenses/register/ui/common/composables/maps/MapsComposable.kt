@@ -19,9 +19,7 @@ import neuro.expenses.register.viewmodel.home.model.CameraPositionModel
 
 @Composable
 fun MapsComposable(
-  initialCameraPosition: CameraPositionModel,
-  event: MapsMoveCameraEvent?,
-  height: Dp = 240.dp
+  initialCameraPosition: CameraPositionModel, event: MapsMoveCameraEvent?, height: Dp = 240.dp
 ) {
   val mapLoaded = remember { mutableStateOf(false) }
   val bitoque = LatLng(37.091495, -8.2475677)
@@ -36,18 +34,14 @@ fun MapsComposable(
   val coroutineScope = rememberCoroutineScope()
 
   Box(Modifier.fillMaxWidth()) {
-    GoogleMap(
-      modifier = Modifier.height(height),
+    GoogleMap(modifier = Modifier.height(height),
       cameraPositionState = cameraPositionState,
       properties = mapProperties,
       onMapLoaded = {
         mapLoaded.value = true
-      }
-    ) {
+      }) {
       Marker(
-        state = MarkerState(position = bitoque),
-        title = "Bitoque",
-        snippet = "Marker in Bitoque"
+        state = MarkerState(position = bitoque), title = "Bitoque", snippet = "Marker in Bitoque"
       )
     }
     ScaleBar(
@@ -58,14 +52,13 @@ fun MapsComposable(
     )
   }
 
-  val mapsMoveCameraEvent = event
-  if (mapLoaded.value && mapsMoveCameraEvent != null) {
-    LaunchedEffect(mapsMoveCameraEvent) {
+  if (event != null) {
+    LaunchedEffect(event) {
       coroutineScope.launch {
         cameraPositionState.animate(
           CameraUpdateFactory.newCameraPosition(
             CameraPosition.fromLatLngZoom(
-              mapsMoveCameraEvent.latLng, mapsMoveCameraEvent.zoom
+              event.latLng, event.zoom
             )
           )
         )

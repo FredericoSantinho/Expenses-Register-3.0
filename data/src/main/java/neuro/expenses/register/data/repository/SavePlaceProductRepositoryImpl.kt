@@ -8,8 +8,9 @@ import neuro.expenses.register.data.model.product.PlaceProductProductCrossRef
 import neuro.expenses.register.domain.dto.PlaceProductDto
 import neuro.expenses.register.domain.repository.SavePlaceProductRepository
 
-class SavePlaceProductRepositoryImpl(private val productDao: ProductDao) :
-  SavePlaceProductRepository {
+class SavePlaceProductRepositoryImpl(
+  private val productDao: ProductDao
+) : SavePlaceProductRepository {
   override fun savePlaceProduct(placeProductDto: PlaceProductDto): Completable {
     return Completable.fromAction {
       productDao.insert(

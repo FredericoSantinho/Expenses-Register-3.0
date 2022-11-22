@@ -8,6 +8,7 @@ val repositoryModule = module {
   single<GeneratePlaceProductIdRepository> { GeneratePlaceProductIdRepositoryImpl(get()) }
   single<ObserveCategoriesRepository> { ObserveCategoriesRepositoryImpl(get()) }
   single<GetCategoryRepository> { GetCategoryRepositoryImpl(get()) }
+  single<SaveCategoryRepository> { SaveCategoryRepositoryImpl(get()) }
   single<ObserveLastBillRepository> { ObserveLastBillRepositoryImpl(get()) }
   single<ObserveBillsRepository> { ObserveBillsRepositoryImpl(get()) }
   single<GetLastBillRepository> { GetLastBillRepositoryImpl(get()) }
@@ -18,9 +19,9 @@ val repositoryModule = module {
   single<GetPlaceProductRepository> { GetPlaceProductRepositoryImpl(get(), get()) }
   single<GenerateProductIdRepository> { GenerateProductIdRepositoryImpl(get()) }
   single<GeneratePlaceIdRepository> { GeneratePlaceIdRepositoryImpl(get()) }
+  single<SavePlaceRepository> { SavePlaceRepositoryImpl(get()) }
   single<GetPlacesRepository> { GetPlacesRepositoryImpl(get()) }
   single<ObservePlacesRepository> { ObservePlacesRepositoryImpl(get()) }
   single<GetPlaceRepository> { GetPlaceRepositoryImpl(get()) }
-  single<SavePlaceRepository> { SavePlaceRepositoryImpl(get()) }
   single<RemovePlaceProductRepository> { RemovePlaceProductRepositoryImpl(get()) }
 }

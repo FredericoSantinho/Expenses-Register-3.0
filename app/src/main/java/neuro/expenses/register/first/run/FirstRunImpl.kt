@@ -1,6 +1,7 @@
 package neuro.expenses.register.first.run
 
 import android.content.SharedPreferences
+import neuro.expenses.register.viewmodel.application.FirstRun
 
 class FirstRunImpl(private val sharedPreferences: SharedPreferences) : FirstRun {
   override fun isFirstRun(): Boolean {

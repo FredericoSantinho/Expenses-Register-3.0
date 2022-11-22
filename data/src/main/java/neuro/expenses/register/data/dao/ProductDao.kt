@@ -21,7 +21,7 @@ interface ProductDao {
   @Query("select * from product_table where descriptionLowercase=:descriptionLowercase")
   fun getProduct(descriptionLowercase: String): Maybe<RoomProduct>
 
-  @Insert(onConflict = OnConflictStrategy.IGNORE)
+  @Insert(onConflict = OnConflictStrategy.ABORT)
   fun insert(roomProduct: RoomProduct): Single<Long>
 
   @Update()
@@ -45,7 +45,7 @@ interface ProductDao {
     productId: Long, categoryId: Long, price: Double
   ): Maybe<RoomPlaceProductWithProductAndCategory>
 
-  @Insert(onConflict = OnConflictStrategy.REPLACE)
+  @Insert(onConflict = OnConflictStrategy.ABORT)
   fun insert(roomPlaceProduct: RoomPlaceProduct): Long
 
   @Transaction

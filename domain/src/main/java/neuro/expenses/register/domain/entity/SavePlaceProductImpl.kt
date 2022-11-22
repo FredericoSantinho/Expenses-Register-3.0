@@ -6,9 +6,8 @@ import neuro.expenses.register.domain.repository.SavePlaceProductRepository
 import neuro.expenses.register.entity.PlaceProduct
 import neuro.expenses.register.entity.controller.product.SavePlaceProduct
 
-class SavePlaceProductImpl(
-  private val savePlaceProductRepository: SavePlaceProductRepository
-) : SavePlaceProduct {
+class SavePlaceProductImpl(private val savePlaceProductRepository: SavePlaceProductRepository) :
+  SavePlaceProduct {
   override fun savePlaceProduct(placeProduct: PlaceProduct): Completable {
     return savePlaceProductRepository.savePlaceProduct(placeProduct.toDomain())
   }

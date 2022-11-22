@@ -75,11 +75,14 @@ class HomeViewModel(
     }.baseSubscribe { nearestPlaces ->
       places.value = nearestPlaces
       placesNames.value = nearestPlaces.map { placeDto -> placeDto.name }
-      onSelectedPlace(nearestPlaces.get(selectedPlaceIndex.value))
-
-      appBarViewModel.searchHint.value = SearchProductsAndPlaces
-      appBarViewModel.enableSearch()
-      setupSearchSuggestions()
+      if (nearestPlaces.isNotEmpty()) {
+        onSelectedPlace(nearestPlaces.get(selectedPlaceIndex.value))
+        appBarViewModel.searchHint.value = SearchProductsAndPlaces
+        appBarViewModel.enableSearch()
+        setupSearchSuggestions()
+      } else {
+        _uiState.value = UiState.Ready
+      }
     }
     feedLastBillViewModel.observe().baseSubscribe { }
   }
