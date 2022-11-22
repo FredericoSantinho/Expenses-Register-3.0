@@ -23,5 +23,6 @@ val repositoryModule = module {
   single<GetPlacesRepository> { GetPlacesRepositoryImpl(get()) }
   single<ObservePlacesRepository> { ObservePlacesRepositoryImpl(get()) }
   single<GetPlaceRepository> { GetPlaceRepositoryImpl(get()) }
+  single<AddPlaceProductRepository> { AddPlaceProductRepositoryImpl(get()) }
   single<RemovePlaceProductRepository> { RemovePlaceProductRepositoryImpl(get()) }
 }

@@ -6,9 +6,7 @@ import neuro.expenses.register.domain.mapper.toDomain
 import neuro.expenses.register.domain.mapper.toEntity
 import neuro.expenses.register.entity.controller.expense.RegisterExpense
 
-class RegisterExpenseUseCaseImpl(
-  private val registerExpense: RegisterExpense
-) :
+class RegisterExpenseUseCaseImpl(private val registerExpense: RegisterExpense) :
   RegisterExpenseUseCase {
   override fun registerExpense(expenseDto: ExpenseDto): Completable {
     return registerExpense.registerExpense(expenseDto.toEntity()).onErrorResumeNext {
