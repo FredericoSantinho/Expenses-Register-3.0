@@ -7,6 +7,7 @@ import neuro.expenses.register.domain.usecase.calendar.GetCalendarUseCase
 import neuro.expenses.register.domain.usecase.expense.RegisterExpenseUseCase
 import neuro.expenses.register.domain.usecase.location.GetCurrentLocationUseCase
 import neuro.expenses.register.domain.usecase.place.ObserveNearestPlacesUseCase
+import neuro.expenses.register.domain.usecase.place.SortPlaceProducts
 import neuro.expenses.register.viewmodel.appbar.AppBarViewModel
 import neuro.expenses.register.viewmodel.appbar.SearchHint
 import neuro.expenses.register.viewmodel.bill.BillViewModel
@@ -32,9 +33,10 @@ class HomeViewModel(
   private val getCurrentLocationUseCase: GetCurrentLocationUseCase,
   private val getCalendarUseCase: GetCalendarUseCase,
   private val registerExpenseUseCase: RegisterExpenseUseCase,
-  private val feedLastBillViewModel: FeedLastBillViewModel,
+  private val sortPlaceProducts: SortPlaceProducts,
   private val productCardModelMapper: ProductCardModelMapper,
   private val searchSuggestionModelMapper: SearchSuggestionModelMapper,
+  private val feedLastBillViewModel: FeedLastBillViewModel,
   override val billViewModel: BillViewModel,
   override val editPlaceProductViewModel: EditPlaceProductViewModel,
   private val mainViewModel: MainViewModel,
@@ -109,11 +111,13 @@ class HomeViewModel(
 
   private fun onSelectedPlace(placeDto: PlaceDto) {
     val latLngModel = placeDto.latLngDto.toViewModel()
-    _uiState.value = UiState.Ready
     _uiEvent.value = UiEvent.MoveCamera(latLngModel, zoom)
-    productsListViewModel.setProducts(placeDto, appBarViewModel.query.value)
     this.placeDto = placeDto
     selectedPlace.value = placeDto.name
+    sortPlaceProducts.sortPlaceProducts(placeDto.products).baseSubscribe {
+      productsListViewModel.setProducts(placeDto, appBarViewModel.query.value)
+      _uiState.value = UiState.Ready
+    }
   }
 
   private fun setupSearchSuggestions() {

@@ -10,12 +10,10 @@ import neuro.expenses.register.entity.service.CalculateDistanceService
 
 class ObserveNearestPlacesUseCaseImpl(
   private val observePlacesRepository: ObservePlacesRepository,
-  private val calculateDistanceService: CalculateDistanceService,
-  private val sortPlacesProducts: SortPlacesProducts
+  private val calculateDistanceService: CalculateDistanceService
 ) : ObserveNearestPlacesUseCase {
   override fun observeNearestPlaces(latLngDto: LatLngDto, limit: Int): Observable<List<PlaceDto>> {
     return observePlacesRepository.observePlaces().map { it.toEntity() }
-      .map { sortPlacesProducts.sortPlacesProducts(it) }
       .map {
         it.sortedBy {
           val latLng = latLngDto.toEntity()

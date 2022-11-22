@@ -42,7 +42,7 @@ class PopulatePlacesImpl(
             .flatMapCompletable { savePlaceUseCase.savePlace(bitoque) }
         }).andThen(Completable.defer {
           val caneca50 = PlaceProductDto(
-            8L,
+            9L,
             ProductDto(
               8L,
               caneca50Description,
@@ -66,7 +66,7 @@ private fun buildBitoqueProducts(
   borga: CategoryDto, restau: CategoryDto
 ): List<PlaceProductDto> {
   val sagresMedia = PlaceProductDto(
-    1L,
+    2L,
     ProductDto(
       1L,
       sagresMediaDescription,
@@ -77,7 +77,7 @@ private fun buildBitoqueProducts(
     price13,
   )
   val superBockMedia = PlaceProductDto(
-    2L,
+    3L,
     ProductDto(
       2L,
       superBockMediaDescription,
@@ -88,7 +88,7 @@ private fun buildBitoqueProducts(
     price13,
   )
   val miniCristal = PlaceProductDto(
-    3L,
+    4L,
     ProductDto(
       3L,
       miniCristalDescription,
@@ -99,7 +99,7 @@ private fun buildBitoqueProducts(
     price11,
   )
   val miniSagres = PlaceProductDto(
-    4L,
+    5L,
     ProductDto(
       4L,
       miniSagresDescription,
@@ -110,7 +110,7 @@ private fun buildBitoqueProducts(
     price11,
   )
   val chicharricos = PlaceProductDto(
-    5L,
+    6L,
     ProductDto(
       5L,
       chicharricosDescription,
@@ -121,7 +121,7 @@ private fun buildBitoqueProducts(
     price15,
   )
   val twix50 = PlaceProductDto(
-    6L,
+    7L,
     ProductDto(
       6L,
       twixDescription,
@@ -132,7 +132,7 @@ private fun buildBitoqueProducts(
     price15,
   )
   val tostaMistaCaseira = PlaceProductDto(
-    7L,
+    8L,
     ProductDto(
       7L,
       tostaMistaCaseiraDescription,

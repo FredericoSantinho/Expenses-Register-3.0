@@ -134,16 +134,6 @@ class PopulateExpensesImpl(private val registerExpenseUseCase: RegisterExpenseUs
     )
     list.add(
       ExpenseDto(
-        sagresMediaDescription,
-        restauName,
-        bitoqueName,
-        price11,
-        1.0,
-        Calendar.getInstance()
-      )
-    )
-    list.add(
-      ExpenseDto(
         caneca50Description,
         borgaName,
         longoBarName,
