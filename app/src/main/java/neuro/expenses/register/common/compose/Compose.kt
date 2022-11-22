@@ -1,4 +1,4 @@
-package neuro.expenses.register.ui.manual.register.composable
+package neuro.expenses.register.common.compose
 
 import androidx.compose.runtime.Composable
 

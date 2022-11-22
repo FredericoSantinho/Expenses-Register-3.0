@@ -1,7 +1,7 @@
 package neuro.expenses.register.domain.entity
 
 import io.reactivex.rxjava3.core.Single
-import neuro.expenses.register.domain.repository.GenerateBillItemIdRepository
+import neuro.expenses.register.domain.repository.bill.GenerateBillItemIdRepository
 import neuro.expenses.register.entity.controller.bill.GenerateBillItemId
 
 class GenerateBillItemIdImpl(private val generateBillItemIdRepository: GenerateBillItemIdRepository) :

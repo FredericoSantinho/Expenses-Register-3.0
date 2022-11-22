@@ -25,13 +25,13 @@ import neuro.expenses.register.common.back.BackNavElement
 import neuro.expenses.register.common.back.DefaultBackHandler
 import neuro.expenses.register.common.back.FinishActivityHandler
 import neuro.expenses.register.common.back.modalBackNavElement
+import neuro.expenses.register.common.compose.rememberUnit
 import neuro.expenses.register.ui.bill.BillComposableContainer
 import neuro.expenses.register.ui.common.composables.datetime.DateTimeComposable
 import neuro.expenses.register.ui.common.composables.dropdown.DropDownTextField
 import neuro.expenses.register.ui.common.composables.maps.MapsComposable
 import neuro.expenses.register.ui.edit.placeproduct.EditPlaceProductComposable
 import neuro.expenses.register.ui.home.mapper.HomeMapsEventMapper
-import neuro.expenses.register.ui.manual.register.composable.rememberUnit
 import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.viewmodel.home.HomeViewModel
 import neuro.expenses.register.viewmodel.home.IHomeViewModel

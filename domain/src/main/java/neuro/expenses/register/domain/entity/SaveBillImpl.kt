@@ -1,7 +1,7 @@
 package neuro.expenses.register.domain.entity
 
 import neuro.expenses.register.domain.mapper.toDomain
-import neuro.expenses.register.domain.repository.SaveBillRepository
+import neuro.expenses.register.domain.repository.bill.SaveBillRepository
 import neuro.expenses.register.entity.Bill
 import neuro.expenses.register.entity.controller.bill.SaveBill
 

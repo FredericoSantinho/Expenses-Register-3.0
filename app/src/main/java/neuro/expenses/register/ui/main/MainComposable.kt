@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.navigation.compose.rememberNavController
 import neuro.expenses.register.ui.common.composables.appbar.SearchAppBar
 import neuro.expenses.register.ui.main.nav.BottomNavigation
+import neuro.expenses.register.ui.main.nav.NavigationGraph
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

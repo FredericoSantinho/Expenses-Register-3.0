@@ -5,7 +5,7 @@ import io.reactivex.rxjava3.core.Single
 import neuro.expenses.register.domain.dto.BillDto
 import neuro.expenses.register.domain.dto.LatLngDto
 import neuro.expenses.register.domain.dto.PlaceDto
-import neuro.expenses.register.domain.repository.ObserveLastBillRepository
+import neuro.expenses.register.domain.repository.bill.ObserveLastBillRepository
 import java.util.*
 
 private val DEFAULT_BILL_DTO = newDefaultBillDto()

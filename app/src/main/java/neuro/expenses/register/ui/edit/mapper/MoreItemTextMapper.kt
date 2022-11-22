@@ -1,4 +1,4 @@
-package neuro.expenses.register.viewmodel.edit.mapper
+package neuro.expenses.register.ui.edit.mapper
 
 import androidx.annotation.StringRes
 import neuro.expenses.register.R

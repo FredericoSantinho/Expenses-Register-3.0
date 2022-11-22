@@ -2,7 +2,7 @@ package neuro.expenses.register.domain.entity
 
 import io.reactivex.rxjava3.core.Maybe
 import neuro.expenses.register.domain.mapper.toEntity
-import neuro.expenses.register.domain.repository.GetPlaceProductRepository
+import neuro.expenses.register.domain.repository.product.GetPlaceProductRepository
 import neuro.expenses.register.entity.PlaceProduct
 import neuro.expenses.register.entity.controller.product.GetPlaceProduct
 

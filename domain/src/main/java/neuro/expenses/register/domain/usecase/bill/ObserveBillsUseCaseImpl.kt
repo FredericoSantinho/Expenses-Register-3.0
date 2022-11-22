@@ -2,7 +2,7 @@ package neuro.expenses.register.domain.usecase.bill
 
 import io.reactivex.rxjava3.core.Observable
 import neuro.expenses.register.domain.dto.BillDto
-import neuro.expenses.register.domain.repository.ObserveBillsRepository
+import neuro.expenses.register.domain.repository.bill.ObserveBillsRepository
 
 class ObserveBillsUseCaseImpl(private val observeBillsRepository: ObserveBillsRepository) :
   ObserveBillsUseCase {

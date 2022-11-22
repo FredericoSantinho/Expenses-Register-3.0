@@ -8,11 +8,11 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import neuro.expenses.register.common.compose.rememberUnit
 import neuro.expenses.register.ui.edit.category.EditCategoriesComposable
 import neuro.expenses.register.ui.edit.place.EditPlacesComposable
 import neuro.expenses.register.ui.edit.placeproduct.EditPlaceProductsComposable
 import neuro.expenses.register.ui.edit.product.EditProductsComposable
-import neuro.expenses.register.ui.manual.register.composable.rememberUnit
 import neuro.expenses.register.viewmodel.edit.Directions
 import neuro.expenses.register.viewmodel.edit.EditViewModel
 import neuro.expenses.register.viewmodel.edit.UiEvent

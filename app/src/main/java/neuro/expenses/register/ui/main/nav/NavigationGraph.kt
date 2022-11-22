@@ -1,4 +1,4 @@
-package neuro.expenses.register.ui.main
+package neuro.expenses.register.ui.main.nav
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -9,7 +9,6 @@ import androidx.navigation.compose.composable
 import neuro.expenses.register.ui.bills.composable.BillsComposable
 import neuro.expenses.register.ui.edit.EditComposable
 import neuro.expenses.register.ui.home.composable.HomeComposable
-import neuro.expenses.register.ui.main.nav.BottomNavItem
 import neuro.expenses.register.ui.manual.register.composable.ManualRegisterComposable
 
 @Composable
