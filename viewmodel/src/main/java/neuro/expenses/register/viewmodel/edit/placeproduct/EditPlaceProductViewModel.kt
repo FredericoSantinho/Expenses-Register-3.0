@@ -40,7 +40,7 @@ class EditPlaceProductViewModel(
 
   fun onSaveButton() {
     buildProductDto().flatMapCompletable { productDto ->
-      updatePlaceProductUseCase.updatePlaceProduct(productDto)
+      updatePlaceProductUseCase.updatePlaceProduct(placeId.value, productDto)
     }.subscribeOn(schedulerProvider.io()).observeOn(schedulerProvider.ui())
       .subscribe { onFinishEditAction.value() }
   }
@@ -57,8 +57,7 @@ class EditPlaceProductViewModel(
         placeProductId.value,
         ProductDto(productId.value, description.value, variableAmount.value, iconUrl.value),
         categoryDto,
-        price.value.toDouble(),
-        placeId.value
+        price.value.toDouble()
       )
     }
   }

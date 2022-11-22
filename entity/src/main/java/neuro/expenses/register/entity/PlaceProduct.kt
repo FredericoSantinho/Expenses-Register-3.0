@@ -1,9 +1,5 @@
 package neuro.expenses.register.entity
 
 data class PlaceProduct(
-  val id: Long,
-  val product: Product,
-  val category: Category,
-  val price: Double,
-  val placeId: Long
+  val id: Long, val product: Product, val category: Category, val price: Double
 )

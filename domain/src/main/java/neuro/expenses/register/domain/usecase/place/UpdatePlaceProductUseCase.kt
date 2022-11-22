@@ -4,5 +4,5 @@ import io.reactivex.rxjava3.core.Completable
 import neuro.expenses.register.domain.dto.PlaceProductDto
 
 interface UpdatePlaceProductUseCase {
-  fun updatePlaceProduct(placeProductDto: PlaceProductDto): Completable
+  fun updatePlaceProduct(placeId: Long, placeProductDto: PlaceProductDto): Completable
 }

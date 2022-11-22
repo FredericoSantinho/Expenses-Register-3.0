@@ -14,8 +14,8 @@ class UpdatePlaceProductUseCaseImpl(
   private val savePlace: SavePlace,
   private val placeController: PlaceController
 ) : UpdatePlaceProductUseCase {
-  override fun updatePlaceProduct(placeProductDto: PlaceProductDto): Completable {
-    return getPlaceUseCase.getPlace(placeProductDto.placeId)
+  override fun updatePlaceProduct(placeId: Long, placeProductDto: PlaceProductDto): Completable {
+    return getPlaceUseCase.getPlace(placeId)
       .flatMapSingle { placeDto -> updateProduct(placeDto, placeProductDto) }
       .flatMapCompletable { placeDto -> savePlace.savePlace(placeDto.toEntity()) }
   }

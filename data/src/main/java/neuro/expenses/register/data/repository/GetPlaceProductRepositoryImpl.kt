@@ -19,8 +19,7 @@ class GetPlaceProductRepositoryImpl(
   override fun getPlaceProduct(
     description: String,
     category: String,
-    price: Double,
-    placeId: Long
+    price: Double
   ): Maybe<PlaceProductDto> {
     return getCategoryRepository.getCategory(category.lowercase()).flatMap { categoryDto ->
       productDao.getProduct(description)
@@ -28,8 +27,7 @@ class GetPlaceProductRepositoryImpl(
           productDao.getPlaceProductWithProductAndCategory(
             roomProduct.productId,
             categoryDto.id,
-            price,
-            placeId
+            price
           )
         }
         .map { roomPlaceProductWithProductAndCategory -> roomPlaceProductWithProductAndCategory.toDomain() }

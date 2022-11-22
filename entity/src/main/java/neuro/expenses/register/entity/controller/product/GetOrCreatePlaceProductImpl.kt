@@ -26,8 +26,7 @@ class GetOrCreatePlaceProductImpl(
         getPlaceProduct.getPlaceProduct(
           description.lowercase(),
           loadedCategory.name,
-          price,
-          loadedPlace
+          price
         ).switchIfEmpty(
           getOrCreateProduct.getOrCreateProduct(description, variableAmount).flatMap { product ->
             generatePlaceProductId.newId().flatMap { placeProductId ->
@@ -35,10 +34,10 @@ class GetOrCreatePlaceProductImpl(
                 placeProductId,
                 product,
                 loadedCategory,
-                price,
-                loadedPlace.id
+                price
               )
-              savePlaceProduct.savePlaceProduct(placeProduct).andThen(Single.just(placeProduct))
+              savePlaceProduct.savePlaceProduct(placeProduct)
+                .andThen(Single.just(placeProduct))
             }
           }
         )

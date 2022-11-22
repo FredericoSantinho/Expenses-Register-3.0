@@ -13,8 +13,8 @@ fun RoomPlaceProductWithProductAndCategory.toDomain(): PlaceProductDto {
       roomProduct.description,
       roomProduct.variableAmount,
       roomProduct.iconUrl
-    ), category.toDomain(), roomPlaceProduct.price, roomPlaceProduct.placeId
+    ), category.toDomain(), roomPlaceProduct.price
   )
 }
 
-fun PlaceProductDto.toData() = RoomPlaceProduct(id, productDto.id, category.id, price, placeId)
+fun PlaceProductDto.toData() = RoomPlaceProduct(id, productDto.id, category.id, price)
