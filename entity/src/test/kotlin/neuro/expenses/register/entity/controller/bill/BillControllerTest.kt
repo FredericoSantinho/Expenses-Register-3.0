@@ -1,4 +1,4 @@
-package neuro.expenses.register.entity.controller
+package neuro.expenses.register.entity.controller.bill
 
 internal class BillControllerTest {
   //  @get:Rule
