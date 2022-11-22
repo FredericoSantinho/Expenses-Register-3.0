@@ -22,49 +22,51 @@ class BillController(
   private val generateBillItemId: GenerateBillItemId
 ) {
   fun add(expense: Expense): Single<Bill> {
-    return getLastBill(expense).flatMap { bill ->
-      Single.defer {
-        val productDescription = expense.description
-        if (contains(bill, productDescription)) {
-          Single.fromCallable {
-            val billItem = getBillItem(bill, productDescription)
-            val billId = bill.id
-            val billItemId = billItem.id
-            val product = billItem.placeProduct
-            val oldAmount = billItem.amount
-            val newAmount = oldAmount + expense.amount
-            val newBillItem = BillItem(billItemId, product, newAmount, newAmount * product.price)
+    return getOrCreatePlace.getOrCreatePlace(expense.place).flatMap { place ->
+      getLastBill(expense, place).flatMap { bill ->
+        Single.defer {
+          val productDescription = expense.description
+          if (contains(bill, productDescription)) {
+            Single.fromCallable {
+              val billItem = getBillItem(bill, productDescription)
+              val billId = bill.id
+              val billItemId = billItem.id
+              val product = billItem.placeProduct
+              val oldAmount = billItem.amount
+              val newAmount = oldAmount + expense.amount
+              val newBillItem = BillItem(billItemId, product, newAmount, newAmount * product.price)
 
-            val billItems = buildList(bill, newBillItem)
-            val total = calculateBillTotal.getTotal(billItems)
-            val iconUrl = getBillIconUrl.getIconUrl(billItems)
-            Bill(billId, bill.calendar, bill.place, total, billItems, iconUrl)
-          }
-        } else {
-          getOrCreatePlaceProduct.getOrCreatePlaceProduct(
-            expense.description,
-            expense.category,
-            expense.price,
-            expense.amount % (expense.amount.toInt()) != 0.0,
-            expense.place
-          ).flatMap { product ->
-            generateBillItemId.newId().map { billItemId ->
-              val newBillItem = BillItem(
-                billItemId, product,
-                expense.amount,
-                expense.price * expense.amount
-              )
-              buildList(bill, newBillItem)
-            }.map { billItems ->
+              val billItems = buildList(bill, newBillItem)
               val total = calculateBillTotal.getTotal(billItems)
               val iconUrl = getBillIconUrl.getIconUrl(billItems)
-              Bill(bill.id, bill.calendar, bill.place, total, billItems, iconUrl)
+              Bill(billId, bill.calendar, bill.place, total, billItems, iconUrl)
+            }
+          } else {
+            getOrCreatePlaceProduct.getOrCreatePlaceProduct(
+              expense.description,
+              expense.category,
+              expense.price,
+              expense.amount % (expense.amount.toInt()) != 0.0,
+              expense.place
+            ).flatMap { product ->
+              generateBillItemId.newId().map { billItemId ->
+                val newBillItem = BillItem(
+                  billItemId, product,
+                  expense.amount,
+                  expense.price * expense.amount
+                )
+                buildList(bill, newBillItem)
+              }.map { billItems ->
+                val total = calculateBillTotal.getTotal(billItems)
+                val iconUrl = getBillIconUrl.getIconUrl(billItems)
+                Bill(bill.id, bill.calendar, bill.place, total, billItems, iconUrl)
+              }
             }
           }
         }
+      }.doOnSuccess { bill ->
+        saveBill.save(bill)
       }
-    }.doOnSuccess { bill ->
-      saveBill.save(bill)
     }
   }
 
@@ -105,15 +107,13 @@ class BillController(
   private fun getBillItem(bill: Bill, productDescription: String) =
     bill.billItems.find { it.placeProduct.product.description == productDescription }!!
 
-  private fun getLastBill(expense: Expense): Single<Bill> {
-    return getOrCreatePlace.getOrCreatePlace(expense.place).flatMap { place ->
-      getLastBill.getLastBill().defaultIfEmpty(defaultBillDto).flatMap { lastStoredBill ->
-        val calendar = expense.calendar
-        if (!lastStoredBill.isOpen || lastStoredBill.place.id != place.id) {
-          newBill(calendar, place)
-        } else {
-          Single.just(lastStoredBill)
-        }
+  private fun getLastBill(expense: Expense, place: Place): Single<Bill> {
+    return getLastBill.getLastBill().defaultIfEmpty(defaultBillDto).flatMap { lastStoredBill ->
+      val calendar = expense.calendar
+      if (!lastStoredBill.isOpen || lastStoredBill.place.id != place.id) {
+        newBill(calendar, place)
+      } else {
+        Single.just(lastStoredBill)
       }
     }
   }
