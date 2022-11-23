@@ -23,7 +23,7 @@ fun ProductSearchSuggestionComposable(description: String, price: String, iconUr
   ConstraintLayout(
     modifier = Modifier.fillMaxSize()
   ) {
-    val (iconC, descriptionC, priceC, dividerC) = createRefs()
+    val (iconC, descriptionC, priceC) = createRefs()
 
     AsyncImage(modifier = Modifier
       .constrainAs(iconC) {

@@ -9,6 +9,10 @@ import neuro.expenses.register.data.model.bill.*
 
 @Dao
 interface BillDao {
+  @Transaction
+  @Query("select * from bill_table where billId=:id")
+  fun getBill(id: Long): Single<RoomBillWithBillItemsAndPlace>
+
   @Query("SELECT MAX(billId) FROM bill_table")
   fun getLastBillId(): Maybe<Long>
 

@@ -1,4 +1,4 @@
-package neuro.expenses.register.ui.bills.composable
+package neuro.expenses.register.ui.bills
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
@@ -24,13 +24,17 @@ import neuro.expenses.register.ui.home.composable.*
 import neuro.expenses.register.ui.theme.grey_fog_lighter
 import neuro.expenses.register.viewmodel.bill.BillViewModel
 import neuro.expenses.register.viewmodel.bills.BillsViewModel
-import neuro.expenses.register.viewmodel.home.UiEvent
+import neuro.expenses.register.viewmodel.bills.UiEvent
+import neuro.expenses.register.viewmodel.edit.bill.EditBillViewModel
+import org.koin.androidx.compose.get
 import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun BillsComposable(
-  fragmentActivity: FragmentActivity, billsViewModel: BillsViewModel = getViewModel()
+  fragmentActivity: FragmentActivity,
+  editBillViewModel: EditBillViewModel = get(),
+  billsViewModel: BillsViewModel = getViewModel()
 ) {
   rememberUnit { billsViewModel.onComposition() }
 
@@ -41,7 +45,9 @@ fun BillsComposable(
 
   val bills = billsViewModel.bills.subscribeAsState(initial = emptyList())
 
-  ModalBottomSheetLayout(modalBottomSheetState, { EditBillComposable(fragmentActivity) }) {
+  ModalBottomSheetLayout(
+    modalBottomSheetState,
+    { EditBillComposable(fragmentActivity, editBillViewModel) }) {
     LazyColumn(
       Modifier
         .background(color = grey_fog_lighter)
@@ -126,7 +132,6 @@ fun onUiEvent(
     is UiEvent.CloseEditMode -> hideModalBottomSheet(
       uiEvent.value, coroutineScope, modalBottomSheetState
     )
-    is UiEvent.MoveCamera -> {}
     null -> {}
   }
   billsViewModel.eventConsumed()

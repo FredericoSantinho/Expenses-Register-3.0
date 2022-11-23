@@ -57,7 +57,7 @@ fun PlaceSearchSuggestionComposable(name: String) {
 
 
 @Composable
-fun ProductSearchSuggestionTitleComposable() {
+fun PlaceSearchSuggestionTitleComposable() {
   Column {
     Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()) {
       Text(

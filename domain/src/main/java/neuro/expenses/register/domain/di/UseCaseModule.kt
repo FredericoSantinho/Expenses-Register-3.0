@@ -20,6 +20,7 @@ import org.koin.dsl.module
 
 val useCaseModule = module {
   single<RegisterExpenseUseCase> { RegisterExpenseUseCaseImpl(get()) }
+  single<GetBillUseCase> { GetBillUseCaseImpl(get()) }
   single<ObserveLastBillUseCase> { ObserveLastBillUseCaseImpl(get(), get()) }
   single<GetLastBillUseCase> { GetLastBillUseCaseImpl(get()) }
   single<ObserveBillsUseCase> { ObserveBillsUseCaseImpl(get()) }

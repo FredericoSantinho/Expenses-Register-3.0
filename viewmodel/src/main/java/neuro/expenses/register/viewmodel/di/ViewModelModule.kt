@@ -8,6 +8,8 @@ import neuro.expenses.register.viewmodel.bill.FeedLastBillViewModelImpl
 import neuro.expenses.register.viewmodel.bill.mapper.DateTimeMapper
 import neuro.expenses.register.viewmodel.bill.mapper.DateTimeMapperImpl
 import neuro.expenses.register.viewmodel.bills.BillsViewModel
+import neuro.expenses.register.viewmodel.bills.EditBillViewModelController
+import neuro.expenses.register.viewmodel.bills.EditBillViewModelControllerImpl
 import neuro.expenses.register.viewmodel.common.formatter.DecimalFormatter
 import neuro.expenses.register.viewmodel.common.formatter.DecimalFormatterImpl
 import neuro.expenses.register.viewmodel.common.formatter.NumberFormater
@@ -39,33 +41,13 @@ val viewModelModule = module {
   viewModel { SettingsViewModel() }
   viewModel {
     HomeViewModel(
-      get(),
-      get(),
-      get(),
-      get(),
-      get(),
-      get(),
-      get(),
-      get(),
-      get(),
-      get(),
-      get(),
-      get()
+      get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get()
     )
   }
   single { EditPlaceProductViewModel(get(), get(), get(), get()) }
   viewModel {
     ManualRegisterViewModel(
-      get(),
-      get(),
-      get(),
-      get(),
-      get(),
-      get(),
-      get(),
-      get(),
-      get(),
-      get(named(CURRENCY))
+      get(), get(), get(), get(), get(), get(), get(), get(), get(), get(named(CURRENCY))
     )
   }
   single { BillViewModel() }
@@ -73,7 +55,12 @@ val viewModelModule = module {
   single<DateTimeMapper> { DateTimeMapperImpl(get()) }
   single<NumberFormater> { NumberFormaterImpl() }
   single<DecimalFormatter> { DecimalFormatterImpl(DECIMALS) }
-  viewModel { BillsViewModel(get(), get(), get(), get(), get()) }
+  viewModel { BillsViewModel(get(), get(), get(), get(), get(), get(), get()) }
+  single<EditBillViewModelController> {
+    EditBillViewModelControllerImpl(
+      get(), get(), get(), get(named(CURRENCY))
+    )
+  }
   single { EditBillViewModel() }
   viewModel { EditViewModel(get()) }
   viewModel { EditProductsViewModel() }

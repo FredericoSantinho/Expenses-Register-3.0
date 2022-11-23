@@ -41,13 +41,14 @@
   <string name="manual_register_total">Total</string>
   <string name="manual_register_register">Register</string>
   <string name="manual_register_register_success">Registered %1$s</string>
-
-  <!-- Bills -->
-  <string name="bills_place">Place</string>
-
+  <!-- Errors -->
   <string name="manual_register_empty_description">Empty description!</string>
   <string name="manual_register_empty_place">Empty place!</string>
   <string name="manual_register_invalid_amount">Invalid amount!</string>
+
+  <!-- Bills -->
+  <string name="bills_place">Place</string>
+  <string name="edit_bill_total">Total:</string>
 
   <!-- Edit Product -->
   <string name="edit_place_product_title">Edit Place Product</string>

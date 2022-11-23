@@ -11,7 +11,7 @@ class BillViewModel(
   editable: Boolean = false,
   opened: Boolean = false,
   billModel: BillModel = EMPTY,
-  private val onLongClick: (BillModel) -> Unit = {}
+  private val onBillLongClick: (Long) -> Unit = {}
 ) : IBillViewModel {
   override val billModel = mutableStateOf(billModel)
   override val id = mutableStateOf(billModel.id)
@@ -54,7 +54,7 @@ class BillViewModel(
   }
 
   override fun onCardLongClick() {
-    onLongClick(billModel.value)
+    onBillLongClick(id.value)
   }
 
   override fun onEditClick() {

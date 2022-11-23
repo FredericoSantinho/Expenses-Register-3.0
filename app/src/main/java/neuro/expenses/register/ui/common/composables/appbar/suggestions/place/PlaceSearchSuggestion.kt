@@ -26,7 +26,7 @@ class PlaceSearchSuggestion(
 
   @Composable
   override fun titleComposable() {
-    ProductSearchSuggestionTitleComposable()
+    PlaceSearchSuggestionTitleComposable()
   }
 
   override fun onClick() {
