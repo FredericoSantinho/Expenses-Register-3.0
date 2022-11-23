@@ -9,7 +9,7 @@ class DecimalFormatterImpl(decimals: Int) : DecimalFormatter {
   private val decimalFormat: DecimalFormat
 
   init {
-    require(!(decimals == 0)) { "Decimals must be greater than zero!" }
+    require((decimals > 0)) { "Decimals must be greater than zero!" }
     val pattern = StringBuilder("0.")
     for (i in 0 until decimals) {
       pattern.append('0')
