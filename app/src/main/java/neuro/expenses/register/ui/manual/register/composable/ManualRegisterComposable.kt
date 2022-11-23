@@ -27,13 +27,11 @@ import neuro.expenses.register.common.picker.time.DefaultShowTimePicker
 import neuro.expenses.register.common.picker.time.ShowTimePicker
 import neuro.expenses.register.ui.bill.BillComposableContainer
 import neuro.expenses.register.ui.common.composables.appbar.MockedSuggestions
-import neuro.expenses.register.ui.common.composables.appbar.suggestions.product.ProductSearchSuggestionComposable
 import neuro.expenses.register.ui.common.composables.datetime.DateTimeComposable
 import neuro.expenses.register.ui.common.composables.datetime.mapper.DateTextMapper
 import neuro.expenses.register.ui.common.composables.datetime.mapper.DateTextMapperImpl
 import neuro.expenses.register.ui.common.composables.datetime.mapper.TimeTextMapper
 import neuro.expenses.register.ui.common.composables.datetime.mapper.TimeTextMapperImpl
-import neuro.expenses.register.ui.common.composables.search.SearchWithDropdown
 import neuro.expenses.register.ui.common.composables.snackbar.showSnackbar
 import neuro.expenses.register.ui.common.composables.text.CurrencyTextField
 import neuro.expenses.register.ui.common.composables.text.TextFieldWithDropdown
@@ -47,7 +45,6 @@ import neuro.expenses.register.viewmodel.manual.register.ManualRegisterViewModel
 import neuro.expenses.register.viewmodel.manual.register.UiEvent
 import neuro.expenses.register.viewmodel.manual.register.UiState
 import neuro.expenses.register.viewmodel.manual.register.UiStateError
-import neuro.expenses.register.viewmodel.search.SearchViewModel
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -112,7 +109,6 @@ fun ManualRegisterComposable(
       )
       val dataIn = remember { mutableStateOf(MockedSuggestions().create()) }
 
-      SearchWithDropdown(dataIn = dataIn)
       TextFieldWithDropdown(
         dataIn = manualRegisterViewModel.categoriesNames.subscribeAsState(initial = emptyList()),
         label = stringResource(R.string.category),

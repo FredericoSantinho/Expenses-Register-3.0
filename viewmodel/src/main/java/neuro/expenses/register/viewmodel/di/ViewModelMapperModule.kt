@@ -9,17 +9,14 @@ import neuro.expenses.register.viewmodel.home.mapper.ProductCardModelMapper
 import neuro.expenses.register.viewmodel.home.mapper.ProductCardModelMapperImpl
 import neuro.expenses.register.viewmodel.home.mapper.SearchSuggestionModelMapper
 import neuro.expenses.register.viewmodel.home.mapper.SearchSuggestionModelMapperImpl
-import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val viewModelMapperModule = module {
   single<SearchSuggestionModelMapper> {
-    SearchSuggestionModelMapperImpl(
-      get(), get(named(CURRENCY))
-    )
+    SearchSuggestionModelMapperImpl(get())
   }
-  single<ProductCardModelMapper> { ProductCardModelMapperImpl(get(), get(named(CURRENCY))) }
-  single<BillModelMapper> { BillModelMapperImpl(get(), get(), get(named(CURRENCY))) }
+  single<ProductCardModelMapper> { ProductCardModelMapperImpl(get()) }
+  single<BillModelMapper> { BillModelMapperImpl(get(), get()) }
   single<BillViewModelMapper> { BillViewModelMapperImpl(get()) }
-  single { BillItemModelMapper(get(), get(named(CURRENCY))) }
+  single { BillItemModelMapper(get(), get()) }
 }

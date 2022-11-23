@@ -13,7 +13,7 @@ import neuro.expenses.register.viewmodel.bill.BillViewModel
 import neuro.expenses.register.viewmodel.bill.FeedLastBillViewModel
 import neuro.expenses.register.viewmodel.common.BaseViewModel
 import neuro.expenses.register.viewmodel.common.asState
-import neuro.expenses.register.viewmodel.common.formatter.DecimalFormatter
+import neuro.expenses.register.viewmodel.common.formatter.CurrencyFormatter
 import neuro.expenses.register.viewmodel.common.schedulers.SchedulerProvider
 import neuro.expenses.register.viewmodel.main.MainViewModel
 import neuro.expenses.register.viewmodel.manual.register.mapper.toViewmodel
@@ -25,11 +25,10 @@ class ManualRegisterViewModel(
   private val registerExpenseUseCase: RegisterExpenseUseCase,
   private val getNearestPlaceUseCase: GetNearestPlaceUseCase,
   private val feedLastBillViewModel: FeedLastBillViewModel,
-  private val decimalFormatter: DecimalFormatter,
+  private val currencyFormatter: CurrencyFormatter,
   val billViewModel: BillViewModel,
   private val mainViewModel: MainViewModel,
-  schedulerProvider: SchedulerProvider,
-  private val currency: String
+  schedulerProvider: SchedulerProvider
 ) : BaseViewModel(schedulerProvider) {
   val appBarViewModel: AppBarViewModel = AppBarViewModel()
 
@@ -118,7 +117,7 @@ class ManualRegisterViewModel(
   private fun buildTotalStr(): String {
     val priceDouble = if (price.value.isBlank()) 0.0 else price.value.toDouble()
     val amountDouble = if (amount.value.isBlank()) 0.0 else amount.value.toDouble()
-    return decimalFormatter.format(priceDouble * amountDouble) + ' ' + currency
+    return currencyFormatter.format(priceDouble * amountDouble)
   }
 
   private fun buildExpense(): ExpenseDto {

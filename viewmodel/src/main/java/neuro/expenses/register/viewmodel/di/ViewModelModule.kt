@@ -10,10 +10,7 @@ import neuro.expenses.register.viewmodel.bill.mapper.DateTimeMapperImpl
 import neuro.expenses.register.viewmodel.bills.BillsViewModel
 import neuro.expenses.register.viewmodel.bills.EditBillViewModelController
 import neuro.expenses.register.viewmodel.bills.EditBillViewModelControllerImpl
-import neuro.expenses.register.viewmodel.common.formatter.DecimalFormatter
-import neuro.expenses.register.viewmodel.common.formatter.DecimalFormatterImpl
-import neuro.expenses.register.viewmodel.common.formatter.NumberFormater
-import neuro.expenses.register.viewmodel.common.formatter.NumberFormaterImpl
+import neuro.expenses.register.viewmodel.common.formatter.*
 import neuro.expenses.register.viewmodel.edit.EditViewModel
 import neuro.expenses.register.viewmodel.edit.bill.EditBillViewModel
 import neuro.expenses.register.viewmodel.edit.category.EditCategoriesViewModel
@@ -47,7 +44,7 @@ val viewModelModule = module {
   single { EditPlaceProductViewModel(get(), get(), get(), get()) }
   viewModel {
     ManualRegisterViewModel(
-      get(), get(), get(), get(), get(), get(), get(), get(), get(), get(named(CURRENCY))
+      get(), get(), get(), get(), get(), get(), get(), get(), get()
     )
   }
   single { BillViewModel() }
@@ -55,12 +52,9 @@ val viewModelModule = module {
   single<DateTimeMapper> { DateTimeMapperImpl(get()) }
   single<NumberFormater> { NumberFormaterImpl() }
   single<DecimalFormatter> { DecimalFormatterImpl(DECIMALS) }
+  single<CurrencyFormatter> { CurrencyFormatterImpl(get(), get(named(CURRENCY))) }
   viewModel { BillsViewModel(get(), get(), get(), get(), get(), get(), get()) }
-  single<EditBillViewModelController> {
-    EditBillViewModelControllerImpl(
-      get(), get(), get(), get(named(CURRENCY))
-    )
-  }
+  single<EditBillViewModelController> { EditBillViewModelControllerImpl(get(), get(), get()) }
   single { EditBillViewModel() }
   viewModel { EditViewModel(get()) }
   viewModel { EditProductsViewModel() }

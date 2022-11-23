@@ -2,16 +2,14 @@ package neuro.expenses.register.viewmodel.home.mapper
 
 import neuro.expenses.register.domain.dto.PlaceDto
 import neuro.expenses.register.domain.dto.PlaceProductDto
-import neuro.expenses.register.viewmodel.common.formatter.DecimalFormatter
+import neuro.expenses.register.viewmodel.common.formatter.CurrencyFormatter
 import neuro.expenses.register.viewmodel.model.search.PlaceSearchSuggestionModel
 import neuro.expenses.register.viewmodel.model.search.ProductSearchSuggestionModel
 
-class SearchSuggestionModelMapperImpl(
-  private val decimalFormatter: DecimalFormatter,
-  private val currency: String
-) : SearchSuggestionModelMapper {
+class SearchSuggestionModelMapperImpl(private val currencyFormatter: CurrencyFormatter) :
+  SearchSuggestionModelMapper {
   override fun map(placeProductDto: PlaceProductDto): ProductSearchSuggestionModel {
-    val price = decimalFormatter.format(placeProductDto.price) + ' ' + currency
+    val price = currencyFormatter.format(placeProductDto.price)
 
     return ProductSearchSuggestionModel(
       placeProductDto.productDto.description,
