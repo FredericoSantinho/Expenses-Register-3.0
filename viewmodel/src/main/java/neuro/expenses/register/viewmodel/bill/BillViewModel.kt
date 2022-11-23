@@ -3,10 +3,17 @@ package neuro.expenses.register.viewmodel.bill
 import androidx.compose.runtime.mutableStateOf
 import neuro.expenses.register.viewmodel.bill.model.BillModel
 import neuro.expenses.register.viewmodel.common.asState
+import java.util.*
 
-private val EMPTY = BillModel(0L, "", "", "", "", "", false)
+private val EMPTY = BillModel(0L, "", "", "", "", "", false, Calendar.getInstance())
 
-class BillViewModel(editable: Boolean = false, billModel: BillModel = EMPTY) : IBillViewModel {
+class BillViewModel(
+  editable: Boolean = false,
+  opened: Boolean = false,
+  billModel: BillModel = EMPTY,
+  private val onLongClick: (BillModel) -> Unit = {}
+) : IBillViewModel {
+  override val billModel = mutableStateOf(billModel)
   override val id = mutableStateOf(billModel.id)
   override val iconUrl = mutableStateOf(billModel.iconUrl)
   override val place = mutableStateOf(billModel.place)
@@ -20,6 +27,11 @@ class BillViewModel(editable: Boolean = false, billModel: BillModel = EMPTY) : I
   init {
     if (editable) {
       setEditableBillState()
+    }
+    if (opened) {
+      setOpenedBillState()
+    } else {
+      setClosedBillState()
     }
   }
 
@@ -42,13 +54,12 @@ class BillViewModel(editable: Boolean = false, billModel: BillModel = EMPTY) : I
   }
 
   override fun onCardLongClick() {
-
+    onLongClick(billModel.value)
   }
 
   override fun onEditClick() {
 
   }
-
 
   fun setLoadingState() {
     _uiState.value = UiState.Loading

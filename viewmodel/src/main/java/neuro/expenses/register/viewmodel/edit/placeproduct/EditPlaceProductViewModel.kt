@@ -1,12 +1,8 @@
 package neuro.expenses.register.viewmodel.edit.placeproduct
 
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import io.reactivex.rxjava3.core.Single
-import neuro.expenses.register.domain.dto.CategoryDto
-import neuro.expenses.register.domain.dto.PlaceDto
-import neuro.expenses.register.domain.dto.PlaceProductDto
-import neuro.expenses.register.domain.dto.ProductDto
+import neuro.expenses.register.domain.dto.*
 import neuro.expenses.register.domain.usecase.category.ObserveCategoriesUseCase
 import neuro.expenses.register.domain.usecase.place.RemovePlaceProductUseCase
 import neuro.expenses.register.domain.usecase.place.UpdatePlaceProductUseCase
@@ -18,7 +14,7 @@ class EditPlaceProductViewModel(
   private val removePlaceProductUseCase: RemovePlaceProductUseCase,
   private val schedulerProvider: SchedulerProvider
 ) {
-  lateinit var placeDto: MutableState<PlaceDto>
+  val placeDto = mutableStateOf(PlaceDto(-1, "", emptyList(), LatLngDto(0.0, 0.0)))
 
   val productId = mutableStateOf(0L)
   val placeProductId = mutableStateOf(0L)

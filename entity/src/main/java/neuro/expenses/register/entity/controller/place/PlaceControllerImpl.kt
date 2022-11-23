@@ -9,8 +9,7 @@ class PlaceControllerImpl(
   private val getOrCreatePlaceProduct: GetOrCreatePlaceProduct,
   private val addPlaceProduct: AddPlaceProduct,
   private val removePlaceProduct: RemovePlaceProduct
-) :
-  PlaceController {
+) : PlaceController {
   override fun contains(place: Place, placeProduct: PlaceProduct): Boolean {
     return place.placeProducts.contains(placeProduct)
   }
@@ -39,19 +38,24 @@ class PlaceControllerImpl(
   }
 
   override fun removePlaceProduct(place: Place, placeProductId: Long): Single<Place> {
-    return Single.fromCallable { place.placeProducts.filter { it.id != placeProductId } }
-      .map { products -> Place(place.id, place.name, products, place.latLng) }
-      .flatMap { newPlace ->
-        removePlaceProduct.removePlaceProduct(place.id, placeProductId).toSingle { newPlace }
-      }
+    return removePlaceProduct.removePlaceProduct(place.id, placeProductId).toSingle {
+      Place(
+        place.id, place.name, removeProduct(place.placeProducts, placeProductId), place.latLng
+      )
+    }
   }
 
   override fun updatePlaceProduct(place: Place, placeProduct: PlaceProduct): Single<Place> {
     return removePlaceProduct(place, placeProduct.id).flatMap { newPlace ->
       addPlaceProduct(
-        newPlace,
-        placeProduct
+        newPlace, placeProduct
       )
     }
+  }
+
+  private fun removeProduct(
+    placeProducts: List<PlaceProduct>, placeProductId: Long
+  ): List<PlaceProduct> {
+    return placeProducts.filter { it.id != placeProductId }
   }
 }

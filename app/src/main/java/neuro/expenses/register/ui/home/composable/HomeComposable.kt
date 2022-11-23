@@ -1,8 +1,6 @@
 package neuro.expenses.register.ui.home.composable
 
-import android.app.Activity
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -10,7 +8,6 @@ import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -18,18 +15,14 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.fragment.app.FragmentActivity
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 import neuro.expenses.register.*
 import neuro.expenses.register.R
-import neuro.expenses.register.common.back.BackNavElement
-import neuro.expenses.register.common.back.DefaultBackHandler
-import neuro.expenses.register.common.back.FinishActivityHandler
-import neuro.expenses.register.common.back.modalBackNavElement
 import neuro.expenses.register.common.compose.rememberUnit
 import neuro.expenses.register.ui.bill.BillComposableContainer
 import neuro.expenses.register.ui.common.composables.datetime.DateTimeComposable
 import neuro.expenses.register.ui.common.composables.dropdown.DropDownTextField
 import neuro.expenses.register.ui.common.composables.maps.MapsComposable
+import neuro.expenses.register.ui.common.composables.maps.MapsMoveCameraEvent
 import neuro.expenses.register.ui.edit.placeproduct.EditPlaceProductComposable
 import neuro.expenses.register.ui.home.mapper.HomeMapsEventMapper
 import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
@@ -53,81 +46,61 @@ fun HomeComposable(
   val uiEvent = homeViewModel.uiEvent
 
   val loading = remember { mutableStateOf(true) }
+  val moveCamera = remember { mutableStateOf<MapsMoveCameraEvent?>(null) }
 
   val coroutineScope = rememberCoroutineScope()
-  val modalBottomSheetInitialValue = remember { ModalBottomSheetValue.Hidden }
-  val modalBottomSheetState = rememberModalBottomSheetState(
-    modalBottomSheetInitialValue, confirmStateChange = {
-      it != ModalBottomSheetValue.HalfExpanded
-    }, skipHalfExpanded = true
-  )
+  val modalBottomSheetState = rememberModalBottomSheetState()
 
-  ConstraintLayout(
-    modifier = Modifier.fillMaxSize()
-  ) {
-    val (mainC, billC) = createRefs()
+  ModalBottomSheetLayout(modalBottomSheetState,
+    { EditPlaceProductComposable(homeViewModel.editPlaceProductViewModel) }) {
+    ConstraintLayout(
+      modifier = Modifier.fillMaxSize()
+    ) {
+      val (mainC, billC) = createRefs()
 
-    BillComposableContainer(homeViewModel.billViewModel, Modifier.constrainAs(billC) {
-      bottom.linkTo(parent.bottom)
-    })
-    Column(modifier = Modifier.constrainAs(mainC) {
-      linkTo(top = parent.top, bottom = billC.top)
-      height = Dimension.fillToConstraints
-    }) {
-      MapsComposable(
-        homeViewModel.initialCameraPosition, mapsEventMapper.map(uiEvent.value)
-      )
-      Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-        DateTimeComposable(
-          fragmentActivity = fragmentActivity,
-          modifier = Modifier
-            .align(CenterVertically)
-            .padding(start = 8.dp),
-          calendar = homeViewModel.calendar
-        )
-        DropDownTextField(
-          modifier = Modifier
-            .padding(start = 8.dp)
-            .requiredWidth(180.dp),
-          label = stringResource(id = R.string.home_place),
-          listItems = homeViewModel.placesNames,
-          onSelectedOption = { homeViewModel.onSelectedPlace(it) },
-          selectedItemIndex = homeViewModel.selectedPlaceIndex,
-          value = homeViewModel.selectedPlace
-        )
+      BillComposableContainer(homeViewModel.billViewModel, Modifier.constrainAs(billC) {
+        bottom.linkTo(parent.bottom)
+      })
+      Column(modifier = Modifier.constrainAs(mainC) {
+        linkTo(top = parent.top, bottom = billC.top)
+        height = Dimension.fillToConstraints
+      }) {
+        MapsComposable(homeViewModel.initialCameraPosition, moveCamera)
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+          DateTimeComposable(
+            fragmentActivity = fragmentActivity,
+            modifier = Modifier
+              .align(CenterVertically)
+              .padding(start = 8.dp),
+            calendar = homeViewModel.calendar
+          )
+          DropDownTextField(
+            modifier = Modifier
+              .padding(start = 8.dp)
+              .requiredWidth(180.dp),
+            label = stringResource(id = R.string.home_place),
+            listItems = homeViewModel.placesNames,
+            onSelectedOption = { homeViewModel.onSelectedPlace(it) },
+            selectedItemIndex = homeViewModel.selectedPlaceIndex,
+            value = homeViewModel.selectedPlace
+          )
+        }
+        Divider(thickness = 1.dp, color = Color.LightGray)
+
+        onUiState(uiState, homeViewModel, loading)
       }
-      Divider(thickness = 1.dp, color = Color.LightGray)
-
-      onUiState(uiState, homeViewModel, loading)
     }
   }
-  ModalBottomSheetLayout(sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
-    sheetBackgroundColor = Color.Transparent,
-    sheetState = modalBottomSheetState,
-    sheetContent = {
-      if (modalBottomSheetState.isVisible) {
-        EditPlaceProductComposable(homeViewModel.editPlaceProductViewModel)
-      } else {
-        // Needed to prevent EditPlaceProductComposable to be seen when keyboard is hidding as the recomposition only occurs afterwards.
-        Divider()
-      }
-    }) {}
-  onUiEvent(uiEvent, coroutineScope, modalBottomSheetState, homeViewModel)
+  onUiEvent(
+    uiEvent,
+    coroutineScope,
+    modalBottomSheetState,
+    moveCamera,
+    homeViewModel,
+    mapsEventMapper
+  )
 
   addBackHandler(modalBottomSheetState, coroutineScope)
-}
-
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-private fun addBackHandler(
-  modalBottomSheetState: ModalBottomSheetState, coroutineScope: CoroutineScope
-) {
-  val activity = LocalContext.current as? Activity
-  DefaultBackHandler(
-    BackNavElement.default(
-      modalBackNavElement(modalBottomSheetState, coroutineScope), FinishActivityHandler(activity)
-    )
-  )
 }
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -136,43 +109,23 @@ fun onUiEvent(
   uiEvent: State<UiEvent?>,
   coroutineScope: CoroutineScope,
   modalBottomSheetState: ModalBottomSheetState,
-  homeViewModel: HomeViewModel
+  moveCamera: MutableState<MapsMoveCameraEvent?>,
+  homeViewModel: HomeViewModel,
+  mapsEventMapper: HomeMapsEventMapper
 ) {
   when (uiEvent.value) {
-    is UiEvent.OpenEditMode -> onOpenEditMode(
+    is UiEvent.OpenEditMode -> showModalBottomSheet(
       uiEvent.value as UiEvent.OpenEditMode, coroutineScope, modalBottomSheetState
     )
-    is UiEvent.CloseEditMode -> onCloseEditMode(
-      uiEvent.value as UiEvent.CloseEditMode, coroutineScope, modalBottomSheetState
+    is UiEvent.CloseEditMode -> hideModalBottomSheet(
+      uiEvent.value, coroutineScope, modalBottomSheetState
     )
-    is UiEvent.MoveCamera -> {}
+    is UiEvent.MoveCamera -> {
+      moveCamera.value = mapsEventMapper.map(uiEvent.value)
+    }
     null -> {}
   }
   homeViewModel.eventConsumed()
-}
-
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-fun onOpenEditMode(
-  uiEvent: UiEvent, coroutineScope: CoroutineScope, modalBottomSheetState: ModalBottomSheetState
-) {
-  LaunchedEffect(uiEvent) {
-    coroutineScope.launch {
-      modalBottomSheetState.show()
-    }
-  }
-}
-
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-fun onCloseEditMode(
-  uiEvent: UiEvent, coroutineScope: CoroutineScope, modalBottomSheetState: ModalBottomSheetState
-) {
-  LaunchedEffect(uiEvent) {
-    coroutineScope.launch {
-      modalBottomSheetState.hide()
-    }
-  }
 }
 
 @Composable

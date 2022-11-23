@@ -16,8 +16,7 @@ import neuro.expenses.register.domain.dto.LatLngDto
 import neuro.expenses.register.domain.service.GetCurrentLocationService
 
 class GetCurrentLocationServiceImpl(
-  private val context: Context,
-  private val scheduler: Scheduler
+  private val context: Context, private val scheduler: Scheduler
 ) : GetCurrentLocationService {
   override fun getCurrentLocation(): Maybe<LatLngDto> {
     return Maybe.create { subscriber ->
@@ -25,28 +24,21 @@ class GetCurrentLocationServiceImpl(
         LocationServices.getFusedLocationProviderClient(context)
 
       if (ActivityCompat.checkSelfPermission(
-          context,
-          Manifest.permission.ACCESS_FINE_LOCATION
+          context, Manifest.permission.ACCESS_FINE_LOCATION
         ) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(
-          context,
-          Manifest.permission.ACCESS_COARSE_LOCATION
+          context, Manifest.permission.ACCESS_COARSE_LOCATION
         ) != PackageManager.PERMISSION_GRANTED
       ) {
         throw IllegalStateException("Location permission not granted!")
       }
-      fusedLocationClient.getCurrentLocation(
-        Priority.PRIORITY_BALANCED_POWER_ACCURACY,
+      fusedLocationClient.getCurrentLocation(Priority.PRIORITY_BALANCED_POWER_ACCURACY,
         object : CancellationToken() {
           override fun onCanceledRequested(p0: OnTokenCanceledListener) =
             CancellationTokenSource().token
 
           override fun isCancellationRequested() = false
-        }).addOnSuccessListener {
-        if (it != null) {
-          subscriber.onSuccess(it)
-        } else {
-          subscriber.onComplete()
-        }
+        }).addOnSuccessListener { location ->
+        location?.let { subscriber.onSuccess(it) } ?: subscriber.onComplete()
       }
     }.map { LatLngDto(it.latitude, it.longitude) }.observeOn(scheduler)
   }

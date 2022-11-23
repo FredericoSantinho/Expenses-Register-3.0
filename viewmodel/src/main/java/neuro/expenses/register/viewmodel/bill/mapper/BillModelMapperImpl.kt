@@ -21,7 +21,8 @@ class BillModelMapperImpl(
       time,
       date,
       total,
-      billDto.isOpen
+      billDto.isOpen,
+      billDto.calendar
     )
   }
 }

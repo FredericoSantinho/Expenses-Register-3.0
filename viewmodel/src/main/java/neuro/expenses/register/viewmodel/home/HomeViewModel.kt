@@ -59,11 +59,6 @@ class HomeViewModel(
 
   private val _uiState = mutableStateOf<UiState>(UiState.Loading)
   override val uiState = _uiState.asState()
-
-  override fun onComposition() {
-    mainViewModel.appBarViewModelState.value = appBarViewModel
-  }
-
   private val _uiEvent = mutableStateOf<UiEvent?>(null)
   val uiEvent = _uiEvent.asState()
 
@@ -87,6 +82,10 @@ class HomeViewModel(
       }
     }
     feedLastBillViewModel.observe().baseSubscribe { }
+  }
+
+  override fun onComposition() {
+    mainViewModel.appBarViewModelState.value = appBarViewModel
   }
 
   override fun onSelectedPlace(index: Int) {

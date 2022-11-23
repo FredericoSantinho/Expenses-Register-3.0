@@ -17,64 +17,53 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentActivity
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.CoroutineScope
 import neuro.expenses.register.common.compose.rememberUnit
 import neuro.expenses.register.ui.bill.BillComposable
+import neuro.expenses.register.ui.home.composable.*
 import neuro.expenses.register.ui.theme.grey_fog_lighter
 import neuro.expenses.register.viewmodel.bill.BillViewModel
 import neuro.expenses.register.viewmodel.bills.BillsViewModel
+import neuro.expenses.register.viewmodel.home.UiEvent
 import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun BillsComposable(
-  fragmentActivity: FragmentActivity,
-  billsViewModel: BillsViewModel = getViewModel()
+  fragmentActivity: FragmentActivity, billsViewModel: BillsViewModel = getViewModel()
 ) {
   rememberUnit { billsViewModel.onComposition() }
 
+  val uiEvent = billsViewModel.uiEvent
+
   val coroutineScope = rememberCoroutineScope()
-
-  val modalBottomSheetValue = if (billsViewModel.isEditMode.value)
-    ModalBottomSheetValue.Expanded else ModalBottomSheetValue.Hidden
-
-  val modalBottomSheetState =
-    rememberModalBottomSheetState(
-      modalBottomSheetValue,
-      confirmStateChange = {
-        it != ModalBottomSheetValue.HalfExpanded
-      }
-    )
+  val modalBottomSheetState = rememberModalBottomSheetState()
 
   val bills = billsViewModel.bills.subscribeAsState(initial = emptyList())
 
-  LazyColumn(
-    Modifier
-      .background(color = grey_fog_lighter)
-      .fillMaxSize(),
-    verticalArrangement = Arrangement.spacedBy(8.dp),
-    reverseLayout = true
-  ) {
-    items(bills.value, { listItem: BillViewModel -> listItem.id }) { item ->
-      var unread by remember { mutableStateOf(false) }
-      val dismissState = rememberDismissState(
-        confirmStateChange = {
+  ModalBottomSheetLayout(modalBottomSheetState, { EditBillComposable(fragmentActivity) }) {
+    LazyColumn(
+      Modifier
+        .background(color = grey_fog_lighter)
+        .fillMaxSize(),
+      verticalArrangement = Arrangement.spacedBy(8.dp),
+      reverseLayout = true
+    ) {
+      items(bills.value, { listItem: BillViewModel -> listItem.id }) { item ->
+        var unread by remember { mutableStateOf(false) }
+        val dismissState = rememberDismissState(confirmStateChange = {
           if (it == DismissValue.DismissedToEnd) unread = !unread
           true
-        }
-      )
-      if (dismissState.isDismissed(DismissDirection.EndToStart) ||
-        dismissState.isDismissed(DismissDirection.StartToEnd)
-      ) {
+        })
+        if (dismissState.isDismissed(DismissDirection.EndToStart) || dismissState.isDismissed(
+            DismissDirection.StartToEnd
+          )
+        ) {
           billsViewModel.onBillSwipe(item)
         }
-        SwipeToDismiss(
-          modifier = Modifier.padding(start = 4.dp, end = 4.dp),
+        SwipeToDismiss(modifier = Modifier.padding(start = 4.dp, end = 4.dp),
           state = dismissState,
-          directions = if (billsViewModel.isEditMode.value) setOf() else setOf(
-            DismissDirection.StartToEnd,
-            DismissDirection.EndToStart
-          ),
+          directions = setOf(DismissDirection.StartToEnd, DismissDirection.EndToStart),
           background = {
             val direction = dismissState.dismissDirection ?: return@SwipeToDismiss
             val color by animateColorAsState(
@@ -104,9 +93,7 @@ fun BillsComposable(
               contentAlignment = alignment
             ) {
               Icon(
-                icon,
-                contentDescription = null,
-                modifier = Modifier.scale(scale)
+                icon, contentDescription = null, modifier = Modifier.scale(scale)
               )
             }
           },
@@ -115,29 +102,32 @@ fun BillsComposable(
           },
           dismissThresholds = {
             FractionalThreshold(1.0f)
-          }
-        )
-      }
-  }
-  ModalBottomSheetLayout(
-    sheetBackgroundColor = Color.Transparent,
-    sheetState = modalBottomSheetState,
-    sheetContent = {
-      EditBillComposable(fragmentActivity)
-    }
-  ) {}
-  val isEditMode = billsViewModel.isEditMode.value
-  if (isEditMode) {
-    LaunchedEffect(isEditMode) {
-      coroutineScope.launch {
-        modalBottomSheetState.show()
-      }
-    }
-  } else {
-    LaunchedEffect(isEditMode) {
-      coroutineScope.launch {
-        modalBottomSheetState.hide()
+          })
       }
     }
   }
+  onUiEvent(uiEvent, coroutineScope, modalBottomSheetState, billsViewModel)
+
+  addBackHandler(modalBottomSheetState, coroutineScope)
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun onUiEvent(
+  uiEvent: State<UiEvent?>,
+  coroutineScope: CoroutineScope,
+  modalBottomSheetState: ModalBottomSheetState,
+  billsViewModel: BillsViewModel
+) {
+  when (uiEvent.value) {
+    is UiEvent.OpenEditMode -> showModalBottomSheet(
+      uiEvent.value, coroutineScope, modalBottomSheetState
+    )
+    is UiEvent.CloseEditMode -> hideModalBottomSheet(
+      uiEvent.value, coroutineScope, modalBottomSheetState
+    )
+    is UiEvent.MoveCamera -> {}
+    null -> {}
+  }
+  billsViewModel.eventConsumed()
 }

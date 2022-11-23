@@ -26,9 +26,7 @@ class PermissionsViewModel(
   }
 
   fun eventConsumed() {
-    if (uiEvent.value != null) {
-      _uiEvent.value = null
-    }
+    uiEvent.value?.let { _uiEvent.value = null }
   }
 }
 

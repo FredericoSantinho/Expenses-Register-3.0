@@ -42,7 +42,7 @@ class ClassUtils {
       return classNames
     }
     val files = directory.listFiles()
-    if (files != null) {
+    files?.let {
       for (file in files) {
         if (file.isDirectory) {
           classNames.addAll(findClassNames(file, packageName + '.' + file.name))

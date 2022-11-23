@@ -19,7 +19,9 @@ import neuro.expenses.register.viewmodel.home.model.CameraPositionModel
 
 @Composable
 fun MapsComposable(
-  initialCameraPosition: CameraPositionModel, event: MapsMoveCameraEvent?, height: Dp = 240.dp
+  initialCameraPosition: CameraPositionModel,
+  moveCamera: MutableState<MapsMoveCameraEvent?> = mutableStateOf(null),
+  height: Dp = 240.dp
 ) {
   val mapLoaded = remember { mutableStateOf(false) }
   val bitoque = LatLng(37.091495, -8.2475677)
@@ -52,13 +54,13 @@ fun MapsComposable(
     )
   }
 
-  if (event != null) {
-    LaunchedEffect(event) {
+  moveCamera.value?.let {
+    LaunchedEffect(it) {
       coroutineScope.launch {
         cameraPositionState.animate(
           CameraUpdateFactory.newCameraPosition(
             CameraPosition.fromLatLngZoom(
-              event.latLng, event.zoom
+              it.latLng, it.zoom
             )
           )
         )

@@ -23,24 +23,11 @@ open class BaseViewModel(
     onError: ((Throwable) -> Unit)? = null,
     onSuccess: (T) -> Unit
   ) {
-    if (onError != null) {
-      subscribeOn(subscribeOn)
-        .run {
-          observeOn(observeOn)
-        }
-        .subscribe(
-          { onSuccess.invoke(it) },
-          { onError.invoke(it) }
-        ).addToCompositeDisposable()
-    } else {
-      subscribeOn(subscribeOn)
-        .run {
-          observeOn(observeOn)
-        }
-        .subscribe(
-          { onSuccess.invoke(it) }
-        ).addToCompositeDisposable()
-    }
+    onError?.let {
+      subscribeOn(subscribeOn).observeOn(observeOn)
+        .subscribe({ onSuccess.invoke(it) }, { onError.invoke(it) }).addToCompositeDisposable()
+    } ?: subscribeOn(subscribeOn).observeOn(observeOn).subscribe({ onSuccess.invoke(it) })
+      .addToCompositeDisposable()
   }
 
   fun <T : Any> Single<T>.baseSubscribe(
@@ -49,19 +36,11 @@ open class BaseViewModel(
     onError: ((Throwable) -> Unit)? = null,
     onSuccess: (T) -> Unit
   ) {
-    if (onError != null) {
-      subscribeOn(subscribeOn)
-        .run {
-          observeOn(observeOn)
-        }
-        .subscribe(onSuccess, onError).addToCompositeDisposable()
-    } else {
-      subscribeOn(subscribeOn)
-        .run {
-          observeOn(observeOn)
-        }
-        .subscribe(onSuccess).addToCompositeDisposable()
-    }
+    onError?.let {
+      subscribeOn(subscribeOn).observeOn(observeOn).subscribe(onSuccess, onError)
+        .addToCompositeDisposable()
+    } ?: subscribeOn(subscribeOn).observeOn(observeOn).subscribe(onSuccess)
+      .addToCompositeDisposable()
   }
 
   fun <T : Any> Observable<T>.baseSubscribe(
@@ -70,24 +49,11 @@ open class BaseViewModel(
     onError: ((Throwable) -> Unit)? = null,
     onSuccess: (T) -> Unit
   ) {
-    if (onError != null) {
-      subscribeOn(subscribeOn)
-        .run {
-          observeOn(observeOn)
-        }
-        .subscribe(
-          { onSuccess.invoke(it) },
-          { onError.invoke(it) }
-        ).addToCompositeDisposable()
-    } else {
-      subscribeOn(subscribeOn)
-        .run {
-          observeOn(observeOn)
-        }
-        .subscribe(
-          { onSuccess.invoke(it) }
-        ).addToCompositeDisposable()
-    }
+    onError?.let {
+      subscribeOn(subscribeOn).observeOn(observeOn)
+        .subscribe({ onSuccess.invoke(it) }, { onError.invoke(it) }).addToCompositeDisposable()
+    } ?: subscribeOn(subscribeOn).observeOn(observeOn).subscribe({ onSuccess.invoke(it) })
+      .addToCompositeDisposable()
   }
 
   fun Completable.baseSubscribe(
@@ -96,24 +62,11 @@ open class BaseViewModel(
     onError: ((Throwable) -> Unit)? = null,
     onComplete: () -> Unit
   ) {
-    if (onError != null) {
-      subscribeOn(subscribeOn)
-        .run {
-          observeOn(observeOn)
-        }
-        .subscribe(
-          { onComplete() },
-          { onError.invoke(it) }
-        ).addToCompositeDisposable()
-    } else {
-      subscribeOn(subscribeOn)
-        .run {
-          observeOn(observeOn)
-        }
-        .subscribe(
-          { onComplete() }
-        ).addToCompositeDisposable()
-    }
+    onError?.let {
+      subscribeOn(subscribeOn).observeOn(observeOn)
+        .subscribe({ onComplete() }, { onError.invoke(it) }).addToCompositeDisposable()
+    } ?: subscribeOn(subscribeOn).observeOn(observeOn).subscribe({ onComplete() })
+      .addToCompositeDisposable()
   }
 
   private fun Disposable.addToCompositeDisposable() {

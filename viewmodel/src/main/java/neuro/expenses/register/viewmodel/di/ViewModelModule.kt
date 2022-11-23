@@ -13,6 +13,7 @@ import neuro.expenses.register.viewmodel.common.formatter.DecimalFormatterImpl
 import neuro.expenses.register.viewmodel.common.formatter.NumberFormater
 import neuro.expenses.register.viewmodel.common.formatter.NumberFormaterImpl
 import neuro.expenses.register.viewmodel.edit.EditViewModel
+import neuro.expenses.register.viewmodel.edit.bill.EditBillViewModel
 import neuro.expenses.register.viewmodel.edit.category.EditCategoriesViewModel
 import neuro.expenses.register.viewmodel.edit.place.EditPlacesViewModel
 import neuro.expenses.register.viewmodel.edit.placeproduct.EditPlaceProductViewModel
@@ -72,7 +73,8 @@ val viewModelModule = module {
   single<DateTimeMapper> { DateTimeMapperImpl(get()) }
   single<NumberFormater> { NumberFormaterImpl() }
   single<DecimalFormatter> { DecimalFormatterImpl(DECIMALS) }
-  viewModel { BillsViewModel(get(), get(), get(), get()) }
+  viewModel { BillsViewModel(get(), get(), get(), get(), get()) }
+  single { EditBillViewModel() }
   viewModel { EditViewModel(get()) }
   viewModel { EditProductsViewModel() }
   viewModel { EditPlaceProductsViewModel(get(), get(), get(), get()) }
