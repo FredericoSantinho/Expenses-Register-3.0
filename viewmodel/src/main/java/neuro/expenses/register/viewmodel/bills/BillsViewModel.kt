@@ -44,7 +44,7 @@ class BillsViewModel(
   }
 
   fun onComposition() {
-    mainViewModel.appBarViewModelState.value = appBarViewModel
+    mainViewModel.appBarViewModel.value = appBarViewModel
   }
 
   fun eventConsumed() {

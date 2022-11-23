@@ -42,7 +42,7 @@ fun SearchAppBar(
   navigateToSettings: NavigateToSettings = get(),
   mainViewModel: MainViewModel = getViewModel()
 ) {
-  val appBarViewModel = mainViewModel.appBarViewModelState.value
+  val appBarViewModel = mainViewModel.appBarViewModel.value
   val uiEvent by appBarViewModel.uiEvent
 
   var menuExpanded by remember { mutableStateOf(false) }

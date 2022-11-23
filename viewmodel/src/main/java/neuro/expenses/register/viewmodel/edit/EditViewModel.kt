@@ -39,7 +39,7 @@ class EditViewModel(private val mainViewModel: MainViewModel) : ViewModel() {
   }
 
   fun onComposition() {
-    mainViewModel.appBarViewModelState.value = appBarViewModel
+    mainViewModel.appBarViewModel.value = appBarViewModel
   }
 }
 

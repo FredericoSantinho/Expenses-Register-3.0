@@ -163,7 +163,7 @@ class ManualRegisterViewModel(
   }
 
   fun onComposition() {
-    mainViewModel.appBarViewModelState.value = appBarViewModel
+    mainViewModel.appBarViewModel.value = appBarViewModel
   }
 }
 

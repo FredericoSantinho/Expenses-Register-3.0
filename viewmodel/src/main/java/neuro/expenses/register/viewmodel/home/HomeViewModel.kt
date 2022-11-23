@@ -85,7 +85,7 @@ class HomeViewModel(
   }
 
   override fun onComposition() {
-    mainViewModel.appBarViewModelState.value = appBarViewModel
+    mainViewModel.appBarViewModel.value = appBarViewModel
   }
 
   override fun onSelectedPlace(index: Int) {
