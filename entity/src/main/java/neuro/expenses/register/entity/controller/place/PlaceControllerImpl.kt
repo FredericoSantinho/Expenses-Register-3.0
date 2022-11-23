@@ -23,13 +23,12 @@ class PlaceControllerImpl(
           placeProduct.price,
           placeProduct.product.variableAmount,
           placeProduct.product.iconUrl
-        ).map { savedProduct ->
+        ).flatMap { savedProduct ->
           val placeProducts = mutableListOf<PlaceProduct>()
           placeProducts.addAll(place.placeProducts)
           placeProducts.add(savedProduct)
-          Place(place.id, place.name, placeProducts, place.latLng)
-        }.flatMap { newPlace ->
-          addPlaceProduct.addPlaceProduct(place.id, placeProduct.id).toSingle { newPlace }
+          val newPlace = Place(place.id, place.name, placeProducts, place.latLng)
+          addPlaceProduct.addPlaceProduct(place.id, savedProduct.id).toSingle { newPlace }
         }
       } else {
         Single.just(place)
