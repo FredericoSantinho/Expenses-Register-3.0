@@ -1,18 +1,17 @@
 package neuro.expenses.register.viewmodel.edit
 
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import neuro.expenses.register.viewmodel.appbar.AppBarViewModel
 import neuro.expenses.register.viewmodel.appbar.MoreItem
 import neuro.expenses.register.viewmodel.appbar.MoreItemText
-import neuro.expenses.register.viewmodel.common.asState
+import neuro.expenses.register.viewmodel.edit.EditMoreItem.*
 import neuro.expenses.register.viewmodel.main.MainViewModel
 
 class EditViewModel(private val mainViewModel: MainViewModel) : ViewModel() {
   private val appBarViewModel = AppBarViewModel()
 
-  private val _uiEvent = mutableStateOf<UiEvent?>(null)
-  val uiEvent = _uiEvent.asState()
+  private val _uiEvent = EditUiEvent()
+  val uiEvent = _uiEvent.uiEvent
 
   init {
     appBarViewModel.moreItems.value = buildMoreItemsList()
@@ -21,21 +20,20 @@ class EditViewModel(private val mainViewModel: MainViewModel) : ViewModel() {
   private fun buildMoreItemsList(): List<MoreItem> {
     val list: MutableList<MoreItem> = mutableListOf()
     list.add(
-      MoreItem(EditProductMoreItem, { _uiEvent.value = UiEvent.NavigateTo(Directions.product) })
+      MoreItem(EditProductMoreItem, { _uiEvent.navigateToEditProduct() })
     )
     list.add(
-      MoreItem(EditPlaceProductMoreItem,
-        { _uiEvent.value = UiEvent.NavigateTo(Directions.placeProduct) })
+      MoreItem(EditPlaceProductMoreItem, { _uiEvent.navigateToEditPlaceProduct() })
     )
     list.add(
-      MoreItem(EditCategoryMoreItem, { _uiEvent.value = UiEvent.NavigateTo(Directions.category) })
+      MoreItem(EditCategoryMoreItem, { _uiEvent.navigateToEditCategory() })
     )
-    list.add(MoreItem(EditPlaceMoreItem, { _uiEvent.value = UiEvent.NavigateTo(Directions.place) }))
+    list.add(MoreItem(EditPlaceMoreItem, { _uiEvent.navigateToEditPlace() }))
     return list
   }
 
   fun eventConsumed() {
-    _uiEvent.value = null
+    _uiEvent.eventConsumed()
   }
 
   fun onComposition() {
@@ -43,15 +41,9 @@ class EditViewModel(private val mainViewModel: MainViewModel) : ViewModel() {
   }
 }
 
-sealed class UiEvent(val directions: Directions) {
-  class NavigateTo(directions: Directions) : UiEvent(directions)
+class EditMoreItem {
+  object EditProductMoreItem : MoreItemText()
+  object EditPlaceProductMoreItem : MoreItemText()
+  object EditCategoryMoreItem : MoreItemText()
+  object EditPlaceMoreItem : MoreItemText()
 }
-
-enum class Directions(val screenRoute: String) {
-  product("product"), placeProduct("placeProduct"), category("category"), place("place")
-}
-
-object EditProductMoreItem : MoreItemText()
-object EditPlaceProductMoreItem : MoreItemText()
-object EditCategoryMoreItem : MoreItemText()
-object EditPlaceMoreItem : MoreItemText()

@@ -3,10 +3,7 @@ package neuro.expenses.register.ui.edit.mapper
 import androidx.annotation.StringRes
 import neuro.expenses.register.R
 import neuro.expenses.register.viewmodel.appbar.MoreItemText
-import neuro.expenses.register.viewmodel.edit.EditCategoryMoreItem
-import neuro.expenses.register.viewmodel.edit.EditPlaceMoreItem
-import neuro.expenses.register.viewmodel.edit.EditPlaceProductMoreItem
-import neuro.expenses.register.viewmodel.edit.EditProductMoreItem
+import neuro.expenses.register.viewmodel.edit.EditMoreItem.*
 
 @StringRes
 fun MoreItemText.toPresentation(): Int {

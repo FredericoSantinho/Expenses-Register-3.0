@@ -1,21 +1,10 @@
 package neuro.expenses.register.viewmodel.main
 
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.ViewModel
 import neuro.expenses.register.viewmodel.appbar.AppBarViewModel
-import neuro.expenses.register.viewmodel.common.asState
+import neuro.expenses.register.viewmodel.common.BaseViewModel
+import neuro.expenses.register.viewmodel.common.schedulers.SchedulerProvider
 
-class MainViewModel : ViewModel() {
+class MainViewModel(schedulerProvider: SchedulerProvider) : BaseViewModel(schedulerProvider) {
   val appBarViewModel = mutableStateOf(AppBarViewModel())
-
-  private val _uiEvent = mutableStateOf<UiEvent?>(null)
-  val uiEvent = _uiEvent.asState()
-
-  fun onConfigButton() {
-    _uiEvent.value = UiEvent.NavigateToSettings
-  }
-
-  sealed class UiEvent {
-    object NavigateToSettings : UiEvent()
-  }
 }

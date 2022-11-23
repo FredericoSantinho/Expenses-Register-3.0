@@ -28,8 +28,8 @@ import neuro.expenses.register.ui.common.composables.appbar.mapper.toPresentatio
 import neuro.expenses.register.ui.common.composables.search.SearchWithDropdown
 import neuro.expenses.register.ui.common.mapper.toPresentation
 import neuro.expenses.register.ui.edit.mapper.toPresentation
+import neuro.expenses.register.viewmodel.appbar.AppBarUiEvent.UiEvent
 import neuro.expenses.register.viewmodel.appbar.AppBarViewModel
-import neuro.expenses.register.viewmodel.appbar.UiEvent
 import neuro.expenses.register.viewmodel.main.MainViewModel
 import org.koin.androidx.compose.get
 import org.koin.androidx.compose.getViewModel

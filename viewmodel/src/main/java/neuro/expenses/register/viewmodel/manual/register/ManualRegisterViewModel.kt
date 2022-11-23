@@ -46,8 +46,8 @@ class ManualRegisterViewModel(
 
   private val _uiState = mutableStateOf<UiState>(UiState.Ready)
   val uiState = _uiState.asState()
-  private val _uiEvent = mutableStateOf<UiEvent?>(null)
-  val uiEvent = _uiEvent.asState()
+  private val _uiEvent = ManualRegisterUiEvent()
+  val uiEvent = _uiEvent.uiEvent
 
   init {
     feedLastBillViewModel.observe().baseSubscribe { }
@@ -132,7 +132,7 @@ class ManualRegisterViewModel(
   }
 
   private fun publishAndReset() {
-    _uiEvent.value = UiEvent.ShowRegisterSuccess(description.value)
+    _uiEvent.showRegisterSuccess(description.value)
 
     description.value = ""
     category.value = ""
@@ -158,7 +158,7 @@ class ManualRegisterViewModel(
   }
 
   fun eventConsumed() {
-    _uiEvent.value = null
+    _uiEvent.eventConsumed()
   }
 
   fun onComposition() {

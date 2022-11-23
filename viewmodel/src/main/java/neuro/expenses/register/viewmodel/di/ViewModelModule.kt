@@ -34,7 +34,7 @@ val viewModelModule = module {
   single { ApplicationViewModel(get(), get(), get()) }
   single { AppBarViewModel() }
   viewModel { PermissionsViewModel(get()) }
-  single { MainViewModel() }
+  single { MainViewModel(get()) }
   viewModel { SettingsViewModel() }
   viewModel {
     HomeViewModel(

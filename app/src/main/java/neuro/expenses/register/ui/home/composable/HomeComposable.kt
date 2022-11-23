@@ -24,11 +24,11 @@ import neuro.expenses.register.ui.common.composables.dropdown.DropDownTextField
 import neuro.expenses.register.ui.common.composables.maps.MapsComposable
 import neuro.expenses.register.ui.common.composables.maps.MapsMoveCameraEvent
 import neuro.expenses.register.ui.edit.placeproduct.EditPlaceProductComposable
-import neuro.expenses.register.ui.home.mapper.HomeMapsEventMapper
+import neuro.expenses.register.ui.home.mapper.HomeMapsUiEventMapper
 import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
+import neuro.expenses.register.viewmodel.home.HomeUiEvent.UiEvent
 import neuro.expenses.register.viewmodel.home.HomeViewModel
 import neuro.expenses.register.viewmodel.home.IHomeViewModel
-import neuro.expenses.register.viewmodel.home.UiEvent
 import neuro.expenses.register.viewmodel.home.UiState
 import org.koin.androidx.compose.get
 import org.koin.androidx.compose.getViewModel
@@ -37,7 +37,7 @@ import org.koin.androidx.compose.getViewModel
 @Composable
 fun HomeComposable(
   fragmentActivity: FragmentActivity,
-  mapsEventMapper: HomeMapsEventMapper = get(),
+  mapsEventMapper: HomeMapsUiEventMapper = get(),
   homeViewModel: HomeViewModel = getViewModel()
 ) {
   rememberUnit { homeViewModel.onComposition() }
@@ -111,7 +111,7 @@ fun onUiEvent(
   modalBottomSheetState: ModalBottomSheetState,
   moveCamera: MutableState<MapsMoveCameraEvent?>,
   homeViewModel: HomeViewModel,
-  mapsEventMapper: HomeMapsEventMapper
+  mapsEventMapper: HomeMapsUiEventMapper
 ) {
   when (uiEvent.value) {
     is UiEvent.OpenEditMode -> showModalBottomSheet(

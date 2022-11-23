@@ -8,8 +8,8 @@ import androidx.core.content.ContextCompat
 import neuro.expenses.register.R
 import neuro.expenses.register.common.activity.BaseActivity
 import neuro.expenses.register.databinding.ActivityPermissionsBinding
+import neuro.expenses.register.viewmodel.permissions.PermissionsUiEvent.UiEvent
 import neuro.expenses.register.viewmodel.permissions.PermissionsViewModel
-import neuro.expenses.register.viewmodel.permissions.UiEvent
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 

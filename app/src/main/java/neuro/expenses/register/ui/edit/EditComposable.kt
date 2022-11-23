@@ -13,9 +13,9 @@ import neuro.expenses.register.ui.edit.category.EditCategoriesComposable
 import neuro.expenses.register.ui.edit.place.EditPlacesComposable
 import neuro.expenses.register.ui.edit.placeproduct.EditPlaceProductsComposable
 import neuro.expenses.register.ui.edit.product.EditProductsComposable
-import neuro.expenses.register.viewmodel.edit.Directions
+import neuro.expenses.register.viewmodel.edit.EditUiEvent.Directions
+import neuro.expenses.register.viewmodel.edit.EditUiEvent.UiEvent
 import neuro.expenses.register.viewmodel.edit.EditViewModel
-import neuro.expenses.register.viewmodel.edit.UiEvent
 import org.koin.androidx.compose.getViewModel
 
 @Composable

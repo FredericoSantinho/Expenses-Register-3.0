@@ -23,8 +23,8 @@ import neuro.expenses.register.ui.bill.BillComposable
 import neuro.expenses.register.ui.home.composable.*
 import neuro.expenses.register.ui.theme.grey_fog_lighter
 import neuro.expenses.register.viewmodel.bill.BillViewModel
+import neuro.expenses.register.viewmodel.bills.BillsUiEvent.UiEvent
 import neuro.expenses.register.viewmodel.bills.BillsViewModel
-import neuro.expenses.register.viewmodel.bills.UiEvent
 import neuro.expenses.register.viewmodel.edit.bill.EditBillViewModel
 import org.koin.androidx.compose.get
 import org.koin.androidx.compose.getViewModel
@@ -45,8 +45,7 @@ fun BillsComposable(
 
   val bills = billsViewModel.bills.subscribeAsState(initial = emptyList())
 
-  ModalBottomSheetLayout(
-    modalBottomSheetState,
+  ModalBottomSheetLayout(modalBottomSheetState,
     { EditBillComposable(fragmentActivity, editBillViewModel) }) {
     LazyColumn(
       Modifier
@@ -126,10 +125,10 @@ fun onUiEvent(
   billsViewModel: BillsViewModel
 ) {
   when (uiEvent.value) {
-    is UiEvent.OpenEditMode -> showModalBottomSheet(
+    is UiEvent.OpenEditBill -> showModalBottomSheet(
       uiEvent.value, coroutineScope, modalBottomSheetState
     )
-    is UiEvent.CloseEditMode -> hideModalBottomSheet(
+    is UiEvent.CloseEditBill -> hideModalBottomSheet(
       uiEvent.value, coroutineScope, modalBottomSheetState
     )
     null -> {}

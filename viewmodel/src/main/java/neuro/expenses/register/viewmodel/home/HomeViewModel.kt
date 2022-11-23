@@ -59,8 +59,9 @@ class HomeViewModel(
 
   private val _uiState = mutableStateOf<UiState>(UiState.Loading)
   override val uiState = _uiState.asState()
-  private val _uiEvent = mutableStateOf<UiEvent?>(null)
-  val uiEvent = _uiEvent.asState()
+
+  private val _uiEvent = HomeUiEvent()
+  val uiEvent = _uiEvent.uiEvent
 
   init {
     appBarViewModel.title.value = title
@@ -101,16 +102,16 @@ class HomeViewModel(
   override fun onProductCardLongClick(productCardModel: ProductCardModel) {
     setEditProductViewModel(productCardModel)
 
-    _uiEvent.value = UiEvent.OpenEditMode()
+    _uiEvent.openEditPlaceProduct()
   }
 
   override fun eventConsumed() {
-    _uiEvent.value = null
+    _uiEvent.eventConsumed()
   }
 
   private fun onSelectedPlace(placeDto: PlaceDto) {
     val latLngModel = placeDto.latLngDto.toViewModel()
-    _uiEvent.value = UiEvent.MoveCamera(latLngModel, zoom)
+    _uiEvent.moveCamera(latLngModel, zoom)
     this.placeDto = placeDto
     selectedPlace.value = placeDto.name
     sortPlaceProducts.sortPlaceProducts(placeDto.products).baseSubscribe {
@@ -144,8 +145,7 @@ class HomeViewModel(
     editPlaceProductViewModel.price.value = placeProductDto.price.toString()
     editPlaceProductViewModel.iconUrl.value = placeProductDto.productDto.iconUrl
     editPlaceProductViewModel.variableAmount.value = placeProductDto.productDto.variableAmount
-    editPlaceProductViewModel.onFinishEditAction.value =
-      { _uiEvent.value = UiEvent.CloseEditMode() }
+    editPlaceProductViewModel.onFinishEditAction.value = { _uiEvent.closeEditPlaceProduct() }
   }
 
   private fun getPlaceProduct(productId: Long): PlaceProductDto {
@@ -155,12 +155,6 @@ class HomeViewModel(
   private fun newProductsListViewModel() = ProductsListViewModel(
     ProductCardViewModelFactoryImpl(this), productCardModelMapper
   )
-}
-
-sealed class UiEvent {
-  class MoveCamera(val latLngModel: LatLngModel, val zoom: Float) : UiEvent()
-  class OpenEditMode : UiEvent()
-  class CloseEditMode : UiEvent()
 }
 
 sealed class UiState {

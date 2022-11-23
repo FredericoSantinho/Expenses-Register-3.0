@@ -4,7 +4,6 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import com.jakewharton.rxrelay3.BehaviorRelay
 import io.reactivex.rxjava3.core.Observable
-import neuro.expenses.register.viewmodel.common.asState
 import neuro.expenses.register.viewmodel.model.search.SearchSuggestionModel
 import neuro.expenses.register.viewmodel.search.SearchViewModel
 
@@ -15,30 +14,31 @@ class AppBarViewModel() {
 
   val dataIn: MutableState<List<SearchSuggestionModel>> = mutableStateOf(emptyList())
   val searchEnabled = mutableStateOf(false)
-  private val _uiEvent = mutableStateOf<UiEvent?>(null)
-  val uiEvent = _uiEvent.asState()
 
   val title = mutableStateOf("")
   private val _queryObservable: BehaviorRelay<String> = BehaviorRelay.create()
   private val queryObservable: Observable<String> = _queryObservable
   val query: MutableState<String> = mutableStateOf("")
 
+  private val _uiEvent = AppBarUiEvent()
+  val uiEvent = _uiEvent.uiEvent
+
   fun query(): Observable<String> {
     return queryObservable
   }
 
   fun onSettingsButton() {
-    _uiEvent.value = UiEvent.NavigateToSettings()
+    _uiEvent.navigateToSettings()
   }
 
   fun onSearchButton() {
-    _uiEvent.value = UiEvent.FocusSearch()
+    _uiEvent.focusSearch()
     searchViewModel.showSearch.value = true
     searchEnabled.value = false
   }
 
   fun eventConsumed() {
-    _uiEvent.value = null
+    _uiEvent.eventConsumed()
   }
 
   fun clearSearch() {
@@ -63,11 +63,6 @@ class AppBarViewModel() {
       enableSearch()
     }
   }
-}
-
-sealed class UiEvent {
-  class NavigateToSettings : UiEvent()
-  class FocusSearch : UiEvent()
 }
 
 abstract class SearchHint() {

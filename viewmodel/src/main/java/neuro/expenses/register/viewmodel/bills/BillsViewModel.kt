@@ -1,6 +1,5 @@
 package neuro.expenses.register.viewmodel.bills
 
-import androidx.compose.runtime.mutableStateOf
 import neuro.expenses.register.domain.usecase.bill.GetBillUseCase
 import neuro.expenses.register.domain.usecase.bill.ObserveBillsUseCase
 import neuro.expenses.register.domain.usecase.bill.SortBills
@@ -8,7 +7,6 @@ import neuro.expenses.register.viewmodel.appbar.AppBarViewModel
 import neuro.expenses.register.viewmodel.bill.BillViewModel
 import neuro.expenses.register.viewmodel.bill.mapper.BillViewModelMapper
 import neuro.expenses.register.viewmodel.common.BaseViewModel
-import neuro.expenses.register.viewmodel.common.asState
 import neuro.expenses.register.viewmodel.common.schedulers.SchedulerProvider
 import neuro.expenses.register.viewmodel.main.MainViewModel
 
@@ -31,8 +29,8 @@ class BillsViewModel(
       }
     }
 
-  private val _uiEvent = mutableStateOf<UiEvent?>(null)
-  val uiEvent = _uiEvent.asState()
+  private val _uiEvent = BillsUiEvent()
+  val uiEvent = _uiEvent.uiEvent
 
   init {
     // TODO: Move to right place
@@ -48,18 +46,13 @@ class BillsViewModel(
   }
 
   fun eventConsumed() {
-    _uiEvent.value = null
+    _uiEvent.eventConsumed()
   }
 
   private fun onBillLongClick(billId: Long) {
     getBillUseCase.getBill(billId).baseSubscribe { billDto ->
       editBillViewModelController.setEditBillViewModel(billDto)
-      _uiEvent.value = UiEvent.OpenEditMode()
+      _uiEvent.openEditBill()
     }
   }
-}
-
-sealed class UiEvent {
-  class OpenEditMode : UiEvent()
-  class CloseEditMode : UiEvent()
 }
