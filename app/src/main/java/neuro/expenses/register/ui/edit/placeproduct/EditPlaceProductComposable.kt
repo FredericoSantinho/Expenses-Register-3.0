@@ -1,13 +1,14 @@
 package neuro.expenses.register.ui.edit.placeproduct
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -26,6 +27,7 @@ import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import neuro.expenses.register.R
+import neuro.expenses.register.ui.common.composables.edit.SaveDeleteComposable
 import neuro.expenses.register.ui.common.composables.image.AsyncImage
 import neuro.expenses.register.ui.common.composables.text.CurrencyTextField
 import neuro.expenses.register.ui.common.composables.text.TextFieldWithDropdown
@@ -93,23 +95,8 @@ fun EditPlaceProductComposable(
       value = editPlaceProductViewModel.price,
       textStyle = ExpensesRegisterTypography.body2
     )
-    Row(modifier = Modifier.padding(top = 16.dp), verticalAlignment = Alignment.Bottom) {
-      Spacer(modifier = Modifier.weight(1f))
-      Button(
-        onClick = {
-          editPlaceProductViewModel.onDeleteButton()
-        },
-        colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red),
-      ) {
-        Text(text = stringResource(R.string.delete), color = Color.White)
-      }
-      Spacer(modifier = Modifier.weight(1f))
-      Button(modifier = Modifier.padding(end = 16.dp), onClick = {
-        editPlaceProductViewModel.onSaveButton()
-      }) {
-        Text(text = stringResource(R.string.save))
-      }
-      Spacer(modifier = Modifier.weight(1f))
-    }
+    SaveDeleteComposable(
+      { editPlaceProductViewModel.onSaveButton() },
+      { editPlaceProductViewModel.onDeleteButton() })
   }
 }
