@@ -25,7 +25,7 @@ import neuro.expenses.register.ui.theme.grey_fog_lighter
 import neuro.expenses.register.viewmodel.bill.BillViewModel
 import neuro.expenses.register.viewmodel.bills.BillsUiEvent.UiEvent
 import neuro.expenses.register.viewmodel.bills.BillsViewModel
-import neuro.expenses.register.viewmodel.edit.bill.EditBillViewModel
+import neuro.expenses.register.viewmodel.edit.bill.BillDetailedViewModel
 import org.koin.androidx.compose.get
 import org.koin.androidx.compose.getViewModel
 
@@ -33,7 +33,7 @@ import org.koin.androidx.compose.getViewModel
 @Composable
 fun BillsComposable(
   fragmentActivity: FragmentActivity,
-  editBillViewModel: EditBillViewModel = get(),
+  billDetailedViewModel: BillDetailedViewModel = get(),
   billsViewModel: BillsViewModel = getViewModel()
 ) {
   rememberUnit { billsViewModel.onComposition() }
@@ -46,7 +46,7 @@ fun BillsComposable(
   val bills = billsViewModel.bills.subscribeAsState(initial = emptyList())
 
   ModalBottomSheetLayout(modalBottomSheetState,
-    { EditBillComposable(fragmentActivity, editBillViewModel) }) {
+    { EditBillComposable(fragmentActivity, billDetailedViewModel) }) {
     LazyColumn(
       Modifier
         .background(color = grey_fog_lighter)
@@ -125,10 +125,10 @@ fun onUiEvent(
   billsViewModel: BillsViewModel
 ) {
   when (uiEvent.value) {
-    is UiEvent.OpenEditBill -> showModalBottomSheet(
+    is UiEvent.OpenBillDetailed -> showModalBottomSheet(
       uiEvent.value, coroutineScope, modalBottomSheetState
     )
-    is UiEvent.CloseEditBill -> hideModalBottomSheet(
+    is UiEvent.CloseBillDetailed -> hideModalBottomSheet(
       uiEvent.value, coroutineScope, modalBottomSheetState
     )
     null -> {}

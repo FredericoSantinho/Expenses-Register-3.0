@@ -12,11 +12,11 @@ class BillsUiEvent {
   }
 
   fun openEditBill() {
-    _uiEvent.value = UiEvent.OpenEditBill()
+    _uiEvent.value = UiEvent.OpenBillDetailed()
   }
 
   sealed class UiEvent {
-    class OpenEditBill : UiEvent()
-    class CloseEditBill : UiEvent()
+    class OpenBillDetailed : UiEvent()
+    class CloseBillDetailed : UiEvent()
   }
 }

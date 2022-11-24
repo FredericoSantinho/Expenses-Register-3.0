@@ -17,13 +17,13 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentActivity
 import neuro.expenses.register.ui.common.composables.edit.SaveDeleteComposable
 import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
-import neuro.expenses.register.viewmodel.edit.bill.EditBillViewModel
+import neuro.expenses.register.viewmodel.edit.bill.BillDetailedViewModel
 import neuro.expenses.register.viewmodel.edit.bill.model.BillItemModel
 
 @Composable
 fun EditBillComposable(
   fragmentActivity: FragmentActivity,
-  editBillViewModel: EditBillViewModel,
+  billDetailedViewModel: BillDetailedViewModel,
   modifier: Modifier = Modifier,
 ) {
   Column(
@@ -35,7 +35,7 @@ fun EditBillComposable(
   ) {
     Text(
       modifier = Modifier.padding(top = 16.dp, bottom = 16.dp),
-      text = editBillViewModel.placeName.value,
+      text = billDetailedViewModel.placeName.value,
       fontWeight = FontWeight.Bold,
       fontSize = MaterialTheme.typography.h5.fontSize
     )
@@ -49,7 +49,7 @@ fun EditBillComposable(
         verticalArrangement = Arrangement.spacedBy(8.dp)
       ) {
         items(
-          editBillViewModel.billItems.value,
+          billDetailedViewModel.billItems.value,
           { billItemModel: BillItemModel -> billItemModel.id }) { billItemModel ->
           BillItemComposable(billItemModel)
           Divider(thickness = 1.dp, color = Color.Gray)
@@ -57,8 +57,8 @@ fun EditBillComposable(
       }
       BillItemFooterComposable(
         fragmentActivity,
-        editBillViewModel.total.value,
-        editBillViewModel.calendar
+        billDetailedViewModel.total.value,
+        billDetailedViewModel.calendar
       )
     }
     SaveDeleteComposable({}, {})
@@ -69,10 +69,10 @@ fun EditBillComposable(
 @Composable
 fun PreviewEditBillComposable() {
   ExpensesRegisterTheme {
-    val editBillViewModel = EditBillViewModel()
-    editBillViewModel.placeName.value = "Bitoque"
-    editBillViewModel.billItems.value = emptyList()
+    val billDetailedViewModel = BillDetailedViewModel()
+    billDetailedViewModel.placeName.value = "Bitoque"
+    billDetailedViewModel.billItems.value = emptyList()
 
-    EditBillComposable(FragmentActivity(), editBillViewModel)
+    EditBillComposable(FragmentActivity(), billDetailedViewModel)
   }
 }

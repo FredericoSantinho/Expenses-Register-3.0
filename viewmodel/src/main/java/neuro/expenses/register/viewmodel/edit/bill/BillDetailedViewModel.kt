@@ -4,7 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import neuro.expenses.register.viewmodel.edit.bill.model.BillItemModel
 import java.util.*
 
-class EditBillViewModel() {
+class BillDetailedViewModel() {
 
   val placeName = mutableStateOf("")
   val calendar = mutableStateOf(Calendar.getInstance())
