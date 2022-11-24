@@ -2,12 +2,10 @@ package neuro.expenses.register.ui.common.composables.maps
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.CameraPosition
@@ -20,8 +18,8 @@ import neuro.expenses.register.viewmodel.home.model.CameraPositionModel
 @Composable
 fun MapsComposable(
   initialCameraPosition: CameraPositionModel,
-  moveCamera: MutableState<MapsMoveCameraEvent?> = mutableStateOf(null),
-  height: Dp = 240.dp
+  modifier: Modifier = Modifier,
+  moveCamera: MutableState<MapsMoveCameraEvent?> = mutableStateOf(null)
 ) {
   val mapLoaded = remember { mutableStateOf(false) }
   val bitoque = LatLng(37.091495, -8.2475677)
@@ -36,7 +34,7 @@ fun MapsComposable(
   val coroutineScope = rememberCoroutineScope()
 
   Box(Modifier.fillMaxWidth()) {
-    GoogleMap(modifier = Modifier.height(height),
+    GoogleMap(modifier = modifier,
       cameraPositionState = cameraPositionState,
       properties = mapProperties,
       onMapLoaded = {

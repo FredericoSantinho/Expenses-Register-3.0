@@ -51,7 +51,8 @@ fun HomeComposable(
   val coroutineScope = rememberCoroutineScope()
   val modalBottomSheetState = rememberModalBottomSheetState()
 
-  ModalBottomSheetLayout(modalBottomSheetState,
+  ModalBottomSheetLayout(
+    modalBottomSheetState,
     { EditPlaceProductComposable(homeViewModel.editPlaceProductViewModel) }) {
     ConstraintLayout(
       modifier = Modifier.fillMaxSize()
@@ -65,7 +66,7 @@ fun HomeComposable(
         linkTo(top = parent.top, bottom = billC.top)
         height = Dimension.fillToConstraints
       }) {
-        MapsComposable(homeViewModel.initialCameraPosition, moveCamera)
+        MapsComposable(homeViewModel.initialCameraPosition, Modifier.height(208.dp), moveCamera)
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
           DateTimeComposable(
             fragmentActivity = fragmentActivity,
@@ -92,12 +93,7 @@ fun HomeComposable(
     }
   }
   onUiEvent(
-    uiEvent,
-    coroutineScope,
-    modalBottomSheetState,
-    moveCamera,
-    homeViewModel,
-    mapsEventMapper
+    uiEvent, coroutineScope, modalBottomSheetState, moveCamera, homeViewModel, mapsEventMapper
   )
 
   addBackHandler(modalBottomSheetState, coroutineScope)
