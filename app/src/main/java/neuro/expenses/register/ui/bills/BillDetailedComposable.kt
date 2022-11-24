@@ -17,8 +17,11 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentActivity
 import neuro.expenses.register.ui.common.composables.edit.SaveDeleteComposable
 import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
-import neuro.expenses.register.viewmodel.edit.bill.BillDetailedViewModel
-import neuro.expenses.register.viewmodel.edit.bill.model.BillItemModel
+import neuro.expenses.register.viewmodel.bills.BillDetailedViewModel
+import neuro.expenses.register.viewmodel.common.formatter.CurrencyFormatterImpl
+import neuro.expenses.register.viewmodel.common.formatter.DecimalFormatterImpl
+import neuro.expenses.register.viewmodel.edit.bill.mapper.BillItemViewModelMapper
+import neuro.expenses.register.viewmodel.edit.bill.model.BillItemViewModel
 
 @Composable
 fun BillDetailedComposable(
@@ -44,15 +47,18 @@ fun BillDetailedComposable(
       Divider(thickness = 1.dp, color = Color.Gray)
       LazyColumn(
         Modifier
-          .padding(8.dp)
           .heightIn(max = 360.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
       ) {
         items(
           billDetailedViewModel.billItems.value,
-          { billItemModel: BillItemModel -> billItemModel.id }) { billItemModel ->
-          BillItemComposable(billItemModel)
-          Divider(thickness = 1.dp, color = Color.Gray)
+          { billItemViewModel: BillItemViewModel -> billItemViewModel.id }) { billItemViewModel ->
+          BillItemComposable(billItemViewModel) { billDetailedViewModel.onBillItemsChange() }
+          Divider(
+            modifier = Modifier.padding(start = 4.dp, end = 4.dp),
+            thickness = 1.dp,
+            color = Color.Gray
+          )
         }
       }
       BillItemFooterComposable(
@@ -68,8 +74,12 @@ fun BillDetailedComposable(
 @Preview
 @Composable
 fun PreviewBillDetailedComposable() {
+  val decimalFormatter = DecimalFormatterImpl(2)
+  val currencyFormatter = CurrencyFormatterImpl(decimalFormatter, "€")
+  val billItemViewModelMapper = BillItemViewModelMapper(decimalFormatter)
+
   ExpensesRegisterTheme {
-    val billDetailedViewModel = BillDetailedViewModel()
+    val billDetailedViewModel = BillDetailedViewModel(billItemViewModelMapper, currencyFormatter)
     billDetailedViewModel.placeName.value = "Bitoque"
     billDetailedViewModel.billItems.value = emptyList()
 

@@ -7,12 +7,10 @@ import neuro.expenses.register.viewmodel.bill.FeedLastBillViewModel
 import neuro.expenses.register.viewmodel.bill.FeedLastBillViewModelImpl
 import neuro.expenses.register.viewmodel.bill.mapper.DateTimeMapper
 import neuro.expenses.register.viewmodel.bill.mapper.DateTimeMapperImpl
-import neuro.expenses.register.viewmodel.bills.BillDetailedViewModelController
-import neuro.expenses.register.viewmodel.bills.BillDetailedViewModelControllerImpl
+import neuro.expenses.register.viewmodel.bills.BillDetailedViewModel
 import neuro.expenses.register.viewmodel.bills.BillsViewModel
 import neuro.expenses.register.viewmodel.common.formatter.*
 import neuro.expenses.register.viewmodel.edit.EditViewModel
-import neuro.expenses.register.viewmodel.edit.bill.BillDetailedViewModel
 import neuro.expenses.register.viewmodel.edit.category.EditCategoriesViewModel
 import neuro.expenses.register.viewmodel.edit.place.EditPlacesViewModel
 import neuro.expenses.register.viewmodel.edit.placeproduct.EditPlaceProductViewModel
@@ -54,14 +52,7 @@ val viewModelModule = module {
   single<DecimalFormatter> { DecimalFormatterImpl(DECIMALS) }
   single<CurrencyFormatter> { CurrencyFormatterImpl(get(), get(named(CURRENCY))) }
   viewModel { BillsViewModel(get(), get(), get(), get(), get(), get(), get()) }
-  single<BillDetailedViewModelController> {
-    BillDetailedViewModelControllerImpl(
-      get(),
-      get(),
-      get()
-    )
-  }
-  single { BillDetailedViewModel() }
+  single { BillDetailedViewModel(get(), get()) }
   viewModel { EditViewModel(get()) }
   viewModel { EditProductsViewModel() }
   viewModel { EditPlaceProductsViewModel(get(), get(), get(), get()) }

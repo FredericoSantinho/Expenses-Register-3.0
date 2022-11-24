@@ -15,7 +15,7 @@ class BillsViewModel(
   private val getBillUseCase: GetBillUseCase,
   private val sortBills: SortBills,
   private val billViewModelMapper: BillViewModelMapper,
-  private val billDetailedViewModelController: BillDetailedViewModelController,
+  private val billDetailedViewModel: BillDetailedViewModel,
   private val mainViewModel: MainViewModel,
   schedulerProvider: SchedulerProvider
 ) : BaseViewModel(schedulerProvider) {
@@ -51,7 +51,7 @@ class BillsViewModel(
 
   private fun onBillLongClick(billId: Long) {
     getBillUseCase.getBill(billId).baseSubscribe { billDto ->
-      billDetailedViewModelController.setBillDetailedViewModel(billDto)
+      billDetailedViewModel.setBillDetailedViewModel(billDto)
       _uiEvent.openBillDetailed()
     }
   }

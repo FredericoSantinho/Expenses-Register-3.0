@@ -38,7 +38,8 @@ import neuro.expenses.register.viewmodel.edit.placeproduct.EditPlaceProductViewM
 
 @Composable
 fun EditPlaceProductComposable(
-  editPlaceProductViewModel: EditPlaceProductViewModel, modifier: Modifier = Modifier
+  editPlaceProductViewModel: EditPlaceProductViewModel,
+  modifier: Modifier = Modifier
 ) {
   val descriptionIsError = remember { mutableStateOf(false) }
   val descriptionErrorMessage = remember { mutableStateOf("") }
