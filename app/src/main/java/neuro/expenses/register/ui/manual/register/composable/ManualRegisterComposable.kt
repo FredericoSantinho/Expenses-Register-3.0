@@ -105,21 +105,20 @@ fun ManualRegisterComposable(
         onValueChange = { manualRegisterViewModel.onDescriptionChange() },
         textStyle = ExpensesRegisterTypography.body2
       )
-      TextFieldWithDropdown(
-        dataIn = manualRegisterViewModel.categoriesNames.subscribeAsState(initial = emptyList()),
+      TextFieldWithDropdown(dataIn = manualRegisterViewModel.categoriesNames.subscribeAsState(
+        initial = emptyList()
+      ),
         label = stringResource(R.string.category),
         keyboardOptions = keyboardOptionsText,
         onValueChange = { manualRegisterViewModel.onCategoryChange() },
         value = manualRegisterViewModel.category,
         isError = categoryIsError,
         textStyle = ExpensesRegisterTypography.body2,
-        onSelectOption = { focusManager.moveFocus(FocusDirection.Next) }
-      )
+        onSelectOption = { focusManager.moveFocus(FocusDirection.Next) })
       ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
         val (place, placeAuto) = createRefs()
 
-        TextFieldWithError(
-          label = stringResource(R.string.place),
+        TextFieldWithError(label = stringResource(R.string.place),
           modifier = Modifier
             .constrainAs(place) {
               start.linkTo(parent.start)
@@ -188,19 +187,15 @@ fun ManualRegisterComposable(
           text = stringResource(R.string.manual_register_total) + ':',
           modifier = Modifier.constrainAs(totalLabelC) {
             end.linkTo(totalC.start, margin = 8.dp)
-            top.linkTo(amountC.top, margin = 8.dp)
-            bottom.linkTo(amountC.bottom)
+            bottom.linkTo(amountC.bottom, margin = 4.dp)
           },
-          style = MaterialTheme.typography.body1
+          style = MaterialTheme.typography.h6,
         )
         Text(
-          text = manualRegisterViewModel.total.value,
-          modifier = Modifier.constrainAs(totalC) {
+          text = manualRegisterViewModel.total.value, modifier = Modifier.constrainAs(totalC) {
             end.linkTo(parent.end, margin = 8.dp)
-            top.linkTo(amountC.top, margin = 8.dp)
-            bottom.linkTo(amountC.bottom)
-          },
-          style = MaterialTheme.typography.body1
+            bottom.linkTo(amountC.bottom, margin = 4.dp)
+          }, style = MaterialTheme.typography.h6
         )
       }
       Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
@@ -257,7 +252,8 @@ private fun onUiState(
   when (uiState) {
     UiState.Ready -> {}
     is UiState.Error -> onUiError(
-      uiState.errors, descriptionIsError,
+      uiState.errors,
+      descriptionIsError,
       descriptionErrorMessage,
       categoryIsError,
       placeIsError,
@@ -282,15 +278,11 @@ private fun onUiError(
   errors.forEach { error ->
     when (error) {
       is UiStateError.ShowPlaceError -> showPlaceError(
-        stringResource(error.message.toPresentation()),
-        placeIsError,
-        placeErrorMessage
+        stringResource(error.message.toPresentation()), placeIsError, placeErrorMessage
       )
       is UiStateError.ShowCategoryError -> showCategoryError(categoryIsError)
       is UiStateError.ShowDescriptionError -> showDescriptionError(
-        stringResource(error.message.toPresentation()),
-        descriptionIsError,
-        descriptionErrorMessage
+        stringResource(error.message.toPresentation()), descriptionIsError, descriptionErrorMessage
       )
       is UiStateError.ShowAmountError -> showAmountError(
         stringResource(error.message.toPresentation()), amountIsError, amountErrorMessage
@@ -300,18 +292,14 @@ private fun onUiError(
 }
 
 private fun showAmountError(
-  message: String,
-  amountIsError: MutableState<Boolean>,
-  amountErrorMessage: MutableState<String>
+  message: String, amountIsError: MutableState<Boolean>, amountErrorMessage: MutableState<String>
 ) {
   amountErrorMessage.value = message
   amountIsError.value = true
 }
 
 private fun showPlaceError(
-  message: String,
-  placeIsError: MutableState<Boolean>,
-  placeErrorMessage: MutableState<String>
+  message: String, placeIsError: MutableState<Boolean>, placeErrorMessage: MutableState<String>
 ) {
   placeErrorMessage.value = message
   placeIsError.value = true
