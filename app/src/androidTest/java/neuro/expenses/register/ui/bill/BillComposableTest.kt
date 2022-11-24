@@ -9,8 +9,8 @@ import neuro.expenses.register.ui.assertContainsColor
 import neuro.expenses.register.ui.assertNotContainsColor
 import neuro.expenses.register.ui.performLongClick
 import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
+import neuro.expenses.register.viewmodel.bill.BillUiState.UiState
 import neuro.expenses.register.viewmodel.bill.IBillViewModel
-import neuro.expenses.register.viewmodel.bill.UiState
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.kotlin.*
@@ -54,8 +54,7 @@ internal class BillComposableTest {
     onEditBillIcon.assertDoesNotExist()
 
     onIcon.assertHeightIsEqualTo(64.dp)
-    // 8 for the padding
-    onIcon.assertWidthIsEqualTo(64.dp + 8.dp)
+    onIcon.assertWidthIsEqualTo(64.dp)
 
     onCard.assertContainsColor(Color.White)
     onPlace.assertNotContainsColor(Color.White)
@@ -85,17 +84,6 @@ internal class BillComposableTest {
 
     onCloseBillIcon.assertDoesNotExist()
     onEditBillIcon.assertDoesNotExist()
-  }
-
-  @Test
-  fun testBillEditableState() {
-    onStateReadyTest(UiState.BillEditable)
-
-    val onCloseBillIcon = composeTestRule.onNodeWithTag(BillTags.CLOSE_BILL_ICON, true)
-    val onEditBillIcon = composeTestRule.onNodeWithTag(BillTags.EDIT_BILL_ICON, true)
-
-    onCloseBillIcon.assertDoesNotExist()
-    onEditBillIcon.assertIsDisplayed()
   }
 
   private fun onStateReadyTest(_uiState: UiState) {
@@ -138,8 +126,7 @@ internal class BillComposableTest {
     onDate.assertTextEquals(date.value)
     onTotal.assertTextEquals(total.value)
     onIcon.assertHeightIsEqualTo(64.dp)
-    // 8 for the padding
-    onIcon.assertWidthIsEqualTo(64.dp + 8.dp)
+    onIcon.assertWidthIsEqualTo(64.dp)
 
     onCard.assertContainsColor(Color.White)
     onPlace.assertContainsColor(Color.White)

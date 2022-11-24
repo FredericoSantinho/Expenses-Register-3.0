@@ -7,6 +7,6 @@ class BillViewModelMapperImpl(private val billModelMapper: BillModelMapper) : Bi
   override fun map(
     billDto: BillDto, editable: Boolean, opened: Boolean, onBillLongClick: (Long) -> Unit
   ): BillViewModel {
-    return BillViewModel(editable, opened, billModelMapper.map(billDto), onBillLongClick)
+    return BillViewModel(opened, billModelMapper.map(billDto), onBillLongClick)
   }
 }

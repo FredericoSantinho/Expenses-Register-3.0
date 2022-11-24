@@ -131,10 +131,6 @@ private fun onUiState(
   loading: MutableState<Boolean>
 ) {
   when (uiState) {
-    is UiState.BillEditable -> {
-      editBillIcon(modifier, billViewModel)
-      loading.value = false
-    }
     is UiState.BillOpen -> {
       closeBillIcon(modifier)
       loading.value = false
@@ -169,21 +165,6 @@ private fun closeBillIcon(imageConstraintModifier: Modifier) {
       .padding(start = 8.dp)) {
     Icon(
       painter = painterResource(id = R.drawable.ic_close_bill_24),
-      contentDescription = null,
-      tint = Color.Black
-    )
-  }
-}
-
-@Composable
-private fun editBillIcon(modifier: Modifier, billViewModel: IBillViewModel) {
-  IconButton(onClick = {
-    billViewModel.onEditClick()
-  }, modifier = modifier
-    .semantics { testTag = BillTags.EDIT_BILL_ICON }
-    .padding(start = 8.dp)) {
-    Icon(
-      painter = painterResource(id = R.drawable.ic_edit_24),
       contentDescription = null,
       tint = Color.Black
     )

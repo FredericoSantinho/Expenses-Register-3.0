@@ -19,14 +19,9 @@ class BillUiState {
     _uiState.value = UiState.BillClosed
   }
 
-  fun billEditable() {
-    _uiState.value = UiState.BillEditable
-  }
-
   sealed class UiState {
     object BillOpen : UiState()
     object BillClosed : UiState()
-    object BillEditable : UiState()
     object Loading : UiState()
   }
 }

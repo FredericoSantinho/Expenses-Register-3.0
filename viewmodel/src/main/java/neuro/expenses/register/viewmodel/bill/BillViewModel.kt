@@ -7,7 +7,6 @@ import java.util.*
 private val EMPTY = BillModel(0L, "", "", "", "", "", false, Calendar.getInstance())
 
 class BillViewModel(
-  editable: Boolean = false,
   opened: Boolean = false,
   billModel: BillModel = EMPTY,
   private val onBillLongClick: (Long) -> Unit = {}
@@ -23,9 +22,6 @@ class BillViewModel(
   override val uiState = _uiState.uiState
 
   init {
-    if (editable) {
-      setEditableBillState()
-    }
     if (opened) {
       setOpenedBillState()
     } else {
@@ -69,9 +65,5 @@ class BillViewModel(
 
   fun setClosedBillState() {
     _uiState.billClosed()
-  }
-
-  fun setEditableBillState() {
-    _uiState.billEditable()
   }
 }
