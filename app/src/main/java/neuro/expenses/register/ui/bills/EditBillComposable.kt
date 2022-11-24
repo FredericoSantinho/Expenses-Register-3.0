@@ -37,7 +37,7 @@ fun EditBillComposable(
       modifier = Modifier.padding(top = 16.dp, bottom = 16.dp),
       text = billDetailedViewModel.placeName.value,
       fontWeight = FontWeight.Bold,
-      fontSize = MaterialTheme.typography.h5.fontSize
+      style = MaterialTheme.typography.h5,
     )
     Column {
       BillItemHeaderComposable()

@@ -52,7 +52,7 @@ fun DateTimeComposable(
     verticalAlignment = Alignment.CenterVertically,
     horizontalArrangement = Arrangement.Center
   ) {
-    Text(text = timeText)
+    Text(text = timeText, style = MaterialTheme.typography.subtitle1)
     IconButton(
       modifier = Modifier
         .width(24.dp + 8.dp * 2)
@@ -74,17 +74,18 @@ fun DateTimeComposable(
         tint = MaterialTheme.colors.primary
       )
     }
-    Text(text = dateText)
-    IconButton(modifier = Modifier
-      .width(24.dp + 8.dp)
-      .height(24.dp)
-      .padding(start = 8.dp), onClick = {
-      showDatePicker.showDatePicker(fragmentActivity, object : OnSetDate {
-        override fun onSetDate(day: Int, month: Int, year: Int) {
-          dayVar = day
-          monthVar = month
-          yearVar = year
-          dateText = dateTextMapper.map(day, month, year)
+    Text(text = dateText, style = MaterialTheme.typography.subtitle1)
+    IconButton(
+      modifier = Modifier
+        .width(24.dp + 8.dp)
+        .height(24.dp)
+        .padding(start = 8.dp), onClick = {
+        showDatePicker.showDatePicker(fragmentActivity, object : OnSetDate {
+          override fun onSetDate(day: Int, month: Int, year: Int) {
+            dayVar = day
+            monthVar = month
+            yearVar = year
+            dateText = dateTextMapper.map(day, month, year)
           setCalendar(calendar, day, month, year)
         }
       })

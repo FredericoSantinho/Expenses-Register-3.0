@@ -41,7 +41,7 @@ fun BillItemComposable(billItemModel: BillItemModel, modifier: Modifier = Modifi
     ) {
       Text(
         billItemModel.description,
-        fontSize = MaterialTheme.typography.subtitle2.fontSize,
+        style = MaterialTheme.typography.subtitle2,
         textAlign = TextAlign.Left,
         overflow = TextOverflow.Ellipsis,
         maxLines = 1
@@ -55,7 +55,7 @@ fun BillItemComposable(billItemModel: BillItemModel, modifier: Modifier = Modifi
     ) {
       Text(
         billItemModel.price,
-        fontSize = MaterialTheme.typography.subtitle2.fontSize,
+        style = MaterialTheme.typography.subtitle2,
         textAlign = TextAlign.Right,
         maxLines = 1,
         modifier = Modifier.fillMaxWidth()
@@ -69,7 +69,7 @@ fun BillItemComposable(billItemModel: BillItemModel, modifier: Modifier = Modifi
     ) {
       Text(
         billItemModel.amount,
-        fontSize = MaterialTheme.typography.subtitle2.fontSize,
+        style = MaterialTheme.typography.subtitle2,
         textAlign = TextAlign.Right,
         maxLines = 1,
         modifier = Modifier.fillMaxWidth()
@@ -83,7 +83,7 @@ fun BillItemComposable(billItemModel: BillItemModel, modifier: Modifier = Modifi
     ) {
       Text(
         billItemModel.total,
-        fontSize = MaterialTheme.typography.subtitle2.fontSize,
+        style = MaterialTheme.typography.subtitle2,
         textAlign = TextAlign.Right,
         maxLines = 1,
         modifier = Modifier.fillMaxWidth()

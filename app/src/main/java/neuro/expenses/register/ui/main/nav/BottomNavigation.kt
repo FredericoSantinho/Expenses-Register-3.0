@@ -8,7 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import neuro.expenses.register.R
@@ -38,7 +38,9 @@ fun BottomNavigation(navController: NavController) {
         label = {
           Text(
             text = stringResource(item.stringId),
-            fontSize = 9.sp
+            fontSize = MaterialTheme.typography.overline.fontSize,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
           )
         },
         selectedContentColor = MaterialTheme.colors.primary,

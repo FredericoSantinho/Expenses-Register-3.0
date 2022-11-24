@@ -18,7 +18,7 @@ fun BillItemHeaderComposable() {
   Row(modifier = Modifier.padding(bottom = 4.dp)) {
     Text(
       "Place Product",
-      fontSize = MaterialTheme.typography.subtitle2.fontSize,
+      style = MaterialTheme.typography.subtitle2,
       textAlign = TextAlign.Center,
       fontWeight = FontWeight.Bold,
       modifier = Modifier
@@ -27,7 +27,7 @@ fun BillItemHeaderComposable() {
     )
     Text(
       "Price",
-      fontSize = MaterialTheme.typography.subtitle2.fontSize,
+      style = MaterialTheme.typography.subtitle2,
       textAlign = TextAlign.Center,
       fontWeight = FontWeight.Bold,
       modifier = Modifier
@@ -36,7 +36,7 @@ fun BillItemHeaderComposable() {
     )
     Text(
       "Amount",
-      fontSize = MaterialTheme.typography.subtitle2.fontSize,
+      style = MaterialTheme.typography.subtitle2,
       textAlign = TextAlign.Center,
       fontWeight = FontWeight.Bold,
       maxLines = 1,
@@ -46,7 +46,7 @@ fun BillItemHeaderComposable() {
     )
     Text(
       "Sub-total",
-      fontSize = MaterialTheme.typography.subtitle2.fontSize,
+      style = MaterialTheme.typography.subtitle2,
       textAlign = TextAlign.Center,
       fontWeight = FontWeight.Bold,
       modifier = Modifier

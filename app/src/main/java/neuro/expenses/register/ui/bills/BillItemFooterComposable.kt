@@ -26,24 +26,26 @@ fun BillItemFooterComposable(
   Row(
     modifier = Modifier
       .fillMaxWidth()
-      .padding(top = 16.dp, bottom = 16.dp, end = 8.dp),
-    horizontalArrangement = Arrangement.End
+      .height(24.dp + 16.dp * 2)
+      .padding(top = 16.dp, bottom = 16.dp, end = 8.dp), horizontalArrangement = Arrangement.End
   ) {
-    DateTimeComposable(
-      fragmentActivity = fragmentActivity, calendar = calendar
-    )
     Column(verticalArrangement = Arrangement.Center) {
+      DateTimeComposable(
+        fragmentActivity = fragmentActivity, calendar = calendar
+      )
+    }
+    Column(modifier = Modifier.fillMaxHeight(), verticalArrangement = Arrangement.Center) {
       Row {
         Text(
           stringResource(R.string.edit_bill_total),
-          modifier = Modifier.padding(start = 32.dp),
-          fontSize = MaterialTheme.typography.subtitle1.fontSize.times(1.125),
+          modifier = Modifier.padding(start = 24.dp),
+          style = MaterialTheme.typography.subtitle1,
           fontWeight = FontWeight.Bold
         )
         Text(
           total,
           modifier = Modifier.padding(start = 12.dp),
-          fontSize = MaterialTheme.typography.subtitle1.fontSize.times(1.125),
+          style = MaterialTheme.typography.subtitle1,
           textAlign = TextAlign.End,
           fontWeight = FontWeight.Bold
         )

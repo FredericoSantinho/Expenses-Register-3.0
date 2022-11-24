@@ -15,7 +15,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.fragment.app.FragmentActivity
@@ -192,7 +191,7 @@ fun ManualRegisterComposable(
             top.linkTo(amountC.top, margin = 8.dp)
             bottom.linkTo(amountC.bottom)
           },
-          fontSize = 16.sp
+          style = MaterialTheme.typography.body1
         )
         Text(
           text = manualRegisterViewModel.total.value,
@@ -201,7 +200,7 @@ fun ManualRegisterComposable(
             top.linkTo(amountC.top, margin = 8.dp)
             bottom.linkTo(amountC.bottom)
           },
-          fontSize = 16.sp
+          style = MaterialTheme.typography.body1
         )
       }
       Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {

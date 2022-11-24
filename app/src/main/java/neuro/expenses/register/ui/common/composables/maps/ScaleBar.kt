@@ -31,7 +31,6 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.CameraPositionState
 import com.google.maps.android.ktx.utils.sphericalDistance
@@ -233,11 +232,10 @@ private fun ScaleText(
 ) {
   Text(
     text = text,
-    fontSize = 12.sp,
     color = textColor,
     textAlign = TextAlign.End,
     modifier = modifier,
-    style = MaterialTheme.typography.h4.copy(
+    style = MaterialTheme.typography.caption.copy(
       shadow = Shadow(
         color = shadowColor,
         offset = Offset(2f, 2f),

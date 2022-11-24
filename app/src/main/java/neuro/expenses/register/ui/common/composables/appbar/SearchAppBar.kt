@@ -83,7 +83,7 @@ fun SearchAppBar(
                 linkTo(top = parent.top, bottom = parent.bottom)
               },
               color = Color.White,
-              fontSize = MaterialTheme.typography.h6.fontSize,
+              style = MaterialTheme.typography.h6,
               fontWeight = FontWeight.Bold
             )
           }

@@ -16,12 +16,10 @@ import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import neuro.expenses.register.ui.common.composables.image.AsyncImage
 import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
-import neuro.expenses.register.ui.theme.ExpensesRegisterTypography
 import neuro.expenses.register.viewmodel.home.IProductCardViewModel
 import neuro.expenses.register.viewmodel.home.OnProductCardClick
 import neuro.expenses.register.viewmodel.home.ProductCardViewModel
@@ -63,7 +61,7 @@ fun PlaceProductCardComposable(productCardViewModel: IProductCardViewModel) {
               width = Dimension.fillToConstraints
             }
             .padding(top = 2.dp, start = 2.dp),
-          fontSize = 15.sp,
+          style = MaterialTheme.typography.body2,
           maxLines = 3,
         )
         AsyncImage(modifier = Modifier
@@ -84,7 +82,7 @@ fun PlaceProductCardComposable(productCardViewModel: IProductCardViewModel) {
               bottom.linkTo(parent.bottom, margin = 4.dp)
             }
             .padding(start = 2.dp, bottom = 2.dp),
-          fontSize = ExpensesRegisterTypography.caption.fontSize,
+          style = MaterialTheme.typography.caption,
           fontWeight = FontWeight.Bold,
           maxLines = 1,
         )
@@ -97,7 +95,7 @@ fun PlaceProductCardComposable(productCardViewModel: IProductCardViewModel) {
               bottom.linkTo(parent.bottom)
             }
             .padding(start = 2.dp, bottom = 2.dp),
-          fontSize = ExpensesRegisterTypography.body1.fontSize,
+          style = MaterialTheme.typography.body1,
           fontWeight = FontWeight.Bold,
           maxLines = 1,
         )
@@ -109,7 +107,7 @@ fun PlaceProductCardComposable(productCardViewModel: IProductCardViewModel) {
 @Preview
 @Composable
 fun PreviewDateTimeComposable() {
-  val description = "Tosta Mista Pâo Caseiro"
+  val description = "Tosta Mista Pão Caseiro"
   val categoryModel = CategoryModel(1L, "Restau")
   val place = "Riviera"
   val price = "4.20 €"

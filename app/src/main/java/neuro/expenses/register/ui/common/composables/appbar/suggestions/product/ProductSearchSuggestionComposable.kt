@@ -42,7 +42,7 @@ fun ProductSearchSuggestionComposable(description: String, price: String, iconUr
         width = Dimension.fillToConstraints
       },
       maxLines = 2,
-      fontSize = MaterialTheme.typography.subtitle2.fontSize,
+      style = MaterialTheme.typography.subtitle2,
       overflow = TextOverflow.Ellipsis
     )
     Text(
@@ -51,7 +51,7 @@ fun ProductSearchSuggestionComposable(description: String, price: String, iconUr
         linkTo(top = parent.top, bottom = parent.bottom)
         end.linkTo(parent.end, margin = 4.dp)
       },
-      fontSize = MaterialTheme.typography.subtitle2.fontSize,
+      style = MaterialTheme.typography.subtitle2,
       fontWeight = FontWeight.Bold,
       maxLines = 1,
     )

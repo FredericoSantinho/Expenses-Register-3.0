@@ -18,7 +18,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import neuro.expenses.register.R
 import neuro.expenses.register.common.shimmer.shimmer
@@ -28,6 +27,8 @@ import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.viewmodel.bill.BillUiState.UiState
 import neuro.expenses.register.viewmodel.bill.BillViewModel
 import neuro.expenses.register.viewmodel.bill.IBillViewModel
+import neuro.expenses.register.viewmodel.bill.model.BillModel
+import java.util.*
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -111,7 +112,7 @@ fun BillComposable(
         .shimmerBackground(loading.value),
         textAlign = TextAlign.End,
         text = billViewModel.total.value,
-        fontSize = 26.sp,
+        style = typography.h5,
         fontWeight = FontWeight.Bold,
         color = MaterialTheme.colors.primary)
       val iconConstraintModifier = Modifier.constrainAs(closeBillC) {
@@ -125,9 +126,7 @@ fun BillComposable(
 
 @Composable
 private fun onUiState(
-  uiState: UiState,
-  modifier: Modifier,
-  loading: MutableState<Boolean>
+  uiState: UiState, modifier: Modifier, loading: MutableState<Boolean>
 ) {
   when (uiState) {
     is UiState.BillOpen -> {
@@ -174,7 +173,9 @@ private fun closeBillIcon(imageConstraintModifier: Modifier) {
 @Composable
 fun PreviewDateTimeComposable() {
   ExpensesRegisterTheme {
-    BillComposable(BillViewModel())
+    val billModel =
+      BillModel(0, "", "Bitoque", "10h36", "24/11/2022", "3.60 €", true, Calendar.getInstance())
+    BillComposable(BillViewModel(billModel = billModel))
   }
 }
 

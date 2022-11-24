@@ -49,7 +49,7 @@ fun PlaceSearchSuggestionComposable(name: String) {
         width = Dimension.fillToConstraints
       },
       maxLines = 2,
-      fontSize = MaterialTheme.typography.subtitle2.fontSize,
+      style = MaterialTheme.typography.subtitle2,
       overflow = TextOverflow.Ellipsis
     )
   }
