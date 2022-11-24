@@ -5,6 +5,6 @@ import neuro.expenses.register.viewmodel.bill.BillViewModel
 
 interface BillViewModelMapper {
   fun map(
-    billDto: BillDto, editable: Boolean, opened: Boolean, onLongClick: (Long) -> Unit
+    billDto: BillDto, editable: Boolean, opened: Boolean, onBillLongClick: (Long) -> Unit
   ): BillViewModel
 }

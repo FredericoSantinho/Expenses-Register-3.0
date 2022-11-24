@@ -26,7 +26,6 @@ import neuro.expenses.register.common.picker.date.ShowMaterialDatePicker
 import neuro.expenses.register.common.picker.time.DefaultShowTimePicker
 import neuro.expenses.register.common.picker.time.ShowTimePicker
 import neuro.expenses.register.ui.bill.BillComposableContainer
-import neuro.expenses.register.ui.common.composables.appbar.MockedSuggestions
 import neuro.expenses.register.ui.common.composables.datetime.DateTimeComposable
 import neuro.expenses.register.ui.common.composables.datetime.mapper.DateTextMapper
 import neuro.expenses.register.ui.common.composables.datetime.mapper.DateTextMapperImpl
@@ -107,8 +106,6 @@ fun ManualRegisterComposable(
         onValueChange = { manualRegisterViewModel.onDescriptionChange() },
         textStyle = ExpensesRegisterTypography.body2
       )
-      val dataIn = remember { mutableStateOf(MockedSuggestions().create()) }
-
       TextFieldWithDropdown(
         dataIn = manualRegisterViewModel.categoriesNames.subscribeAsState(initial = emptyList()),
         label = stringResource(R.string.category),

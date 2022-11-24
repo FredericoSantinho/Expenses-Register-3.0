@@ -118,7 +118,7 @@ fun BillComposable(
         end.linkTo(parent.end)
         linkTo(top = parent.top, bottom = parent.bottom)
       }
-      onUiState(uiState, billViewModel, iconConstraintModifier, loading)
+      onUiState(uiState, iconConstraintModifier, loading)
     }
   }
 }
@@ -126,7 +126,6 @@ fun BillComposable(
 @Composable
 private fun onUiState(
   uiState: UiState,
-  billViewModel: IBillViewModel,
   modifier: Modifier,
   loading: MutableState<Boolean>
 ) {

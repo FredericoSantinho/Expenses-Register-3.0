@@ -15,7 +15,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentActivity
-import neuro.expenses.register.ui.common.composables.datetime.DateTimeComposable
 import neuro.expenses.register.ui.common.composables.edit.SaveDeleteComposable
 import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.viewmodel.edit.bill.EditBillViewModel
@@ -56,13 +55,12 @@ fun EditBillComposable(
           Divider(thickness = 1.dp, color = Color.Gray)
         }
       }
-      BillItemFooterComposable(editBillViewModel.total.value)
+      BillItemFooterComposable(
+        fragmentActivity,
+        editBillViewModel.total.value,
+        editBillViewModel.calendar
+      )
     }
-    DateTimeComposable(
-      modifier = Modifier.padding(top = 16.dp, bottom = 16.dp),
-      fragmentActivity = fragmentActivity,
-      calendar = editBillViewModel.calendar
-    )
     SaveDeleteComposable({}, {})
   }
 }

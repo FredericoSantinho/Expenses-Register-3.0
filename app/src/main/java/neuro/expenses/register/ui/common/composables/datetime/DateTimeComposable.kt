@@ -1,7 +1,6 @@
 package neuro.expenses.register.ui.common.composables.datetime
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -11,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentActivity
 import neuro.expenses.register.R
 import neuro.expenses.register.common.picker.date.OnSetDate
@@ -53,16 +53,21 @@ fun DateTimeComposable(
     horizontalArrangement = Arrangement.Center
   ) {
     Text(text = timeText)
-    IconButton(onClick = {
-      showTimePicker.showTimePicker(fragmentActivity, object : OnSetTime {
-        override fun onSetTime(hour: Int, minute: Int) {
-          hourVar = hour
-          minuteVar = minute
-          timeText = timeTextMapper.map(hour, minute)
-          setCalendar(calendar, hour, minute)
-        }
-      })
-    }) {
+    IconButton(
+      modifier = Modifier
+        .width(24.dp + 8.dp * 2)
+        .height(24.dp)
+        .padding(start = 8.dp, end = 8.dp),
+      onClick = {
+        showTimePicker.showTimePicker(fragmentActivity, object : OnSetTime {
+          override fun onSetTime(hour: Int, minute: Int) {
+            hourVar = hour
+            minuteVar = minute
+            timeText = timeTextMapper.map(hour, minute)
+            setCalendar(calendar, hour, minute)
+          }
+        })
+      }) {
       Icon(
         painter = painterResource(id = R.drawable.ic_change_time_24),
         contentDescription = null,
@@ -70,7 +75,10 @@ fun DateTimeComposable(
       )
     }
     Text(text = dateText)
-    IconButton(onClick = {
+    IconButton(modifier = Modifier
+      .width(24.dp + 8.dp)
+      .height(24.dp)
+      .padding(start = 8.dp), onClick = {
       showDatePicker.showDatePicker(fragmentActivity, object : OnSetDate {
         override fun onSetDate(day: Int, month: Int, year: Int) {
           dayVar = day
@@ -82,7 +90,7 @@ fun DateTimeComposable(
       })
     }) {
       Icon(
-        painter = painterResource(id = R.drawable.ic_change_date_24),
+        painter = painterResource(R.drawable.ic_change_date_24),
         contentDescription = null,
         tint = MaterialTheme.colors.primary
       )

@@ -19,7 +19,7 @@ class ClassUtils {
    */
   @Throws(IOException::class, ClassNotFoundException::class)
   fun findClasses(packageName: String): MutableSet<Class<*>> {
-    val reflections = Reflections(packageName, Scanners.SubTypes.filterResultsBy { c -> true })
+    val reflections = Reflections(packageName, Scanners.SubTypes.filterResultsBy { _ -> true })
     return reflections.getSubTypesOf(Any::class.java)
   }
 

@@ -40,6 +40,7 @@ interface ProductDao {
   @Query("select * from place_product_table where productId=:productId and categoryId=:categoryId and price=:price")
   fun getPlaceProduct(productId: Long, categoryId: Long, price: Double): Maybe<RoomPlaceProduct>
 
+  @Transaction
   @Query("select * from place_product_table where productId=:productId and categoryId=:categoryId and price=:price")
   fun getPlaceProductWithProductAndCategory(
     productId: Long, categoryId: Long, price: Double

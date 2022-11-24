@@ -9,8 +9,6 @@ import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.semantics.semantics
@@ -120,7 +118,6 @@ fun PreviewDateTimeComposable() {
     "https://www.iguaria.com/wp-content/uploads/2016/03/Iguaria_Tosta-de-Bacon-Queijo-Fiambre.jpg"
   val productCardModel =
     ProductCardModel(0, description, categoryModel, place, price, iconUrl, amount)
-  val calendar = remember { mutableStateOf(Calendar.getInstance()) }
 
   ExpensesRegisterTheme {
     PlaceProductCardComposable(
