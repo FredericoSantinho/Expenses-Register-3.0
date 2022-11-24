@@ -14,4 +14,8 @@ class ManualRegisterUiEvent {
   fun showRegisterSuccess(description: String) {
     _uiEvent.value = UiEvent.ShowRegisterSuccess(description)
   }
+
+  sealed class UiEvent {
+    class ShowRegisterSuccess(val productDescription: String) : UiEvent()
+  }
 }

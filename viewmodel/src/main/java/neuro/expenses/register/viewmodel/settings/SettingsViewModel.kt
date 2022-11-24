@@ -1,26 +1,21 @@
 package neuro.expenses.register.viewmodel.settings
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class SettingsViewModel() : ViewModel() {
-  private val _uiState = MutableLiveData<UiState>(UiState.Ready)
-  val uiState = _uiState
+
+  private val _uiState = SettingsUiState()
+  val uiState = _uiState.uiState
 
   fun onClearDatabase() {
-    _uiState.value = UiState.ConfirmClearDatabase
+    _uiState.confirmClearDatabase()
   }
 
   fun onClearDatabaseConfirm() {
-    _uiState.value = UiState.Ready
+    _uiState.ready()
   }
 
   fun onClearDatabaseRefuse() {
-    _uiState.value = UiState.Ready
-  }
-
-  sealed class UiState {
-    object Ready : UiState()
-    object ConfirmClearDatabase : UiState()
+    _uiState.ready()
   }
 }

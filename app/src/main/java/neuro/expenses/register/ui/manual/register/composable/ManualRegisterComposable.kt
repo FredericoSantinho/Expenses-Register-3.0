@@ -41,10 +41,10 @@ import neuro.expenses.register.ui.common.keyboard.keyboardOptionsText
 import neuro.expenses.register.ui.manual.register.mapper.toPresentation
 import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.ui.theme.ExpensesRegisterTypography
+import neuro.expenses.register.viewmodel.manual.register.ManualRegisterUiEvent.UiEvent
+import neuro.expenses.register.viewmodel.manual.register.ManualRegisterUiState.UiState
+import neuro.expenses.register.viewmodel.manual.register.ManualRegisterUiState.UiStateError
 import neuro.expenses.register.viewmodel.manual.register.ManualRegisterViewModel
-import neuro.expenses.register.viewmodel.manual.register.UiEvent
-import neuro.expenses.register.viewmodel.manual.register.UiState
-import neuro.expenses.register.viewmodel.manual.register.UiStateError
 import org.koin.androidx.compose.getViewModel
 
 @Composable

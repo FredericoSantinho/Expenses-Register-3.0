@@ -13,7 +13,6 @@ import neuro.expenses.register.viewmodel.appbar.SearchHint
 import neuro.expenses.register.viewmodel.bill.BillViewModel
 import neuro.expenses.register.viewmodel.bill.FeedLastBillViewModel
 import neuro.expenses.register.viewmodel.common.BaseViewModel
-import neuro.expenses.register.viewmodel.common.asState
 import neuro.expenses.register.viewmodel.common.schedulers.SchedulerProvider
 import neuro.expenses.register.viewmodel.edit.placeproduct.EditPlaceProductViewModel
 import neuro.expenses.register.viewmodel.home.factory.ProductCardViewModelFactoryImpl
@@ -57,9 +56,8 @@ class HomeViewModel(
   val selectedPlaceIndex = mutableStateOf(0)
   val selectedPlace = mutableStateOf("")
 
-  private val _uiState = mutableStateOf<UiState>(UiState.Loading)
-  override val uiState = _uiState.asState()
-
+  private val _uiState = HomeUiState()
+  override val uiState = _uiState.uiState
   private val _uiEvent = HomeUiEvent()
   val uiEvent = _uiEvent.uiEvent
 
@@ -79,7 +77,7 @@ class HomeViewModel(
         appBarViewModel.enableSearch()
         setupSearchSuggestions()
       } else {
-        _uiState.value = UiState.Ready
+        _uiState.ready()
       }
     }
     feedLastBillViewModel.observe().baseSubscribe { }
@@ -116,7 +114,7 @@ class HomeViewModel(
     selectedPlace.value = placeDto.name
     sortPlaceProducts.sortPlaceProducts(placeDto.products).baseSubscribe {
       productsListViewModel.setProducts(placeDto, appBarViewModel.query.value)
-      _uiState.value = UiState.Ready
+      _uiState.ready()
     }
   }
 

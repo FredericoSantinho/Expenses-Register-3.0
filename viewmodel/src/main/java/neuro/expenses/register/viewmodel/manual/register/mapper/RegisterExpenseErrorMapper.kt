@@ -1,8 +1,8 @@
 package neuro.expenses.register.viewmodel.manual.register.mapper
 
 import neuro.expenses.register.domain.usecase.expense.RegisterExpenseError
+import neuro.expenses.register.viewmodel.manual.register.ManualRegisterUiState.UiStateError
 import neuro.expenses.register.viewmodel.manual.register.Message
-import neuro.expenses.register.viewmodel.manual.register.UiStateError
 
 fun RegisterExpenseError.toViewmodel(): UiStateError {
   return when (this) {

@@ -20,8 +20,8 @@ import neuro.expenses.register.ui.common.composables.text.TextFieldWithDropdown
 import neuro.expenses.register.ui.common.keyboard.keyboardOptionsText
 import neuro.expenses.register.ui.home.composable.ProductsListComposable
 import neuro.expenses.register.ui.theme.ExpensesRegisterTypography
+import neuro.expenses.register.viewmodel.edit.placeproduct.EditPlaceProductsUiState.UiState
 import neuro.expenses.register.viewmodel.edit.placeproduct.EditPlaceProductsViewModel
-import neuro.expenses.register.viewmodel.edit.placeproduct.UiState
 import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalMaterialApi::class)

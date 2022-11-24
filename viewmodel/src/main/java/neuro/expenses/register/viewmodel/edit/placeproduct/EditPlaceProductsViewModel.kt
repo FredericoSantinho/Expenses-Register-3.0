@@ -5,7 +5,6 @@ import io.reactivex.rxjava3.core.Observable
 import neuro.expenses.register.domain.dto.LatLngDto
 import neuro.expenses.register.domain.usecase.place.GetNearestPlacesUseCase
 import neuro.expenses.register.viewmodel.common.BaseViewModel
-import neuro.expenses.register.viewmodel.common.asState
 import neuro.expenses.register.viewmodel.common.schedulers.SchedulerProvider
 import neuro.expenses.register.viewmodel.home.OnProductCardClick
 import neuro.expenses.register.viewmodel.home.ProductsListViewModel
@@ -19,8 +18,8 @@ class EditPlaceProductsViewModel(
   val editPlaceProductViewModel: EditPlaceProductViewModel,
   schedulerProvider: SchedulerProvider
 ) : BaseViewModel(schedulerProvider), OnProductCardClick {
-  private val _uiState = mutableStateOf<UiState>(UiState.Ready)
-  val uiState = _uiState.asState()
+  private val _uiState = EditPlaceProductsUiState()
+  val uiState = _uiState.uiState
 
   val place = mutableStateOf("")
   val placesNames = Observable.just(listOf("placeA", "placeB"))
@@ -43,10 +42,4 @@ class EditPlaceProductsViewModel(
     getNearestPlacesUseCase.getNearestPlaces(LatLngDto(0.0, 0.0), 1).map { it.get(0) }
       .baseSubscribe { productsListViewModel.setProducts(it) }
   }
-
-}
-
-sealed class UiState {
-  object Ready : UiState()
-  object Editing : UiState()
 }

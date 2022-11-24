@@ -2,7 +2,6 @@ package neuro.expenses.register.viewmodel.bill
 
 import androidx.compose.runtime.mutableStateOf
 import neuro.expenses.register.viewmodel.bill.model.BillModel
-import neuro.expenses.register.viewmodel.common.asState
 import java.util.*
 
 private val EMPTY = BillModel(0L, "", "", "", "", "", false, Calendar.getInstance())
@@ -13,7 +12,6 @@ class BillViewModel(
   billModel: BillModel = EMPTY,
   private val onBillLongClick: (Long) -> Unit = {}
 ) : IBillViewModel {
-  override val billModel = mutableStateOf(billModel)
   override val id = mutableStateOf(billModel.id)
   override val iconUrl = mutableStateOf(billModel.iconUrl)
   override val place = mutableStateOf(billModel.place)
@@ -21,8 +19,8 @@ class BillViewModel(
   override val date = mutableStateOf(billModel.date)
   override val total = mutableStateOf(billModel.total)
 
-  private val _uiState = mutableStateOf<UiState>(UiState.Loading)
-  override val uiState = _uiState.asState()
+  private val _uiState = BillUiState()
+  override val uiState = _uiState.uiState
 
   init {
     if (editable) {
@@ -62,25 +60,18 @@ class BillViewModel(
   }
 
   fun setLoadingState() {
-    _uiState.value = UiState.Loading
+    _uiState.loading()
   }
 
   fun setOpenedBillState() {
-    _uiState.value = UiState.BillOpen
+    _uiState.billOpen()
   }
 
   fun setClosedBillState() {
-    _uiState.value = UiState.BillClosed
+    _uiState.billClosed()
   }
 
   fun setEditableBillState() {
-    _uiState.value = UiState.BillEditable
+    _uiState.billEditable()
   }
-}
-
-sealed class UiState {
-  object BillOpen : UiState()
-  object BillClosed : UiState()
-  object BillEditable : UiState()
-  object Loading : UiState()
 }

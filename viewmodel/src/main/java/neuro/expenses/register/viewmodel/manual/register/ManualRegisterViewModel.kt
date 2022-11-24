@@ -12,10 +12,11 @@ import neuro.expenses.register.viewmodel.appbar.AppBarViewModel
 import neuro.expenses.register.viewmodel.bill.BillViewModel
 import neuro.expenses.register.viewmodel.bill.FeedLastBillViewModel
 import neuro.expenses.register.viewmodel.common.BaseViewModel
-import neuro.expenses.register.viewmodel.common.asState
 import neuro.expenses.register.viewmodel.common.formatter.CurrencyFormatter
 import neuro.expenses.register.viewmodel.common.schedulers.SchedulerProvider
 import neuro.expenses.register.viewmodel.main.MainViewModel
+import neuro.expenses.register.viewmodel.manual.register.ManualRegisterUiState.UiState
+import neuro.expenses.register.viewmodel.manual.register.ManualRegisterUiState.UiStateError
 import neuro.expenses.register.viewmodel.manual.register.mapper.toViewmodel
 
 
@@ -44,8 +45,8 @@ class ManualRegisterViewModel(
   val categoriesNames =
     categories.flatMapSingle { Single.just(it).flattenAsObservable { it }.map { it.name }.toList() }
 
-  private val _uiState = mutableStateOf<UiState>(UiState.Ready)
-  val uiState = _uiState.asState()
+  private val _uiState = ManualRegisterUiState()
+  val uiState = _uiState.uiState
   private val _uiEvent = ManualRegisterUiEvent()
   val uiEvent = _uiEvent.uiEvent
 
@@ -65,7 +66,7 @@ class ManualRegisterViewModel(
         onComplete = { publishAndReset() },
         onError = {
           if (it is RegisterExpenseException) {
-            _uiState.value = UiState.Error(it.errors.toViewmodel())
+            _uiState.error(it.errors.toViewmodel())
           } else {
             throw it
           }
@@ -149,10 +150,10 @@ class ManualRegisterViewModel(
     errors: List<UiStateError>
   ) {
     if (errors.isEmpty()) {
-      _uiState.value = UiState.Ready
+      _uiState.ready()
     } else {
       if (previousErrors.size != errors.size) {
-        _uiState.value = UiState.Error(errors)
+        _uiState.error(errors)
       }
     }
   }
@@ -164,22 +165,6 @@ class ManualRegisterViewModel(
   fun onComposition() {
     mainViewModel.appBarViewModel.value = appBarViewModel
   }
-}
-
-sealed class UiEvent {
-  class ShowRegisterSuccess(val productDescription: String) : UiEvent()
-}
-
-sealed class UiState {
-  object Ready : UiState()
-  data class Error(val errors: List<UiStateError>) : UiState()
-}
-
-sealed class UiStateError {
-  data class ShowDescriptionError(val message: Message) : UiStateError()
-  data class ShowPlaceError(val message: Message) : UiStateError()
-  data class ShowAmountError(val message: Message) : UiStateError()
-  object ShowCategoryError : UiStateError()
 }
 
 enum class Message {

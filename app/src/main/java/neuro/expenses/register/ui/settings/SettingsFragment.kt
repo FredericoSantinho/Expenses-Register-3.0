@@ -7,8 +7,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import neuro.expenses.register.R
+import neuro.expenses.register.viewmodel.settings.SettingsUiState.UiState
 import neuro.expenses.register.viewmodel.settings.SettingsViewModel
-import neuro.expenses.register.viewmodel.settings.SettingsViewModel.UiState
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 

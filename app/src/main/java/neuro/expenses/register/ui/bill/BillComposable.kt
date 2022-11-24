@@ -25,9 +25,9 @@ import neuro.expenses.register.common.shimmer.shimmer
 import neuro.expenses.register.common.shimmer.shimmerBackground
 import neuro.expenses.register.ui.common.composables.image.AsyncImage
 import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
+import neuro.expenses.register.viewmodel.bill.BillUiState.UiState
 import neuro.expenses.register.viewmodel.bill.BillViewModel
 import neuro.expenses.register.viewmodel.bill.IBillViewModel
-import neuro.expenses.register.viewmodel.bill.UiState
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
