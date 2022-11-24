@@ -186,7 +186,6 @@ class BillTags {
     const val TIME = "time"
     const val DATE = "date"
     const val TOTAL = "total"
-    const val EDIT_BILL_ICON = "editIcon"
     const val CLOSE_BILL_ICON = "closeIcon"
   }
 }

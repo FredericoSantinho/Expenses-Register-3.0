@@ -11,7 +11,7 @@ class BillsUiEvent {
     _uiEvent.value = null
   }
 
-  fun openEditBill() {
+  fun openBillDetailed() {
     _uiEvent.value = UiEvent.OpenBillDetailed()
   }
 

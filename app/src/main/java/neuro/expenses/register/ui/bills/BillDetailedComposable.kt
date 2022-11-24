@@ -21,7 +21,7 @@ import neuro.expenses.register.viewmodel.edit.bill.BillDetailedViewModel
 import neuro.expenses.register.viewmodel.edit.bill.model.BillItemModel
 
 @Composable
-fun EditBillComposable(
+fun BillDetailedComposable(
   fragmentActivity: FragmentActivity,
   billDetailedViewModel: BillDetailedViewModel,
   modifier: Modifier = Modifier,
@@ -67,12 +67,12 @@ fun EditBillComposable(
 
 @Preview
 @Composable
-fun PreviewEditBillComposable() {
+fun PreviewBillDetailedComposable() {
   ExpensesRegisterTheme {
     val billDetailedViewModel = BillDetailedViewModel()
     billDetailedViewModel.placeName.value = "Bitoque"
     billDetailedViewModel.billItems.value = emptyList()
 
-    EditBillComposable(FragmentActivity(), billDetailedViewModel)
+    BillDetailedComposable(FragmentActivity(), billDetailedViewModel)
   }
 }

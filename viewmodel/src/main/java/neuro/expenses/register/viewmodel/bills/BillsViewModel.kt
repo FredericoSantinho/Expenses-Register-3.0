@@ -51,8 +51,8 @@ class BillsViewModel(
 
   private fun onBillLongClick(billId: Long) {
     getBillUseCase.getBill(billId).baseSubscribe { billDto ->
-      billDetailedViewModelController.setEditBillViewModel(billDto)
-      _uiEvent.openEditBill()
+      billDetailedViewModelController.setBillDetailedViewModel(billDto)
+      _uiEvent.openBillDetailed()
     }
   }
 }

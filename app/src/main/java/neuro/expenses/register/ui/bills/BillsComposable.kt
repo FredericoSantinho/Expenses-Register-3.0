@@ -46,7 +46,7 @@ fun BillsComposable(
   val bills = billsViewModel.bills.subscribeAsState(initial = emptyList())
 
   ModalBottomSheetLayout(modalBottomSheetState,
-    { EditBillComposable(fragmentActivity, billDetailedViewModel) }) {
+    { BillDetailedComposable(fragmentActivity, billDetailedViewModel) }) {
     LazyColumn(
       Modifier
         .background(color = grey_fog_lighter)

@@ -10,7 +10,7 @@ class BillDetailedViewModelControllerImpl(
   private val billItemModelMapper: BillItemModelMapper,
   private val currencyFormatter: CurrencyFormatter
 ) : BillDetailedViewModelController {
-  override fun setEditBillViewModel(billDto: BillDto) {
+  override fun setBillDetailedViewModel(billDto: BillDto) {
     billDetailedViewModel.placeName.value = billDto.place.name
     billDetailedViewModel.calendar.value = billDto.calendar
     billDetailedViewModel.billItems.value = billDto.billItems.map(billItemModelMapper::map)

@@ -42,7 +42,6 @@ internal class BillComposableTest {
     val onTotal = composeTestRule.onNodeWithTag(BillTags.TOTAL, true)
     val onIcon = composeTestRule.onNodeWithTag(iconUrl.value, true)
     val onCloseBillIcon = composeTestRule.onNodeWithTag(BillTags.CLOSE_BILL_ICON, true)
-    val onEditBillIcon = composeTestRule.onNodeWithTag(BillTags.EDIT_BILL_ICON, true)
 
     onCard.assertIsDisplayed()
     onPlace.assertIsDisplayed()
@@ -51,7 +50,6 @@ internal class BillComposableTest {
     onTotal.assertIsDisplayed()
     onIcon.assertIsDisplayed()
     onCloseBillIcon.assertDoesNotExist()
-    onEditBillIcon.assertDoesNotExist()
 
     onIcon.assertHeightIsEqualTo(64.dp)
     onIcon.assertWidthIsEqualTo(64.dp)
@@ -69,10 +67,8 @@ internal class BillComposableTest {
     onStateReadyTest(UiState.BillOpen)
 
     val onCloseBillIcon = composeTestRule.onNodeWithTag(BillTags.CLOSE_BILL_ICON, true)
-    val onEditBillIcon = composeTestRule.onNodeWithTag(BillTags.EDIT_BILL_ICON, true)
 
     onCloseBillIcon.assertIsDisplayed()
-    onEditBillIcon.assertDoesNotExist()
   }
 
   @Test
@@ -80,10 +76,8 @@ internal class BillComposableTest {
     onStateReadyTest(UiState.BillClosed)
 
     val onCloseBillIcon = composeTestRule.onNodeWithTag(BillTags.CLOSE_BILL_ICON, true)
-    val onEditBillIcon = composeTestRule.onNodeWithTag(BillTags.EDIT_BILL_ICON, true)
 
     onCloseBillIcon.assertDoesNotExist()
-    onEditBillIcon.assertDoesNotExist()
   }
 
   private fun onStateReadyTest(_uiState: UiState) {
