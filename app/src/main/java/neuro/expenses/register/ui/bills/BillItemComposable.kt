@@ -40,6 +40,7 @@ fun BillItemComposable(
   Row(
     modifier = modifier
       .height(32.dp)
+      .padding(start = 4.dp, end = 4.dp)
       .combinedClickable(
         onClick = {},
         onLongClick = { isEditing.value = !isEditing.value },
@@ -52,7 +53,6 @@ fun BillItemComposable(
     ) {
       AsyncImage(
         modifier = Modifier
-          .padding(start = 4.dp)
           .size(28.dp)
           .clip(RoundedCornerShape(corner = CornerSize(8.dp))), billItemViewModel.iconUrl
       )
