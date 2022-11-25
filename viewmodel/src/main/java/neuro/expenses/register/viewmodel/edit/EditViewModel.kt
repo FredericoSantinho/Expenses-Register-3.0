@@ -20,13 +20,13 @@ class EditViewModel(private val mainViewModel: MainViewModel) : ViewModel() {
   private fun buildMoreItemsList(): List<MoreItem> {
     val list: MutableList<MoreItem> = mutableListOf()
     list.add(
+      MoreItem(EditCategoryMoreItem, { _uiEvent.navigateToEditCategory() })
+    )
+    list.add(
       MoreItem(EditProductMoreItem, { _uiEvent.navigateToEditProduct() })
     )
     list.add(
       MoreItem(EditPlaceProductMoreItem, { _uiEvent.navigateToEditPlaceProduct() })
-    )
-    list.add(
-      MoreItem(EditCategoryMoreItem, { _uiEvent.navigateToEditCategory() })
     )
     list.add(MoreItem(EditPlaceMoreItem, { _uiEvent.navigateToEditPlace() }))
     return list

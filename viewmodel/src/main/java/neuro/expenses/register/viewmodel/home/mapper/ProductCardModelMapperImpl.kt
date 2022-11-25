@@ -10,14 +10,14 @@ import java.util.*
 class ProductCardModelMapperImpl(private val currencyFormatter: CurrencyFormatter) :
   ProductCardModelMapper {
   override fun map(placeProductDto: PlaceProductDto, place: String): ProductCardModel {
-    val productId = placeProductDto.id
+    val placeProductId = placeProductDto.id
     val description = placeProductDto.productDto.description
     val category = placeProductDto.category
     val price = currencyFormatter.format(placeProductDto.price)
     val iconUrl = placeProductDto.productDto.iconUrl
 
     return ProductCardModel(
-      productId,
+      placeProductId,
       description,
       category.toViewmodel(),
       place,

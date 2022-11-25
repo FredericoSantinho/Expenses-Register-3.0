@@ -142,7 +142,7 @@ internal class BillComposableTest {
   private fun initComposition(billViewModel: IBillViewModel) {
     composeTestRule.setContent {
       ExpensesRegisterTheme {
-        BillComposable(billViewModel)
+        BillCardComposable(billViewModel)
       }
     }
   }

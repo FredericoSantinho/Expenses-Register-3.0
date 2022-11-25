@@ -12,7 +12,7 @@ import neuro.expenses.register.viewmodel.bill.BillViewModel
 fun BillComposableContainer(billViewModel: BillViewModel, modifier: Modifier = Modifier) {
   Column(modifier = modifier) {
     Divider(thickness = 2.dp, color = Color.LightGray)
-    BillComposable(billViewModel = billViewModel)
+    BillCardComposable(billViewModel = billViewModel)
     Divider(thickness = 2.dp, color = Color.LightGray)
   }
 }

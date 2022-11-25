@@ -30,10 +30,13 @@ import java.util.*
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PlaceProductCardComposable(productCardViewModel: IProductCardViewModel) {
+  val roundedCornerShape = RoundedCornerShape(corner = CornerSize(4.dp))
+
   Row {
     Card(
       modifier = Modifier
         .semantics { testTag = ProductCardTags.CARD }
+        .clip(roundedCornerShape)
         .height(100.dp)
         .combinedClickable(
           onClick = { productCardViewModel.onCardClick() },
@@ -41,7 +44,7 @@ fun PlaceProductCardComposable(productCardViewModel: IProductCardViewModel) {
         ),
       elevation = 2.dp,
       backgroundColor = MaterialTheme.colors.background,
-      shape = RoundedCornerShape(corner = CornerSize(4.dp))
+      shape = roundedCornerShape
     ) {
       ConstraintLayout(
         modifier = Modifier
@@ -108,7 +111,7 @@ fun PlaceProductCardComposable(productCardViewModel: IProductCardViewModel) {
 @Composable
 fun PreviewDateTimeComposable() {
   val description = "Tosta Mista Pão Caseiro"
-  val categoryModel = CategoryModel(1L, "Restau")
+  val categoryModel = CategoryModel(1L, "Restau", "")
   val place = "Riviera"
   val price = "4.20 €"
   val amount = 1.0

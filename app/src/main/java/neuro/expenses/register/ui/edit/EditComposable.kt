@@ -30,12 +30,12 @@ fun EditComposable(editViewModel: EditViewModel = getViewModel()) {
 
   NavHost(
     navController = navController,
-    startDestination = Directions.product.screenRoute,
+    startDestination = Directions.category.screenRoute,
     modifier = Modifier.fillMaxSize()
   ) {
+    composable(Directions.category.screenRoute) { EditCategoriesComposable() }
     composable(Directions.product.screenRoute) { EditProductsComposable() }
     composable(Directions.placeProduct.screenRoute) { EditPlaceProductsComposable() }
-    composable(Directions.category.screenRoute) { EditCategoriesComposable() }
     composable(Directions.place.screenRoute) { EditPlacesComposable() }
   }
 }

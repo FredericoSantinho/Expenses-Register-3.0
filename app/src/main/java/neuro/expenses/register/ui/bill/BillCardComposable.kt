@@ -32,15 +32,18 @@ import java.util.*
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun BillComposable(
+fun BillCardComposable(
   billViewModel: IBillViewModel, modifier: Modifier = Modifier
 ) {
+  val roundedCornerShape = RoundedCornerShape(corner = CornerSize(8.dp))
+
   val uiState by billViewModel.uiState
 
   val loading = remember { mutableStateOf(billViewModel.uiState.value == UiState.Loading) }
 
   Card(modifier = modifier
     .semantics { testTag = BillTags.CARD }
+    .clip(roundedCornerShape)
     .requiredHeight(80.dp)
     .fillMaxWidth()
     .combinedClickable(
@@ -49,7 +52,7 @@ fun BillComposable(
     ),
     elevation = 2.dp,
     backgroundColor = Color.White,
-    shape = RoundedCornerShape(corner = CornerSize(8.dp))
+    shape = roundedCornerShape
   ) {
     ConstraintLayout(
       modifier = Modifier
@@ -66,7 +69,7 @@ fun BillComposable(
           linkTo(top = parent.top, bottom = parent.bottom)
         }
         .size(64.dp)
-        .clip(RoundedCornerShape(corner = CornerSize(8.dp)))
+        .clip(roundedCornerShape)
         .shimmerBackground(loading.value), billViewModel.iconUrl.value, loading)
       Text(modifier = Modifier
         .semantics { testTag = BillTags.PLACE }
@@ -175,7 +178,7 @@ fun PreviewDateTimeComposable() {
   ExpensesRegisterTheme {
     val billModel =
       BillModel(0, "", "Bitoque", "10h36", "24/11/2022", "3.60 €", true, Calendar.getInstance())
-    BillComposable(BillViewModel(billModel = billModel))
+    BillCardComposable(BillViewModel(billModel = billModel))
   }
 }
 

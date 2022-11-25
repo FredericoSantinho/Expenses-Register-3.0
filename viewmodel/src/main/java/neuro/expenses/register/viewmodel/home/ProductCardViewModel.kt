@@ -8,13 +8,14 @@ class ProductCardViewModel(
   private val onProductCardClick: OnProductCardClick,
   productCardModel: ProductCardModel
 ) : IProductCardViewModel {
-  override val productId = mutableStateOf(productCardModel.id)
+  override val placeProductId = mutableStateOf(productCardModel.id)
   override val description = mutableStateOf(productCardModel.description)
   override val categoryModel =
     mutableStateOf(
       CategoryModel(
         productCardModel.categoryModel.id,
-        productCardModel.categoryModel.name
+        productCardModel.categoryModel.name,
+        ""
       )
     )
   override val price = mutableStateOf(productCardModel.price)
@@ -34,7 +35,7 @@ class ProductCardViewModel(
 
   private fun buildProductCardModel(): ProductCardModel {
     val productCardModel = ProductCardModel(
-      productId.value,
+      placeProductId.value,
       description.value,
       categoryModel.value,
       place.value,
