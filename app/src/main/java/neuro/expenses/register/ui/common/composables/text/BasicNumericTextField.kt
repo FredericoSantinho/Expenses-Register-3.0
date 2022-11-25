@@ -1,5 +1,6 @@
 package neuro.expenses.register.ui.common.composables.text
 
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -21,7 +22,8 @@ fun BasicNumericTextField(
   modifier: Modifier = Modifier,
   label: String = "",
   onValueChange: (String) -> Unit = { },
-  textStyle: TextStyle = TextStyle.Default
+  textStyle: TextStyle = TextStyle.Default,
+  keyboardOptions: KeyboardOptions = keyboardOptionsNumeric
 ) {
   val _label: @Composable (() -> Unit)? = if (label.isNotEmpty()) {
     { Text(label) }
@@ -37,7 +39,7 @@ fun BasicNumericTextField(
     colors = TextFieldDefaults.textFieldColors(
       backgroundColor = Color.Transparent,
     ),
-    keyboardOptions = keyboardOptionsNumeric,
+    keyboardOptions = keyboardOptions,
     textStyle = textStyle.copy(textAlign = TextAlign.End),
     label = _label,
     minHeight = 0.dp,

@@ -1,5 +1,7 @@
 package neuro.expenses.register.ui.common.composables.text
 
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -26,7 +28,9 @@ fun BasicCurrencyTextField(
   label: String = "",
   symbol: String = get(named(CURRENCY)),
   onValueChange: (String) -> Unit = { },
-  textStyle: TextStyle = TextStyle.Default
+  textStyle: TextStyle = TextStyle.Default,
+  keyboardOptions: KeyboardOptions = keyboardOptionsNumeric,
+  keyboardActions: KeyboardActions = KeyboardActions.Default
 ) {
   val _label: @Composable (() -> Unit)? = if (label.isNotEmpty()) {
     { Text(label) }
@@ -42,7 +46,8 @@ fun BasicCurrencyTextField(
     colors = TextFieldDefaults.textFieldColors(
       backgroundColor = Color.Transparent,
     ),
-    keyboardOptions = keyboardOptionsNumeric,
+    keyboardOptions = keyboardOptions,
+    keyboardActions = keyboardActions,
     textStyle = textStyle.copy(textAlign = TextAlign.End),
     visualTransformation = SuffixTransformation(symbol),
     label = _label,
