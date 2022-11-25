@@ -12,6 +12,7 @@ import neuro.expenses.register.viewmodel.bills.BillsViewModel
 import neuro.expenses.register.viewmodel.common.formatter.*
 import neuro.expenses.register.viewmodel.edit.EditViewModel
 import neuro.expenses.register.viewmodel.edit.category.EditCategoriesViewModel
+import neuro.expenses.register.viewmodel.edit.category.EditCategoryViewModel
 import neuro.expenses.register.viewmodel.edit.place.EditPlacesViewModel
 import neuro.expenses.register.viewmodel.edit.placeproduct.EditPlaceProductViewModel
 import neuro.expenses.register.viewmodel.edit.placeproduct.EditPlaceProductsViewModel
@@ -56,6 +57,7 @@ val viewModelModule = module {
   viewModel { EditViewModel(get()) }
   viewModel { EditProductsViewModel() }
   viewModel { EditPlaceProductsViewModel(get(), get(), get(), get()) }
-  viewModel { EditCategoriesViewModel() }
+  viewModel { EditCategoriesViewModel(get()) }
+  single { EditCategoryViewModel() }
   viewModel { EditPlacesViewModel() }
 }

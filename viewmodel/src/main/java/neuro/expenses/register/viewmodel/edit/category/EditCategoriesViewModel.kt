@@ -4,9 +4,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import neuro.expenses.register.viewmodel.model.CategoryModel
 
-class EditCategoriesViewModel() : ViewModel() {
-  fun onCategoryClick(categoryModel: CategoryModel) {
+class EditCategoriesViewModel(val editCategoryViewModel: EditCategoryViewModel) : ViewModel() {
+  private val _uiEvent = EditCategoriesUiEvent()
+  val uiEvent = _uiEvent.uiEvent
 
+  fun onCategoryClick(categoryModel: CategoryModel) {
+    editCategoryViewModel.setEditCategoryViewModel(categoryModel)
+    _uiEvent.openEditCategory()
+  }
+
+  fun eventConsumed() {
+    _uiEvent.eventConsumed()
   }
 
   val categories = mutableStateOf(

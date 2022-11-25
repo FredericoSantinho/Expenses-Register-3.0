@@ -55,7 +55,7 @@ fun EditPlaceProductComposable(
     horizontalAlignment = Alignment.CenterHorizontally
   ) {
     Text(
-      modifier = Modifier.padding(bottom = 16.dp),
+      modifier = Modifier.padding(top = 8.dp, bottom = 16.dp),
       text = stringResource(R.string.edit_place_product_title),
       style = MaterialTheme.typography.h5,
       fontWeight = FontWeight.Bold

@@ -37,7 +37,7 @@ fun BillDetailedComposable(
     horizontalAlignment = CenterHorizontally
   ) {
     Text(
-      modifier = Modifier.padding(top = 16.dp, bottom = 16.dp),
+      modifier = Modifier.padding(top = 8.dp, bottom = 24.dp),
       text = billDetailedViewModel.placeName.value,
       fontWeight = FontWeight.Bold,
       style = MaterialTheme.typography.h5,

@@ -14,11 +14,15 @@ import androidx.compose.ui.unit.dp
 import neuro.expenses.register.R
 
 @Composable
-fun SaveDeleteComposable(onSaveButton: () -> (Unit), onDeleteButton: () -> (Unit)) {
-  Row(horizontalArrangement = Arrangement.Center) {
-    Button(onClick = {
-      onDeleteButton()
-    }, colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red)) {
+fun SaveDeleteComposable(
+  onSaveButton: () -> (Unit), onDeleteButton: () -> (Unit), modifier: Modifier = Modifier
+) {
+  Row(modifier = modifier, horizontalArrangement = Arrangement.Center) {
+    Button(
+      onClick = {
+        onDeleteButton()
+      }, colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red)
+    ) {
       Text(stringResource(R.string.delete), color = Color.White)
     }
     Button(modifier = Modifier.padding(start = 64.dp), onClick = {
