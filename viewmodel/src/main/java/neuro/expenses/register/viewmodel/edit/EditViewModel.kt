@@ -37,6 +37,7 @@ class EditViewModel(private val mainViewModel: MainViewModel) : ViewModel() {
   }
 
   fun onComposition() {
+    mainViewModel.reset()
     mainViewModel.appBarViewModel.value = appBarViewModel
   }
 }

@@ -57,7 +57,7 @@ val viewModelModule = module {
   viewModel { EditViewModel(get()) }
   viewModel { EditProductsViewModel() }
   viewModel { EditPlaceProductsViewModel(get(), get(), get(), get()) }
-  viewModel { EditCategoriesViewModel(get()) }
+  viewModel { EditCategoriesViewModel(get(), get()) }
   single { EditCategoryViewModel() }
   viewModel { EditPlacesViewModel() }
 }

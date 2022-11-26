@@ -53,7 +53,7 @@ fun HomeComposable(
 
   ModalBottomSheetLayout(
     modalBottomSheetState,
-    { EditPlaceProductComposable(homeViewModel.editPlaceProductViewModel) }) {
+    modalContent = { EditPlaceProductComposable(homeViewModel.editPlaceProductViewModel) }) {
     ConstraintLayout(
       modifier = Modifier.fillMaxSize()
     ) {

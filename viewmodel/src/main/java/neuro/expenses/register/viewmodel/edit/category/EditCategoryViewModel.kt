@@ -12,6 +12,11 @@ class EditCategoryViewModel {
     iconUrl.value = categoryModel.iconUrl
   }
 
+  fun reset() {
+    name.value = ""
+    iconUrl.value = ""
+  }
+
   fun onNameChange() {
 
   }

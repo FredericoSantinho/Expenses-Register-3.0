@@ -11,7 +11,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
+import neuro.expenses.register.common.compose.rememberUnit
 import neuro.expenses.register.common.koin.startKoinIfNeeded
+import neuro.expenses.register.di.schedulersModule
 import neuro.expenses.register.ui.home.composable.*
 import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.ui.theme.grey_fog_lighter
@@ -19,18 +21,24 @@ import neuro.expenses.register.viewmodel.di.viewModelModule
 import neuro.expenses.register.viewmodel.edit.category.EditCategoriesUiEvent.UiEvent
 import neuro.expenses.register.viewmodel.edit.category.EditCategoriesViewModel
 import neuro.expenses.register.viewmodel.edit.category.EditCategoryViewModel
+import neuro.expenses.register.viewmodel.main.MainViewModel
+import org.koin.androidx.compose.get
 import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun EditCategoriesComposable(editCategoriesViewModel: EditCategoriesViewModel = getViewModel()) {
+  rememberUnit { editCategoriesViewModel.onComposition() }
+
   val uiEvent = editCategoriesViewModel.uiEvent
 
   val coroutineScope = rememberCoroutineScope()
   val modalBottomSheetState = rememberModalBottomSheetState()
 
   ModalBottomSheetLayout(modalBottomSheetState,
-    { EditCategoryComposable(editCategoriesViewModel.editCategoryViewModel) }) {
+    onModalBottomSheetVisible = { editCategoriesViewModel.onModalBottomSheetVisible() },
+    onModalBottomSheetNotVisible = { editCategoriesViewModel.onModalBottomSheetNotVisible() },
+    modalContent = { EditCategoryComposable(editCategoriesViewModel.editCategoryViewModel) }) {
     Column(
       modifier = Modifier
         .background(color = grey_fog_lighter)
@@ -79,8 +87,9 @@ fun onUiEvent(
 @Preview
 @Composable
 fun PreviewEditCategoriesComposable() {
-  startKoinIfNeeded { modules(viewModelModule) }
-  val editCategoriesViewModel = EditCategoriesViewModel(EditCategoryViewModel())
+  startKoinIfNeeded { modules(schedulersModule, viewModelModule) }
+  val mainViewModel: MainViewModel = get()
+  val editCategoriesViewModel = EditCategoriesViewModel(EditCategoryViewModel(), mainViewModel)
 
   ExpensesRegisterTheme {
     EditCategoriesComposable(editCategoriesViewModel)

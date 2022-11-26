@@ -29,6 +29,8 @@ fun rememberModalBottomSheetState(): ModalBottomSheetState {
 @OptIn(ExperimentalMaterialApi::class)
 fun ModalBottomSheetLayout(
   modalBottomSheetState: ModalBottomSheetState,
+  onModalBottomSheetVisible: () -> Unit = {},
+  onModalBottomSheetNotVisible: () -> Unit = {},
   modalContent: @Composable () -> (Unit),
   content: @Composable () -> (Unit)
 ) {
@@ -37,9 +39,11 @@ fun ModalBottomSheetLayout(
     sheetState = modalBottomSheetState,
     sheetContent = {
       if (modalBottomSheetState.isVisible) {
+        onModalBottomSheetVisible()
         modalContent()
       } else {
-        // Needed to prevent EditPlaceProductComposable to be seen when keyboard is hiding as the recomposition only occurs afterwards.
+        onModalBottomSheetNotVisible()
+        // Needed to prevent Modal content to be seen when keyboard is hiding as the recomposition only occurs afterwards.
         Divider()
       }
     }) { content() }
