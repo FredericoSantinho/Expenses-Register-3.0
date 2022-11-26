@@ -63,7 +63,9 @@ class HomeViewModel(
 
   init {
     appBarViewModel.title.value = title
-    appBarViewModel.query().baseSubscribe { query ->
+    appBarViewModel.query.filter { this::placeDto.isInitialized }.flatMapSingle { query ->
+      sortPlaceProducts.sortPlaceProducts(placeDto.products).map { query }
+    }.baseSubscribe { query ->
       productsListViewModel.setProducts(placeDto, query)
     }
     getCurrentLocationUseCase.getCurrentLocation().flatMapObservable {
@@ -113,10 +115,12 @@ class HomeViewModel(
     _uiEvent.moveCamera(latLngModel, zoom)
     this.placeDto = placeDto
     selectedPlace.value = placeDto.name
-    sortPlaceProducts.sortPlaceProducts(placeDto.products).baseSubscribe {
-      productsListViewModel.setProducts(placeDto, appBarViewModel.query.value)
-      _uiState.ready()
-    }
+    sortPlaceProducts.sortPlaceProducts(placeDto.products)
+      .flatMap { appBarViewModel.query.firstOrError() }
+      .baseSubscribe { query ->
+        productsListViewModel.setProducts(placeDto, query)
+        _uiState.ready()
+      }
   }
 
   private fun setupSearchSuggestions() {

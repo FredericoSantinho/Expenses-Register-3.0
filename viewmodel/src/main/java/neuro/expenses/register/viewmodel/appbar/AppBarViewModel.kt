@@ -17,14 +17,13 @@ class AppBarViewModel() {
 
   val title = mutableStateOf("")
   private val _queryObservable: BehaviorRelay<String> = BehaviorRelay.create()
-  private val queryObservable: Observable<String> = _queryObservable
-  val query: MutableState<String> = mutableStateOf("")
+  val query: Observable<String> = _queryObservable
 
   private val _uiEvent = AppBarUiEvent()
   val uiEvent = _uiEvent.uiEvent
 
-  fun query(): Observable<String> {
-    return queryObservable
+  init {
+    _queryObservable.accept("")
   }
 
   fun onSettingsButton() {
@@ -53,7 +52,6 @@ class AppBarViewModel() {
 
   fun onValueChange(query: String) {
     _queryObservable.accept(query)
-    this.query.value = query
   }
 
   fun onCloseSearchButton() {
