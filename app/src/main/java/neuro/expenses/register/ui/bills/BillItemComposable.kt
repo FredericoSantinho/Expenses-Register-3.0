@@ -9,7 +9,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -17,13 +16,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import neuro.expenses.register.common.koin.startKoinIfNeeded
+import neuro.expenses.register.di.registerExpensesModule
 import neuro.expenses.register.ui.common.composables.image.AsyncImage
 import neuro.expenses.register.ui.common.composables.text.BasicCurrencyTextField
 import neuro.expenses.register.ui.common.composables.text.BasicNumericTextField
 import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.viewmodel.common.formatter.CurrencyFormatter
-import neuro.expenses.register.viewmodel.common.formatter.CurrencyFormatterImpl
 import neuro.expenses.register.viewmodel.common.formatter.DecimalFormatterImpl
+import neuro.expenses.register.viewmodel.di.viewModelModule
 import neuro.expenses.register.viewmodel.edit.bill.model.BillItemViewModel
 import org.koin.androidx.compose.get
 
@@ -143,21 +144,27 @@ fun BillItemComposable(
 @Preview
 @Composable
 fun PreviewBillItemComposable() {
-  val id = 0L
-  val description = "Sagres Média 0,33cl"
-  val price = remember { mutableStateOf("1.30 €") }
-  val amount = remember { mutableStateOf("2.00") }
-  val total = remember { mutableStateOf("2.60") }
-  val iconUrl = ""
-  val decimalFormatter = DecimalFormatterImpl(2)
-  val currencyFormatter = CurrencyFormatterImpl(decimalFormatter, "€")
-  val billItemViewModel = BillItemViewModel(
-    id, description, price, amount, total, iconUrl, decimalFormatter
-  )
+  startKoinIfNeeded { modules(registerExpensesModule, viewModelModule) }
+
+  val billItemViewModel = billItemViewModel()
 
   ExpensesRegisterTheme {
     BillItemComposable(
-      billItemViewModel, currencyFormatter = currencyFormatter
+      billItemViewModel
     )
   }
+}
+
+private fun billItemViewModel(): BillItemViewModel {
+  val decimalFormatter = DecimalFormatterImpl(2)
+  val id = 0L
+  val description = "Sagres Média 0,33cl"
+  val price = mutableStateOf("1.30")
+  val amount = mutableStateOf("2.00")
+  val total = mutableStateOf("2.60")
+  val iconUrl = ""
+  val billItemViewModel = BillItemViewModel(
+    id, description, price, amount, total, iconUrl, decimalFormatter
+  )
+  return billItemViewModel
 }

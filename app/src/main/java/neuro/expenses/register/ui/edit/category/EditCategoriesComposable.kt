@@ -88,6 +88,7 @@ fun onUiEvent(
 @Composable
 fun PreviewEditCategoriesComposable() {
   startKoinIfNeeded { modules(schedulersModule, viewModelModule) }
+
   val scaffoldViewModelState: ScaffoldViewModelState = get()
   val editCategoriesViewModel =
     EditCategoriesViewModel(EditCategoryViewModel(), scaffoldViewModelState)
