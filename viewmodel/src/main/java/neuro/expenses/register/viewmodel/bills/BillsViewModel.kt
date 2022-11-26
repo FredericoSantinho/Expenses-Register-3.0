@@ -8,7 +8,7 @@ import neuro.expenses.register.viewmodel.bill.BillViewModel
 import neuro.expenses.register.viewmodel.bill.mapper.BillViewModelMapper
 import neuro.expenses.register.viewmodel.common.BaseViewModel
 import neuro.expenses.register.viewmodel.common.schedulers.SchedulerProvider
-import neuro.expenses.register.viewmodel.main.MainViewModel
+import neuro.expenses.register.viewmodel.scaffold.ScaffoldViewModelState
 
 class BillsViewModel(
   private val observeBillsUseCase: ObserveBillsUseCase,
@@ -16,7 +16,7 @@ class BillsViewModel(
   private val sortBills: SortBills,
   private val billViewModelMapper: BillViewModelMapper,
   private val billDetailedViewModel: BillDetailedViewModel,
-  private val mainViewModel: MainViewModel,
+  private val scaffoldViewModelState: ScaffoldViewModelState,
   schedulerProvider: SchedulerProvider
 ) : BaseViewModel(schedulerProvider) {
   val appBarViewModel: AppBarViewModel = AppBarViewModel()
@@ -42,8 +42,8 @@ class BillsViewModel(
   }
 
   fun onComposition() {
-    mainViewModel.reset()
-    mainViewModel.appBarViewModel.value = appBarViewModel
+    scaffoldViewModelState.reset()
+    scaffoldViewModelState.appBarViewModel.value = appBarViewModel
   }
 
   fun eventConsumed() {

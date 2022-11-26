@@ -5,9 +5,9 @@ import neuro.expenses.register.viewmodel.appbar.AppBarViewModel
 import neuro.expenses.register.viewmodel.appbar.MoreItem
 import neuro.expenses.register.viewmodel.appbar.MoreItemText
 import neuro.expenses.register.viewmodel.edit.EditMoreItem.*
-import neuro.expenses.register.viewmodel.main.MainViewModel
+import neuro.expenses.register.viewmodel.scaffold.ScaffoldViewModelState
 
-class EditViewModel(private val mainViewModel: MainViewModel) : ViewModel() {
+class EditViewModel(private val scaffoldViewModelState: ScaffoldViewModelState) : ViewModel() {
   private val appBarViewModel = AppBarViewModel()
 
   private val _uiEvent = EditUiEvent()
@@ -37,8 +37,8 @@ class EditViewModel(private val mainViewModel: MainViewModel) : ViewModel() {
   }
 
   fun onComposition() {
-    mainViewModel.reset()
-    mainViewModel.appBarViewModel.value = appBarViewModel
+    scaffoldViewModelState.reset()
+    scaffoldViewModelState.appBarViewModel.value = appBarViewModel
   }
 }
 

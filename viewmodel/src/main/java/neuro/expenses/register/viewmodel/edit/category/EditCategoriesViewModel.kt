@@ -3,12 +3,12 @@ package neuro.expenses.register.viewmodel.edit.category
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import neuro.expenses.register.viewmodel.fab.FloatingActionButtonViewModel
-import neuro.expenses.register.viewmodel.main.MainViewModel
 import neuro.expenses.register.viewmodel.model.CategoryModel
+import neuro.expenses.register.viewmodel.scaffold.ScaffoldViewModelState
 
 class EditCategoriesViewModel(
   val editCategoryViewModel: EditCategoryViewModel,
-  private val mainViewModel: MainViewModel
+  private val scaffoldViewModelState: ScaffoldViewModelState
 ) : ViewModel() {
   val floatingActionButtonViewModel =
     FloatingActionButtonViewModel { onFloatingActionButtonClick() }
@@ -30,7 +30,7 @@ class EditCategoriesViewModel(
   }
 
   fun onModalBottomSheetVisible() {
-    mainViewModel.floatingActionButtonViewModel.value = null
+    scaffoldViewModelState.floatingActionButtonViewModel.value = null
   }
 
   fun onModalBottomSheetNotVisible() {
@@ -43,7 +43,7 @@ class EditCategoriesViewModel(
   }
 
   private fun enableFab() {
-    mainViewModel.floatingActionButtonViewModel.value = floatingActionButtonViewModel
+    scaffoldViewModelState.floatingActionButtonViewModel.value = floatingActionButtonViewModel
   }
 
   val categories = mutableStateOf(

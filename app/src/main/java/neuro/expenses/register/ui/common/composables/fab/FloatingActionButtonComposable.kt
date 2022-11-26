@@ -8,23 +8,23 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import neuro.expenses.register.viewmodel.main.MainViewModel
-import org.koin.androidx.compose.getViewModel
+import neuro.expenses.register.viewmodel.scaffold.ScaffoldViewModelState
+import org.koin.androidx.compose.get
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun FloatingActionButtonComposable(
-  mainViewModel: MainViewModel = getViewModel(),
-  modifier: Modifier = Modifier
+  modifier: Modifier = Modifier,
+  scaffoldViewModelState: ScaffoldViewModelState = get()
 ) {
   AnimatedVisibility(
-    visible = mainViewModel.floatingActionButtonViewModel.value != null,
+    visible = scaffoldViewModelState.floatingActionButtonViewModel.value != null,
     modifier = modifier,
     enter = scaleIn(animationSpec = tween(500)),
     exit = scaleOut(animationSpec = tween(500)),
   ) {
     FloatingActionButton(
-      onClick = { mainViewModel.floatingActionButtonViewModel.value?.onClick() }
+      onClick = { scaffoldViewModelState.floatingActionButtonViewModel.value?.onClick() }
     ) {
       Icon(Icons.Filled.Add, "")
     }

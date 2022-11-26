@@ -18,9 +18,10 @@ import neuro.expenses.register.viewmodel.edit.placeproduct.EditPlaceProductViewM
 import neuro.expenses.register.viewmodel.edit.placeproduct.EditPlaceProductsViewModel
 import neuro.expenses.register.viewmodel.edit.product.EditProductsViewModel
 import neuro.expenses.register.viewmodel.home.HomeViewModel
-import neuro.expenses.register.viewmodel.main.MainViewModel
 import neuro.expenses.register.viewmodel.manual.register.ManualRegisterViewModel
 import neuro.expenses.register.viewmodel.permissions.PermissionsViewModel
+import neuro.expenses.register.viewmodel.scaffold.ScaffoldViewModelState
+import neuro.expenses.register.viewmodel.scaffold.ScaffoldViewModelStateImpl
 import neuro.expenses.register.viewmodel.settings.SettingsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
@@ -33,7 +34,7 @@ val viewModelModule = module {
   single { ApplicationViewModel(get(), get(), get()) }
   single { AppBarViewModel() }
   viewModel { PermissionsViewModel(get()) }
-  single { MainViewModel(get()) }
+  single<ScaffoldViewModelState> { ScaffoldViewModelStateImpl() }
   viewModel { SettingsViewModel() }
   viewModel {
     HomeViewModel(

@@ -14,10 +14,10 @@ import neuro.expenses.register.viewmodel.bill.FeedLastBillViewModel
 import neuro.expenses.register.viewmodel.common.BaseViewModel
 import neuro.expenses.register.viewmodel.common.formatter.CurrencyFormatter
 import neuro.expenses.register.viewmodel.common.schedulers.SchedulerProvider
-import neuro.expenses.register.viewmodel.main.MainViewModel
 import neuro.expenses.register.viewmodel.manual.register.ManualRegisterUiState.UiState
 import neuro.expenses.register.viewmodel.manual.register.ManualRegisterUiState.UiStateError
 import neuro.expenses.register.viewmodel.manual.register.mapper.toViewmodel
+import neuro.expenses.register.viewmodel.scaffold.ScaffoldViewModelState
 
 
 class ManualRegisterViewModel(
@@ -28,7 +28,7 @@ class ManualRegisterViewModel(
   private val feedLastBillViewModel: FeedLastBillViewModel,
   private val currencyFormatter: CurrencyFormatter,
   val billViewModel: BillViewModel,
-  private val mainViewModel: MainViewModel,
+  private val scaffoldViewModelState: ScaffoldViewModelState,
   schedulerProvider: SchedulerProvider
 ) : BaseViewModel(schedulerProvider) {
   val appBarViewModel: AppBarViewModel = AppBarViewModel()
@@ -163,8 +163,8 @@ class ManualRegisterViewModel(
   }
 
   fun onComposition() {
-    mainViewModel.reset()
-    mainViewModel.appBarViewModel.value = appBarViewModel
+    scaffoldViewModelState.reset()
+    scaffoldViewModelState.appBarViewModel.value = appBarViewModel
   }
 }
 

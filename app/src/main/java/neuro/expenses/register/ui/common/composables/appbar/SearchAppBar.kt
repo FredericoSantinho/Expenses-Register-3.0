@@ -30,9 +30,8 @@ import neuro.expenses.register.ui.common.mapper.toPresentation
 import neuro.expenses.register.ui.edit.mapper.toPresentation
 import neuro.expenses.register.viewmodel.appbar.AppBarUiEvent.UiEvent
 import neuro.expenses.register.viewmodel.appbar.AppBarViewModel
-import neuro.expenses.register.viewmodel.main.MainViewModel
+import neuro.expenses.register.viewmodel.scaffold.ScaffoldViewModelState
 import org.koin.androidx.compose.get
-import org.koin.androidx.compose.getViewModel
 
 @ExperimentalComposeUiApi
 @Composable
@@ -40,9 +39,9 @@ fun SearchAppBar(
   navController: NavController,
   fragmentActivity: FragmentActivity,
   navigateToSettings: NavigateToSettings = get(),
-  mainViewModel: MainViewModel = getViewModel()
+  scaffoldViewModelState: ScaffoldViewModelState = get()
 ) {
-  val appBarViewModel = mainViewModel.appBarViewModel.value
+  val appBarViewModel = scaffoldViewModelState.appBarViewModel.value
   val uiEvent by appBarViewModel.uiEvent
 
   var menuExpanded by remember { mutableStateOf(false) }

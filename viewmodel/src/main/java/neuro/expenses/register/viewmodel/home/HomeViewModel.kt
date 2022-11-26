@@ -22,8 +22,8 @@ import neuro.expenses.register.viewmodel.home.mapper.toViewModel
 import neuro.expenses.register.viewmodel.home.model.CameraPositionModel
 import neuro.expenses.register.viewmodel.home.model.LatLngModel
 import neuro.expenses.register.viewmodel.home.model.ProductCardModel
-import neuro.expenses.register.viewmodel.main.MainViewModel
 import neuro.expenses.register.viewmodel.model.search.SearchSuggestionModel
+import neuro.expenses.register.viewmodel.scaffold.ScaffoldViewModelState
 
 private val lisbon = CameraPositionModel(LatLngModel(38.722252, -9.139337), 7.0f)
 
@@ -38,7 +38,7 @@ class HomeViewModel(
   private val feedLastBillViewModel: FeedLastBillViewModel,
   override val billViewModel: BillViewModel,
   override val editPlaceProductViewModel: EditPlaceProductViewModel,
-  private val mainViewModel: MainViewModel,
+  private val scaffoldViewModelState: ScaffoldViewModelState,
   schedulerProvider: SchedulerProvider,
   private val zoom: Float = 19.0f,
   val initialCameraPosition: CameraPositionModel = lisbon,
@@ -86,8 +86,8 @@ class HomeViewModel(
   }
 
   override fun onComposition() {
-    mainViewModel.reset()
-    mainViewModel.appBarViewModel.value = appBarViewModel
+    scaffoldViewModelState.reset()
+    scaffoldViewModelState.appBarViewModel.value = appBarViewModel
   }
 
   override fun onSelectedPlace(index: Int) {

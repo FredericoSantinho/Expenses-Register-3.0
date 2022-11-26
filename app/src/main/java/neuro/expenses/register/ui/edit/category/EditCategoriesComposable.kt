@@ -21,7 +21,7 @@ import neuro.expenses.register.viewmodel.di.viewModelModule
 import neuro.expenses.register.viewmodel.edit.category.EditCategoriesUiEvent.UiEvent
 import neuro.expenses.register.viewmodel.edit.category.EditCategoriesViewModel
 import neuro.expenses.register.viewmodel.edit.category.EditCategoryViewModel
-import neuro.expenses.register.viewmodel.main.MainViewModel
+import neuro.expenses.register.viewmodel.scaffold.ScaffoldViewModelState
 import org.koin.androidx.compose.get
 import org.koin.androidx.compose.getViewModel
 
@@ -88,8 +88,9 @@ fun onUiEvent(
 @Composable
 fun PreviewEditCategoriesComposable() {
   startKoinIfNeeded { modules(schedulersModule, viewModelModule) }
-  val mainViewModel: MainViewModel = get()
-  val editCategoriesViewModel = EditCategoriesViewModel(EditCategoryViewModel(), mainViewModel)
+  val scaffoldViewModelState: ScaffoldViewModelState = get()
+  val editCategoriesViewModel =
+    EditCategoriesViewModel(EditCategoryViewModel(), scaffoldViewModelState)
 
   ExpensesRegisterTheme {
     EditCategoriesComposable(editCategoriesViewModel)
