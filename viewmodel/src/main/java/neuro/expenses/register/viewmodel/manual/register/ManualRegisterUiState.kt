@@ -26,4 +26,10 @@ class ManualRegisterUiState {
     data class ShowAmountError(val message: Message) : UiStateError()
     object ShowCategoryError : UiStateError()
   }
+
+  enum class Message {
+    EMPTY_DESCRIPTION,
+    EMPTY_PLACE,
+    INVALID_AMOUNT
+  }
 }

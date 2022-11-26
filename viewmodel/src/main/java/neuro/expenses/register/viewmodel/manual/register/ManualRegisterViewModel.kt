@@ -166,10 +166,5 @@ class ManualRegisterViewModel(
     scaffoldViewModelState.reset()
     scaffoldViewModelState.appBarViewModel.value = appBarViewModel
   }
-}
 
-enum class Message {
-  EMPTY_DESCRIPTION,
-  EMPTY_PLACE,
-  INVALID_AMOUNT
 }

@@ -2,8 +2,8 @@ package neuro.expenses.register.ui.manual.register.mapper
 
 import androidx.annotation.StringRes
 import neuro.expenses.register.R
-import neuro.expenses.register.viewmodel.manual.register.Message
-import neuro.expenses.register.viewmodel.manual.register.Message.*
+import neuro.expenses.register.viewmodel.manual.register.ManualRegisterUiState.Message
+import neuro.expenses.register.viewmodel.manual.register.ManualRegisterUiState.Message.*
 
 @StringRes
 fun Message.toPresentation(): Int = when (this) {
