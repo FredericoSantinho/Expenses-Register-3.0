@@ -2,14 +2,14 @@ package neuro.expenses.register.ui.edit.category
 
 import androidx.compose.runtime.mutableStateOf
 import io.reactivex.rxjava3.core.Observable
+import neuro.expenses.register.mocks.EditCategoryViewModelMock
 import neuro.expenses.register.viewmodel.edit.category.EditCategoriesUiEvent
-import neuro.expenses.register.viewmodel.edit.category.EditCategoryViewModel
 import neuro.expenses.register.viewmodel.edit.category.IEditCategoriesViewModel
 import neuro.expenses.register.viewmodel.model.CategoryModel
 
-class MockedEditCategoriesViewModel() : IEditCategoriesViewModel {
+class EditCategoriesViewModelMock() : IEditCategoriesViewModel {
 
-  override val editCategoryViewModel = EditCategoryViewModel()
+  override val editCategoryViewModel = EditCategoryViewModelMock()
   override val categories: Observable<List<CategoryModel>> =
     Observable.just(buildCategoryModelList())
 

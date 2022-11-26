@@ -3,7 +3,7 @@ package neuro.expenses.register.viewmodel.bill
 import androidx.compose.runtime.mutableStateOf
 import neuro.expenses.register.viewmodel.common.asState
 
-class BillUiState {
+class BillUiState() {
   private val _uiState = mutableStateOf<UiState>(UiState.Loading)
   val uiState = _uiState.asState()
 

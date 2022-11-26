@@ -3,7 +3,7 @@ package neuro.expenses.register.viewmodel.edit.category
 import androidx.compose.runtime.mutableStateOf
 import neuro.expenses.register.viewmodel.common.asState
 
-class EditCategoriesUiEvent() {
+class EditCategoryUiEvent {
   private val _uiEvent = mutableStateOf<UiEvent?>(null)
   val uiEvent = _uiEvent.asState()
 
@@ -11,16 +11,5 @@ class EditCategoriesUiEvent() {
     _uiEvent.value = null
   }
 
-  fun openEditCategory() {
-    _uiEvent.value = UiEvent.OpenEditCategory()
-  }
-
-  fun closeEditPlaceProduct() {
-    _uiEvent.value = UiEvent.CloseEditCategory()
-  }
-
-  sealed class UiEvent {
-    class OpenEditCategory : UiEvent()
-    class CloseEditCategory : UiEvent()
-  }
+  sealed class UiEvent
 }

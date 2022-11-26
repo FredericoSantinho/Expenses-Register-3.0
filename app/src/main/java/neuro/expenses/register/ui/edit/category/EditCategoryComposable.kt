@@ -10,6 +10,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -21,20 +22,26 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import neuro.expenses.register.R
+import neuro.expenses.register.common.alert.AlertDialog
+import neuro.expenses.register.mocks.EditCategoryViewModelMock
 import neuro.expenses.register.ui.common.composables.edit.SaveDeleteComposable
 import neuro.expenses.register.ui.common.composables.image.AsyncImage
 import neuro.expenses.register.ui.common.composables.text.TextFieldWithError
 import neuro.expenses.register.ui.common.keyboard.keyboardOptionsText
 import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.ui.theme.ExpensesRegisterTypography
-import neuro.expenses.register.viewmodel.edit.category.EditCategoryViewModel
+import neuro.expenses.register.viewmodel.edit.category.EditCategoryUiState
+import neuro.expenses.register.viewmodel.edit.category.IEditCategoryViewModel
 
 @Composable
 fun EditCategoryComposable(
-  editCategoryViewModel: EditCategoryViewModel, modifier: Modifier = Modifier
+  editCategoryViewModel: IEditCategoryViewModel, modifier: Modifier = Modifier
 ) {
-  val descriptionIsError = remember { mutableStateOf(false) }
-  val descriptionErrorMessage = remember { mutableStateOf("") }
+  val uiEvent by editCategoryViewModel.uiEvent
+  val uiState by editCategoryViewModel.uiState
+
+  val nameIsError = remember { mutableStateOf(false) }
+  val nameErrorMessage = remember { mutableStateOf("") }
 
   Column(
     modifier = modifier
@@ -60,8 +67,8 @@ fun EditCategoryComposable(
       label = stringResource(R.string.category),
       keyboardOptions = keyboardOptionsText,
       value = editCategoryViewModel.name,
-      isError = descriptionIsError,
-      errorMessage = descriptionErrorMessage,
+      isError = nameIsError,
+      errorMessage = nameErrorMessage,
       onValueChange = { editCategoryViewModel.onNameChange() },
       textStyle = ExpensesRegisterTypography.body2
     )
@@ -72,14 +79,55 @@ fun EditCategoryComposable(
       textStyle = ExpensesRegisterTypography.body2
     )
 
-    SaveDeleteComposable({}, {}, modifier = Modifier.padding(top = 16.dp))
+    SaveDeleteComposable(
+      { editCategoryViewModel.onSaveButton() },
+      { editCategoryViewModel.onDeleteButton() },
+      modifier = Modifier.padding(top = 16.dp)
+    )
+  }
+
+  onUiState(uiState, editCategoryViewModel)
+  onUiEvent(editCategoryViewModel)
+}
+
+@Composable
+private fun onUiState(
+  uiState: EditCategoryUiState.UiState, editCategoryViewModel: IEditCategoryViewModel
+) {
+  when (uiState) {
+    EditCategoryUiState.UiState.Ready -> {}
+    EditCategoryUiState.UiState.DeleteCategoryError -> onDeleteCategoryError(editCategoryViewModel)
   }
 }
+
+@Composable
+private fun onUiEvent(
+  editCategoryViewModel: IEditCategoryViewModel
+) {
+  editCategoryViewModel.eventConsumed()
+}
+
+@Composable
+fun onDeleteCategoryError(editCategoryViewModel: IEditCategoryViewModel) {
+  AlertDialog(
+    title = stringResource(
+      R.string.edit_category_on_delete_category_error_title, editCategoryViewModel.name.value
+    ),
+    text = stringResource(
+      R.string.edit_category_on_delete_category_error_text, editCategoryViewModel.name.value
+    ),
+    confirmButtonText = stringResource(R.string.ok),
+    onConfirmButton = { editCategoryViewModel.onDeleteCategoryErrorDialogDismiss() },
+    onDismissRequest = { editCategoryViewModel.onDeleteCategoryErrorDialogDismiss() },
+    modifier = Modifier.background(Color.Red)
+  )
+}
+
 
 @Preview
 @Composable
 fun PreviewEditCategoryComposable() {
-  val editCategoryViewModel = EditCategoryViewModel()
+  val editCategoryViewModel = EditCategoryViewModelMock()
   editCategoryViewModel.name.value = "Super"
 
   ExpensesRegisterTheme {

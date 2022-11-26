@@ -85,6 +85,6 @@ fun onUiEvent(
 @Composable
 fun PreviewEditCategoriesComposable() {
   ExpensesRegisterTheme {
-    EditCategoriesComposable(MockedEditCategoriesViewModel())
+    EditCategoriesComposable(EditCategoriesViewModelMock())
   }
 }

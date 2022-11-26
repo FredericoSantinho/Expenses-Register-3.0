@@ -24,6 +24,6 @@ interface CategoryDao {
   @Update()
   fun update(category: RoomCategory): Completable
 
-  @Delete()
-  fun delete(category: RoomCategory): Completable
+  @Query("delete from category_table where categoryId=:categoryId")
+  fun delete(categoryId: Long): Completable
 }

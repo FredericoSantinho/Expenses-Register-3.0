@@ -29,6 +29,7 @@
   <string name="amount">Amount</string>
   <string name="icon_url">Icon Url</string>
   <string name="save">Save</string>
+  <string name="ok">Ok</string>
   <string name="delete">Delete</string>
   <string name="search">Search</string>
   <string name="search_products_and_places">Search products and places</string>
@@ -42,9 +43,9 @@
   <string name="manual_register_register">Register</string>
   <string name="manual_register_register_success">Registered %1$s</string>
   <!-- Errors -->
-  <string name="manual_register_empty_description">Empty description!</string>
-  <string name="manual_register_empty_place">Empty place!</string>
-  <string name="manual_register_invalid_amount">Invalid amount!</string>
+  <string name="manual_register_error_empty_description">Empty description!</string>
+  <string name="manual_register_error_empty_place">Empty place!</string>
+  <string name="manual_register_error_invalid_amount">Invalid amount!</string>
 
   <!-- Bills -->
   <string name="bills_place">Place</string>
@@ -55,6 +56,11 @@
 
   <!-- Edit Category -->
   <string name="edit_category_title">Edit Category</string>
+  <!-- Errors -->
+  <string name="edit_category_error_active_relations">This category cannot be deleted as there are products associated with it.</string>
+  <!-- Dialog -->
+  <string name="edit_category_on_delete_category_error_title">Cannot delete category %1$s!</string>
+  <string name="edit_category_on_delete_category_error_text">Cannot delete category %1$s as there are place products relating to it.</string>
 
   <!-- Edit -->
   <string name="title_edit">Edit</string>

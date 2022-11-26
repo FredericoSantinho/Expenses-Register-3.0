@@ -148,7 +148,11 @@ class HomeViewModel(
     editPlaceProductViewModel.price.value = placeProductDto.price.toString()
     editPlaceProductViewModel.iconUrl.value = placeProductDto.productDto.iconUrl
     editPlaceProductViewModel.variableAmount.value = placeProductDto.productDto.variableAmount
-    editPlaceProductViewModel.onFinishEditAction.value = { _uiEvent.closeEditPlaceProduct() }
+    editPlaceProductViewModel.onFinishEditAction.value = { onFinishEditAction() }
+  }
+
+  private fun onFinishEditAction() {
+    _uiEvent.closeEditPlaceProduct()
   }
 
   private fun getPlaceProduct(productId: Long): PlaceProductDto {

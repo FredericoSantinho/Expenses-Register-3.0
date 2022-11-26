@@ -25,7 +25,7 @@ class EditCategoriesViewModel(
   }
 
   override fun onCategoryClick(categoryModel: CategoryModel) {
-    editCategoryViewModel.setEditCategoryViewModel(categoryModel)
+    editCategoryViewModel.setEditCategoryViewModel(categoryModel, { onFinishEditAction() })
     _uiEvent.openEditCategory()
   }
 
@@ -44,6 +44,10 @@ class EditCategoriesViewModel(
   override fun onFloatingActionButtonClick() {
     editCategoryViewModel.reset()
     _uiEvent.openEditCategory()
+  }
+
+  private fun onFinishEditAction() {
+    _uiEvent.closeEditPlaceProduct()
   }
 
   private fun enableFab() {

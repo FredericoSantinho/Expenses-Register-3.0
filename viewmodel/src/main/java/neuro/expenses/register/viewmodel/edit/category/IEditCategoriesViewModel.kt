@@ -5,7 +5,7 @@ import io.reactivex.rxjava3.core.Observable
 import neuro.expenses.register.viewmodel.model.CategoryModel
 
 interface IEditCategoriesViewModel {
-  val editCategoryViewModel: EditCategoryViewModel
+  val editCategoryViewModel: IEditCategoryViewModel
   val categories: Observable<List<CategoryModel>>
 
   val uiEvent: State<EditCategoriesUiEvent.UiEvent?>

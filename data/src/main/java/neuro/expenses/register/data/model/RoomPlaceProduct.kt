@@ -15,12 +15,12 @@ import androidx.room.PrimaryKey
     entity = RoomProduct::class,
     parentColumns = arrayOf("productId"),
     childColumns = arrayOf("productId"),
-    onDelete = ForeignKey.CASCADE
+    onDelete = ForeignKey.RESTRICT
   ), ForeignKey(
     entity = RoomCategory::class,
     parentColumns = arrayOf("categoryId"),
     childColumns = arrayOf("categoryId"),
-    onDelete = ForeignKey.CASCADE
+    onDelete = ForeignKey.RESTRICT
   )]
 )
 data class RoomPlaceProduct(
