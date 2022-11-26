@@ -10,16 +10,16 @@ import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationToken
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.android.gms.tasks.OnTokenCanceledListener
-import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Scheduler
+import io.reactivex.rxjava3.core.Single
 import neuro.expenses.register.domain.dto.LatLngDto
 import neuro.expenses.register.domain.service.GetCurrentLocationService
 
 class GetCurrentLocationServiceImpl(
   private val context: Context, private val scheduler: Scheduler
 ) : GetCurrentLocationService {
-  override fun getCurrentLocation(): Maybe<LatLngDto> {
-    return Maybe.create { subscriber ->
+  override fun getCurrentLocation(): Single<LatLngDto> {
+    return Single.create { subscriber ->
       val fusedLocationClient: FusedLocationProviderClient =
         LocationServices.getFusedLocationProviderClient(context)
 
@@ -31,15 +31,14 @@ class GetCurrentLocationServiceImpl(
       ) {
         throw IllegalStateException("Location permission not granted!")
       }
-      fusedLocationClient.getCurrentLocation(Priority.PRIORITY_BALANCED_POWER_ACCURACY,
+      fusedLocationClient.getCurrentLocation(
+        Priority.PRIORITY_BALANCED_POWER_ACCURACY,
         object : CancellationToken() {
           override fun onCanceledRequested(p0: OnTokenCanceledListener) =
             CancellationTokenSource().token
 
           override fun isCancellationRequested() = false
-        }).addOnSuccessListener { location ->
-        location?.let { subscriber.onSuccess(it) } ?: subscriber.onComplete()
-      }
+        }).addOnSuccessListener { location -> subscriber.onSuccess(location) }
     }.map { LatLngDto(it.latitude, it.longitude) }.observeOn(scheduler)
   }
 }

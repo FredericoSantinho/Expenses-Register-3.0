@@ -53,7 +53,7 @@ class EditCategoriesViewModel(
       CategoryModel(
         3,
         "Café",
-        "https://toppng.com/uploads/preview/coffee-png-11552943089jgfzxcloo8.png"
+        "https://s.cornershopapp.com/product-images/3205020.jpg?versionId=dPWWwHtry_eCCDi_rThXTzL9zcAmNeY9"
       )
     )
   )
