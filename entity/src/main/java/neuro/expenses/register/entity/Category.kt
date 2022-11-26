@@ -1,3 +1,3 @@
 package neuro.expenses.register.entity
 
-data class Category(val id: Long, val name: String)
+data class Category(val id: Long, val name: String, val iconUrl: String)

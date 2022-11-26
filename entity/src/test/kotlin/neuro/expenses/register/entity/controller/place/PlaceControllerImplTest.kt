@@ -27,7 +27,7 @@ internal class PlaceControllerImplTest {
     val placeProductId: Long = 1
 
     val product = Product(0, description, variableAmount, iconUrl)
-    val category = Category(0, categoryName)
+    val category = Category(0, categoryName, "")
 
     val residualPlaceProduct = PlaceProduct(2, product, category, 0.0)
     val placeProduct = PlaceProduct(placeProductId, product, category, price)

@@ -18,7 +18,7 @@ internal class ProductCardViewModelTest {
     val onProductCardClick = mock<OnProductCardClick>()
     val id = 1L
     val description = "desc"
-    val categoryModel = CategoryModel(1L, "cat")
+    val categoryModel = CategoryModel(1L, "cat", "")
     val place = "place"
     val price = "1.00 €"
     val amount = 1.0

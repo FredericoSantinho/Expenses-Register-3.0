@@ -7,41 +7,38 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.rxjava3.subscribeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
 import neuro.expenses.register.common.compose.rememberUnit
-import neuro.expenses.register.common.koin.startKoinIfNeeded
-import neuro.expenses.register.di.schedulersModule
 import neuro.expenses.register.ui.home.composable.*
 import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.ui.theme.grey_fog_lighter
-import neuro.expenses.register.viewmodel.di.viewModelModule
 import neuro.expenses.register.viewmodel.edit.category.EditCategoriesUiEvent.UiEvent
 import neuro.expenses.register.viewmodel.edit.category.EditCategoriesViewModel
-import neuro.expenses.register.viewmodel.edit.category.EditCategoryViewModel
-import neuro.expenses.register.viewmodel.scaffold.ScaffoldViewModelState
-import org.koin.androidx.compose.get
+import neuro.expenses.register.viewmodel.edit.category.IEditCategoriesViewModel
 import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun EditCategoriesComposable(editCategoriesViewModel: EditCategoriesViewModel = getViewModel()) {
+fun EditCategoriesComposable(editCategoriesViewModel: IEditCategoriesViewModel = getViewModel<EditCategoriesViewModel>()) {
   rememberUnit { editCategoriesViewModel.onComposition() }
 
   val uiEvent = editCategoriesViewModel.uiEvent
 
   val coroutineScope = rememberCoroutineScope()
   val modalBottomSheetState = rememberModalBottomSheetState()
+  val categories = editCategoriesViewModel.categories.subscribeAsState(initial = emptyList())
 
-  ModalBottomSheetLayout(modalBottomSheetState,
+  ModalBottomSheetLayout(
+    modalBottomSheetState,
     onModalBottomSheetVisible = { editCategoriesViewModel.onModalBottomSheetVisible() },
     onModalBottomSheetNotVisible = { editCategoriesViewModel.onModalBottomSheetNotVisible() },
     modalContent = { EditCategoryComposable(editCategoriesViewModel.editCategoryViewModel) }) {
     Column(
-      modifier = Modifier
-        .background(color = grey_fog_lighter)
+      modifier = Modifier.background(color = grey_fog_lighter)
     ) {
       LazyVerticalGrid(
         modifier = Modifier
@@ -51,7 +48,7 @@ fun EditCategoriesComposable(editCategoriesViewModel: EditCategoriesViewModel = 
         verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
       ) {
-        items(editCategoriesViewModel.categories.value, key = {
+        items(categories.value, key = {
           it.id
         }) { categoryModel ->
           CategoryComposable(categoryModel) { editCategoriesViewModel.onCategoryClick(it) }
@@ -70,7 +67,7 @@ fun onUiEvent(
   uiEvent: State<UiEvent?>,
   coroutineScope: CoroutineScope,
   modalBottomSheetState: ModalBottomSheetState,
-  editCategoriesViewModel: EditCategoriesViewModel
+  editCategoriesViewModel: IEditCategoriesViewModel
 ) {
   when (uiEvent.value) {
     is UiEvent.OpenEditCategory -> showModalBottomSheet(
@@ -87,13 +84,7 @@ fun onUiEvent(
 @Preview
 @Composable
 fun PreviewEditCategoriesComposable() {
-  startKoinIfNeeded { modules(schedulersModule, viewModelModule) }
-
-  val scaffoldViewModelState: ScaffoldViewModelState = get()
-  val editCategoriesViewModel =
-    EditCategoriesViewModel(EditCategoryViewModel(), scaffoldViewModelState)
-
   ExpensesRegisterTheme {
-    EditCategoriesComposable(editCategoriesViewModel)
+    EditCategoriesComposable(MockedEditCategoriesViewModel())
   }
 }

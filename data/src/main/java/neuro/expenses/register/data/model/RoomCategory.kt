@@ -9,5 +9,6 @@ data class RoomCategory(
   @PrimaryKey(autoGenerate = true)
   val categoryId: Long,
   val name: String,
+  val iconUrl: String,
   val nameLowercase: String = name.lowercase()
 )

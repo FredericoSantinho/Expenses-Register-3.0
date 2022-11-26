@@ -1,43 +1,47 @@
 package neuro.expenses.register.viewmodel.edit.category
 
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import neuro.expenses.register.domain.usecase.category.ObserveCategoriesUseCase
 import neuro.expenses.register.viewmodel.fab.FloatingActionButtonViewModel
+import neuro.expenses.register.viewmodel.mapper.toViewmodel
 import neuro.expenses.register.viewmodel.model.CategoryModel
 import neuro.expenses.register.viewmodel.scaffold.ScaffoldViewModelState
 
 class EditCategoriesViewModel(
-  val editCategoryViewModel: EditCategoryViewModel,
+  private val observeCategoriesUseCase: ObserveCategoriesUseCase,
+  override val editCategoryViewModel: EditCategoryViewModel,
   private val scaffoldViewModelState: ScaffoldViewModelState
-) : ViewModel() {
+) : ViewModel(), IEditCategoriesViewModel {
   val floatingActionButtonViewModel =
     FloatingActionButtonViewModel { onFloatingActionButtonClick() }
 
-  private val _uiEvent = EditCategoriesUiEvent()
-  val uiEvent = _uiEvent.uiEvent
+  override val categories = observeCategoriesUseCase.observeCategories().map { it.toViewmodel() }
 
-  fun onComposition() {
+  private val _uiEvent = EditCategoriesUiEvent()
+  override val uiEvent = _uiEvent.uiEvent
+
+  override fun onComposition() {
     enableFab()
   }
 
-  fun onCategoryClick(categoryModel: CategoryModel) {
+  override fun onCategoryClick(categoryModel: CategoryModel) {
     editCategoryViewModel.setEditCategoryViewModel(categoryModel)
     _uiEvent.openEditCategory()
   }
 
-  fun eventConsumed() {
+  override fun eventConsumed() {
     _uiEvent.eventConsumed()
   }
 
-  fun onModalBottomSheetVisible() {
+  override fun onModalBottomSheetVisible() {
     scaffoldViewModelState.floatingActionButtonViewModel.value = null
   }
 
-  fun onModalBottomSheetNotVisible() {
+  override fun onModalBottomSheetNotVisible() {
     enableFab()
   }
 
-  private fun onFloatingActionButtonClick() {
+  override fun onFloatingActionButtonClick() {
     editCategoryViewModel.reset()
     _uiEvent.openEditCategory()
   }
@@ -45,16 +49,4 @@ class EditCategoriesViewModel(
   private fun enableFab() {
     scaffoldViewModelState.floatingActionButtonViewModel.value = floatingActionButtonViewModel
   }
-
-  val categories = mutableStateOf(
-    listOf(
-      CategoryModel(1, "Portagens", ""),
-      CategoryModel(2, "Borga", ""),
-      CategoryModel(
-        3,
-        "Café",
-        "https://s.cornershopapp.com/product-images/3205020.jpg?versionId=dPWWwHtry_eCCDi_rThXTzL9zcAmNeY9"
-      )
-    )
-  )
 }

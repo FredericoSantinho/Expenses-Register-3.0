@@ -9,7 +9,7 @@ internal class ProductCardModelTest {
   fun test() {
     val id = 1L
     val description = "description"
-    val categoryModel = CategoryModel(1L, "category")
+    val categoryModel = CategoryModel(1L, "category", "")
     val place = "place"
     val price = "price"
     val amount = 1.0

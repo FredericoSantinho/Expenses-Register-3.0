@@ -14,9 +14,21 @@ class PopulatePlacesImpl(
 ) : PopulatePlaces {
   override fun populatePlaces(): Completable {
     return Completable.defer {
-      val cafe = CategoryDto(1L, "Café")
-      val borga = CategoryDto(2L, borgaName)
-      val restau = CategoryDto(3L, restauName)
+      val cafe = CategoryDto(
+        1L,
+        "Café",
+        "https://s.cornershopapp.com/product-images/3205020.jpg?versionId=dPWWwHtry_eCCDi_rThXTzL9zcAmNeY9"
+      )
+      val borga = CategoryDto(
+        2L,
+        borgaName,
+        "https://www.kimushi.pt/wp-content/uploads/2020/05/imperial.webp"
+      )
+      val restau = CategoryDto(
+        3L,
+        restauName,
+        "https://cdn.pixabay.com/photo/2021/05/25/02/03/restaurant-6281067_1280.png"
+      )
 
       saveCategoryUseCase.saveCategories(listOf(cafe, borga, restau)).andThen(Completable.defer {
         val sagresMedia = PlaceProductDto(
