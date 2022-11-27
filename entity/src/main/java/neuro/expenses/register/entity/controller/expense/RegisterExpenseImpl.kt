@@ -22,6 +22,7 @@ class RegisterExpenseImpl(
 
   private fun addPlaceProductToPlaceIfNeeded(expense: Expense): Completable {
     return getPlaceProduct.getPlaceProduct(expense.description, expense.category, expense.price)
+      .toSingle()
       .flatMapCompletable { placeProduct ->
         getOrCreatePlace.getOrCreatePlace(expense.place).flatMapCompletable { place ->
           if (!placeController.contains(place, placeProduct)) {

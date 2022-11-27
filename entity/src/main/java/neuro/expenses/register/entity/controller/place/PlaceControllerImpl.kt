@@ -17,19 +17,11 @@ class PlaceControllerImpl(
   override fun addPlaceProduct(place: Place, placeProduct: PlaceProduct): Single<Place> {
     return Single.defer {
       if (!contains(place, placeProduct)) {
-        getOrCreatePlaceProduct.getOrCreatePlaceProduct(
-          placeProduct.product.description,
-          placeProduct.category.name,
-          placeProduct.price,
-          placeProduct.product.variableAmount,
-          placeProduct.product.iconUrl
-        ).flatMap { savedProduct ->
-          val placeProducts = mutableListOf<PlaceProduct>()
-          placeProducts.addAll(place.placeProducts)
-          placeProducts.add(savedProduct)
-          val newPlace = Place(place.id, place.name, placeProducts, place.latLng)
-          addPlaceProduct.addPlaceProduct(place.id, savedProduct.id).toSingle { newPlace }
-        }
+        val placeProducts = mutableListOf<PlaceProduct>()
+        placeProducts.addAll(place.placeProducts)
+        placeProducts.add(placeProduct)
+        val newPlace = Place(place.id, place.name, placeProducts, place.latLng)
+        addPlaceProduct.addPlaceProduct(place.id, placeProduct.id).toSingle { newPlace }
       } else {
         Single.just(place)
       }
@@ -46,9 +38,17 @@ class PlaceControllerImpl(
 
   override fun updatePlaceProduct(place: Place, placeProduct: PlaceProduct): Single<Place> {
     return removePlaceProduct(place, placeProduct.id).flatMap { newPlace ->
-      addPlaceProduct(
-        newPlace, placeProduct
-      )
+      getOrCreatePlaceProduct.getOrCreatePlaceProduct(
+        placeProduct.product.description,
+        placeProduct.category.name,
+        placeProduct.price,
+        placeProduct.product.variableAmount,
+        placeProduct.product.iconUrl
+      ).flatMap { newPlaceProduct ->
+        addPlaceProduct(
+          newPlace, newPlaceProduct
+        )
+      }
     }
   }
 

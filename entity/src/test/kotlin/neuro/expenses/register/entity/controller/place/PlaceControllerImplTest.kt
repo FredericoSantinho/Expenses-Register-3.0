@@ -44,13 +44,6 @@ internal class PlaceControllerImplTest {
 
     whenever(
       getOrCreatePlaceProduct.getOrCreatePlaceProduct(
-        eq(description), eq(categoryName), eq(price), eq(variableAmount), eq(iconUrl)
-      )
-    ).doReturn(
-      Single.just(placeProduct)
-    )
-    whenever(
-      getOrCreatePlaceProduct.getOrCreatePlaceProduct(
         eq(description), eq(categoryName), eq(newPrice), eq(variableAmount), eq(iconUrl)
       )
     ).doReturn(
@@ -69,8 +62,8 @@ internal class PlaceControllerImplTest {
     var newPlaceObservable = placeController.addPlaceProduct(place, placeProduct).test()
     var newPlace = newPlaceObservable.values().get(0)
 
-    verify(getOrCreatePlaceProduct, times(1)).getOrCreatePlaceProduct(
-      eq(description), eq(categoryName), eq(price), eq(variableAmount), eq(iconUrl)
+    verify(getOrCreatePlaceProduct, times(0)).getOrCreatePlaceProduct(
+      any(), any(), any(), any(), any()
     )
     verify(addPlaceProduct, times(1)).addPlaceProduct(eq(placeId), eq(placeProductId))
 
@@ -93,8 +86,8 @@ internal class PlaceControllerImplTest {
     newPlaceObservable = placeController.removePlaceProduct(newPlace, -1).test()
     newPlace = newPlaceObservable.values().get(0)
 
-    verify(getOrCreatePlaceProduct, times(1)).getOrCreatePlaceProduct(
-      eq(description), eq(categoryName), eq(price), eq(variableAmount), eq(iconUrl)
+    verify(getOrCreatePlaceProduct, times(0)).getOrCreatePlaceProduct(
+      any(), any(), any(), any(), any()
     )
     verify(addPlaceProduct, times(1)).addPlaceProduct(eq(placeId), eq(placeProductId))
     verify(removePlaceProduct, times(1)).removePlaceProduct(eq(placeId), eq(-1))
@@ -108,8 +101,8 @@ internal class PlaceControllerImplTest {
     newPlaceObservable = placeController.removePlaceProduct(newPlace, placeProductId).test()
     newPlace = newPlaceObservable.values().get(0)
 
-    verify(getOrCreatePlaceProduct, times(1)).getOrCreatePlaceProduct(
-      eq(description), eq(categoryName), eq(price), eq(variableAmount), eq(iconUrl)
+    verify(getOrCreatePlaceProduct, times(0)).getOrCreatePlaceProduct(
+      any(), any(), any(), any(), any()
     )
     verify(addPlaceProduct, times(1)).addPlaceProduct(eq(placeId), eq(placeProductId))
     verify(removePlaceProduct, times(1)).removePlaceProduct(eq(placeId), eq(placeProductId))
@@ -124,7 +117,7 @@ internal class PlaceControllerImplTest {
     newPlace = newPlaceObservable.values().get(0)
 
     verify(getOrCreatePlaceProduct, times(1)).getOrCreatePlaceProduct(
-      eq(description), eq(categoryName), eq(price), eq(variableAmount), eq(iconUrl)
+      eq(description), eq(categoryName), eq(newPrice), eq(variableAmount), eq(iconUrl)
     )
     verify(addPlaceProduct, times(1)).addPlaceProduct(eq(placeId), not(eq(placeProductId)))
     verify(removePlaceProduct, times(2)).removePlaceProduct(eq(placeId), eq(placeProductId))
