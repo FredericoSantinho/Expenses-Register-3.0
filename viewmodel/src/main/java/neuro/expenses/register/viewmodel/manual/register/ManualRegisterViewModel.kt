@@ -10,7 +10,6 @@ import neuro.expenses.register.domain.usecase.expense.RegisterExpenseUseCase
 import neuro.expenses.register.domain.usecase.near.GetNearestPlaceUseCase
 import neuro.expenses.register.viewmodel.appbar.AppBarViewModel
 import neuro.expenses.register.viewmodel.bill.BillViewModel
-import neuro.expenses.register.viewmodel.bill.FeedLastBillViewModel
 import neuro.expenses.register.viewmodel.common.BaseViewModel
 import neuro.expenses.register.viewmodel.common.formatter.CurrencyFormatter
 import neuro.expenses.register.viewmodel.common.schedulers.SchedulerProvider
@@ -25,7 +24,6 @@ class ManualRegisterViewModel(
   private val observeCategoriesUseCase: ObserveCategoriesUseCase,
   private val registerExpenseUseCase: RegisterExpenseUseCase,
   private val getNearestPlaceUseCase: GetNearestPlaceUseCase,
-  private val feedLastBillViewModel: FeedLastBillViewModel,
   private val currencyFormatter: CurrencyFormatter,
   val billViewModel: BillViewModel,
   private val scaffoldViewModelState: ScaffoldViewModelState,
@@ -49,10 +47,6 @@ class ManualRegisterViewModel(
   val uiState = _uiState.uiState
   private val _uiEvent = ManualRegisterUiEvent()
   val uiEvent = _uiEvent.uiEvent
-
-  init {
-    feedLastBillViewModel.observe().baseSubscribe { }
-  }
 
   fun onNearestPlaceButton() {
     setNearestPlace()

@@ -11,7 +11,6 @@ import neuro.expenses.register.domain.usecase.place.SortPlaceProducts
 import neuro.expenses.register.viewmodel.appbar.AppBarViewModel
 import neuro.expenses.register.viewmodel.appbar.SearchHint
 import neuro.expenses.register.viewmodel.bill.BillViewModel
-import neuro.expenses.register.viewmodel.bill.FeedLastBillViewModel
 import neuro.expenses.register.viewmodel.common.BaseViewModel
 import neuro.expenses.register.viewmodel.common.schedulers.SchedulerProvider
 import neuro.expenses.register.viewmodel.edit.placeproduct.EditPlaceProductViewModel
@@ -35,7 +34,6 @@ class HomeViewModel(
   private val sortPlaceProducts: SortPlaceProducts,
   private val productCardModelMapper: ProductCardModelMapper,
   private val searchSuggestionModelMapper: SearchSuggestionModelMapper,
-  private val feedLastBillViewModel: FeedLastBillViewModel,
   override val billViewModel: BillViewModel,
   override val editPlaceProductViewModel: EditPlaceProductViewModel,
   private val scaffoldViewModelState: ScaffoldViewModelState,
@@ -82,7 +80,6 @@ class HomeViewModel(
         _uiState.ready()
       }
     }
-    feedLastBillViewModel.observe().baseSubscribe { }
   }
 
   override fun onComposition() {

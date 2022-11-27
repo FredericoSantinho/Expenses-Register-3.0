@@ -18,6 +18,7 @@ import neuro.expenses.register.viewmodel.edit.placeproduct.EditPlaceProductViewM
 import neuro.expenses.register.viewmodel.edit.placeproduct.EditPlaceProductsViewModel
 import neuro.expenses.register.viewmodel.edit.product.EditProductsViewModel
 import neuro.expenses.register.viewmodel.home.HomeViewModel
+import neuro.expenses.register.viewmodel.main.MainViewModel
 import neuro.expenses.register.viewmodel.manual.register.ManualRegisterViewModel
 import neuro.expenses.register.viewmodel.permissions.PermissionsViewModel
 import neuro.expenses.register.viewmodel.scaffold.ScaffoldViewModelState
@@ -32,19 +33,20 @@ const val DECIMALS = 2
 
 val viewModelModule = module {
   single { ApplicationViewModel(get(), get(), get()) }
+  single { MainViewModel(get(), get()) }
   single { AppBarViewModel() }
   viewModel { PermissionsViewModel(get()) }
   single<ScaffoldViewModelState> { ScaffoldViewModelStateImpl() }
   viewModel { SettingsViewModel() }
   viewModel {
     HomeViewModel(
-      get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get()
+      get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get()
     )
   }
   single { EditPlaceProductViewModel(get(), get(), get(), get()) }
   viewModel {
     ManualRegisterViewModel(
-      get(), get(), get(), get(), get(), get(), get(), get(), get()
+      get(), get(), get(), get(), get(), get(), get(), get()
     )
   }
   single { BillViewModel() }
