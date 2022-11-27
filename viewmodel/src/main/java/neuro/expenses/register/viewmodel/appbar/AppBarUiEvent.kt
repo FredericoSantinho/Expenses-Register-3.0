@@ -1,16 +1,9 @@
 package neuro.expenses.register.viewmodel.appbar
 
-import androidx.compose.runtime.mutableStateOf
-import neuro.expenses.register.viewmodel.common.asState
+import neuro.expenses.register.viewmodel.appbar.AppBarUiEvent.UiEvent
+import neuro.expenses.register.viewmodel.common.BaseUiEvent
 
-class AppBarUiEvent {
-  private val _uiEvent = mutableStateOf<UiEvent?>(null)
-  val uiEvent = _uiEvent.asState()
-
-  fun eventConsumed() {
-    _uiEvent.value = null
-  }
-
+class AppBarUiEvent : BaseUiEvent<UiEvent>() {
   fun navigateToSettings() {
     _uiEvent.value = UiEvent.NavigateToSettings()
   }

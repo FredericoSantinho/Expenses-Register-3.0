@@ -1,16 +1,9 @@
 package neuro.expenses.register.viewmodel.edit
 
-import androidx.compose.runtime.mutableStateOf
-import neuro.expenses.register.viewmodel.common.asState
+import neuro.expenses.register.viewmodel.common.BaseUiEvent
+import neuro.expenses.register.viewmodel.edit.EditUiEvent.UiEvent
 
-class EditUiEvent {
-  private val _uiEvent = mutableStateOf<UiEvent?>(null)
-  val uiEvent = _uiEvent.asState()
-
-  fun eventConsumed() {
-    _uiEvent.value = null
-  }
-
+class EditUiEvent : BaseUiEvent<UiEvent>() {
   fun navigateToEditProduct() {
     _uiEvent.value = UiEvent.NavigateTo(Directions.product)
   }
