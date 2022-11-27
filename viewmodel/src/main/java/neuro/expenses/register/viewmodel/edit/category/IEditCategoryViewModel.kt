@@ -17,6 +17,8 @@ interface IEditCategoryViewModel {
   fun onNameChange()
   fun onSaveButton()
   fun onDeleteButton()
+  fun onConfirmDelete()
   fun eventConsumed()
   fun onDeleteCategoryErrorDialogDismiss()
+  fun onConfirmDeleteDismiss()
 }

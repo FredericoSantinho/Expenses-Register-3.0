@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 @Composable
 fun AlertDialog(
     title: String,
-    text: String,
+    text: String = "",
     confirmButtonText: String = "",
     onConfirmButton: () -> Unit = {},
     dismissButtonText: String = "",

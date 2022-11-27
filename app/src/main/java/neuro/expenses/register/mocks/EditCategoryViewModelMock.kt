@@ -24,6 +24,8 @@ class EditCategoryViewModelMock() : IEditCategoryViewModel {
   override fun onNameChange() {}
   override fun onSaveButton() {}
   override fun onDeleteButton() {}
+  override fun onConfirmDelete() {}
   override fun eventConsumed() {}
   override fun onDeleteCategoryErrorDialogDismiss() {}
+  override fun onConfirmDeleteDismiss() {}
 }

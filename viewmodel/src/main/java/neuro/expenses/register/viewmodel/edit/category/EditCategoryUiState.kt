@@ -15,8 +15,13 @@ class EditCategoryUiState {
     _uiState.value = UiState.DeleteCategoryError
   }
 
+  fun confirmCategoryDelete() {
+    _uiState.value = UiState.ConfirmCategoryDelete
+  }
+
   sealed class UiState {
     object Ready : UiState()
     object DeleteCategoryError : UiState()
+    object ConfirmCategoryDelete : UiState()
   }
 }

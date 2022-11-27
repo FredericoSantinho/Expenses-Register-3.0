@@ -31,6 +31,8 @@
   <string name="save">Save</string>
   <string name="ok">Ok</string>
   <string name="delete">Delete</string>
+  <string name="yes">Yes</string>
+  <string name="no">No</string>
   <string name="search">Search</string>
   <string name="search_products_and_places">Search products and places</string>
 
@@ -56,6 +58,7 @@
 
   <!-- Edit Category -->
   <string name="edit_category_title">Edit Category</string>
+  <string name="edit_category_confirm_delete_title">Do you realy want to delete category %1$s?</string>
   <!-- Errors -->
   <string name="edit_category_error_active_relations">This category cannot be deleted as there are products associated with it.</string>
   <!-- Dialog -->

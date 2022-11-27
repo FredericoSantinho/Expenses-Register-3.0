@@ -96,8 +96,23 @@ private fun onUiState(
 ) {
   when (uiState) {
     EditCategoryUiState.UiState.Ready -> {}
+    EditCategoryUiState.UiState.ConfirmCategoryDelete -> onConfirmCategoryDelete(
+      editCategoryViewModel
+    )
     EditCategoryUiState.UiState.DeleteCategoryError -> onDeleteCategoryError(editCategoryViewModel)
   }
+}
+
+@Composable
+fun onConfirmCategoryDelete(editCategoryViewModel: IEditCategoryViewModel) {
+  AlertDialog(title = stringResource(
+    R.string.edit_category_confirm_delete_title,
+    editCategoryViewModel.name.value
+  ),
+    confirmButtonText = stringResource(R.string.yes),
+    dismissButtonText = stringResource(R.string.no),
+    onConfirmButton = { editCategoryViewModel.onConfirmDelete() },
+    onDismissRequest = { editCategoryViewModel.onConfirmDeleteDismiss() })
 }
 
 @Composable

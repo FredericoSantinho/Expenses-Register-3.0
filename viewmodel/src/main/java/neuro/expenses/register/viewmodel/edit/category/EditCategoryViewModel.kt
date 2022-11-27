@@ -46,6 +46,10 @@ class EditCategoryViewModel(
   }
 
   override fun onDeleteButton() {
+    _uiState.confirmCategoryDelete()
+  }
+
+  override fun onConfirmDelete() {
     deleteCategoryUseCase.deleteCategory(id.value).subscribeOn(schedulerProvider.io()).subscribe({
       onFinishEditAction.value()
     }, {
@@ -62,6 +66,10 @@ class EditCategoryViewModel(
   }
 
   override fun onDeleteCategoryErrorDialogDismiss() {
+    _uiState.ready()
+  }
+
+  override fun onConfirmDeleteDismiss() {
     _uiState.ready()
   }
 }
