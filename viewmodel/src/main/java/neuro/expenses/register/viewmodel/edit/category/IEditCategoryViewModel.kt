@@ -6,6 +6,7 @@ import neuro.expenses.register.viewmodel.model.CategoryModel
 
 interface IEditCategoryViewModel {
   val id: MutableState<Long>
+  val currentName: String
   val name: MutableState<String>
   val iconUrl: MutableState<String>
 
@@ -19,6 +20,8 @@ interface IEditCategoryViewModel {
   fun onDeleteButton()
   fun onConfirmDelete()
   fun eventConsumed()
+  fun onCreateCategoryErrorDialogDismiss()
+  fun onUpdateCategoryErrorDialogDismiss()
   fun onDeleteCategoryErrorDialogDismiss()
   fun onConfirmDeleteDismiss()
 }

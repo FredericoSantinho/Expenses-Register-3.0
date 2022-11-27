@@ -17,11 +17,11 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentActivity
 import neuro.expenses.register.ui.common.composables.edit.SaveDeleteComposable
 import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
-import neuro.expenses.register.viewmodel.bills.BillDetailedViewModel
+import neuro.expenses.register.viewmodel.bill.BillDetailedViewModel
+import neuro.expenses.register.viewmodel.bill.mapper.BillItemModelMapper
+import neuro.expenses.register.viewmodel.bill.model.BillItemModel
 import neuro.expenses.register.viewmodel.common.formatter.CurrencyFormatterImpl
 import neuro.expenses.register.viewmodel.common.formatter.DecimalFormatterImpl
-import neuro.expenses.register.viewmodel.edit.bill.mapper.BillItemViewModelMapper
-import neuro.expenses.register.viewmodel.edit.bill.model.BillItemViewModel
 
 @Composable
 fun BillDetailedComposable(
@@ -52,7 +52,7 @@ fun BillDetailedComposable(
       ) {
         items(
           billDetailedViewModel.billItems.value,
-          { billItemViewModel: BillItemViewModel -> billItemViewModel.id }) { billItemViewModel ->
+          { billItemModel: BillItemModel -> billItemModel.id }) { billItemViewModel ->
           BillItemComposable(billItemViewModel) { billDetailedViewModel.onBillItemsChange() }
           Divider(
             modifier = Modifier.padding(start = 4.dp, end = 4.dp),
@@ -76,10 +76,10 @@ fun BillDetailedComposable(
 fun PreviewBillDetailedComposable() {
   val decimalFormatter = DecimalFormatterImpl(2)
   val currencyFormatter = CurrencyFormatterImpl(decimalFormatter, "€")
-  val billItemViewModelMapper = BillItemViewModelMapper(decimalFormatter)
+  val billItemModelMapper = BillItemModelMapper(decimalFormatter)
 
   ExpensesRegisterTheme {
-    val billDetailedViewModel = BillDetailedViewModel(billItemViewModelMapper, currencyFormatter)
+    val billDetailedViewModel = BillDetailedViewModel(billItemModelMapper, currencyFormatter)
     billDetailedViewModel.placeName.value = "Bitoque"
     billDetailedViewModel.billItems.value = emptyList()
 

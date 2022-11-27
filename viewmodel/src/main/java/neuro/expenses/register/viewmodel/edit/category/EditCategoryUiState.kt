@@ -12,16 +12,26 @@ class EditCategoryUiState {
   }
 
   fun deleteFailedActiveRelations() {
-    _uiState.value = UiState.DeleteCategoryError
+    _uiState.value = UiState.DeleteCategoryErrorActiveRelations
   }
 
   fun confirmCategoryDelete() {
     _uiState.value = UiState.ConfirmCategoryDelete
   }
 
+  fun createFailedNameConflict() {
+    _uiState.value = UiState.CreateCategoryErrorNameConflict
+  }
+
+  fun updateFailedNameConflict() {
+    _uiState.value = UiState.UpdateCategoryErrorNameConflict
+  }
+
   sealed class UiState {
     object Ready : UiState()
-    object DeleteCategoryError : UiState()
+    object DeleteCategoryErrorActiveRelations : UiState()
     object ConfirmCategoryDelete : UiState()
+    object CreateCategoryErrorNameConflict : UiState()
+    object UpdateCategoryErrorNameConflict : UiState()
   }
 }

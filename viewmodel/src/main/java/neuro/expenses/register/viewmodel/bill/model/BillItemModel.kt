@@ -1,9 +1,9 @@
-package neuro.expenses.register.viewmodel.edit.bill.model
+package neuro.expenses.register.viewmodel.bill.model
 
 import androidx.compose.runtime.MutableState
 import neuro.expenses.register.viewmodel.common.formatter.DecimalFormatter
 
-data class BillItemViewModel(
+data class BillItemModel(
   val id: Long,
   val description: String,
   val price: MutableState<String>,

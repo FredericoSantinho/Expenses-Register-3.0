@@ -1,12 +1,12 @@
-package neuro.expenses.register.viewmodel.edit.bill.mapper
+package neuro.expenses.register.viewmodel.bill.mapper
 
 import androidx.compose.runtime.mutableStateOf
 import neuro.expenses.register.domain.dto.BillItemDto
+import neuro.expenses.register.viewmodel.bill.model.BillItemModel
 import neuro.expenses.register.viewmodel.common.formatter.DecimalFormatter
-import neuro.expenses.register.viewmodel.edit.bill.model.BillItemViewModel
 
-class BillItemViewModelMapper(private val decimalFormatter: DecimalFormatter) {
-  fun map(billItemDto: BillItemDto): BillItemViewModel {
+class BillItemModelMapper(private val decimalFormatter: DecimalFormatter) {
+  fun map(billItemDto: BillItemDto): BillItemModel {
     val id = billItemDto.id
     val description = billItemDto.placeProductDto.productDto.description
     val price = mutableStateOf(decimalFormatter.format(billItemDto.placeProductDto.price))
@@ -17,6 +17,6 @@ class BillItemViewModelMapper(private val decimalFormatter: DecimalFormatter) {
     val total = mutableStateOf(decimalFormatter.format(billItemDto.total))
     val iconUrl = billItemDto.placeProductDto.productDto.iconUrl
 
-    return BillItemViewModel(id, description, price, amount, total, iconUrl, decimalFormatter)
+    return BillItemModel(id, description, price, amount, total, iconUrl, decimalFormatter)
   }
 }

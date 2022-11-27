@@ -1,20 +1,20 @@
-package neuro.expenses.register.viewmodel.bills
+package neuro.expenses.register.viewmodel.bill
 
 import androidx.compose.runtime.mutableStateOf
 import neuro.expenses.register.domain.dto.BillDto
+import neuro.expenses.register.viewmodel.bill.mapper.BillItemModelMapper
+import neuro.expenses.register.viewmodel.bill.model.BillItemModel
 import neuro.expenses.register.viewmodel.common.formatter.CurrencyFormatter
-import neuro.expenses.register.viewmodel.edit.bill.mapper.BillItemViewModelMapper
-import neuro.expenses.register.viewmodel.edit.bill.model.BillItemViewModel
 import java.util.*
 
 class BillDetailedViewModel(
-  private val billItemViewModelMapper: BillItemViewModelMapper,
+  private val billItemModelMapper: BillItemModelMapper,
   private val currencyFormatter: CurrencyFormatter
 ) {
 
   val placeName = mutableStateOf("")
   val calendar = mutableStateOf(Calendar.getInstance())
-  val billItems = mutableStateOf(emptyList<BillItemViewModel>())
+  val billItems = mutableStateOf(emptyList<BillItemModel>())
   val total = mutableStateOf("")
 
   fun onSaveButton() {
@@ -30,7 +30,7 @@ class BillDetailedViewModel(
   fun setBillDetailedViewModel(billDto: BillDto) {
     placeName.value = billDto.place.name
     calendar.value = billDto.calendar
-    billItems.value = billDto.billItems.map(billItemViewModelMapper::map)
+    billItems.value = billDto.billItems.map(billItemModelMapper::map)
     total.value = computeTotal()
   }
 

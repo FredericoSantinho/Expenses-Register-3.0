@@ -6,3 +6,5 @@ import neuro.expenses.register.domain.dto.CategoryDto
 interface SaveCategoryRepository {
   fun saveCategory(categoryDto: CategoryDto): Completable
 }
+
+class SaveCategoryError : java.lang.IllegalArgumentException()

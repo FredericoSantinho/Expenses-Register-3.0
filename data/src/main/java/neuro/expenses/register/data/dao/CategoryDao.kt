@@ -9,6 +9,9 @@ import neuro.expenses.register.data.model.RoomCategory
 
 @Dao
 interface CategoryDao {
+  @Query("SELECT MAX(categoryId) FROM category_table")
+  fun getLastCategoryId(): Maybe<Long>
+
   @Query("select * from category_table")
   fun observeCategories(): Observable<List<RoomCategory>>
 

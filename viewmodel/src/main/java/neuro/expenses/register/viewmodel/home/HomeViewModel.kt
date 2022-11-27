@@ -140,6 +140,7 @@ class HomeViewModel(
     val placeProductDto = getPlaceProduct(productCardModel.id)
     editPlaceProductViewModel.placeDto.value = placeDto
     editPlaceProductViewModel.placeProductId.value = placeProductDto.id
+    editPlaceProductViewModel.currentDescription = placeProductDto.productDto.description
     editPlaceProductViewModel.description.value = placeProductDto.productDto.description
     editPlaceProductViewModel.category.value = placeProductDto.category.name
     editPlaceProductViewModel.price.value = placeProductDto.price.toString()

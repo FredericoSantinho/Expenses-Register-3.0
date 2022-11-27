@@ -5,14 +5,15 @@ import io.reactivex.rxjava3.core.Completable
 import neuro.expenses.register.data.dao.CategoryDao
 import neuro.expenses.register.data.mapper.category.toData
 import neuro.expenses.register.domain.dto.CategoryDto
-import neuro.expenses.register.domain.repository.category.SaveCategoryError
-import neuro.expenses.register.domain.repository.category.SaveCategoryRepository
+import neuro.expenses.register.domain.repository.category.CreateCategoryError
+import neuro.expenses.register.domain.repository.category.CreateCategoryRepository
 
-class SaveCategoryRepositoryImpl(private val categoryDao: CategoryDao) : SaveCategoryRepository {
-  override fun saveCategory(categoryDto: CategoryDto): Completable {
+class CreateCategoryRepositoryImpl(private val categoryDao: CategoryDao) :
+  CreateCategoryRepository {
+  override fun createCategory(categoryDto: CategoryDto): Completable {
     return categoryDao.insert(categoryDto.toData()).ignoreElement().onErrorResumeNext {
       val error = if (it is SQLiteConstraintException) {
-        SaveCategoryError()
+        CreateCategoryError()
       } else {
         it
       }

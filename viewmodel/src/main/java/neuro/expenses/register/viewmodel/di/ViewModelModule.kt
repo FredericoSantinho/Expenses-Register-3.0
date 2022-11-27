@@ -2,12 +2,12 @@ package neuro.expenses.register.viewmodel.di
 
 import neuro.expenses.register.viewmodel.appbar.AppBarViewModel
 import neuro.expenses.register.viewmodel.application.ApplicationViewModel
+import neuro.expenses.register.viewmodel.bill.BillDetailedViewModel
 import neuro.expenses.register.viewmodel.bill.BillViewModel
 import neuro.expenses.register.viewmodel.bill.FeedLastBillViewModel
 import neuro.expenses.register.viewmodel.bill.FeedLastBillViewModelImpl
 import neuro.expenses.register.viewmodel.bill.mapper.DateTimeMapper
 import neuro.expenses.register.viewmodel.bill.mapper.DateTimeMapperImpl
-import neuro.expenses.register.viewmodel.bills.BillDetailedViewModel
 import neuro.expenses.register.viewmodel.bills.BillsViewModel
 import neuro.expenses.register.viewmodel.common.formatter.*
 import neuro.expenses.register.viewmodel.edit.EditViewModel
@@ -33,7 +33,7 @@ const val DECIMALS = 2
 
 val viewModelModule = module {
   single { ApplicationViewModel(get(), get(), get()) }
-  single { MainViewModel(get(), get()) }
+  single { MainViewModel(get(), get(), get(), get()) }
   single { AppBarViewModel() }
   viewModel { PermissionsViewModel(get()) }
   single<ScaffoldViewModelState> { ScaffoldViewModelStateImpl() }
@@ -61,6 +61,6 @@ val viewModelModule = module {
   viewModel { EditProductsViewModel() }
   viewModel { EditPlaceProductsViewModel(get(), get(), get(), get()) }
   viewModel { EditCategoriesViewModel(get(), get(), get()) }
-  single { EditCategoryViewModel(get(), get()) }
+  single { EditCategoryViewModel(get(), get(), get(), get()) }
   viewModel { EditPlacesViewModel() }
 }

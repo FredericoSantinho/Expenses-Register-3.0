@@ -99,16 +99,59 @@ private fun onUiState(
     EditCategoryUiState.UiState.ConfirmCategoryDelete -> onConfirmCategoryDelete(
       editCategoryViewModel
     )
-    EditCategoryUiState.UiState.DeleteCategoryError -> onDeleteCategoryError(editCategoryViewModel)
+    EditCategoryUiState.UiState.CreateCategoryErrorNameConflict -> onCreateCategoryError(
+      editCategoryViewModel
+    )
+    EditCategoryUiState.UiState.UpdateCategoryErrorNameConflict -> onUpdateCategoryError(
+      editCategoryViewModel
+    )
+    EditCategoryUiState.UiState.DeleteCategoryErrorActiveRelations -> onDeleteCategoryError(
+      editCategoryViewModel
+    )
   }
 }
 
 @Composable
+fun onCreateCategoryError(editCategoryViewModel: IEditCategoryViewModel) {
+  AlertDialog(
+    title = stringResource(
+      R.string.edit_category_on_create_category_error_title, editCategoryViewModel.name.value
+    ),
+    text = stringResource(
+      R.string.edit_category_on_create_category_error_text, editCategoryViewModel.name.value
+    ),
+    confirmButtonText = stringResource(R.string.ok),
+    onConfirmButton = { editCategoryViewModel.onCreateCategoryErrorDialogDismiss() },
+    onDismissRequest = { editCategoryViewModel.onCreateCategoryErrorDialogDismiss() },
+    modifier = Modifier.background(Color.Red)
+  )
+}
+
+@Composable
+fun onUpdateCategoryError(editCategoryViewModel: IEditCategoryViewModel) {
+  AlertDialog(
+    title = stringResource(
+      R.string.edit_category_on_update_category_error_title, editCategoryViewModel.currentName
+    ),
+    text = stringResource(
+      R.string.edit_category_on_update_category_error_text,
+      editCategoryViewModel.currentName,
+      editCategoryViewModel.name.value
+    ),
+    confirmButtonText = stringResource(R.string.ok),
+    onConfirmButton = { editCategoryViewModel.onUpdateCategoryErrorDialogDismiss() },
+    onDismissRequest = { editCategoryViewModel.onUpdateCategoryErrorDialogDismiss() },
+    modifier = Modifier.background(Color.Red)
+  )
+}
+
+@Composable
 fun onConfirmCategoryDelete(editCategoryViewModel: IEditCategoryViewModel) {
-  AlertDialog(title = stringResource(
-    R.string.edit_category_confirm_delete_title,
-    editCategoryViewModel.name.value
-  ),
+  AlertDialog(
+    title = stringResource(
+      R.string.edit_category_confirm_delete_title,
+      editCategoryViewModel.currentName
+    ),
     confirmButtonText = stringResource(R.string.yes),
     dismissButtonText = stringResource(R.string.no),
     onConfirmButton = { editCategoryViewModel.onConfirmDelete() },
@@ -116,26 +159,26 @@ fun onConfirmCategoryDelete(editCategoryViewModel: IEditCategoryViewModel) {
 }
 
 @Composable
-private fun onUiEvent(
-  editCategoryViewModel: IEditCategoryViewModel
-) {
-  editCategoryViewModel.eventConsumed()
-}
-
-@Composable
 fun onDeleteCategoryError(editCategoryViewModel: IEditCategoryViewModel) {
   AlertDialog(
     title = stringResource(
-      R.string.edit_category_on_delete_category_error_title, editCategoryViewModel.name.value
+      R.string.edit_category_on_delete_category_error_title, editCategoryViewModel.currentName
     ),
     text = stringResource(
-      R.string.edit_category_on_delete_category_error_text, editCategoryViewModel.name.value
+      R.string.edit_category_on_delete_category_error_text, editCategoryViewModel.currentName
     ),
     confirmButtonText = stringResource(R.string.ok),
     onConfirmButton = { editCategoryViewModel.onDeleteCategoryErrorDialogDismiss() },
     onDismissRequest = { editCategoryViewModel.onDeleteCategoryErrorDialogDismiss() },
     modifier = Modifier.background(Color.Red)
   )
+}
+
+@Composable
+private fun onUiEvent(
+  editCategoryViewModel: IEditCategoryViewModel
+) {
+  editCategoryViewModel.eventConsumed()
 }
 
 

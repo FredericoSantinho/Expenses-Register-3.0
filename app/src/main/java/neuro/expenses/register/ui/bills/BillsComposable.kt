@@ -22,8 +22,8 @@ import neuro.expenses.register.common.compose.rememberUnit
 import neuro.expenses.register.ui.bill.BillCardComposable
 import neuro.expenses.register.ui.home.composable.*
 import neuro.expenses.register.ui.theme.grey_fog_lighter
+import neuro.expenses.register.viewmodel.bill.BillDetailedViewModel
 import neuro.expenses.register.viewmodel.bill.BillViewModel
-import neuro.expenses.register.viewmodel.bills.BillDetailedViewModel
 import neuro.expenses.register.viewmodel.bills.BillsUiEvent.UiEvent
 import neuro.expenses.register.viewmodel.bills.BillsViewModel
 import org.koin.androidx.compose.get

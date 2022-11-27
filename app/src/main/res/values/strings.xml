@@ -60,8 +60,10 @@
   <string name="edit_category_title">Edit Category</string>
   <string name="edit_category_confirm_delete_title">Do you realy want to delete category %1$s?</string>
   <!-- Errors -->
-  <string name="edit_category_error_active_relations">This category cannot be deleted as there are products associated with it.</string>
-  <!-- Dialog -->
+  <string name="edit_category_on_create_category_error_title">Cannot create category %1$s!</string>
+  <string name="edit_category_on_create_category_error_text">Cannot create category %1$s because there\'s already other category with that name.</string>
+  <string name="edit_category_on_update_category_error_title">Cannot update category %1$s!</string>
+  <string name="edit_category_on_update_category_error_text">Cannot change category %1$s name to %2$s because there\'s already other category with that name.</string>
   <string name="edit_category_on_delete_category_error_title">Cannot delete category %1$s!</string>
   <string name="edit_category_on_delete_category_error_text">Cannot delete category %1$s as there are place products relating to it.</string>
 

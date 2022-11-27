@@ -8,6 +8,7 @@ import neuro.expenses.register.viewmodel.model.CategoryModel
 
 class EditCategoryViewModelMock() : IEditCategoryViewModel {
   override val id = mutableStateOf(-1L)
+  override val currentName = ""
   override val name = mutableStateOf("")
   override val iconUrl = mutableStateOf("")
 
@@ -26,6 +27,8 @@ class EditCategoryViewModelMock() : IEditCategoryViewModel {
   override fun onDeleteButton() {}
   override fun onConfirmDelete() {}
   override fun eventConsumed() {}
+  override fun onCreateCategoryErrorDialogDismiss() {}
+  override fun onUpdateCategoryErrorDialogDismiss() {}
   override fun onDeleteCategoryErrorDialogDismiss() {}
   override fun onConfirmDeleteDismiss() {}
 }

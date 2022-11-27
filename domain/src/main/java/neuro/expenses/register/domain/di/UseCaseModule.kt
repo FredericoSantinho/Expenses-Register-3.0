@@ -22,8 +22,10 @@ val useCaseModule = module {
   single<GetLastBillUseCase> { GetLastBillUseCaseImpl(get()) }
   single<ObserveBillsUseCase> { ObserveBillsUseCaseImpl(get()) }
   single<ObserveCategoriesUseCase> { ObserveCategoriesUseCaseImpl(get()) }
+  single<CreateCategoryUseCase> { CreateCategoryUseCaseImpl(get(), get()) }
   single<SaveCategoryUseCase> { SaveCategoryUseCaseImpl(get()) }
   single<DeleteCategoryUseCase> { DeleteCategoryUseCaseImpl(get()) }
+  single<UpdateCategoryUseCase> { UpdateCategoryUseCaseImpl(get()) }
   single<GetCalendarUseCase> { GetCalendarUseCaseImpl() }
   single<GetNearestPlaceUseCase> { GetNearestPlaceUseCaseImpl(get(), get()) }
   single<GetNearestPlacesUseCase> { GetNearestPlacesUseCaseImpl(get()) }

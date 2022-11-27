@@ -22,16 +22,16 @@ import neuro.expenses.register.ui.common.composables.image.AsyncImage
 import neuro.expenses.register.ui.common.composables.text.BasicCurrencyTextField
 import neuro.expenses.register.ui.common.composables.text.BasicNumericTextField
 import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
+import neuro.expenses.register.viewmodel.bill.model.BillItemModel
 import neuro.expenses.register.viewmodel.common.formatter.CurrencyFormatter
 import neuro.expenses.register.viewmodel.common.formatter.DecimalFormatterImpl
 import neuro.expenses.register.viewmodel.di.viewModelModule
-import neuro.expenses.register.viewmodel.edit.bill.model.BillItemViewModel
 import org.koin.androidx.compose.get
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BillItemComposable(
-  billItemViewModel: BillItemViewModel,
+  billItemModel: BillItemModel,
   modifier: Modifier = Modifier,
   currencyFormatter: CurrencyFormatter = get(),
   onValuesChange: () -> (Unit) = {}
@@ -55,7 +55,7 @@ fun BillItemComposable(
       AsyncImage(
         modifier = Modifier
           .size(28.dp)
-          .clip(RoundedCornerShape(corner = CornerSize(8.dp))), billItemViewModel.iconUrl
+          .clip(RoundedCornerShape(corner = CornerSize(8.dp))), billItemModel.iconUrl
       )
     }
 
@@ -65,7 +65,7 @@ fun BillItemComposable(
         .weight(0.45f), verticalArrangement = Arrangement.Center
     ) {
       Text(
-        billItemViewModel.description,
+        billItemModel.description,
         style = MaterialTheme.typography.subtitle2,
         textAlign = TextAlign.Left,
         overflow = TextOverflow.Ellipsis,
@@ -79,15 +79,15 @@ fun BillItemComposable(
     ) {
       if (isEditing.value) {
         BasicCurrencyTextField(
-          billItemViewModel.price,
+          billItemModel.price,
           textStyle = MaterialTheme.typography.subtitle2,
           onValueChange = {
-            billItemViewModel.updateTotal()
+            billItemModel.updateTotal()
             onValuesChange()
           })
       } else {
         Text(
-          currencyFormatter.format(billItemViewModel.price.value),
+          currencyFormatter.format(billItemModel.price.value),
           style = MaterialTheme.typography.subtitle2,
           textAlign = TextAlign.Right,
           maxLines = 1,
@@ -103,17 +103,17 @@ fun BillItemComposable(
     ) {
       if (isEditing.value) {
         BasicNumericTextField(
-          billItemViewModel.amount,
+          billItemModel.amount,
           textStyle = MaterialTheme.typography.subtitle2.copy(textAlign = TextAlign.End),
           onValueChange = {
-            billItemViewModel.updateTotal()
+            billItemModel.updateTotal()
             onValuesChange()
           },
           modifier = Modifier.padding(start = 8.dp)
         )
       } else {
         Text(
-          billItemViewModel.amount.value,
+          billItemModel.amount.value,
           style = MaterialTheme.typography.subtitle2,
           textAlign = TextAlign.End,
           maxLines = 1,
@@ -128,7 +128,7 @@ fun BillItemComposable(
         .weight(0.17f), verticalArrangement = Arrangement.Center
     ) {
       Text(
-        currencyFormatter.format(billItemViewModel.total.value),
+        currencyFormatter.format(billItemModel.total.value),
         style = MaterialTheme.typography.subtitle2,
         textAlign = TextAlign.Right,
         maxLines = 1,
@@ -155,7 +155,7 @@ fun PreviewBillItemComposable() {
   }
 }
 
-private fun billItemViewModel(): BillItemViewModel {
+private fun billItemViewModel(): BillItemModel {
   val decimalFormatter = DecimalFormatterImpl(2)
   val id = 0L
   val description = "Sagres Média 0,33cl"
@@ -163,8 +163,8 @@ private fun billItemViewModel(): BillItemViewModel {
   val amount = mutableStateOf("2.00")
   val total = mutableStateOf("2.60")
   val iconUrl = ""
-  val billItemViewModel = BillItemViewModel(
+  val billItemModel = BillItemModel(
     id, description, price, amount, total, iconUrl, decimalFormatter
   )
-  return billItemViewModel
+  return billItemModel
 }
