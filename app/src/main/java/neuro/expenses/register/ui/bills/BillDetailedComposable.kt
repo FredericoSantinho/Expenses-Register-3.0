@@ -15,13 +15,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentActivity
+import neuro.expenses.register.mocks.bill.BillDetailedViewModelMock
 import neuro.expenses.register.ui.common.composables.edit.SaveDeleteComposable
 import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.viewmodel.bill.BillDetailedViewModel
-import neuro.expenses.register.viewmodel.bill.mapper.BillItemModelMapper
 import neuro.expenses.register.viewmodel.bill.model.BillItemModel
-import neuro.expenses.register.viewmodel.common.formatter.CurrencyFormatterImpl
-import neuro.expenses.register.viewmodel.common.formatter.DecimalFormatterImpl
 
 @Composable
 fun BillDetailedComposable(
@@ -74,15 +72,10 @@ fun BillDetailedComposable(
 @Preview
 @Composable
 fun PreviewBillDetailedComposable() {
-  val decimalFormatter = DecimalFormatterImpl(2)
-  val currencyFormatter = CurrencyFormatterImpl(decimalFormatter, "€")
-  val billItemModelMapper = BillItemModelMapper(decimalFormatter)
+  val fragmentActivity = FragmentActivity()
+  val billDetailedViewModel = BillDetailedViewModelMock().createBillDetailedViewModel()
 
   ExpensesRegisterTheme {
-    val billDetailedViewModel = BillDetailedViewModel(billItemModelMapper, currencyFormatter)
-    billDetailedViewModel.placeName.value = "Bitoque"
-    billDetailedViewModel.billItems.value = emptyList()
-
-    BillDetailedComposable(FragmentActivity(), billDetailedViewModel)
+    BillDetailedComposable(fragmentActivity, billDetailedViewModel)
   }
 }

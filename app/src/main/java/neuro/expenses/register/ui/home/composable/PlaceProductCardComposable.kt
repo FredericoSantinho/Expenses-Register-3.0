@@ -18,13 +18,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import neuro.expenses.register.mocks.placeproduct.PlaceProductCardModelMock
 import neuro.expenses.register.ui.common.composables.image.AsyncImage
 import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.viewmodel.home.IProductCardViewModel
 import neuro.expenses.register.viewmodel.home.OnProductCardClick
-import neuro.expenses.register.viewmodel.home.ProductCardViewModel
-import neuro.expenses.register.viewmodel.home.model.ProductCardModel
-import neuro.expenses.register.viewmodel.model.CategoryModel
+import neuro.expenses.register.viewmodel.home.PlaceProductCardViewModel
+import neuro.expenses.register.viewmodel.home.model.PlaceProductCardModel
 import java.util.*
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -110,30 +110,22 @@ fun PlaceProductCardComposable(productCardViewModel: IProductCardViewModel) {
 @Preview
 @Composable
 fun PreviewDateTimeComposable() {
-  val description = "Tosta Mista Pão Caseiro"
-  val categoryModel = CategoryModel(1L, "Restau", "")
-  val place = "Riviera"
-  val price = "4.20 €"
-  val amount = 1.0
-  val iconUrl =
-    "https://www.iguaria.com/wp-content/uploads/2016/03/Iguaria_Tosta-de-Bacon-Queijo-Fiambre.jpg"
-  val productCardModel =
-    ProductCardModel(0, description, categoryModel, place, price, iconUrl, amount)
+  val placeProductCardModel = PlaceProductCardModelMock().createPlaceProductCardModel()
 
   ExpensesRegisterTheme {
     PlaceProductCardComposable(
-      ProductCardViewModel(
+      PlaceProductCardViewModel(
         MockedOnProductCardClick(),
-        productCardModel
+        placeProductCardModel
       )
     )
   }
 }
 
 private class MockedOnProductCardClick : OnProductCardClick {
-  override fun onProductCardClick(productCardModel: ProductCardModel) {}
+  override fun onProductCardClick(placeProductCardModel: PlaceProductCardModel) {}
 
-  override fun onProductCardLongClick(productCardModel: ProductCardModel) {}
+  override fun onProductCardLongClick(placeProductCardModel: PlaceProductCardModel) {}
 }
 
 class ProductCardTags {

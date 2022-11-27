@@ -18,13 +18,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import neuro.expenses.register.common.koin.startKoinIfNeeded
 import neuro.expenses.register.di.registerExpensesModule
+import neuro.expenses.register.mocks.bill.BillItemModelMock
 import neuro.expenses.register.ui.common.composables.image.AsyncImage
 import neuro.expenses.register.ui.common.composables.text.BasicCurrencyTextField
 import neuro.expenses.register.ui.common.composables.text.BasicNumericTextField
 import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.viewmodel.bill.model.BillItemModel
 import neuro.expenses.register.viewmodel.common.formatter.CurrencyFormatter
-import neuro.expenses.register.viewmodel.common.formatter.DecimalFormatterImpl
 import neuro.expenses.register.viewmodel.di.viewModelModule
 import org.koin.androidx.compose.get
 
@@ -146,25 +146,11 @@ fun BillItemComposable(
 fun PreviewBillItemComposable() {
   startKoinIfNeeded { modules(registerExpensesModule, viewModelModule) }
 
-  val billItemViewModel = billItemViewModel()
+  val billItemViewModel = BillItemModelMock().createBillItemModel()
 
   ExpensesRegisterTheme {
     BillItemComposable(
       billItemViewModel
     )
   }
-}
-
-private fun billItemViewModel(): BillItemModel {
-  val decimalFormatter = DecimalFormatterImpl(2)
-  val id = 0L
-  val description = "Sagres Média 0,33cl"
-  val price = mutableStateOf("1.30")
-  val amount = mutableStateOf("2.00")
-  val total = mutableStateOf("2.60")
-  val iconUrl = ""
-  val billItemModel = BillItemModel(
-    id, description, price, amount, total, iconUrl, decimalFormatter
-  )
-  return billItemModel
 }

@@ -57,10 +57,13 @@ fun BillItemFooterComposable(
 @Preview
 @Composable
 fun PreviewBillItemFooterComposable() {
+  val fragmentActivity = FragmentActivity()
+  val total = "10.30 €"
   val calendar = remember { mutableStateOf(Calendar.getInstance()) }
+
   ExpensesRegisterTheme {
     BillItemFooterComposable(
-      FragmentActivity(), "10.30 €", calendar
+      fragmentActivity, total, calendar
     )
   }
 }

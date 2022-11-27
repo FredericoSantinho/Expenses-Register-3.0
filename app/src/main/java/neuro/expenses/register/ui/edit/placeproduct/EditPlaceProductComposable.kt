@@ -66,13 +66,13 @@ fun EditPlaceProductComposable(
       .clip(RoundedCornerShape(corner = CornerSize(8.dp))),
       editPlaceProductViewModel.iconUrl.value)
     TextFieldWithError(
+      value = editPlaceProductViewModel.description,
       label = stringResource(R.string.description),
       keyboardOptions = keyboardOptionsText,
-      value = editPlaceProductViewModel.description,
-      isError = descriptionIsError,
-      errorMessage = descriptionErrorMessage,
+      textStyle = ExpensesRegisterTypography.body2,
       onValueChange = { editPlaceProductViewModel.onDescriptionChange() },
-      textStyle = ExpensesRegisterTypography.body2
+      isError = descriptionIsError,
+      errorMessage = descriptionErrorMessage
     )
     TextFieldWithDropdown(
       dataIn = editPlaceProductViewModel.categoriesNames.subscribeAsState(initial = emptyList()),
@@ -85,15 +85,15 @@ fun EditPlaceProductComposable(
       onSelectOption = { focusManager.moveFocus(FocusDirection.Next) }
     )
     TextFieldWithError(
+      value = editPlaceProductViewModel.iconUrl,
       label = stringResource(R.string.icon_url),
       keyboardOptions = keyboardOptionsText,
-      value = editPlaceProductViewModel.iconUrl,
       textStyle = ExpensesRegisterTypography.body2
     )
     CurrencyTextField(
-      modifier = Modifier.width(96.dp),
-      label = stringResource(R.string.price),
       value = editPlaceProductViewModel.price,
+      label = stringResource(R.string.price),
+      modifier = Modifier.width(96.dp),
       textStyle = ExpensesRegisterTypography.body2
     )
     SaveDeleteComposable(

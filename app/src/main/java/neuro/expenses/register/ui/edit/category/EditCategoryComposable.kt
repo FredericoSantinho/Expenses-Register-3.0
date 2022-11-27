@@ -23,7 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import neuro.expenses.register.R
 import neuro.expenses.register.common.alert.AlertDialog
-import neuro.expenses.register.mocks.EditCategoryViewModelMock
+import neuro.expenses.register.mocks.category.EditCategoryViewModelMock
 import neuro.expenses.register.ui.common.composables.edit.SaveDeleteComposable
 import neuro.expenses.register.ui.common.composables.image.AsyncImage
 import neuro.expenses.register.ui.common.composables.text.TextFieldWithError
@@ -63,19 +63,19 @@ fun EditCategoryComposable(
       editCategoryViewModel.iconUrl.value
     )
     TextFieldWithError(
-      modifier = Modifier.padding(top = 8.dp),
-      label = stringResource(R.string.category),
-      keyboardOptions = keyboardOptionsText,
       value = editCategoryViewModel.name,
-      isError = nameIsError,
-      errorMessage = nameErrorMessage,
+      label = stringResource(R.string.category),
+      modifier = Modifier.padding(top = 8.dp),
+      keyboardOptions = keyboardOptionsText,
+      textStyle = ExpensesRegisterTypography.body2,
       onValueChange = { editCategoryViewModel.onNameChange() },
-      textStyle = ExpensesRegisterTypography.body2
+      isError = nameIsError,
+      errorMessage = nameErrorMessage
     )
     TextFieldWithError(
+      value = editCategoryViewModel.iconUrl,
       label = stringResource(R.string.icon_url),
       keyboardOptions = keyboardOptionsText,
-      value = editCategoryViewModel.iconUrl,
       textStyle = ExpensesRegisterTypography.body2
     )
 
@@ -186,7 +186,6 @@ private fun onUiEvent(
 @Composable
 fun PreviewEditCategoryComposable() {
   val editCategoryViewModel = EditCategoryViewModelMock()
-  editCategoryViewModel.name.value = "Super"
 
   ExpensesRegisterTheme {
     EditCategoryComposable(editCategoryViewModel)

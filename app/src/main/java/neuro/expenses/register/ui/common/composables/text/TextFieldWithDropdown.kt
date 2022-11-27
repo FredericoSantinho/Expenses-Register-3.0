@@ -125,7 +125,7 @@ fun InternalTextFieldWithDropdown(
 @Preview
 @Composable
 fun PreviewTextFieldWithDropdown() {
-  val dataIn = remember { mutableStateOf(listOf("aaa", "abb", "abc")) }
+  val dataIn = remember { mutableStateOf(listOf("Super", "Café", "Borga")) }
 
   ExpensesRegisterTheme {
     TextFieldWithDropdown(

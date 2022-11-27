@@ -156,6 +156,7 @@ private fun onUiReady(homeViewModel: IHomeViewModel, loading: MutableState<Boole
 @Composable
 fun PreviewHomeComposable() {
   val fragmentActivity = FragmentActivity()
+
   ExpensesRegisterTheme {
     HomeComposable(fragmentActivity)
   }

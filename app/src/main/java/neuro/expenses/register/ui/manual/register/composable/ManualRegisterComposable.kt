@@ -97,13 +97,13 @@ fun ManualRegisterComposable(
         calendar = manualRegisterViewModel.calendar
       )
       TextFieldWithError(
+        value = manualRegisterViewModel.description,
         label = stringResource(R.string.description),
         keyboardOptions = keyboardOptionsText,
-        value = manualRegisterViewModel.description,
-        isError = descriptionIsError,
-        errorMessage = descriptionErrorMessage,
+        textStyle = ExpensesRegisterTypography.body2,
         onValueChange = { manualRegisterViewModel.onDescriptionChange() },
-        textStyle = ExpensesRegisterTypography.body2
+        isError = descriptionIsError,
+        errorMessage = descriptionErrorMessage
       )
       TextFieldWithDropdown(dataIn = manualRegisterViewModel.categoriesNames.subscribeAsState(
         initial = emptyList()
@@ -118,7 +118,9 @@ fun ManualRegisterComposable(
       ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
         val (place, placeAuto) = createRefs()
 
-        TextFieldWithError(label = stringResource(R.string.place),
+        TextFieldWithError(
+          value = manualRegisterViewModel.place,
+          label = stringResource(R.string.place),
           modifier = Modifier
             .constrainAs(place) {
               start.linkTo(parent.start)
@@ -127,13 +129,12 @@ fun ManualRegisterComposable(
             }
             .onFocusEvent { placeHasFocus.value = it.isFocused },
           keyboardOptions = keyboardOptionsText,
-          value = manualRegisterViewModel.place,
-          isError = placeIsError,
-          errorMessage = placeErrorMessage,
+          textStyle = ExpensesRegisterTypography.body2,
           onValueChange = {
             manualRegisterViewModel.onPlaceChange()
           },
-          textStyle = ExpensesRegisterTypography.body2
+          isError = placeIsError,
+          errorMessage = placeErrorMessage
         )
         IconButton(onClick = {
           manualRegisterViewModel.onNearestPlaceButton()
@@ -156,6 +157,7 @@ fun ManualRegisterComposable(
         val (priceC, amountC, totalLabelC, totalC) = createRefs()
 
         CurrencyTextField(
+          value = manualRegisterViewModel.price,
           label = stringResource(R.string.price),
           modifier = Modifier.constrainAs(priceC) {
             start.linkTo(parent.start)
@@ -164,10 +166,10 @@ fun ManualRegisterComposable(
           onValueChange = {
             manualRegisterViewModel.onPriceChange()
           },
-          value = manualRegisterViewModel.price,
           textStyle = ExpensesRegisterTypography.body2
         )
         TextFieldWithError(
+          value = manualRegisterViewModel.amount,
           label = stringResource(R.string.amount),
           modifier = Modifier.constrainAs(amountC) {
             start.linkTo(priceC.end, margin = 8.dp)
@@ -179,7 +181,6 @@ fun ManualRegisterComposable(
             manualRegisterViewModel.amount.value = it
             manualRegisterViewModel.onAmountChange()
           },
-          value = manualRegisterViewModel.amount,
           isError = amountIsError,
           errorMessage = amountErrorMessage
         )
@@ -321,7 +322,9 @@ private fun showDescriptionError(
 @Preview
 @Composable
 fun PreviewManualRegisterComposable() {
+  val fragmentActivity = FragmentActivity()
+
   ExpensesRegisterTheme {
-    ManualRegisterComposable(fragmentActivity = FragmentActivity())
+    ManualRegisterComposable(fragmentActivity)
   }
 }

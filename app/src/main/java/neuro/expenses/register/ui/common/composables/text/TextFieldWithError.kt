@@ -11,6 +11,7 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -20,12 +21,12 @@ import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
 
 @Composable
 fun TextFieldWithError(
+  value: MutableState<String> = mutableStateOf(""),
   label: String,
   modifier: Modifier = Modifier,
   keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
   textStyle: TextStyle = TextStyle.Default,
   onValueChange: (String) -> Unit = { },
-  value: MutableState<String> = mutableStateOf(""),
   isError: MutableState<Boolean> = mutableStateOf(false),
   errorMessage: MutableState<String> = mutableStateOf("")
 ) {
@@ -60,7 +61,9 @@ fun TextFieldWithError(
 @Preview
 @Composable
 fun PreviewTextFieldWithError() {
+  val value = remember { mutableStateOf("This is a description") }
+
   ExpensesRegisterTheme {
-    TextFieldWithError("description")
+    TextFieldWithError(value, "description")
   }
 }

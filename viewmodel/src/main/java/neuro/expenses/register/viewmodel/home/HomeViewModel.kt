@@ -14,13 +14,13 @@ import neuro.expenses.register.viewmodel.bill.BillViewModel
 import neuro.expenses.register.viewmodel.common.BaseViewModel
 import neuro.expenses.register.viewmodel.common.schedulers.SchedulerProvider
 import neuro.expenses.register.viewmodel.edit.placeproduct.EditPlaceProductViewModel
-import neuro.expenses.register.viewmodel.home.factory.ProductCardViewModelFactoryImpl
-import neuro.expenses.register.viewmodel.home.mapper.ProductCardModelMapper
+import neuro.expenses.register.viewmodel.home.factory.PlaceProductCardViewModelFactoryImpl
+import neuro.expenses.register.viewmodel.home.mapper.PlaceProductCardModelMapper
 import neuro.expenses.register.viewmodel.home.mapper.SearchSuggestionModelMapper
 import neuro.expenses.register.viewmodel.home.mapper.toViewModel
 import neuro.expenses.register.viewmodel.home.model.CameraPositionModel
 import neuro.expenses.register.viewmodel.home.model.LatLngModel
-import neuro.expenses.register.viewmodel.home.model.ProductCardModel
+import neuro.expenses.register.viewmodel.home.model.PlaceProductCardModel
 import neuro.expenses.register.viewmodel.model.search.SearchSuggestionModel
 import neuro.expenses.register.viewmodel.scaffold.ScaffoldViewModelState
 
@@ -32,7 +32,7 @@ class HomeViewModel(
   private val getCalendarUseCase: GetCalendarUseCase,
   private val registerExpenseUseCase: RegisterExpenseUseCase,
   private val sortPlaceProducts: SortPlaceProducts,
-  private val productCardModelMapper: ProductCardModelMapper,
+  private val placeProductCardModelMapper: PlaceProductCardModelMapper,
   private val searchSuggestionModelMapper: SearchSuggestionModelMapper,
   override val billViewModel: BillViewModel,
   override val editPlaceProductViewModel: EditPlaceProductViewModel,
@@ -91,14 +91,14 @@ class HomeViewModel(
     onSelectedPlace(places.value.get(index))
   }
 
-  override fun onProductCardClick(productCardModel: ProductCardModel) {
+  override fun onProductCardClick(placeProductCardModel: PlaceProductCardModel) {
     registerExpenseUseCase.registerExpense(
-      productCardModelMapper.map(productCardModel, calendar.value)
+      placeProductCardModelMapper.map(placeProductCardModel, calendar.value)
     ).baseSubscribe {}
   }
 
-  override fun onProductCardLongClick(productCardModel: ProductCardModel) {
-    setEditProductViewModel(productCardModel)
+  override fun onProductCardLongClick(placeProductCardModel: PlaceProductCardModel) {
+    setEditProductViewModel(placeProductCardModel)
 
     _uiEvent.openEditPlaceProduct()
   }
@@ -136,8 +136,8 @@ class HomeViewModel(
     onSelectedPlace(places.value.first { it.id == placeId })
   }
 
-  private fun setEditProductViewModel(productCardModel: ProductCardModel) {
-    val placeProductDto = getPlaceProduct(productCardModel.id)
+  private fun setEditProductViewModel(placeProductCardModel: PlaceProductCardModel) {
+    val placeProductDto = getPlaceProduct(placeProductCardModel.id)
     editPlaceProductViewModel.placeDto.value = placeDto
     editPlaceProductViewModel.placeProductId.value = placeProductDto.id
     editPlaceProductViewModel.currentDescription = placeProductDto.productDto.description
@@ -158,7 +158,7 @@ class HomeViewModel(
   }
 
   private fun newProductsListViewModel() = ProductsListViewModel(
-    ProductCardViewModelFactoryImpl(this), productCardModelMapper
+    PlaceProductCardViewModelFactoryImpl(this), placeProductCardModelMapper
   )
 }
 

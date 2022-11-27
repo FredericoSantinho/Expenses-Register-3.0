@@ -8,13 +8,13 @@ import neuro.expenses.register.viewmodel.common.BaseViewModel
 import neuro.expenses.register.viewmodel.common.schedulers.SchedulerProvider
 import neuro.expenses.register.viewmodel.home.OnProductCardClick
 import neuro.expenses.register.viewmodel.home.ProductsListViewModel
-import neuro.expenses.register.viewmodel.home.factory.ProductCardViewModelFactoryImpl
-import neuro.expenses.register.viewmodel.home.mapper.ProductCardModelMapper
-import neuro.expenses.register.viewmodel.home.model.ProductCardModel
+import neuro.expenses.register.viewmodel.home.factory.PlaceProductCardViewModelFactoryImpl
+import neuro.expenses.register.viewmodel.home.mapper.PlaceProductCardModelMapper
+import neuro.expenses.register.viewmodel.home.model.PlaceProductCardModel
 
 class EditPlaceProductsViewModel(
   private val getNearestPlacesUseCase: GetNearestPlacesUseCase,
-  private val productCardModelMapper: ProductCardModelMapper,
+  private val placeProductCardModelMapper: PlaceProductCardModelMapper,
   val editPlaceProductViewModel: EditPlaceProductViewModel,
   schedulerProvider: SchedulerProvider
 ) : BaseViewModel(schedulerProvider), OnProductCardClick {
@@ -27,14 +27,14 @@ class EditPlaceProductsViewModel(
   val productsListViewModel: ProductsListViewModel = newProductsListViewModel()
 
   private fun newProductsListViewModel() = ProductsListViewModel(
-    ProductCardViewModelFactoryImpl(this), productCardModelMapper
+    PlaceProductCardViewModelFactoryImpl(this), placeProductCardModelMapper
   )
 
-  override fun onProductCardClick(productCardModel: ProductCardModel) {
+  override fun onProductCardClick(placeProductCardModel: PlaceProductCardModel) {
 
   }
 
-  override fun onProductCardLongClick(productCardModel: ProductCardModel) {
+  override fun onProductCardLongClick(placeProductCardModel: PlaceProductCardModel) {
 
   }
 

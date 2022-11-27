@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
 import neuro.expenses.register.common.compose.rememberUnit
+import neuro.expenses.register.mocks.category.EditCategoriesViewModelMock
 import neuro.expenses.register.ui.home.composable.*
 import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.ui.theme.grey_fog_lighter

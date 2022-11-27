@@ -22,12 +22,12 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import neuro.expenses.register.R
 import neuro.expenses.register.common.shimmer.shimmer
 import neuro.expenses.register.common.shimmer.shimmerBackground
+import neuro.expenses.register.mocks.bill.BillModelMock
 import neuro.expenses.register.ui.common.composables.image.AsyncImage
 import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.viewmodel.bill.BillUiState.UiState
 import neuro.expenses.register.viewmodel.bill.BillViewModel
 import neuro.expenses.register.viewmodel.bill.IBillViewModel
-import neuro.expenses.register.viewmodel.bill.model.BillModel
 import java.util.*
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -175,10 +175,9 @@ private fun closeBillIcon(imageConstraintModifier: Modifier) {
 @Preview
 @Composable
 fun PreviewDateTimeComposable() {
+
   ExpensesRegisterTheme {
-    val billModel =
-      BillModel(0, "", "Bitoque", "10h36", "24/11/2022", "3.60 €", true, Calendar.getInstance())
-    BillCardComposable(BillViewModel(billModel = billModel))
+    BillCardComposable(BillViewModel(billModel = BillModelMock().createBillModel()))
   }
 }
 

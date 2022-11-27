@@ -2,7 +2,7 @@ package neuro.expenses.register.viewmodel.home.model
 
 import neuro.expenses.register.viewmodel.model.CategoryModel
 
-data class ProductCardModel(
+data class PlaceProductCardModel(
   val id: Long,
   val description: String,
   val categoryModel: CategoryModel,

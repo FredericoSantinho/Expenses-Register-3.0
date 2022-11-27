@@ -1,8 +1,7 @@
-package neuro.expenses.register.ui.edit.category
+package neuro.expenses.register.mocks.category
 
 import androidx.compose.runtime.mutableStateOf
 import io.reactivex.rxjava3.core.Observable
-import neuro.expenses.register.mocks.EditCategoryViewModelMock
 import neuro.expenses.register.viewmodel.edit.category.EditCategoriesUiEvent
 import neuro.expenses.register.viewmodel.edit.category.IEditCategoriesViewModel
 import neuro.expenses.register.viewmodel.model.CategoryModel
