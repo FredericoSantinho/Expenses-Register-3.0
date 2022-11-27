@@ -14,7 +14,6 @@ import neuro.expenses.register.viewmodel.bill.BillViewModel
 import neuro.expenses.register.viewmodel.common.BaseViewModel
 import neuro.expenses.register.viewmodel.common.schedulers.SchedulerProvider
 import neuro.expenses.register.viewmodel.edit.placeproduct.EditPlaceProductViewModel
-import neuro.expenses.register.viewmodel.home.factory.PlaceProductCardViewModelFactoryImpl
 import neuro.expenses.register.viewmodel.home.mapper.PlaceProductCardModelMapper
 import neuro.expenses.register.viewmodel.home.mapper.SearchSuggestionModelMapper
 import neuro.expenses.register.viewmodel.home.mapper.toViewModel
@@ -91,13 +90,13 @@ class HomeViewModel(
     onSelectedPlace(places.value.get(index))
   }
 
-  override fun onProductCardClick(placeProductCardModel: PlaceProductCardModel) {
+  fun onProductCardClick(placeProductCardModel: PlaceProductCardModel) {
     registerExpenseUseCase.registerExpense(
       placeProductCardModelMapper.map(placeProductCardModel, calendar.value)
     ).baseSubscribe {}
   }
 
-  override fun onProductCardLongClick(placeProductCardModel: PlaceProductCardModel) {
+  fun onProductCardLongClick(placeProductCardModel: PlaceProductCardModel) {
     setEditProductViewModel(placeProductCardModel)
 
     _uiEvent.openEditPlaceProduct()
@@ -113,8 +112,7 @@ class HomeViewModel(
     this.placeDto = placeDto
     selectedPlace.value = placeDto.name
     sortPlaceProducts.sortPlaceProducts(placeDto.products)
-      .flatMap { appBarViewModel.query.firstOrError() }
-      .baseSubscribe { query ->
+      .flatMap { appBarViewModel.query.firstOrError() }.baseSubscribe { query ->
         productsListViewModel.setProducts(placeDto, query)
         _uiState.ready()
       }
@@ -124,7 +122,7 @@ class HomeViewModel(
     val productSearchSuggestionModels =
       placeDto.products.map { searchSuggestionModelMapper.map(it) }
     val placeSearchSuggestionModels =
-      places.value.map { searchSuggestionModelMapper.map(it, { onPlaceSearchSuggestion(it) }) }
+      places.value.map { searchSuggestionModelMapper.map(it, ::onPlaceSearchSuggestion) }
     val list = mutableListOf<SearchSuggestionModel>()
     list.addAll(placeSearchSuggestionModels)
     list.addAll(productSearchSuggestionModels)
@@ -158,7 +156,7 @@ class HomeViewModel(
   }
 
   private fun newProductsListViewModel() = ProductsListViewModel(
-    PlaceProductCardViewModelFactoryImpl(this), placeProductCardModelMapper
+    placeProductCardModelMapper, ::onProductCardClick, ::onProductCardLongClick
   )
 }
 

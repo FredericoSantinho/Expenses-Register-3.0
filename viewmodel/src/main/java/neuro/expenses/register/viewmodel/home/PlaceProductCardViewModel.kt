@@ -5,8 +5,9 @@ import neuro.expenses.register.viewmodel.home.model.PlaceProductCardModel
 import neuro.expenses.register.viewmodel.model.CategoryModel
 
 class PlaceProductCardViewModel(
-  private val onProductCardClick: OnProductCardClick,
-  placeProductCardModel: PlaceProductCardModel
+  placeProductCardModel: PlaceProductCardModel,
+  private val onProductCardClick: (PlaceProductCardModel) -> Unit = {},
+  private val onProductCardLongClick: (PlaceProductCardModel) -> Unit = {}
 ) : IProductCardViewModel {
   override val placeProductId = mutableStateOf(placeProductCardModel.id)
   override val description = mutableStateOf(placeProductCardModel.description)
@@ -24,16 +25,16 @@ class PlaceProductCardViewModel(
   val amount = mutableStateOf(placeProductCardModel.amount)
 
   override fun onCardClick() {
-    val productCardModel = buildProductCardModel()
-    onProductCardClick.onProductCardClick(productCardModel)
+    val productCardModel = buildPlaceProductCardModel()
+    onProductCardClick(productCardModel)
   }
 
   override fun onCardLongClick() {
-    val productCardModel = buildProductCardModel()
-    onProductCardClick.onProductCardLongClick(productCardModel)
+    val productCardModel = buildPlaceProductCardModel()
+    onProductCardLongClick(productCardModel)
   }
 
-  private fun buildProductCardModel(): PlaceProductCardModel {
+  private fun buildPlaceProductCardModel(): PlaceProductCardModel {
     val placeProductCardModel = PlaceProductCardModel(
       placeProductId.value,
       description.value,

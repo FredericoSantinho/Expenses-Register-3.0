@@ -15,7 +15,8 @@ internal class PlaceProductCardViewModelTest {
 
   @Test
   fun test() {
-    val onProductCardClick = mock<OnProductCardClick>()
+    val onProductCardClick: (PlaceProductCardModel) -> Unit = mock()
+    val onProductCardLongClick: (PlaceProductCardModel) -> Unit = mock()
     val id = 1L
     val description = "desc"
     val categoryModel = CategoryModel(1L, "cat", "")
@@ -27,7 +28,7 @@ internal class PlaceProductCardViewModelTest {
       PlaceProductCardModel(id, description, categoryModel, place, price, iconUrl)
 
     val placeProductCardViewModel =
-      PlaceProductCardViewModel(onProductCardClick, placeProductCardModel)
+      PlaceProductCardViewModel(placeProductCardModel, onProductCardClick, onProductCardLongClick)
 
     assertEquals(description, placeProductCardViewModel.description.value)
     assertEquals(categoryModel, placeProductCardViewModel.categoryModel.value)
@@ -38,17 +39,11 @@ internal class PlaceProductCardViewModelTest {
 
     verifyNoInteractions(onProductCardClick)
     placeProductCardViewModel.onCardClick()
-    verify(onProductCardClick, times(1)).onProductCardClick(
-      eq(placeProductCardModel)
-    )
-    verify(onProductCardClick, times(0)).onProductCardLongClick(any())
+    verify(onProductCardClick, times(1)).invoke(eq(placeProductCardModel))
+    verify(onProductCardLongClick, times(0)).invoke(any())
 
     placeProductCardViewModel.onCardLongClick()
-    verify(onProductCardClick, times(1)).onProductCardClick(
-      eq(placeProductCardModel)
-    )
-    verify(onProductCardClick, times(1)).onProductCardLongClick(
-      eq(placeProductCardModel)
-    )
+    verify(onProductCardClick, times(1)).invoke(eq(placeProductCardModel))
+    verify(onProductCardLongClick, times(1)).invoke(eq(placeProductCardModel))
   }
 }

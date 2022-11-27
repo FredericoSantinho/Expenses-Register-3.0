@@ -6,7 +6,7 @@ import neuro.expenses.register.viewmodel.bill.BillViewModel
 import neuro.expenses.register.viewmodel.edit.placeproduct.EditPlaceProductViewModel
 import java.util.*
 
-interface IHomeViewModel : OnProductCardClick {
+interface IHomeViewModel {
   val billViewModel: BillViewModel
   val placesNames: MutableState<List<String>>
   val calendar: MutableState<Calendar>

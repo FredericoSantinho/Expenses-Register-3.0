@@ -22,9 +22,7 @@ import neuro.expenses.register.mocks.placeproduct.PlaceProductCardModelMock
 import neuro.expenses.register.ui.common.composables.image.AsyncImage
 import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.viewmodel.home.IProductCardViewModel
-import neuro.expenses.register.viewmodel.home.OnProductCardClick
 import neuro.expenses.register.viewmodel.home.PlaceProductCardViewModel
-import neuro.expenses.register.viewmodel.home.model.PlaceProductCardModel
 import java.util.*
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -114,18 +112,9 @@ fun PreviewDateTimeComposable() {
 
   ExpensesRegisterTheme {
     PlaceProductCardComposable(
-      PlaceProductCardViewModel(
-        MockedOnProductCardClick(),
-        placeProductCardModel
-      )
+      PlaceProductCardViewModel(placeProductCardModel)
     )
   }
-}
-
-private class MockedOnProductCardClick : OnProductCardClick {
-  override fun onProductCardClick(placeProductCardModel: PlaceProductCardModel) {}
-
-  override fun onProductCardLongClick(placeProductCardModel: PlaceProductCardModel) {}
 }
 
 class ProductCardTags {
