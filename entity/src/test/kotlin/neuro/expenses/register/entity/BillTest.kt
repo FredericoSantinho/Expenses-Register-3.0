@@ -18,9 +18,9 @@ internal class BillTest {
     val iconUrl = "iconUrl"
     val isOpen = false
 
-    val bill = Bill(1, calendar, place, total, billItems, iconUrl, isOpen)
-    val billEqual = Bill(1, calendar, place, total, billItems, iconUrl, isOpen)
-    val billDifferent = Bill(2, calendar, place, total, billItems, iconUrl, isOpen)
+    val bill = Bill(id, calendar, place, total, billItems, iconUrl, isOpen)
+    val billEqual = Bill(id, calendar, place, total, billItems, iconUrl, isOpen)
+    val billDifferent = Bill(id + 1, calendar, place, total, billItems, iconUrl, isOpen)
 
     assertEquals(bill.id, id)
     assertEquals(bill.calendar, calendar)
@@ -32,5 +32,15 @@ internal class BillTest {
 
     assertEquals(bill, billEqual)
     assertNotEquals(bill, billDifferent)
+  }
+
+  @Test
+  fun testBillWithEmptyPlace() {
+    val id = 1L
+    val calendar = Calendar.getInstance()
+
+    val bill = Bill(id, calendar)
+
+    assertEquals(bill.place.id, -1L)
   }
 }

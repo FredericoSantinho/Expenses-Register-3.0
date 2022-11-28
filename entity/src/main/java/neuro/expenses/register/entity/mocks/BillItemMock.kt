@@ -2,7 +2,7 @@ package neuro.expenses.register.entity.mocks
 
 import neuro.expenses.register.entity.BillItem
 
-fun billItemMock(id: Long = 1L): BillItem {
+fun billItemMock(id: Long): BillItem {
   return BillItem(id, placeProductMock(id), 2.0)
 }
 
