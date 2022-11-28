@@ -11,6 +11,7 @@ import androidx.compose.runtime.rxjava3.subscribeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import kotlinx.coroutines.CoroutineScope
 import neuro.expenses.register.common.compose.rememberUnit
 import neuro.expenses.register.mocks.category.EditCategoriesViewModelMock
@@ -24,7 +25,10 @@ import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun EditCategoriesComposable(editCategoriesViewModel: IEditCategoriesViewModel = getViewModel<EditCategoriesViewModel>()) {
+fun EditCategoriesComposable(
+  editCategoriesViewModel: IEditCategoriesViewModel = getViewModel<EditCategoriesViewModel>(),
+  navController: NavHostController? = null
+) {
   rememberUnit { editCategoriesViewModel.onComposition() }
 
   val uiEvent = editCategoriesViewModel.uiEvent
@@ -34,7 +38,8 @@ fun EditCategoriesComposable(editCategoriesViewModel: IEditCategoriesViewModel =
     rememberModalBottomSheetState(if (editCategoriesViewModel.modalBottomSheetVisible.value) ModalBottomSheetValue.Expanded else ModalBottomSheetValue.Hidden)
   val categories = editCategoriesViewModel.categories.subscribeAsState(initial = emptyList())
 
-  ModalBottomSheetLayout(modalBottomSheetState,
+  ModalBottomSheetLayout(
+    modalBottomSheetState,
     onModalBottomSheetVisible = { editCategoriesViewModel.onModalBottomSheetVisible() },
     onModalBottomSheetNotVisible = { editCategoriesViewModel.onModalBottomSheetNotVisible() },
     modalContent = { EditCategoryComposable(editCategoriesViewModel.editCategoryViewModel) }) {
@@ -59,7 +64,7 @@ fun EditCategoriesComposable(editCategoriesViewModel: IEditCategoriesViewModel =
   }
   onUiEvent(uiEvent, coroutineScope, modalBottomSheetState, editCategoriesViewModel)
 
-  addBackHandler(modalBottomSheetState, coroutineScope)
+  navController?.let { addBackHandler(modalBottomSheetState, coroutineScope, navController) }
 }
 
 @OptIn(ExperimentalMaterialApi::class)

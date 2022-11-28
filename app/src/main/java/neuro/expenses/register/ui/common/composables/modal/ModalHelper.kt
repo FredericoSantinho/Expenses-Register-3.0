@@ -8,12 +8,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import neuro.expenses.register.common.back.BackNavElement
-import neuro.expenses.register.common.back.DefaultBackHandler
-import neuro.expenses.register.common.back.FinishActivityHandler
-import neuro.expenses.register.common.back.modalBackNavElement
+import neuro.expenses.register.common.back.*
 
 @Composable
 @OptIn(ExperimentalMaterialApi::class)
@@ -52,12 +50,16 @@ fun ModalBottomSheetLayout(
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun addBackHandler(
-  modalBottomSheetState: ModalBottomSheetState, coroutineScope: CoroutineScope
+  modalBottomSheetState: ModalBottomSheetState,
+  coroutineScope: CoroutineScope,
+  navController: NavHostController
 ) {
   val activity = LocalContext.current as? Activity
+
   DefaultBackHandler(
     BackNavElement.default(
-      modalBackNavElement(modalBottomSheetState, coroutineScope), FinishActivityHandler(activity)
+      modalBackNavElement(modalBottomSheetState, coroutineScope),
+      NavHostControllerHandler(navController, activity)
     )
   )
 }

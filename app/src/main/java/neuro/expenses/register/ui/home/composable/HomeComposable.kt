@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.fragment.app.FragmentActivity
+import androidx.navigation.NavHostController
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.MultiplePermissionsState
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
@@ -40,6 +41,7 @@ import org.koin.androidx.compose.getViewModel
 @Composable
 fun HomeComposable(
   fragmentActivity: FragmentActivity,
+  navController: NavHostController? = null,
   mapsEventMapper: HomeMapsUiEventMapper = get(),
   homeViewModel: HomeViewModel = getViewModel()
 ) {
@@ -111,7 +113,7 @@ fun HomeComposable(
     locationPermissionsState
   )
 
-  addBackHandler(modalBottomSheetState, coroutineScope)
+  navController?.let { addBackHandler(modalBottomSheetState, coroutineScope, navController) }
 
   handleLocationPermissions(locationPermissionsState, homeViewModel)
 }
@@ -182,7 +184,7 @@ private fun onUiState(
   when (uiState) {
     UiState.Ready -> onUiReady(homeViewModel, loading)
     UiState.Loading -> {
-      onUiLoading()
+      onUiLoading(loading)
     }
     UiState.ShowLocationPermissionDialog -> {
       onShowLocationPermissionDialog(homeViewModel)
@@ -191,13 +193,14 @@ private fun onUiState(
 }
 
 @Composable
-private fun onUiLoading() {
+private fun onUiLoading(loading: MutableState<Boolean>) {
   Column(
     horizontalAlignment = Alignment.CenterHorizontally,
     verticalArrangement = Arrangement.Center,
     modifier = Modifier.fillMaxSize()
   ) {
     CircularProgressIndicator(modifier = Modifier.size(128.dp), strokeWidth = 4.dp)
+    loading.value = true
   }
 }
 

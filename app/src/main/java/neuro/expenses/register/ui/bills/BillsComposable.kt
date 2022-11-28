@@ -17,6 +17,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentActivity
+import androidx.navigation.NavHostController
 import kotlinx.coroutines.CoroutineScope
 import neuro.expenses.register.common.compose.rememberUnit
 import neuro.expenses.register.ui.bill.BillCardComposable
@@ -33,6 +34,7 @@ import org.koin.androidx.compose.getViewModel
 @Composable
 fun BillsComposable(
   fragmentActivity: FragmentActivity,
+  navController: NavHostController? = null,
   billDetailedViewModel: BillDetailedViewModel = get(),
   billsViewModel: BillsViewModel = getViewModel()
 ) {
@@ -113,7 +115,7 @@ fun BillsComposable(
   }
   onUiEvent(uiEvent, coroutineScope, modalBottomSheetState, billsViewModel)
 
-  addBackHandler(modalBottomSheetState, coroutineScope)
+  navController?.let { addBackHandler(modalBottomSheetState, coroutineScope, navController) }
 }
 
 @OptIn(ExperimentalMaterialApi::class)
