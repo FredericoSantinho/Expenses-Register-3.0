@@ -6,19 +6,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import com.google.accompanist.pager.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import neuro.expenses.register.R
 import neuro.expenses.register.common.compose.rememberUnit
-import neuro.expenses.register.ui.edit.category.EditCategoriesComposable
-import neuro.expenses.register.ui.edit.place.EditPlacesComposable
-import neuro.expenses.register.ui.edit.placeproduct.EditPlaceProductsComposable
-import neuro.expenses.register.ui.edit.product.EditProductsComposable
-import neuro.expenses.register.viewmodel.edit.EditUiEvent.Destination
+import neuro.expenses.register.ui.edit.mapper.toPresentation
 import neuro.expenses.register.viewmodel.edit.EditUiEvent.UiEvent
 import neuro.expenses.register.viewmodel.edit.EditViewModel
 import org.koin.androidx.compose.getViewModel
@@ -33,7 +27,7 @@ fun EditComposable(editViewModel: EditViewModel = getViewModel()) {
   val pagerState = rememberPagerState()
   val coroutineScope = rememberCoroutineScope()
 
-  val pages = editViewModel.pages
+  val pages = editViewModel.pages.map { it.toPresentation() }
   Column {
     TabRow(
       selectedTabIndex = pagerState.currentPage,
@@ -46,7 +40,7 @@ fun EditComposable(editViewModel: EditViewModel = getViewModel()) {
         Tab(
           text = {
             Text(
-              getDirectionTitle(directions),
+              directions.title,
               style = MaterialTheme.typography.caption.copy(
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center
@@ -63,24 +57,9 @@ fun EditComposable(editViewModel: EditViewModel = getViewModel()) {
       count = pages.size,
       state = pagerState,
     ) { page ->
-      when (page) {
-        0 -> EditCategoriesComposable()
-        1 -> EditProductsComposable()
-        2 -> EditPlaceProductsComposable()
-        3 -> EditPlacesComposable()
-      }
+      pages[page].composable()
     }
     onUiEvent(uiEvent, editViewModel, pagerState, coroutineScope)
-  }
-}
-
-@Composable
-private fun getDirectionTitle(destination: Destination): String {
-  return when (destination) {
-    Destination.categories -> stringResource(R.string.edit_categories_title)
-    Destination.products -> stringResource(R.string.edit_products_title)
-    Destination.placeProducts -> stringResource(R.string.edit_place_products_title)
-    Destination.places -> stringResource(R.string.edit_places_title)
   }
 }
 
