@@ -4,6 +4,7 @@ import neuro.expenses.register.domain.usecase.bill.GetBillUseCase
 import neuro.expenses.register.domain.usecase.bill.ObserveBillsUseCase
 import neuro.expenses.register.domain.usecase.bill.SortBills
 import neuro.expenses.register.viewmodel.appbar.AppBarViewModel
+import neuro.expenses.register.viewmodel.appbar.Title
 import neuro.expenses.register.viewmodel.bill.BillDetailedViewModel
 import neuro.expenses.register.viewmodel.bill.BillViewModel
 import neuro.expenses.register.viewmodel.bill.mapper.BillViewModelMapper
@@ -36,6 +37,7 @@ class BillsViewModel(
   init {
     // TODO: Move to right place
     appBarViewModel.enableSearch()
+    appBarViewModel.title.value = BillsTitle
   }
 
   fun onBillSwipe(item: BillViewModel) {
@@ -58,3 +60,5 @@ class BillsViewModel(
     }
   }
 }
+
+object BillsTitle : Title()

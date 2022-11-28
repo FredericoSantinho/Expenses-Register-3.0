@@ -9,6 +9,7 @@ import neuro.expenses.register.domain.usecase.expense.RegisterExpenseException
 import neuro.expenses.register.domain.usecase.expense.RegisterExpenseUseCase
 import neuro.expenses.register.domain.usecase.near.GetNearestPlaceUseCase
 import neuro.expenses.register.viewmodel.appbar.AppBarViewModel
+import neuro.expenses.register.viewmodel.appbar.Title
 import neuro.expenses.register.viewmodel.bill.BillViewModel
 import neuro.expenses.register.viewmodel.common.BaseViewModel
 import neuro.expenses.register.viewmodel.common.formatter.CurrencyFormatter
@@ -47,6 +48,10 @@ class ManualRegisterViewModel(
   val uiState = _uiState.uiState
   private val _uiEvent = ManualRegisterUiEvent()
   val uiEvent = _uiEvent.uiEvent
+
+  init {
+    appBarViewModel.title.value = ManualRegisterTitle
+  }
 
   fun onNearestPlaceButton() {
     setNearestPlace()
@@ -160,5 +165,6 @@ class ManualRegisterViewModel(
     scaffoldViewModelState.reset()
     scaffoldViewModelState.appBarViewModel.value = appBarViewModel
   }
-
 }
+
+object ManualRegisterTitle : Title()

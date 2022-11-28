@@ -15,7 +15,7 @@ class AppBarViewModel() {
   val dataIn: MutableState<List<SearchSuggestionModel>> = mutableStateOf(emptyList())
   val searchEnabled = mutableStateOf(false)
 
-  val title = mutableStateOf("")
+  val title = mutableStateOf<Title>(Title.EmptyTitle)
   private val _queryObservable: BehaviorRelay<String> = BehaviorRelay.create()
   val query: Observable<String> = _queryObservable
 
@@ -65,4 +65,8 @@ class AppBarViewModel() {
 
 abstract class SearchHint() {
   object Search : SearchHint()
+}
+
+abstract class Title() {
+  object EmptyTitle : Title()
 }

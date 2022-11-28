@@ -14,6 +14,7 @@ import neuro.expenses.register.domain.usecase.place.ObserveNearestPlacesUseCase
 import neuro.expenses.register.domain.usecase.place.SortPlaceProducts
 import neuro.expenses.register.viewmodel.appbar.AppBarViewModel
 import neuro.expenses.register.viewmodel.appbar.SearchHint
+import neuro.expenses.register.viewmodel.appbar.Title
 import neuro.expenses.register.viewmodel.bill.BillViewModel
 import neuro.expenses.register.viewmodel.common.BaseViewModel
 import neuro.expenses.register.viewmodel.common.schedulers.SchedulerProvider
@@ -64,7 +65,7 @@ class HomeViewModel(
   val uiEvent = _uiEvent.uiEvent
 
   init {
-    appBarViewModel.title.value = title
+    appBarViewModel.title.value = HomeTitle
     appBarViewModel.query.filter { this::placeDto.isInitialized }.flatMapSingle { query ->
       sortPlaceProducts.sortPlaceProducts(placeDto.products).map { query }
     }.baseSubscribe { query ->
@@ -191,3 +192,4 @@ class HomeViewModel(
 }
 
 object searchProductsAndPlaces : SearchHint()
+object HomeTitle : Title()

@@ -74,7 +74,7 @@ fun SearchAppBar(
             )
           } else {
             Text(
-              appBarViewModel.title.value,
+              appBarViewModel.title.value.toPresentation(),
               Modifier.constrainAs(searchC) {
                 linkTo(top = parent.top, bottom = parent.bottom)
               },
