@@ -21,7 +21,7 @@ fun suffixFilter(number: AnnotatedString, suffix: String): TransformedText {
     }
 
     override fun transformedToOriginal(offset: Int): Int {
-      return offset
+      return if (offset <= number.text.length) offset else number.text.length
     }
   }
 

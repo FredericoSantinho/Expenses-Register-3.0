@@ -20,7 +20,6 @@ import neuro.expenses.register.viewmodel.edit.product.EditProductsViewModel
 import neuro.expenses.register.viewmodel.home.HomeViewModel
 import neuro.expenses.register.viewmodel.main.MainViewModel
 import neuro.expenses.register.viewmodel.manual.register.ManualRegisterViewModel
-import neuro.expenses.register.viewmodel.permissions.PermissionsViewModel
 import neuro.expenses.register.viewmodel.scaffold.ScaffoldViewModelState
 import neuro.expenses.register.viewmodel.scaffold.ScaffoldViewModelStateImpl
 import neuro.expenses.register.viewmodel.settings.SettingsViewModel
@@ -35,7 +34,6 @@ val viewModelModule = module {
   single { ApplicationViewModel(get(), get(), get()) }
   single { MainViewModel(get(), get(), get(), get()) }
   single { AppBarViewModel() }
-  viewModel { PermissionsViewModel(get()) }
   single<ScaffoldViewModelState> { ScaffoldViewModelStateImpl() }
   viewModel { SettingsViewModel() }
   viewModel {

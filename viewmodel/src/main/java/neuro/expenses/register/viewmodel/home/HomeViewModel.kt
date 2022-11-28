@@ -153,8 +153,10 @@ class HomeViewModel(
   }
 
   private fun onSelectedPlace(placeDto: PlaceDto) {
-    val latLngModel = placeDto.latLngDto.toViewModel()
-    _uiEvent.moveCamera(latLngModel, zoom)
+    if (!this::placeDto.isInitialized || this.placeDto.latLngDto != placeDto.latLngDto) {
+      val latLngModel = placeDto.latLngDto.toViewModel()
+      _uiEvent.moveCamera(latLngModel, zoom)
+    }
     this.placeDto = placeDto
     selectedPlaceName.value = placeDto.name
     sortPlaceProducts.sortPlaceProducts(placeDto.products)

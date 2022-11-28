@@ -4,7 +4,6 @@ import android.app.Activity
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -65,25 +64,19 @@ fun addBackHandler(
 }
 
 @OptIn(ExperimentalMaterialApi::class)
-@Composable
 fun showModalBottomSheet(
-  key: Any?, coroutineScope: CoroutineScope, modalBottomSheetState: ModalBottomSheetState
+  coroutineScope: CoroutineScope, modalBottomSheetState: ModalBottomSheetState
 ) {
-  LaunchedEffect(key) {
-    coroutineScope.launch {
-      modalBottomSheetState.show()
-    }
+  coroutineScope.launch {
+    modalBottomSheetState.show()
   }
 }
 
 @OptIn(ExperimentalMaterialApi::class)
-@Composable
 fun hideModalBottomSheet(
-  key: Any?, coroutineScope: CoroutineScope, modalBottomSheetState: ModalBottomSheetState
+  coroutineScope: CoroutineScope, modalBottomSheetState: ModalBottomSheetState
 ) {
-  LaunchedEffect(key) {
-    coroutineScope.launch {
-      modalBottomSheetState.hide()
-    }
+  coroutineScope.launch {
+    modalBottomSheetState.hide()
   }
 }

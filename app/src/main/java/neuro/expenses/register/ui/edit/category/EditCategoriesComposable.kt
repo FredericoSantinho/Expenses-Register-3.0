@@ -77,10 +77,10 @@ fun onUiEvent(
 ) {
   when (uiEvent.value) {
     is UiEvent.OpenEditCategory -> showModalBottomSheet(
-      uiEvent.value, coroutineScope, modalBottomSheetState
+      coroutineScope, modalBottomSheetState
     )
     is UiEvent.CloseEditCategory -> hideModalBottomSheet(
-      uiEvent.value, coroutineScope, modalBottomSheetState
+      coroutineScope, modalBottomSheetState
     )
     null -> {}
   }

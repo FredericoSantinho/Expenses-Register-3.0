@@ -128,10 +128,10 @@ fun onUiEvent(
 ) {
   when (uiEvent.value) {
     is UiEvent.OpenBillDetailed -> showModalBottomSheet(
-      uiEvent.value, coroutineScope, modalBottomSheetState
+      coroutineScope, modalBottomSheetState
     )
     is UiEvent.CloseBillDetailed -> hideModalBottomSheet(
-      uiEvent.value, coroutineScope, modalBottomSheetState
+      coroutineScope, modalBottomSheetState
     )
     null -> {}
   }

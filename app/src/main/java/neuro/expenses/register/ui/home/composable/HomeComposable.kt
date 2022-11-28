@@ -119,11 +119,14 @@ fun HomeComposable(
 }
 
 @OptIn(ExperimentalPermissionsApi::class)
+@Composable
 private fun handleLocationPermissions(
   locationPermissionsState: MultiplePermissionsState, homeViewModel: HomeViewModel
 ) {
   if (locationPermissionsState.allPermissionsGranted) {
-    homeViewModel.onPermissionsGranted()
+    rememberUnit {
+      homeViewModel.onPermissionsGranted()
+    }
   }
 }
 
@@ -140,10 +143,10 @@ private fun onUiEvent(
 ) {
   when (uiEvent.value) {
     is UiEvent.OpenEditMode -> showModalBottomSheet(
-      uiEvent.value as UiEvent.OpenEditMode, coroutineScope, modalBottomSheetState
+      coroutineScope, modalBottomSheetState
     )
     is UiEvent.CloseEditMode -> hideModalBottomSheet(
-      uiEvent.value, coroutineScope, modalBottomSheetState
+      coroutineScope, modalBottomSheetState
     )
     is UiEvent.MoveCamera -> {
       moveCamera.value = mapsEventMapper.map(uiEvent.value)
