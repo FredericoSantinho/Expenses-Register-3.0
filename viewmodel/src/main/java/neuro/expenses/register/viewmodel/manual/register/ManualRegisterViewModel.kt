@@ -49,10 +49,6 @@ class ManualRegisterViewModel(
   private val _uiEvent = ManualRegisterUiEvent()
   val uiEvent = _uiEvent.uiEvent
 
-  init {
-    appBarViewModel.title.value = ManualRegisterTitle
-  }
-
   fun onNearestPlaceButton() {
     setNearestPlace()
     onPlaceChange()
@@ -162,6 +158,11 @@ class ManualRegisterViewModel(
   }
 
   fun onComposition() {
+    setupScaffold()
+  }
+
+  private fun setupScaffold() {
+    appBarViewModel.title.value = ManualRegisterTitle
     scaffoldViewModelState.reset()
     scaffoldViewModelState.appBarViewModel.value = appBarViewModel
   }

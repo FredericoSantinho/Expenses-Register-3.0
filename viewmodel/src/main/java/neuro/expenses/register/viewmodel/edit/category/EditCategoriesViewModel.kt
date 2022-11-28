@@ -23,7 +23,7 @@ class EditCategoriesViewModel(
   override val uiEvent = _uiEvent.uiEvent
 
   override fun onComposition() {
-    enableFab()
+    setupScaffold()
   }
 
   override fun onCategoryClick(categoryModel: CategoryModel) {
@@ -43,6 +43,11 @@ class EditCategoriesViewModel(
   override fun onModalBottomSheetNotVisible() {
     enableFab()
     modalBottomSheetVisible.value = false
+  }
+
+  private fun setupScaffold() {
+    scaffoldViewModelState.reset()
+    enableFab()
   }
 
   override fun onFloatingActionButtonClick() {

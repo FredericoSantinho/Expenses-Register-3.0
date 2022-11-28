@@ -64,8 +64,9 @@ class HomeViewModel(
   private val _uiEvent = HomeUiEvent()
   val uiEvent = _uiEvent.uiEvent
 
-  init {
-    appBarViewModel.title.value = HomeTitle
+  override fun onComposition() {
+    setupScaffold()
+
     appBarViewModel.query.filter { this::placeDto.isInitialized }.flatMapSingle { query ->
       sortPlaceProducts.sortPlaceProducts(placeDto.products).map { query }
     }.baseSubscribe { query ->
@@ -73,11 +74,6 @@ class HomeViewModel(
     }
     getCurrentLocationUseCase.getCurrentLocation()
       .baseSubscribe(onSuccess = {}, onError = ::handleLocationPermissionException)
-  }
-
-  override fun onComposition() {
-    scaffoldViewModelState.reset()
-    scaffoldViewModelState.appBarViewModel.value = appBarViewModel
   }
 
   override fun onSelectedPlace(index: Int) {
@@ -111,6 +107,12 @@ class HomeViewModel(
 
   override fun onDismissLocationPermissionDialog() {
     observeNearPlaces(true)
+  }
+
+  private fun setupScaffold() {
+    appBarViewModel.title.value = HomeTitle
+    scaffoldViewModelState.reset()
+    scaffoldViewModelState.appBarViewModel.value = appBarViewModel
   }
 
   private fun handleLocationPermissionException(it: Throwable) {

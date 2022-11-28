@@ -34,23 +34,23 @@ class BillsViewModel(
   private val _uiEvent = BillsUiEvent()
   val uiEvent = _uiEvent.uiEvent
 
-  init {
-    // TODO: Move to right place
-    appBarViewModel.enableSearch()
-    appBarViewModel.title.value = BillsTitle
-  }
-
   fun onBillSwipe(item: BillViewModel) {
     // TODO: remove bill
   }
 
   fun onComposition() {
-    scaffoldViewModelState.reset()
-    scaffoldViewModelState.appBarViewModel.value = appBarViewModel
+    setupScaffold()
   }
 
   fun eventConsumed() {
     _uiEvent.eventConsumed()
+  }
+
+  private fun setupScaffold() {
+    appBarViewModel.title.value = BillsTitle
+    appBarViewModel.enableSearch()
+    scaffoldViewModelState.reset()
+    scaffoldViewModelState.appBarViewModel.value = appBarViewModel
   }
 
   private fun onBillLongClick(billId: Long) {

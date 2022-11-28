@@ -18,9 +18,7 @@ class EditViewModel(private val scaffoldViewModelState: ScaffoldViewModelState) 
   }
 
   fun onComposition() {
-    scaffoldViewModelState.reset()
-    appBarViewModel.title.value = EditTitle
-    scaffoldViewModelState.appBarViewModel.value = appBarViewModel
+    setupScaffold()
   }
 
   fun onPageClick(index: Int) {
@@ -30,6 +28,12 @@ class EditViewModel(private val scaffoldViewModelState: ScaffoldViewModelState) 
       2 -> _uiEvent.navigateToEditPlaceProduct()
       3 -> _uiEvent.navigateToEditPlace()
     }
+  }
+
+  private fun setupScaffold() {
+    scaffoldViewModelState.reset()
+    appBarViewModel.title.value = EditTitle
+    scaffoldViewModelState.appBarViewModel.value = appBarViewModel
   }
 
   private fun buildPages() = listOf(
