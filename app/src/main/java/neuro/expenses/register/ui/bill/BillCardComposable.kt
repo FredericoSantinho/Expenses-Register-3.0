@@ -22,7 +22,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import neuro.expenses.register.R
 import neuro.expenses.register.common.shimmer.shimmer
 import neuro.expenses.register.common.shimmer.shimmerBackground
-import neuro.expenses.register.mocks.bill.BillModelMock
+import neuro.expenses.register.mocks.bill.billModelMock
 import neuro.expenses.register.ui.common.composables.image.AsyncImage
 import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.viewmodel.bill.BillUiState.UiState
@@ -177,7 +177,7 @@ private fun closeBillIcon(imageConstraintModifier: Modifier) {
 fun PreviewDateTimeComposable() {
 
   ExpensesRegisterTheme {
-    BillCardComposable(BillViewModel(billModel = BillModelMock().createBillModel()))
+    BillCardComposable(BillViewModel(billModel = billModelMock()))
   }
 }
 

@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import androidx.compose.ui.window.PopupProperties
 import neuro.expenses.register.R
-import neuro.expenses.register.mocks.search.PlaceSearchSuggestionsMock
+import neuro.expenses.register.mocks.search.placeSearchSuggestionsMock
 import neuro.expenses.register.ui.common.composables.text.TextFieldWithoutPadding
 import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.viewmodel.search.SearchViewModel
@@ -182,7 +182,7 @@ fun SearchWithDropdown(
 @Preview
 @Composable
 fun PreviewSearchWithDropdown() {
-  val dataIn = PlaceSearchSuggestionsMock().createPlaceSearchSuggestionsState()
+  val dataIn = placeSearchSuggestionsMock()
 
   ExpensesRegisterTheme {
     SearchWithDropdown(

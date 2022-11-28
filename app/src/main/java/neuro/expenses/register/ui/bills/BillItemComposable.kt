@@ -18,7 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import neuro.expenses.register.common.koin.startKoinIfNeeded
 import neuro.expenses.register.di.registerExpensesModule
-import neuro.expenses.register.mocks.bill.BillItemModelMock
+import neuro.expenses.register.mocks.bill.billItemModelMock
 import neuro.expenses.register.ui.common.composables.image.AsyncImage
 import neuro.expenses.register.ui.common.composables.text.BasicCurrencyTextField
 import neuro.expenses.register.ui.common.composables.text.BasicNumericTextField
@@ -146,7 +146,7 @@ fun BillItemComposable(
 fun PreviewBillItemComposable() {
   startKoinIfNeeded { modules(registerExpensesModule, viewModelModule) }
 
-  val billItemViewModel = BillItemModelMock().createBillItemModel()
+  val billItemViewModel = billItemModelMock()
 
   ExpensesRegisterTheme {
     BillItemComposable(

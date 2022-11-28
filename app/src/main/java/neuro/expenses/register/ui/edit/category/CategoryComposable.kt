@@ -17,7 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import neuro.expenses.register.mocks.category.CategoryModelMock
+import neuro.expenses.register.mocks.category.categoryModelMock
 import neuro.expenses.register.ui.common.composables.image.AsyncImage
 import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.viewmodel.model.CategoryModel
@@ -66,7 +66,7 @@ fun CategoryComposable(
 fun PreviewCategoryComposable() {
   ExpensesRegisterTheme {
     CategoryComposable(
-      CategoryModelMock().createCategoryModel()
+      categoryModelMock()
     )
   }
 }

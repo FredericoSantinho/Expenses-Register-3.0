@@ -18,7 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import neuro.expenses.register.mocks.placeproduct.PlaceProductCardModelMock
+import neuro.expenses.register.mocks.placeproduct.placeProductCardModelMock
 import neuro.expenses.register.ui.common.composables.image.AsyncImage
 import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.viewmodel.home.IProductCardViewModel
@@ -108,7 +108,7 @@ fun PlaceProductCardComposable(productCardViewModel: IProductCardViewModel) {
 @Preview
 @Composable
 fun PreviewDateTimeComposable() {
-  val placeProductCardModel = PlaceProductCardModelMock().createPlaceProductCardModel()
+  val placeProductCardModel = placeProductCardModelMock()
 
   ExpensesRegisterTheme {
     PlaceProductCardComposable(
