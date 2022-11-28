@@ -30,11 +30,11 @@ fun EditCategoriesComposable(editCategoriesViewModel: IEditCategoriesViewModel =
   val uiEvent = editCategoriesViewModel.uiEvent
 
   val coroutineScope = rememberCoroutineScope()
-  val modalBottomSheetState = rememberModalBottomSheetState()
+  val modalBottomSheetState =
+    rememberModalBottomSheetState(if (editCategoriesViewModel.modalBottomSheetVisible.value) ModalBottomSheetValue.Expanded else ModalBottomSheetValue.Hidden)
   val categories = editCategoriesViewModel.categories.subscribeAsState(initial = emptyList())
 
-  ModalBottomSheetLayout(
-    modalBottomSheetState,
+  ModalBottomSheetLayout(modalBottomSheetState,
     onModalBottomSheetVisible = { editCategoriesViewModel.onModalBottomSheetVisible() },
     onModalBottomSheetNotVisible = { editCategoriesViewModel.onModalBottomSheetNotVisible() },
     modalContent = { EditCategoryComposable(editCategoriesViewModel.editCategoryViewModel) }) {

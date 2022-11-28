@@ -8,6 +8,7 @@ import neuro.expenses.register.viewmodel.model.CategoryModel
 
 class EditCategoriesViewModelMock() : IEditCategoriesViewModel {
 
+  override val modalBottomSheetVisible = mutableStateOf(false)
   override val editCategoryViewModel = EditCategoryViewModelMock()
   override val categories: Observable<List<CategoryModel>> =
     Observable.just(buildCategoryModelList())

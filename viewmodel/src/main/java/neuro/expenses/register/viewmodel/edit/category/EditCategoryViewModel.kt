@@ -24,8 +24,6 @@ class EditCategoryViewModel(
   override val iconUrl = mutableStateOf("")
   val onFinishEditAction = mutableStateOf({ })
 
-  private val _uiEvent = EditCategoryUiEvent()
-  override val uiEvent = _uiEvent.uiEvent
   private val _uiState = EditCategoryUiState()
   override val uiState = _uiState.uiState
 
@@ -86,10 +84,6 @@ class EditCategoryViewModel(
           throw it
         }
       })
-  }
-
-  override fun eventConsumed() {
-    _uiEvent.eventConsumed()
   }
 
   override fun onCreateCategoryErrorDialogDismiss() {

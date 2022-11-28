@@ -1,5 +1,6 @@
 package neuro.expenses.register.viewmodel.edit.category
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import neuro.expenses.register.domain.usecase.category.ObserveCategoriesUseCase
 import neuro.expenses.register.viewmodel.fab.FloatingActionButtonViewModel
@@ -15,6 +16,7 @@ class EditCategoriesViewModel(
   val floatingActionButtonViewModel =
     FloatingActionButtonViewModel { onFloatingActionButtonClick() }
 
+  override val modalBottomSheetVisible = mutableStateOf(false)
   override val categories = observeCategoriesUseCase.observeCategories().map { it.toViewmodel() }
 
   private val _uiEvent = EditCategoriesUiEvent()
@@ -35,10 +37,12 @@ class EditCategoriesViewModel(
 
   override fun onModalBottomSheetVisible() {
     scaffoldViewModelState.floatingActionButtonViewModel.value = null
+    modalBottomSheetVisible.value = true
   }
 
   override fun onModalBottomSheetNotVisible() {
     enableFab()
+    modalBottomSheetVisible.value = false
   }
 
   override fun onFloatingActionButtonClick() {

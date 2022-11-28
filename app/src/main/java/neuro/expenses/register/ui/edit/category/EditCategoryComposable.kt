@@ -37,7 +37,6 @@ import neuro.expenses.register.viewmodel.edit.category.IEditCategoryViewModel
 fun EditCategoryComposable(
   editCategoryViewModel: IEditCategoryViewModel, modifier: Modifier = Modifier
 ) {
-  val uiEvent by editCategoryViewModel.uiEvent
   val uiState by editCategoryViewModel.uiState
 
   val nameIsError = remember { mutableStateOf(false) }
@@ -87,7 +86,6 @@ fun EditCategoryComposable(
   }
 
   onUiState(uiState, editCategoryViewModel)
-  onUiEvent(editCategoryViewModel)
 }
 
 @Composable
@@ -173,14 +171,6 @@ fun onDeleteCategoryError(editCategoryViewModel: IEditCategoryViewModel) {
     modifier = Modifier.background(Color.Red)
   )
 }
-
-@Composable
-private fun onUiEvent(
-  editCategoryViewModel: IEditCategoryViewModel
-) {
-  editCategoryViewModel.eventConsumed()
-}
-
 
 @Preview
 @Composable

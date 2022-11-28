@@ -10,7 +10,6 @@ interface IEditCategoryViewModel {
   val name: MutableState<String>
   val iconUrl: MutableState<String>
 
-  val uiEvent: State<EditCategoryUiEvent.UiEvent?>
   val uiState: State<EditCategoryUiState.UiState>
 
   fun setEditCategoryViewModel(categoryModel: CategoryModel, onFinishEditAction: () -> Unit)
@@ -19,7 +18,6 @@ interface IEditCategoryViewModel {
   fun onSaveButton()
   fun onDeleteButton()
   fun onConfirmDelete()
-  fun eventConsumed()
   fun onCreateCategoryErrorDialogDismiss()
   fun onUpdateCategoryErrorDialogDismiss()
   fun onDeleteCategoryErrorDialogDismiss()

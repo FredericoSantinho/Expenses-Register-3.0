@@ -1,10 +1,12 @@
 package neuro.expenses.register.viewmodel.edit.category
 
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import io.reactivex.rxjava3.core.Observable
 import neuro.expenses.register.viewmodel.model.CategoryModel
 
 interface IEditCategoriesViewModel {
+  val modalBottomSheetVisible: MutableState<Boolean>
   val editCategoryViewModel: IEditCategoryViewModel
   val categories: Observable<List<CategoryModel>>
 
