@@ -29,7 +29,7 @@ val repositoryModule = module {
   single<SaveProductRepository> { SaveProductRepositoryImpl(get()) }
   single<SavePlaceProductRepository> { SavePlaceProductRepositoryImpl(get()) }
   single<GetProductRepository> { GetProductRepositoryImpl(get()) }
-  single<GetPlaceProductRepository> { GetPlaceProductRepositoryImpl(get(), get()) }
+  single<GetPlaceProductRepository> { GetPlaceProductRepositoryImpl(get(), get(), get()) }
   single<GenerateProductIdRepository> { GenerateProductIdRepositoryImpl(get()) }
   single<GeneratePlaceIdRepository> { GeneratePlaceIdRepositoryImpl(get()) }
   single<SavePlaceRepository> { SavePlaceRepositoryImpl(get()) }

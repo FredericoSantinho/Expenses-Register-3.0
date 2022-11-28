@@ -4,10 +4,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import neuro.expenses.register.data.converter.Converters
-import neuro.expenses.register.data.dao.BillDao
-import neuro.expenses.register.data.dao.CategoryDao
-import neuro.expenses.register.data.dao.PlaceDao
-import neuro.expenses.register.data.dao.ProductDao
+import neuro.expenses.register.data.dao.*
 import neuro.expenses.register.data.model.RoomCategory
 import neuro.expenses.register.data.model.RoomPlaceProduct
 import neuro.expenses.register.data.model.RoomProduct
@@ -31,5 +28,6 @@ abstract class ExpensesRegisterDatabase : RoomDatabase() {
   abstract val categoryDao: CategoryDao
   abstract val billDao: BillDao
   abstract val productDao: ProductDao
+  abstract val placeProductDao: PlaceProductDao
   abstract val placeDao: PlaceDao
 }
