@@ -4,6 +4,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import neuro.expenses.register.viewmodel.bill.BillViewModel
 import neuro.expenses.register.viewmodel.edit.placeproduct.EditPlaceProductViewModel
+import neuro.expenses.register.viewmodel.home.HomeUiState.UiState
 import java.util.*
 
 interface IHomeViewModel {
@@ -18,4 +19,7 @@ interface IHomeViewModel {
   fun onComposition()
   fun onSelectedPlace(index: Int)
   fun eventConsumed()
+  fun onRequestLocationPermission()
+  fun onPermissionsGranted()
+  fun onDismissLocationPermissionDialog()
 }

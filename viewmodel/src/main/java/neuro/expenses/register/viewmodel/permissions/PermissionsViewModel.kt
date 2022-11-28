@@ -20,7 +20,8 @@ class PermissionsViewModel(
   }
 
   fun onPermissionsNotGranted() {
-    _uiEvent.requestPermissions()
+    onPermissionsGranted()
+    //    _uiEvent.requestPermissions()
   }
 
   fun eventConsumed() {

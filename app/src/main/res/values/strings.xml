@@ -7,8 +7,10 @@
   <string name="title_settings">Settings</string>
 
   <!-- Permissions -->
-  <string name="permissions_title">Location Permission</string>
-  <string name="permissions_text">This app requires access to device location in order to work properly.</string>
+  <string name="permissions_grant">Grant</string>
+  <string name="permissions_null_island">Null Island</string>
+  <string name="permissions_title">This app requires Location Permission</string>
+  <string name="permissions_text">This app uses your device\'s location to suggest nearby places.\nIf you don\'t grant permission the app will assume your location is Null Island.</string>
 
   <!-- Settings -->
   <string name="settings_key_clear_database">clearDatabase</string>
@@ -29,7 +31,7 @@
   <string name="amount">Amount</string>
   <string name="icon_url">Icon Url</string>
   <string name="save">Save</string>
-  <string name="ok">Ok</string>
+  <string name="ok">OK</string>
   <string name="delete">Delete</string>
   <string name="yes">Yes</string>
   <string name="no">No</string>
@@ -58,7 +60,7 @@
 
   <!-- Edit Category -->
   <string name="edit_category_title">Edit Category</string>
-  <string name="edit_category_confirm_delete_title">Do you realy want to delete category %1$s?</string>
+  <string name="edit_category_confirm_delete_title">Do you really want to delete category %1$s?</string>
   <!-- Errors -->
   <string name="edit_category_on_create_category_error_title">Cannot create category %1$s!</string>
   <string name="edit_category_on_create_category_error_text">Cannot create category %1$s because there\'s already other category with that name.</string>

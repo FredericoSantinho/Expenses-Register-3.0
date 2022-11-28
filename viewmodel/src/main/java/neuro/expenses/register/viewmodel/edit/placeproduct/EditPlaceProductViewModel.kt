@@ -50,6 +50,18 @@ class EditPlaceProductViewModel(
       .baseSubscribe { onFinishEditAction.value() }
   }
 
+  fun set(placeDto: PlaceDto, placeProductDto: PlaceProductDto, onFinishEditAction: () -> Unit) {
+    this.placeDto.value = placeDto
+    placeProductId.value = placeProductDto.id
+    currentDescription = placeProductDto.productDto.description
+    description.value = placeProductDto.productDto.description
+    category.value = placeProductDto.category.name
+    price.value = placeProductDto.price.toString()
+    iconUrl.value = placeProductDto.productDto.iconUrl
+    variableAmount.value = placeProductDto.productDto.variableAmount
+    this.onFinishEditAction.value = onFinishEditAction
+  }
+
   private fun buildProductDto(): Single<PlaceProductDto> {
     return getCategory().map { categoryDto ->
       PlaceProductDto(

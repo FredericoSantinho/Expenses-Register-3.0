@@ -49,6 +49,9 @@ lib.google = ["androidx.core:core-ktx:$ver.ktx",
               "androidx.compose.material:material:$ver.compose",
               "androidx.compose.ui:ui-tooling:$ver.compose",]
 
+lib.accompanist_permissions =
+    "com.google.accompanist:accompanist-permissions:$ver.accompanist_permissions"
+
 lib.compose_ui_test_junit4 = "androidx.compose.ui:ui-test-junit4:$ver.compose"
 lib.compose_test = "androidx.compose.ui:ui-test-manifest:$ver.compose"
 

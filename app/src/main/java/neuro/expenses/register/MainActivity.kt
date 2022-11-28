@@ -18,6 +18,8 @@ class MainActivity : BaseComposeActivity() {
     @Suppress("DEPRECATION")
     // We need to use this method as our minSdk is < 30.
     window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+    // We need to reference the view model in order for it to be bounded to the activity's lifecycle.
+    mainViewModel
   }
 
   @Composable

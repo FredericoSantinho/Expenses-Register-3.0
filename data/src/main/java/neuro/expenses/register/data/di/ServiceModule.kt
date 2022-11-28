@@ -3,7 +3,7 @@ package neuro.expenses.register.data.di
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.schedulers.Schedulers
 import neuro.expenses.register.data.service.GetCurrentLocationServiceImpl
-import neuro.expenses.register.domain.service.GetCurrentLocationService
+import neuro.expenses.register.domain.service.location.GetCurrentLocationService
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 

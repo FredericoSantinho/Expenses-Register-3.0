@@ -9,13 +9,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 
 @Composable
-fun AlertDialog(
+fun AlertDialogDismissable(
     title: String,
     text: String = "",
     confirmButtonText: String = "",
     onConfirmButton: () -> Unit = {},
     dismissButtonText: String = "",
-    onDismissButton: () -> Unit = {},
     onDismissRequest: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
@@ -25,7 +24,10 @@ fun AlertDialog(
 
         androidx.compose.material.AlertDialog(
             modifier = modifier,
-            onDismissRequest = { onDismissRequest() },
+            onDismissRequest = {
+                openDialog.value = false
+                onDismissRequest()
+            },
             title = {
                 Text(text = title)
             },
@@ -35,7 +37,10 @@ fun AlertDialog(
             confirmButton = {
                 if (confirmButtonText.isNotEmpty()) {
                     Button(
-                        onClick = { onConfirmButton() }) {
+                        onClick = {
+                            openDialog.value = false
+                            onConfirmButton()
+                        }) {
                         Text(confirmButtonText)
                     }
                 }
@@ -43,7 +48,10 @@ fun AlertDialog(
             dismissButton = {
                 if (dismissButtonText.isNotEmpty()) {
                     Button(
-                        onClick = { onDismissButton() }) {
+                        onClick = {
+                            openDialog.value = false
+                            onDismissRequest()
+                        }) {
                         Text(dismissButtonText)
                     }
                 }

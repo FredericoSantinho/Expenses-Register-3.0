@@ -22,7 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import neuro.expenses.register.R
-import neuro.expenses.register.common.alert.AlertDialog
+import neuro.expenses.register.common.alert.AlertDialogDismissable
 import neuro.expenses.register.mocks.category.EditCategoryViewModelMock
 import neuro.expenses.register.ui.common.composables.edit.SaveDeleteComposable
 import neuro.expenses.register.ui.common.composables.image.AsyncImage
@@ -113,7 +113,7 @@ private fun onUiState(
 
 @Composable
 fun onCreateCategoryError(editCategoryViewModel: IEditCategoryViewModel) {
-  AlertDialog(
+  AlertDialogDismissable(
     title = stringResource(
       R.string.edit_category_on_create_category_error_title, editCategoryViewModel.name.value
     ),
@@ -129,7 +129,7 @@ fun onCreateCategoryError(editCategoryViewModel: IEditCategoryViewModel) {
 
 @Composable
 fun onUpdateCategoryError(editCategoryViewModel: IEditCategoryViewModel) {
-  AlertDialog(
+  AlertDialogDismissable(
     title = stringResource(
       R.string.edit_category_on_update_category_error_title, editCategoryViewModel.currentName
     ),
@@ -147,7 +147,7 @@ fun onUpdateCategoryError(editCategoryViewModel: IEditCategoryViewModel) {
 
 @Composable
 fun onConfirmCategoryDelete(editCategoryViewModel: IEditCategoryViewModel) {
-  AlertDialog(
+  AlertDialogDismissable(
     title = stringResource(
       R.string.edit_category_confirm_delete_title,
       editCategoryViewModel.currentName
@@ -160,7 +160,7 @@ fun onConfirmCategoryDelete(editCategoryViewModel: IEditCategoryViewModel) {
 
 @Composable
 fun onDeleteCategoryError(editCategoryViewModel: IEditCategoryViewModel) {
-  AlertDialog(
+  AlertDialogDismissable(
     title = stringResource(
       R.string.edit_category_on_delete_category_error_title, editCategoryViewModel.currentName
     ),

@@ -17,9 +17,14 @@ class HomeUiEvent : BaseUiEvent<UiEvent>() {
     _uiEvent.value = UiEvent.CloseEditMode()
   }
 
+  fun requestLocationPermission() {
+    _uiEvent.value = UiEvent.RequestLocationPermission()
+  }
+
   sealed class UiEvent {
     class MoveCamera(val latLngModel: LatLngModel, val zoom: Float) : UiEvent()
     class OpenEditMode : UiEvent()
     class CloseEditMode : UiEvent()
+    class RequestLocationPermission : UiEvent()
   }
 }

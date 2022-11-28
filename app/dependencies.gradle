@@ -7,6 +7,7 @@ dependencies {
   api project(path: ':data')
   testImplementation project(':test')
 
+  implementation lib.accompanist_permissions
   implementation lib.google
   implementation lib.google_maps
   implementation lib.koin_compose

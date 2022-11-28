@@ -5,7 +5,6 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -14,9 +13,13 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.fragment.app.FragmentActivity
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.MultiplePermissionsState
+import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import kotlinx.coroutines.CoroutineScope
 import neuro.expenses.register.*
 import neuro.expenses.register.R
+import neuro.expenses.register.common.alert.AlertDialog
 import neuro.expenses.register.common.compose.rememberUnit
 import neuro.expenses.register.ui.bill.BillComposableContainer
 import neuro.expenses.register.ui.common.composables.datetime.DateTimeComposable
@@ -27,13 +30,13 @@ import neuro.expenses.register.ui.edit.placeproduct.EditPlaceProductComposable
 import neuro.expenses.register.ui.home.mapper.HomeMapsUiEventMapper
 import neuro.expenses.register.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.viewmodel.home.HomeUiEvent.UiEvent
+import neuro.expenses.register.viewmodel.home.HomeUiState.UiState
 import neuro.expenses.register.viewmodel.home.HomeViewModel
 import neuro.expenses.register.viewmodel.home.IHomeViewModel
-import neuro.expenses.register.viewmodel.home.UiState
 import org.koin.androidx.compose.get
 import org.koin.androidx.compose.getViewModel
 
-@OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalPermissionsApi::class, ExperimentalMaterialApi::class)
 @Composable
 fun HomeComposable(
   fragmentActivity: FragmentActivity,
@@ -51,13 +54,19 @@ fun HomeComposable(
   val coroutineScope = rememberCoroutineScope()
   val modalBottomSheetState = rememberModalBottomSheetState()
 
-  ModalBottomSheetLayout(
-    modalBottomSheetState,
+  val locationPermissionsState = rememberMultiplePermissionsState(
+    listOf(
+      android.Manifest.permission.ACCESS_COARSE_LOCATION,
+      android.Manifest.permission.ACCESS_FINE_LOCATION,
+    )
+  )
+
+  ModalBottomSheetLayout(modalBottomSheetState,
     modalContent = { EditPlaceProductComposable(homeViewModel.editPlaceProductViewModel) }) {
     ConstraintLayout(
       modifier = Modifier.fillMaxSize()
     ) {
-      val (mainC, billC) = createRefs()
+      val (mainC, billC, permissionsDialog) = createRefs()
 
       BillComposableContainer(homeViewModel.billViewModel, Modifier.constrainAs(billC) {
         bottom.linkTo(parent.bottom)
@@ -83,7 +92,7 @@ fun HomeComposable(
             listItems = homeViewModel.placesNames,
             onSelectedOption = { homeViewModel.onSelectedPlace(it) },
             selectedItemIndex = homeViewModel.selectedPlaceIndex,
-            value = homeViewModel.selectedPlace
+            value = homeViewModel.selectedPlaceName
           )
         }
         Divider(thickness = 1.dp, color = Color.LightGray)
@@ -93,21 +102,39 @@ fun HomeComposable(
     }
   }
   onUiEvent(
-    uiEvent, coroutineScope, modalBottomSheetState, moveCamera, homeViewModel, mapsEventMapper
+    uiEvent,
+    coroutineScope,
+    modalBottomSheetState,
+    moveCamera,
+    homeViewModel,
+    mapsEventMapper,
+    locationPermissionsState
   )
 
   addBackHandler(modalBottomSheetState, coroutineScope)
+
+  handleLocationPermissions(locationPermissionsState, homeViewModel)
 }
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalPermissionsApi::class)
+private fun handleLocationPermissions(
+  locationPermissionsState: MultiplePermissionsState, homeViewModel: HomeViewModel
+) {
+  if (locationPermissionsState.allPermissionsGranted) {
+    homeViewModel.onPermissionsGranted()
+  }
+}
+
+@OptIn(ExperimentalMaterialApi::class, ExperimentalPermissionsApi::class)
 @Composable
-fun onUiEvent(
+private fun onUiEvent(
   uiEvent: State<UiEvent?>,
   coroutineScope: CoroutineScope,
   modalBottomSheetState: ModalBottomSheetState,
   moveCamera: MutableState<MapsMoveCameraEvent?>,
   homeViewModel: HomeViewModel,
-  mapsEventMapper: HomeMapsUiEventMapper
+  mapsEventMapper: HomeMapsUiEventMapper,
+  locationPermissionsState: MultiplePermissionsState
 ) {
   when (uiEvent.value) {
     is UiEvent.OpenEditMode -> showModalBottomSheet(
@@ -119,24 +146,52 @@ fun onUiEvent(
     is UiEvent.MoveCamera -> {
       moveCamera.value = mapsEventMapper.map(uiEvent.value)
     }
+    is UiEvent.RequestLocationPermission -> {
+      onRequestLocationPermission(uiEvent.value, locationPermissionsState)
+    }
     null -> {}
   }
   homeViewModel.eventConsumed()
 }
 
 @Composable
+private fun onShowLocationPermissionDialog(homeViewModel: IHomeViewModel) {
+  AlertDialog(title = stringResource(R.string.permissions_title),
+    text = stringResource(R.string.permissions_text),
+    confirmButtonText = stringResource(R.string.permissions_grant),
+    dismissButtonText = stringResource(R.string.permissions_null_island),
+    onConfirmButton = { homeViewModel.onRequestLocationPermission() },
+    onDismissButton = { homeViewModel.onDismissLocationPermissionDialog() })
+}
+
+@OptIn(ExperimentalPermissionsApi::class)
+@Composable
+private fun onRequestLocationPermission(
+  uiEvent: UiEvent?,
+  locationPermissionsState: MultiplePermissionsState
+) {
+  LaunchedEffect(key1 = uiEvent, block = {
+    locationPermissionsState.launchMultiplePermissionRequest()
+  })
+}
+
+@Composable
 private fun onUiState(
   uiState: UiState, homeViewModel: IHomeViewModel, loading: MutableState<Boolean>
 ) {
-  if (uiState is UiState.Loading) {
-    onUiLoading()
-  } else {
-    onUiReady(homeViewModel, loading)
+  when (uiState) {
+    UiState.Ready -> onUiReady(homeViewModel, loading)
+    UiState.Loading -> {
+      onUiLoading()
+    }
+    UiState.ShowLocationPermissionDialog -> {
+      onShowLocationPermissionDialog(homeViewModel)
+    }
   }
 }
 
 @Composable
-fun onUiLoading() {
+private fun onUiLoading() {
   Column(
     horizontalAlignment = Alignment.CenterHorizontally,
     verticalArrangement = Arrangement.Center,

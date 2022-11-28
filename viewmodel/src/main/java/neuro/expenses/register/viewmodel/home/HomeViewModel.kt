@@ -1,8 +1,12 @@
 package neuro.expenses.register.viewmodel.home
 
 import androidx.compose.runtime.mutableStateOf
+import io.reactivex.rxjava3.core.Single
+import neuro.expenses.register.domain.dto.LatLngDto
 import neuro.expenses.register.domain.dto.PlaceDto
 import neuro.expenses.register.domain.dto.PlaceProductDto
+import neuro.expenses.register.domain.service.location.NoLocationException
+import neuro.expenses.register.domain.service.location.NoLocationPermissionException
 import neuro.expenses.register.domain.usecase.calendar.GetCalendarUseCase
 import neuro.expenses.register.domain.usecase.expense.RegisterExpenseUseCase
 import neuro.expenses.register.domain.usecase.location.GetCurrentLocationUseCase
@@ -24,6 +28,7 @@ import neuro.expenses.register.viewmodel.model.search.SearchSuggestionModel
 import neuro.expenses.register.viewmodel.scaffold.ScaffoldViewModelState
 
 private val lisbon = CameraPositionModel(LatLngModel(38.722252, -9.139337), 7.0f)
+private val zero = LatLngDto(0.0, 0.0)
 
 class HomeViewModel(
   private val observeNearestPlacesUseCase: ObserveNearestPlacesUseCase,
@@ -51,7 +56,7 @@ class HomeViewModel(
   private lateinit var placeDto: PlaceDto
 
   val selectedPlaceIndex = mutableStateOf(0)
-  val selectedPlace = mutableStateOf("")
+  val selectedPlaceName = mutableStateOf("")
 
   private val _uiState = HomeUiState()
   override val uiState = _uiState.uiState
@@ -65,20 +70,8 @@ class HomeViewModel(
     }.baseSubscribe { query ->
       productsListViewModel.setProducts(placeDto, query)
     }
-    getCurrentLocationUseCase.getCurrentLocation().flatMapObservable {
-      observeNearestPlacesUseCase.observeNearestPlaces(it, Int.MAX_VALUE)
-    }.baseSubscribe { nearestPlaces ->
-      places.value = nearestPlaces
-      placesNames.value = nearestPlaces.map { placeDto -> placeDto.name }
-      if (nearestPlaces.isNotEmpty()) {
-        onSelectedPlace(nearestPlaces.get(selectedPlaceIndex.value))
-        appBarViewModel.searchHint.value = SearchProductsAndPlaces
-        appBarViewModel.enableSearch()
-        setupSearchSuggestions()
-      } else {
-        _uiState.ready()
-      }
-    }
+    getCurrentLocationUseCase.getCurrentLocation()
+      .baseSubscribe(onSuccess = {}, onError = ::handleLocationPermissionException)
   }
 
   override fun onComposition() {
@@ -97,7 +90,8 @@ class HomeViewModel(
   }
 
   fun onProductCardLongClick(placeProductCardModel: PlaceProductCardModel) {
-    setEditProductViewModel(placeProductCardModel)
+    val placeProductDto = getPlaceProduct(placeProductCardModel.id)
+    editPlaceProductViewModel.set(placeDto, placeProductDto) { onFinishEditPlaceProductAction() }
 
     _uiEvent.openEditPlaceProduct()
   }
@@ -106,11 +100,60 @@ class HomeViewModel(
     _uiEvent.eventConsumed()
   }
 
+  override fun onRequestLocationPermission() {
+    _uiEvent.requestLocationPermission()
+  }
+
+  override fun onPermissionsGranted() {
+    observeNearPlaces()
+  }
+
+  override fun onDismissLocationPermissionDialog() {
+    observeNearPlaces(true)
+  }
+
+  private fun handleLocationPermissionException(it: Throwable) {
+    if (it is NoLocationPermissionException) {
+      _uiState.showLocationPermissionDialog()
+    } else {
+      if (!(it is NoLocationException)) {
+        // Not supposed to happen
+        throw it
+      }
+    }
+  }
+
+  private fun observeNearPlaces(defaultNullIsland: Boolean = false) {
+    getCurrentLocationUseCase.getCurrentLocation().onErrorResumeNext {
+      if (it is NoLocationException || (defaultNullIsland && it is NoLocationPermissionException)) {
+        Single.just(zero)
+      } else {
+        Single.error(it)
+      }
+    }.flatMapObservable {
+      observeNearestPlacesUseCase.observeNearestPlaces(it, Int.MAX_VALUE)
+    }.baseSubscribe(onSuccess = { nearestPlaces ->
+      places.value = nearestPlaces
+      placesNames.value = nearestPlaces.map { placeDto -> placeDto.name }
+      if (nearestPlaces.isNotEmpty()) {
+        onSelectedPlace(nearestPlaces.get(selectedPlaceIndex.value))
+        appBarViewModel.searchHint.value = searchProductsAndPlaces
+        appBarViewModel.enableSearch()
+        setupSearchSuggestions()
+      } else {
+        _uiState.ready()
+      }
+    }, onError = {
+      // Not supposed to happen
+      throw it
+    })
+  }
+
   private fun onSelectedPlace(placeDto: PlaceDto) {
     val latLngModel = placeDto.latLngDto.toViewModel()
     _uiEvent.moveCamera(latLngModel, zoom)
     this.placeDto = placeDto
-    selectedPlace.value = placeDto.name
+    selectedPlaceName.value = placeDto.name
     sortPlaceProducts.sortPlaceProducts(placeDto.products)
       .flatMap { appBarViewModel.query.firstOrError() }.baseSubscribe { query ->
         productsListViewModel.setProducts(placeDto, query)
@@ -134,20 +177,7 @@ class HomeViewModel(
     onSelectedPlace(places.value.first { it.id == placeId })
   }
 
-  private fun setEditProductViewModel(placeProductCardModel: PlaceProductCardModel) {
-    val placeProductDto = getPlaceProduct(placeProductCardModel.id)
-    editPlaceProductViewModel.placeDto.value = placeDto
-    editPlaceProductViewModel.placeProductId.value = placeProductDto.id
-    editPlaceProductViewModel.currentDescription = placeProductDto.productDto.description
-    editPlaceProductViewModel.description.value = placeProductDto.productDto.description
-    editPlaceProductViewModel.category.value = placeProductDto.category.name
-    editPlaceProductViewModel.price.value = placeProductDto.price.toString()
-    editPlaceProductViewModel.iconUrl.value = placeProductDto.productDto.iconUrl
-    editPlaceProductViewModel.variableAmount.value = placeProductDto.productDto.variableAmount
-    editPlaceProductViewModel.onFinishEditAction.value = { onFinishEditAction() }
-  }
-
-  private fun onFinishEditAction() {
+  private fun onFinishEditPlaceProductAction() {
     _uiEvent.closeEditPlaceProduct()
   }
 
@@ -160,9 +190,4 @@ class HomeViewModel(
   )
 }
 
-sealed class UiState {
-  object Loading : UiState()
-  object Ready : UiState()
-}
-
-object SearchProductsAndPlaces : SearchHint()
+object searchProductsAndPlaces : SearchHint()

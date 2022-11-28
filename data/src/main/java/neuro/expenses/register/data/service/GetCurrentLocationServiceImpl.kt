@@ -13,7 +13,9 @@ import com.google.android.gms.tasks.OnTokenCanceledListener
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
 import neuro.expenses.register.domain.dto.LatLngDto
-import neuro.expenses.register.domain.service.GetCurrentLocationService
+import neuro.expenses.register.domain.service.location.GetCurrentLocationService
+import neuro.expenses.register.domain.service.location.NoLocationException
+import neuro.expenses.register.domain.service.location.NoLocationPermissionException
 
 class GetCurrentLocationServiceImpl(
   private val context: Context, private val scheduler: Scheduler
@@ -29,7 +31,7 @@ class GetCurrentLocationServiceImpl(
           context, Manifest.permission.ACCESS_COARSE_LOCATION
         ) != PackageManager.PERMISSION_GRANTED
       ) {
-        throw IllegalStateException("Location permission not granted!")
+        subscriber.onError(NoLocationPermissionException())
       }
       fusedLocationClient.getCurrentLocation(
         Priority.PRIORITY_BALANCED_POWER_ACCURACY,
@@ -38,7 +40,9 @@ class GetCurrentLocationServiceImpl(
             CancellationTokenSource().token
 
           override fun isCancellationRequested() = false
-        }).addOnSuccessListener { location -> subscriber.onSuccess(location) }
+        }).addOnSuccessListener { location ->
+        location?.let { subscriber.onSuccess(it) } ?: subscriber.onError(NoLocationException())
+      }
     }.map { LatLngDto(it.latitude, it.longitude) }.observeOn(scheduler)
   }
 }

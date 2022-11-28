@@ -10,4 +10,14 @@ class HomeUiState {
   fun ready() {
     _uiState.value = UiState.Ready
   }
+
+  fun showLocationPermissionDialog() {
+    _uiState.value = UiState.ShowLocationPermissionDialog
+  }
+
+  sealed class UiState {
+    object Loading : UiState()
+    object Ready : UiState()
+    object ShowLocationPermissionDialog : UiState()
+  }
 }
