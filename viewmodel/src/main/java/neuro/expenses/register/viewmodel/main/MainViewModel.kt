@@ -12,7 +12,7 @@ class MainViewModel(
   private val editCategoryViewModel: EditCategoryViewModel,
   schedulerProvider: SchedulerProvider
 ) : BaseViewModel(schedulerProvider) {
-  init {
+  fun onComposition() {
     feedLastBillViewModel.observe().baseSubscribe { }
   }
 

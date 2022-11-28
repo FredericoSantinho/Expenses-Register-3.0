@@ -6,11 +6,11 @@ import androidx.compose.runtime.Composable
 import neuro.expenses.register.common.activity.BaseComposeActivity
 import neuro.expenses.register.ui.main.MainComposable
 import neuro.expenses.register.viewmodel.main.MainViewModel
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : BaseComposeActivity() {
 
-  private val mainViewModel: MainViewModel by inject()
+  private val mainViewModel: MainViewModel by viewModel()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)

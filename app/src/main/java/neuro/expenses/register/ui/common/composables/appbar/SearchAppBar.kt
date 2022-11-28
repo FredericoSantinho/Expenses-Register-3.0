@@ -95,7 +95,7 @@ fun SearchAppBar(
           }
           IconButton(modifier = Modifier.constrainAs(configIconC) {
             linkTo(top = parent.top, bottom = parent.bottom)
-            end.linkTo(parent.start)
+            end.linkTo(parent.end)
           }, onClick = { appBarViewModel.onSettingsButton() }) {
             Icon(Icons.Filled.Settings, null, tint = Color.White)
           }
