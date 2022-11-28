@@ -31,7 +31,8 @@ internal class ProductCardComposableTest {
       mutableStateOf(
         CategoryModel(
           1,
-          category
+          category,
+          "iconUrl"
         )
       )
     )
