@@ -19,6 +19,8 @@ val repositoryModule = module {
   single<SaveCategoryRepository> { SaveCategoryRepositoryImpl(get()) }
   single<DeleteCategoryRepository> { DeleteCategoryRepositoryImpl(get()) }
   single<UpdateCategoryRepository> { UpdateCategoryRepositoryImpl(get()) }
+  single<GenerateBillIdRepository> { GenerateBillIdRepositoryImpl(get()) }
+  single<GenerateBillItemIdRepository> { GenerateBillItemIdRepositoryImpl(get()) }
   single<GetBillRepository> { GetBillRepositoryImpl(get()) }
   single<ObserveLastBillRepository> { ObserveLastBillRepositoryImpl(get()) }
   single<ObserveBillsRepository> { ObserveBillsRepositoryImpl(get()) }

@@ -6,7 +6,7 @@ import java.util.*
 
 @Entity(tableName = "bill_table")
 data class RoomBill(
-  @PrimaryKey(autoGenerate = true)
+  @PrimaryKey
   var billId: Long = 0,
   val placeId: Long,
   val calendar: Calendar,

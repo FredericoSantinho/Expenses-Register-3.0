@@ -15,7 +15,7 @@ import neuro.expenses.register.data.model.RoomPlaceProduct
   )], indices = [Index(value = ["placeProductId"])]
 )
 data class RoomBillItem(
-  @PrimaryKey(autoGenerate = true)
+  @PrimaryKey
   val billItemId: Long = 0,
   val amount: Double,
   val placeProductId: Long,
