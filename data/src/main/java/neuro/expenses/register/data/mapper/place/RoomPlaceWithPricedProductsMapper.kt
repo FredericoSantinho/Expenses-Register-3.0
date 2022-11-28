@@ -8,7 +8,7 @@ fun RoomPlaceWithPlaceProducts.toDomain(): PlaceDto = PlaceDto(
   roomPlace.placeId,
   roomPlace.name,
   placeProducts.map { it.toDomain() },
-  roomPlace.latLng.toDomain()
+  roomPlace.latLngModel.toDomain()
 )
 
 fun List<RoomPlaceWithPlaceProducts>.toDomain(): List<PlaceDto> = map { it.toDomain() }

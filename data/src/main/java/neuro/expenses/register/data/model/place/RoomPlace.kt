@@ -9,6 +9,6 @@ data class RoomPlace(
   @PrimaryKey(autoGenerate = true)
   val placeId: Long,
   val name: String,
-  val latLng: LatLng,
+  val latLngModel: LatLngModel,
   val nameLowercase: String = name.lowercase()
 )

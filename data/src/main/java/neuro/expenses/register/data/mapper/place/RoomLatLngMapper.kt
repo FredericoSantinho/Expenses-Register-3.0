@@ -1,8 +1,8 @@
 package neuro.expenses.register.data.mapper.place
 
-import neuro.expenses.register.data.model.place.LatLng
+import neuro.expenses.register.data.model.place.LatLngModel
 import neuro.expenses.register.domain.dto.LatLngDto
 
-fun LatLngDto.toData(): LatLng = LatLng(latitude, longitude)
+fun LatLngDto.toData(): LatLngModel = LatLngModel(latitude, longitude)
 
-fun LatLng.toDomain(): LatLngDto = LatLngDto(latitude, longitude)
+fun LatLngModel.toDomain(): LatLngDto = LatLngDto(latitude, longitude)

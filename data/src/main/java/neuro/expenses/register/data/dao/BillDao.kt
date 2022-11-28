@@ -53,9 +53,6 @@ interface BillDao {
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   fun insert(roomBill: RoomBill): Single<Long>
 
-  @Update()
-  fun update(roomBill: RoomBill): Completable
-
   @Delete()
   fun delete(roomBill: RoomBill): Completable
 
@@ -65,9 +62,6 @@ interface BillDao {
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   fun insert(roomBillItem: RoomBillItem): Single<Long>
-
-  @Update()
-  fun update(roomBillItem: RoomBillItem): Completable
 
   @Delete()
   fun delete(roomBillItem: RoomBillItem): Completable

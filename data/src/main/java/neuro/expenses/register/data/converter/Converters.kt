@@ -2,7 +2,7 @@ package neuro.expenses.register.data.converter
 
 import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
-import neuro.expenses.register.data.model.place.LatLng
+import neuro.expenses.register.data.model.place.LatLngModel
 import java.util.*
 
 @ProvidedTypeConverter
@@ -20,15 +20,15 @@ class Converters {
   }
 
   @TypeConverter
-  fun stringToLatLng(s: String): LatLng {
+  fun stringToLatLng(s: String): LatLngModel {
     val split = s.split(';')
     val latitude = split[0].toDouble()
     val longitude = split[1].toDouble()
-    return LatLng(latitude, longitude)
+    return LatLngModel(latitude, longitude)
   }
 
   @TypeConverter
-  fun latLngToString(latLng: LatLng): String {
-    return latLng.latitude.toString() + ';' + latLng.longitude.toString()
+  fun latLngToString(latLngModel: LatLngModel): String {
+    return latLngModel.latitude.toString() + ';' + latLngModel.longitude.toString()
   }
 }
