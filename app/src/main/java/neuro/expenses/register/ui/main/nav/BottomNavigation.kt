@@ -70,13 +70,13 @@ sealed class BottomNavItem(
   var screenRoute: String
 ) {
 
-  object Home : BottomNavItem(R.string.title_home, R.drawable.ic_home_black_24dp, "home")
+  object Home : BottomNavItem(R.string.home_title, R.drawable.ic_home_black_24dp, "home")
   object ManualRegister : BottomNavItem(
-    R.string.title_manual_register,
+    R.string.manual_register_title,
     R.drawable.ic_manual_register_24,
     "manual_register"
   )
 
-  object Bills : BottomNavItem(R.string.title_bills, R.drawable.ic_bill_black_24dp, "bills")
-  object Edit : BottomNavItem(R.string.title_edit, R.drawable.ic_edit_24, "edit")
+  object Bills : BottomNavItem(R.string.bills_title, R.drawable.ic_bill_black_24dp, "bills")
+  object Edit : BottomNavItem(R.string.edit_title, R.drawable.ic_edit_24, "edit")
 }
