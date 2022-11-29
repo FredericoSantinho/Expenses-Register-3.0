@@ -12,6 +12,7 @@ import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.android.gms.tasks.OnTokenCanceledListener
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
+import neuro.expenses.register.data.BuildConfig
 import neuro.expenses.register.domain.dto.LatLngDto
 import neuro.expenses.register.domain.service.location.GetCurrentLocationService
 import neuro.expenses.register.domain.service.location.NoLocationException
@@ -33,8 +34,10 @@ class GetCurrentLocationServiceImpl(
       ) {
         subscriber.onError(NoLocationPermissionException())
       }
+      val priorityLowPower =
+        if (BuildConfig.DEBUG) Priority.PRIORITY_LOW_POWER else Priority.PRIORITY_HIGH_ACCURACY
       fusedLocationClient.getCurrentLocation(
-        Priority.PRIORITY_HIGH_ACCURACY,
+        priorityLowPower,
         object : CancellationToken() {
           override fun onCanceledRequested(p0: OnTokenCanceledListener) =
             CancellationTokenSource().token
