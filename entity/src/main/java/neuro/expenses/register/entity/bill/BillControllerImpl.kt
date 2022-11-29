@@ -31,36 +31,34 @@ class BillControllerImpl(
           expense.amount % (expense.amount.toInt()) != 0.0,
           ""
         ).flatMap { placeProduct ->
-          Single.defer {
-            if (contains(bill, placeProduct.id)) {
-              Single.fromCallable {
-                val billItem = getBillItem(bill, placeProduct.id)!!
-                val billId = bill.id
-                val billItemId = billItem.id
-                val product = billItem.placeProduct
-                val oldAmount = billItem.amount
-                val newAmount = oldAmount + expense.amount
-                val newBillItem =
-                  BillItem(billItemId, product, newAmount, newAmount * product.price)
+          if (contains(bill, placeProduct.id)) {
+            Single.fromCallable {
+              val billItem = getBillItem(bill, placeProduct.id)!!
+              val billId = bill.id
+              val billItemId = billItem.id
+              val product = billItem.placeProduct
+              val oldAmount = billItem.amount
+              val newAmount = oldAmount + expense.amount
+              val newBillItem =
+                BillItem(billItemId, product, newAmount, newAmount * product.price)
 
-                val billItems = buildList(bill, newBillItem)
-                val total = calculateBillTotal.getTotal(billItems)
-                val iconUrl = getBillIconUrl.getIconUrl(billItems)
-                Bill(billId, bill.calendar, bill.place, total, billItems, iconUrl)
-              }
-            } else {
-              generateBillItemId.newId().map { billItemId ->
-                val newBillItem = BillItem(
-                  billItemId, placeProduct,
-                  expense.amount,
-                  expense.price * expense.amount
-                )
-                buildList(bill, newBillItem)
-              }.map { billItems ->
-                val total = calculateBillTotal.getTotal(billItems)
-                val iconUrl = getBillIconUrl.getIconUrl(billItems)
-                Bill(bill.id, bill.calendar, bill.place, total, billItems, iconUrl)
-              }
+              val billItems = buildList(bill, newBillItem)
+              val total = calculateBillTotal.getTotal(billItems)
+              val iconUrl = getBillIconUrl.getIconUrl(billItems)
+              Bill(billId, bill.calendar, bill.place, total, billItems, iconUrl)
+            }
+          } else {
+            generateBillItemId.newId().map { billItemId ->
+              val newBillItem = BillItem(
+                billItemId, placeProduct,
+                expense.amount,
+                expense.price * expense.amount
+              )
+              buildList(bill, newBillItem)
+            }.map { billItems ->
+              val total = calculateBillTotal.getTotal(billItems)
+              val iconUrl = getBillIconUrl.getIconUrl(billItems)
+              Bill(bill.id, bill.calendar, bill.place, total, billItems, iconUrl)
             }
           }
         }

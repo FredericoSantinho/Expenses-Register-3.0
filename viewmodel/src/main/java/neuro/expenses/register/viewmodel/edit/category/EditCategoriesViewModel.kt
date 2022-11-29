@@ -27,7 +27,7 @@ class EditCategoriesViewModel(
   }
 
   override fun onCategoryClick(categoryModel: CategoryModel) {
-    editCategoryViewModel.setEditCategoryViewModel(categoryModel, { onFinishEditAction() })
+    editCategoryViewModel.setEditCategoryViewModel(categoryModel) { onFinishEditAction() }
     _uiEvent.openEditCategory()
   }
 
@@ -52,6 +52,7 @@ class EditCategoriesViewModel(
 
   override fun onFloatingActionButtonClick() {
     editCategoryViewModel.reset()
+    editCategoryViewModel.onFinishEditAction.value = { onFinishEditAction() }
     _uiEvent.openEditCategory()
   }
 

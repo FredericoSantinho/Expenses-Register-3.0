@@ -77,7 +77,10 @@ class EditCategoryViewModel(
 
   override fun onConfirmDelete() {
     deleteCategoryUseCase.deleteCategory(id.value)
-      .baseSubscribe(onComplete = { onFinishEditAction.value() }, onError = {
+      .baseSubscribe(onComplete = {
+        onFinishEditAction.value()
+        _uiState.ready()
+      }, onError = {
         if (it is DeleteCategoryError) {
           _uiState.deleteFailedActiveRelations()
         } else {

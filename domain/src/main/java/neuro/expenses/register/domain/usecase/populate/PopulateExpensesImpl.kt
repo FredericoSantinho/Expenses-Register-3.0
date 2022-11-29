@@ -22,6 +22,8 @@ class PopulateExpensesImpl(private val registerExpenseUseCase: RegisterExpenseUs
       list.add(copyWithRandomCalendar(fakeExpensesList.get(random.nextInt(fakeExpensesList.size))))
     }
 
+    list.sortBy { it.calendar }
+
     return list
   }
 

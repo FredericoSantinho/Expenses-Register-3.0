@@ -17,11 +17,11 @@ interface BillDao {
   fun getLastBillId(): Maybe<Long>
 
   @Transaction
-  @Query("select * from bill_table order by calendar desc limit 1")
+  @Query("select * from bill_table order by billId desc limit 1")
   fun observeLastBill(): Observable<RoomBillWithBillItemsAndPlace>
 
   @Transaction
-  @Query("select * from bill_table order by calendar desc limit 1")
+  @Query("select * from bill_table order by billId desc limit 1")
   fun getLastBill(): Maybe<RoomBillWithBillItemsAndPlace>
 
   @Transaction
