@@ -11,7 +11,7 @@ data class RoomBillWithBillItemsAndPlace(
   @Relation(
     entity = RoomBillItem::class,
     parentColumn = "billId",
-    entityColumn = "parentBillId"
+    entityColumn = "billId"
   )
   val billItems: List<RoomBillItemWithPlaceProduct>,
   @Relation(

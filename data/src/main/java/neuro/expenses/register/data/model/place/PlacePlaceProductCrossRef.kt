@@ -12,12 +12,12 @@ import neuro.expenses.register.data.model.RoomPlaceProduct
     entity = RoomPlace::class,
     parentColumns = arrayOf("placeId"),
     childColumns = arrayOf("placeId"),
-    onDelete = ForeignKey.RESTRICT
+    onDelete = ForeignKey.NO_ACTION
   ), ForeignKey(
     entity = RoomPlaceProduct::class,
     parentColumns = arrayOf("placeProductId"),
     childColumns = arrayOf("placeProductId"),
-    onDelete = ForeignKey.RESTRICT
+    onDelete = ForeignKey.NO_ACTION
   )]
 )
 data class PlacePlaceProductCrossRef(

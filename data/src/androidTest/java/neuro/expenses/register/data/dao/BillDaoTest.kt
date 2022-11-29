@@ -55,7 +55,7 @@ class BillDaoTest {
   @Throws(Exception::class)
   fun getLastBillId() {
     val roomPlace = roomPlaceMock()
-    placeDao.insert(roomPlace)
+    placeDao.insert(roomPlace).test()
 
     // We want to make sure repeated calls return the same result
     billDao.getLastBillId().test().assertNoValues().assertNoErrors().assertComplete()
@@ -74,8 +74,12 @@ class BillDaoTest {
   fun getLastBillItemId() {
     val roomCategory = roomCategoryMock()
     val roomProduct = roomProductMock()
+    val roomPlace = roomPlaceMock()
+    val roomBill = roomBillMock(placeId = roomPlace.placeId)
     categoryDao.insert(roomCategory).test()
     productDao.insert(roomProduct).test()
+    placeDao.insert(roomPlace).test()
+    billDao.insert(roomBill).test()
 
     // We want to make sure repeated calls return the same result
     billDao.getLastBillItemId().test().assertNoValues().assertNoErrors().assertComplete()
@@ -87,7 +91,7 @@ class BillDaoTest {
           counter, roomProduct.productId, roomCategory.categoryId, 1.0 + i
         )
       )
-      billDao.insert(RoomBillItem(counter, 1.0, counter, 1)).test()
+      billDao.insert(RoomBillItem(counter, 1.0, counter, roomBill.billId)).test()
       // We want to make sure repeated calls return the same result
       billDao.getLastBillItemId().test().assertValue(counter).assertNoErrors().assertComplete()
       billDao.getLastBillItemId().test().assertValue(counter).assertNoErrors().assertComplete()
@@ -112,8 +116,8 @@ class BillDaoTest {
     categoryDao.insert(roomCategory).test()
     productDao.insert(roomProduct).test()
     placeDao.insert(roomPlace).test()
-    placeDao.insert(PlacePlaceProductCrossRef(placeId, placeProductId)).test()
     placeProductDao.insert(roomPlaceProduct)
+    placeDao.insert(PlacePlaceProductCrossRef(placeId, placeProductId)).test()
     placeProductDao.insert(PlaceProductCategoryCrossRef(placeProductId, roomCategory.categoryId))
     placeProductDao.insert(PlaceProductProductCrossRef(placeProductId, roomProduct.productId))
     billDao.insert(roomBill).test().assertValue(roomBill.billId).assertNoErrors().assertComplete()
@@ -161,8 +165,8 @@ class BillDaoTest {
     categoryDao.insert(roomCategory).test()
     productDao.insert(roomProduct).test()
     placeDao.insert(roomPlace).test()
-    placeDao.insert(PlacePlaceProductCrossRef(placeId, placeProductId)).test()
     placeProductDao.insert(roomPlaceProduct)
+    placeDao.insert(PlacePlaceProductCrossRef(placeId, placeProductId)).test().values()
     placeProductDao.insert(PlaceProductCategoryCrossRef(placeProductId, roomCategory.categoryId))
     placeProductDao.insert(PlaceProductProductCrossRef(placeProductId, roomProduct.productId))
     billDao.insert(roomBill, listOf(roomBillItem))
@@ -198,8 +202,8 @@ class BillDaoTest {
     categoryDao.insert(roomCategory).test()
     productDao.insert(roomProduct).test()
     placeDao.insert(roomPlace).test()
-    placeDao.insert(PlacePlaceProductCrossRef(placeId, placeProductId)).test()
     placeProductDao.insert(roomPlaceProduct)
+    placeDao.insert(PlacePlaceProductCrossRef(placeId, placeProductId)).test()
     placeProductDao.insert(PlaceProductCategoryCrossRef(placeProductId, roomCategory.categoryId))
     placeProductDao.insert(PlaceProductProductCrossRef(placeProductId, roomProduct.productId))
     billDao.insert(roomBill, listOf(roomBillItem))

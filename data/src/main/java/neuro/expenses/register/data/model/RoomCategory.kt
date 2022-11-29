@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "category_table", indices = [Index(value = ["nameLowercase"], unique = true)])
 data class RoomCategory(
-  @PrimaryKey(autoGenerate = true)
+  @PrimaryKey
   val categoryId: Long,
   val name: String,
   val iconUrl: String,

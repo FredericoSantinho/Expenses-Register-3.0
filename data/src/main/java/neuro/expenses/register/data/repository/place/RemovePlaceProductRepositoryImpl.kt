@@ -7,7 +7,7 @@ import neuro.expenses.register.domain.repository.place.RemovePlaceProductReposit
 
 class RemovePlaceProductRepositoryImpl(private val placeDao: PlaceDao) :
   RemovePlaceProductRepository {
-  override fun removePlaceProduct(placeId: Long, productId: Long): Completable {
-    return placeDao.delete(PlacePlaceProductCrossRef(placeId, productId))
+  override fun removePlaceProduct(placeId: Long, placeProductId: Long): Completable {
+    return placeDao.delete(PlacePlaceProductCrossRef(placeId, placeProductId))
   }
 }

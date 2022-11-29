@@ -15,17 +15,17 @@ import androidx.room.PrimaryKey
     entity = RoomProduct::class,
     parentColumns = arrayOf("productId"),
     childColumns = arrayOf("productId"),
-    onDelete = ForeignKey.RESTRICT
+    onDelete = ForeignKey.NO_ACTION
   ), ForeignKey(
     entity = RoomCategory::class,
     parentColumns = arrayOf("categoryId"),
     childColumns = arrayOf("categoryId"),
-    onDelete = ForeignKey.RESTRICT
+    onDelete = ForeignKey.NO_ACTION
   )]
 )
 data class RoomPlaceProduct(
   @PrimaryKey
-  var placeProductId: Long = 0,
+  var placeProductId: Long,
   val productId: Long,
   val categoryId: Long,
   val price: Double

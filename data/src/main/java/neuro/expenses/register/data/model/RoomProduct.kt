@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
   indices = [Index(value = ["descriptionLowercase"], unique = true)]
 )
 data class RoomProduct(
-  @PrimaryKey(autoGenerate = true)
+  @PrimaryKey
   var productId: Long,
   val description: String,
   val iconUrl: String,
