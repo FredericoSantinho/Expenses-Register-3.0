@@ -2,6 +2,6 @@ package neuro.expenses.register.entity.mocks
 
 import neuro.expenses.register.entity.Category
 
-fun categoryMock(): Category {
-  return Category(1, "name", "iconUrl")
+fun categoryMock(name: String = "name"): Category {
+  return Category(1, name, "iconUrl")
 }

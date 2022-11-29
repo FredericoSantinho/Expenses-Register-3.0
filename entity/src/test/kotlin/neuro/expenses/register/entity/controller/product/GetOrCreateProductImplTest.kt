@@ -13,7 +13,7 @@ import org.mockito.kotlin.whenever
 
 internal class GetOrCreateProductImplTest : ObserveSubscriptionTest() {
   @Test
-  fun testNonExistentProduct() {
+  fun nonExistentProduct() {
     val incrementer = Incrementer()
     val offset = getAndIncrementOffset()
 
@@ -45,7 +45,7 @@ internal class GetOrCreateProductImplTest : ObserveSubscriptionTest() {
   }
 
   @Test
-  fun testExistentProduct() {
+  fun existentProduct() {
     val incrementer = Incrementer()
     val offset = getAndIncrementOffset()
 
