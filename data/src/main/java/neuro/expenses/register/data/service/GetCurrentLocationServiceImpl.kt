@@ -34,7 +34,7 @@ class GetCurrentLocationServiceImpl(
         subscriber.onError(NoLocationPermissionException())
       }
       fusedLocationClient.getCurrentLocation(
-        Priority.PRIORITY_BALANCED_POWER_ACCURACY,
+        Priority.PRIORITY_HIGH_ACCURACY,
         object : CancellationToken() {
           override fun onCanceledRequested(p0: OnTokenCanceledListener) =
             CancellationTokenSource().token
