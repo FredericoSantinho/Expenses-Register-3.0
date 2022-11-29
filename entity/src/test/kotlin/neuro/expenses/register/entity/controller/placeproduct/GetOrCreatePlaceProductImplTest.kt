@@ -10,7 +10,7 @@ import neuro.expenses.register.entity.controller.product.GetOrCreateProduct
 import neuro.expenses.register.entity.mocks.categoryMock
 import neuro.expenses.register.entity.mocks.placeProductMock
 import neuro.expenses.register.entity.mocks.productMock
-import neuro.test.Incrementer
+import neuro.test.rx.Incrementer
 import neuro.test.rx.ObserveSubscriptionTest
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
@@ -43,15 +43,13 @@ internal class GetOrCreatePlaceProductImplTest : ObserveSubscriptionTest() {
     val placeProduct = placeProductMock(category = category)
 
     whenever(getCategory.getCategory(categoryName.lowercase())).thenReturn(
-      Maybe.just(category).observeSubscription(incrementer.getAndIncrement(), offset)
+      Maybe.just(category).observeSubscription(incrementer, offset)
     )
     whenever(
       getPlaceProduct.getPlaceProduct(
         description, categoryName, price
       )
-    ).thenReturn(
-      Maybe.just(placeProduct).observeSubscription(incrementer.getAndIncrement(), offset)
-    )
+    ).thenReturn(Maybe.just(placeProduct).observeSubscription(incrementer, offset))
     whenever(
       getOrCreateProduct.getOrCreateProduct(
         description.lowercase(), variableAmount, iconUrl
@@ -91,25 +89,23 @@ internal class GetOrCreatePlaceProductImplTest : ObserveSubscriptionTest() {
     val placeProduct = placeProductMock(category = category)
 
     whenever(getCategory.getCategory(categoryName.lowercase())).thenReturn(
-      Maybe.just(category).observeSubscription(incrementer.getAndIncrement(), offset)
+      Maybe.just(category).observeSubscription(incrementer, offset)
     )
     whenever(
       getPlaceProduct.getPlaceProduct(
         description, categoryName, price
       )
-    ).thenReturn(
-      Maybe.empty<PlaceProduct>().observeSubscription(incrementer.getAndIncrement(), offset)
-    )
+    ).thenReturn(Maybe.empty<PlaceProduct>().observeSubscription(incrementer, offset))
     whenever(
       getOrCreateProduct.getOrCreateProduct(
         description.lowercase(), variableAmount, iconUrl
       )
-    ).thenReturn(Single.just(product).observeSubscription(incrementer.getAndIncrement(), offset))
+    ).thenReturn(Single.just(product).observeSubscription(incrementer, offset))
     whenever(generatePlaceProductId.newId()).thenReturn(
-      Single.just(1L).observeSubscription(incrementer.getAndIncrement(), offset)
+      Single.just(1L).observeSubscription(incrementer, offset)
     )
     whenever(savePlaceProduct.savePlaceProduct(placeProduct)).thenReturn(
-      Completable.complete().observeSubscription(incrementer.getAndIncrement(), offset)
+      Completable.complete().observeSubscription(incrementer, offset)
     )
 
     getOrCreatePlaceProduct.getOrCreatePlaceProduct(
@@ -144,7 +140,7 @@ internal class GetOrCreatePlaceProductImplTest : ObserveSubscriptionTest() {
     val iconUrl = "iconUrl"
 
     whenever(getCategory.getCategory(categoryName.lowercase())).thenReturn(
-      Maybe.empty<Category>().observeSubscription(incrementer.getAndIncrement(), offset)
+      Maybe.empty<Category>().observeSubscription(incrementer, offset)
     )
 
     getOrCreatePlaceProduct.getOrCreatePlaceProduct(

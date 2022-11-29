@@ -1,4 +1,4 @@
-package neuro.test
+package neuro.test.rx
 
 class OffsetIncrementer(
   private val incrementer: Incrementer = Incrementer(),

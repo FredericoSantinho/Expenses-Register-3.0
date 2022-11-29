@@ -1,4 +1,4 @@
-package neuro.test
+package neuro.test.rx
 
 import java.util.concurrent.atomic.AtomicLong
 
@@ -8,12 +8,12 @@ class Incrementer {
   private val counter = AtomicLong(0)
 
   fun getAndIncrement(): Long {
-    return counter.incrementAndGet()
+    return counter.getAndIncrement()
   }
 
   fun getAll(): List<Long> {
     val list = mutableListOf<Long>()
-    for (i in 1..counter.get()) {
+    for (i in 0..counter.get() - 1) {
       list.add(i)
     }
     return list

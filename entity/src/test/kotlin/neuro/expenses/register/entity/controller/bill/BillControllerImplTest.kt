@@ -5,7 +5,7 @@ import io.reactivex.rxjava3.core.Single
 import neuro.expenses.register.entity.controller.place.GetOrCreatePlace
 import neuro.expenses.register.entity.controller.placeproduct.GetOrCreatePlaceProduct
 import neuro.expenses.register.entity.mocks.*
-import neuro.test.Incrementer
+import neuro.test.rx.Incrementer
 import neuro.test.rx.ObserveSubscriptionTest
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.any
@@ -62,18 +62,16 @@ internal class BillControllerImplTest : ObserveSubscriptionTest() {
     val placeProduct = placeProductMock(4)
 
     whenever(getOrCreatePlace.getOrCreatePlace(placeName)).thenReturn(
-      Single.just(place).observeSubscription(incrementer.getAndIncrement(), offset)
+      Single.just(place).observeSubscription(incrementer, offset)
     )
     whenever(getLastBill.getLastBill()).thenReturn(
-      Maybe.just(lastBill).observeSubscription(incrementer.getAndIncrement(), offset)
+      Maybe.just(lastBill).observeSubscription(incrementer, offset)
     )
     whenever(
       getOrCreatePlaceProduct.getOrCreatePlaceProduct(description, category, price, false, "")
-    ).thenReturn(
-      Single.just(placeProduct).observeSubscription(incrementer.getAndIncrement(), offset)
-    )
+    ).thenReturn(Single.just(placeProduct).observeSubscription(incrementer, offset))
     whenever(generateBillItemId.newId()).thenReturn(
-      Single.just(billItemId).observeSubscription(incrementer.getAndIncrement(), offset)
+      Single.just(billItemId).observeSubscription(incrementer, offset)
     )
     whenever(calculateBillTotal.getTotal(billItems)).thenReturn(1.0)
     whenever(getBillIconUrl.getIconUrl(any())).thenReturn("")
@@ -131,14 +129,12 @@ internal class BillControllerImplTest : ObserveSubscriptionTest() {
 
     whenever(
       getOrCreatePlaceProduct.getOrCreatePlaceProduct(description, category, price, false, "")
-    ).thenReturn(
-      Single.just(placeProduct).observeSubscription(incrementer.getAndIncrement(), offset)
-    )
+    ).thenReturn(Single.just(placeProduct).observeSubscription(incrementer, offset))
     whenever(getOrCreatePlace.getOrCreatePlace(placeName)).thenReturn(
-      Single.just(place).observeSubscription(incrementer.getAndIncrement(), offset)
+      Single.just(place).observeSubscription(incrementer, offset)
     )
     whenever(getLastBill.getLastBill()).thenReturn(
-      Maybe.just(lastBill).observeSubscription(incrementer.getAndIncrement(), offset)
+      Maybe.just(lastBill).observeSubscription(incrementer, offset)
     )
     whenever(calculateBillTotal.getTotal(billItems)).thenReturn(1.0)
     whenever(getBillIconUrl.getIconUrl(any())).thenReturn("")
@@ -196,18 +192,16 @@ internal class BillControllerImplTest : ObserveSubscriptionTest() {
     val placeProduct = placeProductMock(4)
 
     whenever(getOrCreatePlace.getOrCreatePlace(placeName)).thenReturn(
-      Single.just(place).observeSubscription(incrementer.getAndIncrement(), offset)
+      Single.just(place).observeSubscription(incrementer, offset)
     )
     whenever(getLastBill.getLastBill()).thenReturn(
-      Maybe.just(lastBill).observeSubscription(incrementer.getAndIncrement(), offset)
+      Maybe.just(lastBill).observeSubscription(incrementer, offset)
     )
     whenever(
       getOrCreatePlaceProduct.getOrCreatePlaceProduct(description, category, price, true, "")
-    ).thenReturn(
-      Single.just(placeProduct).observeSubscription(incrementer.getAndIncrement(), offset)
-    )
+    ).thenReturn(Single.just(placeProduct).observeSubscription(incrementer, offset))
     whenever(generateBillItemId.newId()).thenReturn(
-      Single.just(billItemId).observeSubscription(incrementer.getAndIncrement(), offset)
+      Single.just(billItemId).observeSubscription(incrementer, offset)
     )
     whenever(calculateBillTotal.getTotal(billItems)).thenReturn(1.0)
     whenever(getBillIconUrl.getIconUrl(any())).thenReturn("")
@@ -264,10 +258,10 @@ internal class BillControllerImplTest : ObserveSubscriptionTest() {
     )
 
     whenever(getOrCreatePlace.getOrCreatePlace(placeName)).thenReturn(
-      Single.just(place).observeSubscription(incrementer.getAndIncrement(), offset)
+      Single.just(place).observeSubscription(incrementer, offset)
     )
     whenever(getLastBill.getLastBill()).thenReturn(
-      Maybe.just(lastBill).observeSubscription(incrementer.getAndIncrement(), offset)
+      Maybe.just(lastBill).observeSubscription(incrementer, offset)
     )
     whenever(calculateBillTotal.getTotal(billItems)).thenReturn(1.0)
     whenever(getBillIconUrl.getIconUrl(any())).thenReturn("")
@@ -277,10 +271,10 @@ internal class BillControllerImplTest : ObserveSubscriptionTest() {
       )
     ).thenReturn(Single.just(placeProduct))
     whenever(generateBillId.newId()).thenReturn(
-      Single.just(1L).observeSubscription(incrementer.getAndIncrement(), offset)
+      Single.just(1L).observeSubscription(incrementer, offset)
     )
     whenever(generateBillItemId.newId()).thenReturn(
-      Single.just(1L).observeSubscription(incrementer.getAndIncrement(), offset)
+      Single.just(1L).observeSubscription(incrementer, offset)
     )
 
     billController.add(expense).test().assertValue(bill).assertNoErrors().assertComplete()
@@ -335,10 +329,10 @@ internal class BillControllerImplTest : ObserveSubscriptionTest() {
     )
 
     whenever(getOrCreatePlace.getOrCreatePlace(placeName)).thenReturn(
-      Single.just(place).observeSubscription(incrementer.getAndIncrement(), offset)
+      Single.just(place).observeSubscription(incrementer, offset)
     )
     whenever(getLastBill.getLastBill()).thenReturn(
-      Maybe.just(lastBill).observeSubscription(incrementer.getAndIncrement(), offset)
+      Maybe.just(lastBill).observeSubscription(incrementer, offset)
     )
     whenever(calculateBillTotal.getTotal(billItems)).thenReturn(1.0)
     whenever(getBillIconUrl.getIconUrl(any())).thenReturn("")
@@ -348,10 +342,10 @@ internal class BillControllerImplTest : ObserveSubscriptionTest() {
       )
     ).thenReturn(Single.just(placeProduct))
     whenever(generateBillId.newId()).thenReturn(
-      Single.just(1L).observeSubscription(incrementer.getAndIncrement(), offset)
+      Single.just(1L).observeSubscription(incrementer, offset)
     )
     whenever(generateBillItemId.newId()).thenReturn(
-      Single.just(1L).observeSubscription(incrementer.getAndIncrement(), offset)
+      Single.just(1L).observeSubscription(incrementer, offset)
     )
 
     billController.add(expense).test().assertValue(bill).assertNoErrors().assertComplete()

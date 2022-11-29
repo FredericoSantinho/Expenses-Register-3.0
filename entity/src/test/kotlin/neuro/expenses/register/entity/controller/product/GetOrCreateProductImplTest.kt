@@ -5,7 +5,7 @@ import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 import neuro.expenses.register.entity.Product
 import neuro.expenses.register.entity.mocks.productMock
-import neuro.test.Incrementer
+import neuro.test.rx.Incrementer
 import neuro.test.rx.ObserveSubscriptionTest
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
@@ -29,13 +29,13 @@ internal class GetOrCreateProductImplTest : ObserveSubscriptionTest() {
     val product = productMock(1L, description, iconUrl)
 
     whenever(getProduct.getProduct(description)).thenReturn(
-      Maybe.empty<Product>().observeSubscription(incrementer.getAndIncrement(), offset)
+      Maybe.empty<Product>().observeSubscription(incrementer, offset)
     )
     whenever(generateProductId.newId()).thenReturn(
-      Single.just(1L).observeSubscription(incrementer.getAndIncrement(), offset)
+      Single.just(1L).observeSubscription(incrementer, offset)
     )
     whenever(saveProduct.saveProduct(product)).thenReturn(
-      Completable.complete().observeSubscription(incrementer.getAndIncrement(), offset)
+      Completable.complete().observeSubscription(incrementer, offset)
     )
 
     getOrCreateProduct.getOrCreateProduct(description, variableAmount, iconUrl).test()
@@ -61,7 +61,7 @@ internal class GetOrCreateProductImplTest : ObserveSubscriptionTest() {
     val product = productMock(1L, description, iconUrl)
 
     whenever(getProduct.getProduct(description)).thenReturn(
-      Maybe.just(product).observeSubscription(incrementer.getAndIncrement(), offset)
+      Maybe.just(product).observeSubscription(incrementer, offset)
     )
     whenever(generateProductId.newId()).thenReturn(Single.error(IllegalStateException()))
 

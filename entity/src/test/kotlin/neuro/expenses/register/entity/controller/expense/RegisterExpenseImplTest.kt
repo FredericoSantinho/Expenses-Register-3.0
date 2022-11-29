@@ -14,7 +14,7 @@ import neuro.expenses.register.entity.controller.placeproduct.GetOrCreatePlacePr
 import neuro.expenses.register.entity.mocks.billMock
 import neuro.expenses.register.entity.mocks.placeMock
 import neuro.expenses.register.entity.mocks.placeProductMock
-import neuro.test.Incrementer
+import neuro.test.rx.Incrementer
 import neuro.test.rx.ObserveSubscriptionTest
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
@@ -50,10 +50,10 @@ internal class RegisterExpenseImplTest : ObserveSubscriptionTest() {
 
     val expense = Expense(description, category, placeName, price, amount, calendar)
     whenever(expenseValidator.validate(expense)).thenReturn(
-      Completable.complete().observeSubscription(incrementer.getAndIncrement(), offset)
+      Completable.complete().observeSubscription(incrementer, offset)
     )
     whenever(billController.add(expense)).thenReturn(
-      Single.just(billMock()).observeSubscription(incrementer.getAndIncrement(), offset)
+      Single.just(billMock()).observeSubscription(incrementer, offset)
     )
     val placeProduct = placeProductMock()
     whenever(
@@ -61,11 +61,11 @@ internal class RegisterExpenseImplTest : ObserveSubscriptionTest() {
         description, category, price, variableAmount, iconUrl
       )
     ).thenReturn(
-      Single.just(placeProduct).observeSubscription(incrementer.getAndIncrement(), offset)
+      Single.just(placeProduct).observeSubscription(incrementer, offset)
     )
     val place = placeMock()
     whenever(getOrCreatePlace.getOrCreatePlace(placeName)).thenReturn(
-      Single.just(place).observeSubscription(incrementer.getAndIncrement(), offset)
+      Single.just(place).observeSubscription(incrementer, offset)
     )
     whenever(placeController.contains(place, placeProduct)).thenReturn(true)
 
@@ -100,7 +100,7 @@ internal class RegisterExpenseImplTest : ObserveSubscriptionTest() {
     val expense = Expense(description, category, placeName, price, amount, calendar)
     whenever(expenseValidator.validate(expense)).thenReturn(
       Completable.error(RegisterExpenseException(emptySet()))
-        .observeSubscription(incrementer.getAndIncrement(), offset)
+        .observeSubscription(incrementer, offset)
     )
     whenever(billController.add(expense)).thenReturn(
       Maybe.empty<Bill>().toSingle()
@@ -143,10 +143,10 @@ internal class RegisterExpenseImplTest : ObserveSubscriptionTest() {
 
     val expense = Expense(description, category, placeName, price, amount, calendar)
     whenever(expenseValidator.validate(expense)).thenReturn(
-      Completable.complete().observeSubscription(incrementer.getAndIncrement(), offset)
+      Completable.complete().observeSubscription(incrementer, offset)
     )
     whenever(billController.add(expense)).thenReturn(
-      Single.just(billMock()).observeSubscription(incrementer.getAndIncrement(), offset)
+      Single.just(billMock()).observeSubscription(incrementer, offset)
     )
     val placeProduct = placeProductMock()
     whenever(
@@ -154,15 +154,15 @@ internal class RegisterExpenseImplTest : ObserveSubscriptionTest() {
         description, category, price, variableAmount, iconUrl
       )
     ).thenReturn(
-      Single.just(placeProduct).observeSubscription(incrementer.getAndIncrement(), offset)
+      Single.just(placeProduct).observeSubscription(incrementer, offset)
     )
     val place = placeMock()
     whenever(getOrCreatePlace.getOrCreatePlace(placeName)).thenReturn(
-      Single.just(place).observeSubscription(incrementer.getAndIncrement(), offset)
+      Single.just(place).observeSubscription(incrementer, offset)
     )
     whenever(placeController.contains(place, placeProduct)).thenReturn(false)
     whenever(placeController.addPlaceProduct(place, placeProduct)).thenReturn(
-      Single.just(place).observeSubscription(incrementer.getAndIncrement(), offset)
+      Single.just(place).observeSubscription(incrementer, offset)
     )
 
     registerExpense.registerExpense(expense).test().assertNoErrors().assertComplete()
