@@ -38,7 +38,7 @@ open class ObserveSubscriptionTest(private val offsetIncrementer: OffsetIncremen
     }
   }
 
-  fun assertSubscriptions(list: List<Int>, offset: Int = 0) {
+  fun assertSubscriptions(list: List<Int>, offset: Int) {
     list.forEach { assertSubscription(it, offset) }
   }
 

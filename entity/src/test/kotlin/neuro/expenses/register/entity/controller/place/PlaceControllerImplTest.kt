@@ -18,7 +18,7 @@ internal class PlaceControllerImplTest {
     val removePlaceProduct = mock<RemovePlaceProduct>()
 
 
-    val description = "desc"
+    val description = "description"
     val categoryName = "cat"
     val price = 1.0
     val variableAmount = false

@@ -2,8 +2,6 @@ package neuro.test
 
 import java.util.concurrent.atomic.AtomicInteger
 
-val incrementer = Incrementer()
-
 class Incrementer {
   private val counter = AtomicInteger(0)
 

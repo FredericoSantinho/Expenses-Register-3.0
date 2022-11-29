@@ -8,7 +8,7 @@ import java.util.*
 internal class ExpenseTest {
   @Test
   fun test() {
-    val description = "desc"
+    val description = "description"
     val category = "cat"
     val place = "place"
     val price = 1.0

@@ -8,7 +8,7 @@ internal class ProductTest {
   @Test
   fun test() {
     val id = 1L
-    val description = "desc"
+    val description = "description"
     val variableAmount = true
     val iconUrl = "iconUrl"
 

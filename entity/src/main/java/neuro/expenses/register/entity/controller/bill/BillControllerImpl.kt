@@ -28,7 +28,7 @@ class BillControllerImpl(
           val productDescription = expense.description
           if (contains(bill, productDescription)) {
             Single.fromCallable {
-              val billItem = getBillItem(bill, productDescription)
+              val billItem = getBillItem(bill, productDescription)!!
               val billId = bill.id
               val billItemId = billItem.id
               val product = billItem.placeProduct
@@ -48,10 +48,10 @@ class BillControllerImpl(
               expense.price,
               expense.amount % (expense.amount.toInt()) != 0.0,
               ""
-            ).flatMap { product ->
+            ).flatMap { placeProduct ->
               generateBillItemId.newId().map { billItemId ->
                 val newBillItem = BillItem(
-                  billItemId, product,
+                  billItemId, placeProduct,
                   expense.amount,
                   expense.price * expense.amount
                 )
@@ -71,8 +71,11 @@ class BillControllerImpl(
   }
 
   private fun contains(bill: Bill, productDescription: String): Boolean {
-    return bill.billItems.find { it.placeProduct.product.description.lowercase() == productDescription.lowercase() } != null
+    return getBillItem(bill, productDescription) != null
   }
+
+  private fun getBillItem(bill: Bill, productDescription: String) =
+    bill.billItems.find { it.placeProduct.product.description == productDescription }
 
   private fun buildList(bill: Bill, newBillItem: BillItem): List<BillItem> {
     return if (contains(bill, newBillItem.placeProduct.product.description)) {
@@ -103,9 +106,6 @@ class BillControllerImpl(
     list.add(newBillItem)
     return list
   }
-
-  private fun getBillItem(bill: Bill, productDescription: String) =
-    bill.billItems.find { it.placeProduct.product.description == productDescription }!!
 
   private fun getLastBill(expense: Expense, place: Place): Single<Bill> {
     return getLastBill.getLastBill().defaultIfEmpty(defaultBillDto).flatMap { lastStoredBill ->

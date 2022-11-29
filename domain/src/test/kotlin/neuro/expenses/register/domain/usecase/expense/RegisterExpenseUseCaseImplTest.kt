@@ -12,13 +12,13 @@ internal class RegisterExpenseUseCaseImplTest {
 //      "place",
 //      1,
 //      0.0,
-//      listOf(BillItemDto(ProductDto("desc", "", 0.0), "place", 1.0))
+//      listOf(BillItemDto(ProductDto("description", "", 0.0), "place", 1.0))
 //    )
 //    val expectedBill = Bill(
 //      "place",
 //      1,
 //      0.0,
-//      listOf(BillItem(Product("desc", "", 0.0), 2.0))
+//      listOf(BillItem(Product("description", "", 0.0), 2.0))
 //    )
 //
 //    val getLastBillUseCase = mock<GetLastBillUseCase> { getLastBill ->
@@ -34,7 +34,7 @@ internal class RegisterExpenseUseCaseImplTest {
 //
 //
 //    val calendar = Calendar.getInstance()
-//    val billItemDto = BillItemDto(ProductDto("desc", "", 0.0), "place", 1.0, calendar)
+//    val billItemDto = BillItemDto(ProductDto("description", "", 0.0), "place", 1.0, calendar)
 //    registerExpenseUseCase.registerExpense(billItemDto)
 //
 //    verify(saveBillUseCase, times(1)).save(expectedBill, "place")
@@ -49,7 +49,7 @@ internal class RegisterExpenseUseCaseImplTest {
 //    )
 //    val expectedBill = Bill(
 //      1,
-//      listOf(BillItem(Product("desc1", "", 0.0), 1.0), BillItem(Product("desc", "", 0.0), 1.0)),,
+//      listOf(BillItem(Product("desc1", "", 0.0), 1.0), BillItem(Product("description", "", 0.0), 1.0)),,
 //      iconUrl = "place"
 //    )
 //
@@ -66,7 +66,7 @@ internal class RegisterExpenseUseCaseImplTest {
 //
 //
 //    val calendar = Calendar.getInstance()
-//    val billItemDto = BillItemDto(ProductDto("desc", "", 0.0), "place", 1.0, calendar)
+//    val billItemDto = BillItemDto(ProductDto("description", "", 0.0), "place", 1.0, calendar)
 //    registerExpenseUseCase.registerExpense(billItemDto)
 //
 //    verify(saveBillUseCase, times(1)).save(expectedBill, "place")
@@ -76,12 +76,12 @@ internal class RegisterExpenseUseCaseImplTest {
 //  fun openedBillDifferentPlace() {
 //    val mockedBill = Bill(
 //      1,
-//      listOf(BillItem(Product("desc", "", 0.0), 1.0)),,
+//      listOf(BillItem(Product("description", "", 0.0), 1.0)),,
 //      iconUrl = "place"
 //    )
 //    val expectedBill = Bill(
 //      1,
-//      listOf(BillItem(Product("desc", "", 0.0), 1.0)),,
+//      listOf(BillItem(Product("description", "", 0.0), 1.0)),,
 //      iconUrl = "place2"
 //    )
 //
@@ -99,7 +99,7 @@ internal class RegisterExpenseUseCaseImplTest {
 //
 //    val calendar = Calendar.getInstance()
 //    calendar.time = Date(1)
-//    val billItemDto = BillItemDto(ProductDto("desc", "", 0.0), "place2", 1.0, calendar)
+//    val billItemDto = BillItemDto(ProductDto("description", "", 0.0), "place2", 1.0, calendar)
 //    registerExpenseUseCase.registerExpense(billItemDto)
 //
 //    verify(saveBillUseCase, times(1)).save(expectedBill, "place2")
@@ -109,11 +109,11 @@ internal class RegisterExpenseUseCaseImplTest {
 //  fun closedBill() {
 //    val mockedBill = Bill(
 //      1,
-//      listOf(BillItem(Product("desc", "", 0.0), 2.0)),, false, iconUrl = "place"
+//      listOf(BillItem(Product("description", "", 0.0), 2.0)),, false, iconUrl = "place"
 //    )
 //    val expectedBill = Bill(
 //      1,
-//      listOf(BillItem(Product("desc", "", 0.0), 1.0)),,
+//      listOf(BillItem(Product("description", "", 0.0), 1.0)),,
 //      iconUrl = "place"
 //    )
 //
@@ -130,7 +130,7 @@ internal class RegisterExpenseUseCaseImplTest {
 //
 //
 //    val calendar = Calendar.getInstance()
-//    val billItemDto = BillItemDto(ProductDto("desc", "", 0.0), "place", 1.0, calendar)
+//    val billItemDto = BillItemDto(ProductDto("description", "", 0.0), "place", 1.0, calendar)
 //    calendar.time = Date(1)
 //    registerExpenseUseCase.registerExpense(billItemDto)
 //
@@ -141,7 +141,7 @@ internal class RegisterExpenseUseCaseImplTest {
 //  fun testValidatorUsage() {
 //    val mockedBill = Bill(
 //      1,
-//      listOf(BillItem(Product("desc", "", 0.0), 2.0)),, false, iconUrl = "place"
+//      listOf(BillItem(Product("description", "", 0.0), 2.0)),, false, iconUrl = "place"
 //    )
 //
 //    val getLastBillUseCase = mock<GetLastBillUseCase> { getLastBill ->
@@ -155,7 +155,7 @@ internal class RegisterExpenseUseCaseImplTest {
 //
 //
 //    val calendar = Calendar.getInstance()
-//    val billItemDto = BillItemDto(ProductDto("desc", "", 0.0), "place", 1.0, calendar)
+//    val billItemDto = BillItemDto(ProductDto("description", "", 0.0), "place", 1.0, calendar)
 //    calendar.time = Date(1)
 //
 //    assertEquals(getErrorList(), registerExpenseUseCase.registerExpense(billItemDto))
