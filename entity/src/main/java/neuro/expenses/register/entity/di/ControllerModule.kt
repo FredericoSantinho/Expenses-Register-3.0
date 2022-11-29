@@ -23,7 +23,7 @@ val controllerModule = module {
   single<ExpenseValidator> { ExpenseValidatorImpl(get()) }
   single<IsValidCategory> { IsValidCategoryImpl(get()) }
   single<BillController> {
-    BillController(get(), get(), get(), get(), get(), get(), get(), get())
+    BillControllerImpl(get(), get(), get(), get(), get(), get(), get(), get())
   }
   single<GetBillIconUrl> { GetBillIconUrlImpl() }
   single<CalculateBillTotal> { CalculateBillTotalImpl() }

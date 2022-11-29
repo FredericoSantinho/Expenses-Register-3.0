@@ -14,6 +14,7 @@ import neuro.expenses.register.data.model.place.RoomPlaceWithPlaceProducts
 import neuro.expenses.register.data.model.product.PlaceProductCategoryCrossRef
 import neuro.expenses.register.data.model.product.PlaceProductProductCrossRef
 import neuro.expenses.register.data.model.product.RoomPlaceProductWithProductAndCategory
+import neuro.test.Incrementer
 import org.junit.After
 import org.junit.Before
 import org.junit.Test

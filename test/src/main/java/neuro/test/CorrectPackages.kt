@@ -3,20 +3,19 @@ package neuro.test
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import neuro.test.clazz.ClassUtils
+import neuro.test.rx.ObserveSubscriptionTest
 import java.io.IOException
 import java.util.*
 
 class CorrectPackages(
-  exclusions: List<String>,
   aClass: Class<*>,
+  exclusions: List<String> = listOf(ObserveSubscriptionTest::class.qualifiedName!!),
   private val classUtils: ClassUtils = ClassUtils()
 ) {
-  private val exclusions = mutableListOf("")
-
-  constructor(aClass: Class<*>) : this(emptyList<String>(), aClass)
+  private val exclusions: List<String>
 
   init {
-    this.exclusions.addAll(buildExclusions(exclusions, aClass))
+    this.exclusions = buildExclusions(exclusions, aClass)
   }
 
   fun checkPackages() {

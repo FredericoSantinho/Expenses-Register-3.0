@@ -5,6 +5,7 @@ dependencies {
 
   implementation project(':domain')
   testImplementation project(':test')
+  androidTestImplementation project(':test')
 
   implementation lib.kotlin
   implementation lib.koin_core
