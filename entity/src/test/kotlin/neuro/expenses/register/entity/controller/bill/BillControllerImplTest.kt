@@ -113,11 +113,9 @@ internal class BillControllerImplTest : ObserveSubscriptionTest() {
     val placeName = "placeName"
     val place = placeMock(placeName = placeName)
     val lastBill = billMock(calendar = calendar, place = place)
-    val billItems = mutableListOf(
-      billItemMock(
-        1, placeProductMock(product = productMock(description = description)), 3.0
-      ), billItemMock(2), billItemMock(3)
-    )
+    val placeProduct = placeProductMock(product = productMock(description = description))
+    val billItems =
+      mutableListOf(billItemMock(1, placeProduct, 3.0), billItemMock(2), billItemMock(3))
     val bill = billMock(calendar = calendar, place = place, billItems = billItems)
 
     val category = "category"
@@ -131,6 +129,11 @@ internal class BillControllerImplTest : ObserveSubscriptionTest() {
       amount = amount
     )
 
+    whenever(
+      getOrCreatePlaceProduct.getOrCreatePlaceProduct(description, category, price, false, "")
+    ).thenReturn(
+      Single.just(placeProduct).observeSubscription(incrementer.getAndIncrement(), offset)
+    )
     whenever(getOrCreatePlace.getOrCreatePlace(placeName)).thenReturn(
       Single.just(place).observeSubscription(incrementer.getAndIncrement(), offset)
     )
