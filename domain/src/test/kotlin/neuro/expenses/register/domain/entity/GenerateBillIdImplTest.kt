@@ -9,7 +9,6 @@ internal class GenerateBillIdImplTest {
   @Test
   fun test() {
     val generateBillIdRepository = mock<GenerateBillIdRepository>()
-
     val generateBillId = GenerateBillIdImpl(generateBillIdRepository)
 
     whenever(generateBillIdRepository.newId()).thenReturn(Single.just(1L))
