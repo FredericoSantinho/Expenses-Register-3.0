@@ -42,7 +42,7 @@ internal class GetOrCreatePlaceImplTest {
     // Test existing place
     val generatePlaceIdSubject = PublishSubject.create<Long>()
     whenever(getPlace.getPlace(placeName)).thenReturn(Maybe.just(expectedPlace))
-    whenever(generatePlaceId.newId()).thenReturn(generatePlaceIdSubject.singleOrError())
+    whenever(generatePlaceId.newId()).thenReturn(generatePlaceIdSubject.firstOrError())
 
     testObserver = getOrCreatePlace.getOrCreatePlace(placeName).test()
     testObserver.assertValue(expectedPlace)
