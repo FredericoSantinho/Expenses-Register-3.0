@@ -52,8 +52,9 @@ fun BillsComposable(
     LazyColumn(
       Modifier
         .background(color = grey_fog_lighter)
-        .fillMaxSize(),
-      verticalArrangement = Arrangement.spacedBy(8.dp),
+        .fillMaxSize()
+        .padding(start = 4.dp, end = 4.dp),
+      verticalArrangement = Arrangement.spacedBy(4.dp),
       reverseLayout = true
     ) {
       items(bills.value, { listItem: BillViewModel -> listItem.id }) { item ->
@@ -68,7 +69,7 @@ fun BillsComposable(
         ) {
           billsViewModel.onBillSwipe(item)
         }
-        SwipeToDismiss(modifier = Modifier.padding(start = 4.dp, end = 4.dp),
+        SwipeToDismiss(
           state = dismissState,
           directions = setOf(DismissDirection.StartToEnd, DismissDirection.EndToStart),
           background = {
