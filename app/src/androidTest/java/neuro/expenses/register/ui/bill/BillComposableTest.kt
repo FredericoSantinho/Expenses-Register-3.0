@@ -20,7 +20,7 @@ internal class BillComposableTest {
   val composeTestRule = createComposeRule()
 
   @Test
-  fun testLoadingState() {
+  fun loadingState() {
     val billViewModel = mock<IBillViewModel>()
 
     val iconUrl = mutableStateOf("iconUrl")
@@ -63,7 +63,7 @@ internal class BillComposableTest {
   }
 
   @Test
-  fun testBillOpenState() {
+  fun billOpenState() {
     onStateReadyTest(UiState.BillOpen)
 
     val onCloseBillIcon = composeTestRule.onNodeWithTag(BillTags.CLOSE_BILL_ICON, true)
@@ -72,7 +72,7 @@ internal class BillComposableTest {
   }
 
   @Test
-  fun testBillClosedState() {
+  fun billClosedState() {
     onStateReadyTest(UiState.BillClosed)
 
     val onCloseBillIcon = composeTestRule.onNodeWithTag(BillTags.CLOSE_BILL_ICON, true)

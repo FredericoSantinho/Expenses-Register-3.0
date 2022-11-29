@@ -53,7 +53,7 @@ class BillDaoTest {
 
   @Test
   @Throws(Exception::class)
-  fun testGetLastBillId() {
+  fun getLastBillId() {
     val roomPlace = roomPlaceMock()
     placeDao.insert(roomPlace)
 
@@ -71,7 +71,7 @@ class BillDaoTest {
 
   @Test
   @Throws(Exception::class)
-  fun testGetLastBillItemId() {
+  fun getLastBillItemId() {
     val roomCategory = roomCategoryMock()
     val roomProduct = roomProductMock()
     categoryDao.insert(roomCategory).test()
@@ -96,7 +96,7 @@ class BillDaoTest {
 
   @Test
   @Throws(Exception::class)
-  fun testInsertAndGetBill() {
+  fun insertAndGetBill() {
     val roomCategory = roomCategoryMock()
     val roomProduct = roomProductMock()
     val roomPlace = roomPlaceMock()
@@ -145,7 +145,7 @@ class BillDaoTest {
 
   @Test
   @Throws(Exception::class)
-  fun testInsertBillWithBillItemsAndGetBill() {
+  fun insertBillWithBillItemsAndGetBill() {
     val roomCategory = roomCategoryMock()
     val roomProduct = roomProductMock()
     val roomPlace = roomPlaceMock()
@@ -183,7 +183,7 @@ class BillDaoTest {
 
   @Test
   @Throws(Exception::class)
-  fun testGetLastBill() {
+  fun getLastBill() {
     val roomCategory = roomCategoryMock()
     val roomProduct = roomProductMock()
     val roomPlace = roomPlaceMock()

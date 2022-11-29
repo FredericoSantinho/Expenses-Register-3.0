@@ -7,7 +7,7 @@ import org.mockito.kotlin.*
 
 internal class GenerateBillIdRepositoryImplTest {
   @Test
-  fun testLastIdPresent() {
+  fun lastIdPresent() {
     val billDao = mock<BillDao>()
     val generateBillIdRepository = GenerateBillIdRepositoryImpl(billDao)
 
@@ -21,7 +21,7 @@ internal class GenerateBillIdRepositoryImplTest {
   }
 
   @Test
-  fun testLastIdNotPresent() {
+  fun lastIdNotPresent() {
     val billDao = mock<BillDao>()
     val generateBillIdRepository = GenerateBillIdRepositoryImpl(billDao)
 
