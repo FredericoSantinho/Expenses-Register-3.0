@@ -11,6 +11,8 @@ import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verifyNoInteractions
 import org.mockito.kotlin.whenever
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 internal class PlaceControllerImplTest : ObserveSubscriptionTest() {
   @Test
@@ -253,5 +255,36 @@ internal class PlaceControllerImplTest : ObserveSubscriptionTest() {
       .assertValue(placeWithUpdatedProduct).assertNoErrors().assertComplete()
 
     assertSubscriptions(incrementer.getAll(), offset)
+  }
+
+  @Test
+  fun containsProduct() {
+    val getOrCreatePlaceProduct = mock<GetOrCreatePlaceProduct>()
+    val addPlaceProduct = mock<AddPlaceProduct>()
+    val removePlaceProduct = mock<RemovePlaceProduct>()
+
+    val description = "description"
+    val categoryName = "cat"
+    val price = 1.0
+    val variableAmount = false
+    val iconUrl = ""
+    val placeId: Long = 0
+    val placeProductId: Long = 1
+
+    val product = Product(0, description, variableAmount, iconUrl)
+    val category = Category(0, categoryName, "")
+
+    val residualPlaceProduct = PlaceProduct(2, product, category, 0.0)
+    val placeProduct = PlaceProduct(placeProductId, product, category, price)
+    val newPrice = 1.2
+    val updatedPlaceProduct = PlaceProduct(placeProductId, product, category, newPrice)
+    val placeWithProduct =
+      Place(placeId, "", listOf(residualPlaceProduct, placeProduct), LatLng(0.0, 0.0))
+    val placeController =
+      PlaceControllerImpl(getOrCreatePlaceProduct, addPlaceProduct, removePlaceProduct)
+
+
+    assertTrue { placeController.contains(placeWithProduct, placeProduct) }
+    assertFalse { placeController.contains(placeWithProduct, updatedPlaceProduct) }
   }
 }

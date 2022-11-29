@@ -24,7 +24,7 @@ val entityModule = module {
   single<BillController> {
     BillControllerImpl(get(), get(), get(), get(), get(), get(), get(), get())
   }
-  single<GetBillIconUrl> { GetBillIconUrlImpl() }
+  single<SelectBillIconUrl> { SelectBillIconUrlImpl() }
   single<CalculateBillTotal> { CalculateBillTotalImpl() }
   single<GetOrCreateProduct> { GetOrCreateProductImpl(get(), get(), get()) }
   single<GetOrCreatePlaceProduct> {

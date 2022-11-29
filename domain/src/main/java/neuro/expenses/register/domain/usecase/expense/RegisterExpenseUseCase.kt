@@ -6,8 +6,8 @@ import neuro.expenses.register.domain.dto.ExpenseDto
 interface RegisterExpenseUseCase {
   /**
    * Register expense.
-   * @return a Completable that completes if register succeeds or emits an error in case validation fails.
-   * @throws neuro.expenses.register.entity.expense.validator.RegisterExpenseException with a list of validation errors.
+   * @return Completable that completes if register succeeds or emits an error in case validation
+   * fails, with an RegisterExpenseException containing a list of validation errors.
    */
   fun registerExpense(expenseDto: ExpenseDto): Completable
 }

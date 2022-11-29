@@ -13,7 +13,7 @@ private val defaultBillDto = Bill(0, Calendar.getInstance(), isOpen = false)
 
 class BillControllerImpl(
   private val calculateBillTotal: CalculateBillTotal,
-  private val getBillIconUrl: GetBillIconUrl,
+  private val selectBillIconUrl: SelectBillIconUrl,
   private val getLastBill: GetLastBill,
   private val saveBill: SaveBill,
   private val getOrCreatePlaceProduct: GetOrCreatePlaceProduct,
@@ -44,7 +44,7 @@ class BillControllerImpl(
 
               val billItems = buildList(bill, newBillItem)
               val total = calculateBillTotal.getTotal(billItems)
-              val iconUrl = getBillIconUrl.getIconUrl(billItems)
+              val iconUrl = selectBillIconUrl.selectIconUrl(billItems)
               Bill(billId, bill.calendar, bill.place, total, billItems, iconUrl)
             }
           } else {
@@ -57,7 +57,7 @@ class BillControllerImpl(
               buildList(bill, newBillItem)
             }.map { billItems ->
               val total = calculateBillTotal.getTotal(billItems)
-              val iconUrl = getBillIconUrl.getIconUrl(billItems)
+              val iconUrl = selectBillIconUrl.selectIconUrl(billItems)
               Bill(bill.id, bill.calendar, bill.place, total, billItems, iconUrl)
             }
           }

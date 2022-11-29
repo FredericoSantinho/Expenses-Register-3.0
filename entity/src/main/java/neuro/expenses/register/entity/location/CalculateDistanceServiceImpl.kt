@@ -13,11 +13,16 @@ class CalculateDistanceServiceImpl : CalculateDistanceService {
   }
 
   /**
-   * Calculate distance between two points in latitude and longitude taking into account height difference. If you are not interested in height difference pass 0.0. Uses Haversine
-   * method as its base.
+   * Calculate distance between two points in latitude and longitude taking into account height
+   * difference. If you are not interested in height difference pass 0.0. Uses Haversine method as
+   * its base.
    *
-   *
-   * lat1, lon1 Start point lat2, lon2 End point el1 Start altitude in meters el2 End altitude in meters
+   * @param lat1 start latitude.
+   * @param lat2 end latitude.
+   * @param lon1 start longitude.
+   * @param lon2 end latitude.
+   * @param el1 start elevation.
+   * @param el2 end elevation.
    *
    * @returns Distance in Meters
    */

@@ -20,7 +20,7 @@ internal class BillControllerImplTest : ObserveSubscriptionTest() {
     val offset = getAndIncrementOffset()
 
     val calculateBillTotal = mock<CalculateBillTotal>()
-    val getBillIconUrl = mock<GetBillIconUrl>()
+    val selectBillIconUrl = mock<SelectBillIconUrl>()
     val getLastBill = mock<GetLastBill>()
     val saveBill = mock<SaveBill>()
     val getOrCreatePlaceProduct = mock<GetOrCreatePlaceProduct>()
@@ -30,7 +30,7 @@ internal class BillControllerImplTest : ObserveSubscriptionTest() {
 
     val billController = BillControllerImpl(
       calculateBillTotal,
-      getBillIconUrl,
+      selectBillIconUrl,
       getLastBill,
       saveBill,
       getOrCreatePlaceProduct,
@@ -74,7 +74,7 @@ internal class BillControllerImplTest : ObserveSubscriptionTest() {
       Single.just(billItemId).observeSubscription(incrementer, offset)
     )
     whenever(calculateBillTotal.getTotal(billItems)).thenReturn(1.0)
-    whenever(getBillIconUrl.getIconUrl(any())).thenReturn("")
+    whenever(selectBillIconUrl.selectIconUrl(any())).thenReturn("")
 
     billController.add(expense).test().assertValue(bill).assertNoErrors().assertComplete()
 
@@ -87,7 +87,7 @@ internal class BillControllerImplTest : ObserveSubscriptionTest() {
     val offset = getAndIncrementOffset()
 
     val calculateBillTotal = mock<CalculateBillTotal>()
-    val getBillIconUrl = mock<GetBillIconUrl>()
+    val selectBillIconUrl = mock<SelectBillIconUrl>()
     val getLastBill = mock<GetLastBill>()
     val saveBill = mock<SaveBill>()
     val getOrCreatePlaceProduct = mock<GetOrCreatePlaceProduct>()
@@ -97,7 +97,7 @@ internal class BillControllerImplTest : ObserveSubscriptionTest() {
 
     val billController = BillControllerImpl(
       calculateBillTotal,
-      getBillIconUrl,
+      selectBillIconUrl,
       getLastBill,
       saveBill,
       getOrCreatePlaceProduct,
@@ -137,7 +137,7 @@ internal class BillControllerImplTest : ObserveSubscriptionTest() {
       Maybe.just(lastBill).observeSubscription(incrementer, offset)
     )
     whenever(calculateBillTotal.getTotal(billItems)).thenReturn(1.0)
-    whenever(getBillIconUrl.getIconUrl(any())).thenReturn("")
+    whenever(selectBillIconUrl.selectIconUrl(any())).thenReturn("")
 
     billController.add(expense).test().assertValue(bill).assertNoErrors().assertComplete()
 
@@ -150,7 +150,7 @@ internal class BillControllerImplTest : ObserveSubscriptionTest() {
     val offset = getAndIncrementOffset()
 
     val calculateBillTotal = mock<CalculateBillTotal>()
-    val getBillIconUrl = mock<GetBillIconUrl>()
+    val selectBillIconUrl = mock<SelectBillIconUrl>()
     val getLastBill = mock<GetLastBill>()
     val saveBill = mock<SaveBill>()
     val getOrCreatePlaceProduct = mock<GetOrCreatePlaceProduct>()
@@ -160,7 +160,7 @@ internal class BillControllerImplTest : ObserveSubscriptionTest() {
 
     val billController = BillControllerImpl(
       calculateBillTotal,
-      getBillIconUrl,
+      selectBillIconUrl,
       getLastBill,
       saveBill,
       getOrCreatePlaceProduct,
@@ -204,7 +204,7 @@ internal class BillControllerImplTest : ObserveSubscriptionTest() {
       Single.just(billItemId).observeSubscription(incrementer, offset)
     )
     whenever(calculateBillTotal.getTotal(billItems)).thenReturn(1.0)
-    whenever(getBillIconUrl.getIconUrl(any())).thenReturn("")
+    whenever(selectBillIconUrl.selectIconUrl(any())).thenReturn("")
 
     billController.add(expense).test().assertValue(bill).assertNoErrors().assertComplete()
 
@@ -217,7 +217,7 @@ internal class BillControllerImplTest : ObserveSubscriptionTest() {
     val offset = getAndIncrementOffset()
 
     val calculateBillTotal = mock<CalculateBillTotal>()
-    val getBillIconUrl = mock<GetBillIconUrl>()
+    val selectBillIconUrl = mock<SelectBillIconUrl>()
     val getLastBill = mock<GetLastBill>()
     val saveBill = mock<SaveBill>()
     val getOrCreatePlaceProduct = mock<GetOrCreatePlaceProduct>()
@@ -227,7 +227,7 @@ internal class BillControllerImplTest : ObserveSubscriptionTest() {
 
     val billController = BillControllerImpl(
       calculateBillTotal,
-      getBillIconUrl,
+      selectBillIconUrl,
       getLastBill,
       saveBill,
       getOrCreatePlaceProduct,
@@ -264,7 +264,7 @@ internal class BillControllerImplTest : ObserveSubscriptionTest() {
       Maybe.just(lastBill).observeSubscription(incrementer, offset)
     )
     whenever(calculateBillTotal.getTotal(billItems)).thenReturn(1.0)
-    whenever(getBillIconUrl.getIconUrl(any())).thenReturn("")
+    whenever(selectBillIconUrl.selectIconUrl(any())).thenReturn("")
     whenever(
       getOrCreatePlaceProduct.getOrCreatePlaceProduct(
         any(), any(), any(), any(), any()
@@ -288,7 +288,7 @@ internal class BillControllerImplTest : ObserveSubscriptionTest() {
     val offset = getAndIncrementOffset()
 
     val calculateBillTotal = mock<CalculateBillTotal>()
-    val getBillIconUrl = mock<GetBillIconUrl>()
+    val selectBillIconUrl = mock<SelectBillIconUrl>()
     val getLastBill = mock<GetLastBill>()
     val saveBill = mock<SaveBill>()
     val getOrCreatePlaceProduct = mock<GetOrCreatePlaceProduct>()
@@ -298,7 +298,7 @@ internal class BillControllerImplTest : ObserveSubscriptionTest() {
 
     val billController = BillControllerImpl(
       calculateBillTotal,
-      getBillIconUrl,
+      selectBillIconUrl,
       getLastBill,
       saveBill,
       getOrCreatePlaceProduct,
@@ -335,7 +335,7 @@ internal class BillControllerImplTest : ObserveSubscriptionTest() {
       Maybe.just(lastBill).observeSubscription(incrementer, offset)
     )
     whenever(calculateBillTotal.getTotal(billItems)).thenReturn(1.0)
-    whenever(getBillIconUrl.getIconUrl(any())).thenReturn("")
+    whenever(selectBillIconUrl.selectIconUrl(any())).thenReturn("")
     whenever(
       getOrCreatePlaceProduct.getOrCreatePlaceProduct(
         any(), any(), any(), any(), any()

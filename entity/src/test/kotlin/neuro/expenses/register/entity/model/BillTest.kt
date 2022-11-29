@@ -34,7 +34,7 @@ internal class BillTest {
   }
 
   @Test
-  fun testBillWithEmptyPlace() {
+  fun billWithEmptyPlace() {
     val id = 1L
     val calendar = Calendar.getInstance()
 
