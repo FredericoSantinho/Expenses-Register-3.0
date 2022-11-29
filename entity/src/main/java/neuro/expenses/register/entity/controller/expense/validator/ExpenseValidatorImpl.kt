@@ -4,9 +4,9 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import neuro.expenses.register.entity.Expense
 
-class ExpenseValidatorImpl(val isValidCategory: IsValidCategory) : ExpenseValidator {
+class ExpenseValidatorImpl(private val isValidCategory: IsValidCategory) : ExpenseValidator {
   override fun validate(expense: Expense): Completable {
-    return Single.fromCallable { mutableListOf<RegisterExpenseError>() }
+    return Single.fromCallable { mutableSetOf<RegisterExpenseError>() }
       .flatMapCompletable { errors ->
         if (expense.description.isBlank()) {
           errors.add(RegisterExpenseError.EMPTY_DESCRIPTION)

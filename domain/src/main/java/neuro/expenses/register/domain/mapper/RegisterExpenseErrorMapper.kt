@@ -10,5 +10,5 @@ fun neuro.expenses.register.entity.controller.expense.validator.RegisterExpenseE
     neuro.expenses.register.entity.controller.expense.validator.RegisterExpenseError.INVALID_AMOUNT -> RegisterExpenseError.INVALID_AMOUNT
   }
 
-fun List<neuro.expenses.register.entity.controller.expense.validator.RegisterExpenseError>.toDomain(): List<RegisterExpenseError> =
+fun Set<neuro.expenses.register.entity.controller.expense.validator.RegisterExpenseError>.toDomain(): List<RegisterExpenseError> =
   map { it.toDomain() }
