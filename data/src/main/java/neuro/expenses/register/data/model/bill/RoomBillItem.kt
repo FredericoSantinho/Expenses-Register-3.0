@@ -17,7 +17,7 @@ import neuro.expenses.register.data.model.RoomPlaceProduct
     parentColumns = arrayOf("billId"),
     childColumns = arrayOf("billId"),
     onDelete = ForeignKey.NO_ACTION
-  )], indices = [Index(value = ["placeProductId"])]
+  )], indices = [Index(value = ["placeProductId"]), Index(value = ["billId"])]
 )
 data class RoomBillItem(
   @PrimaryKey

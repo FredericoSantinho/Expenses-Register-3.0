@@ -3,7 +3,7 @@ package neuro.expenses.register.domain.usecase.category
 import io.reactivex.rxjava3.core.Completable
 import neuro.expenses.register.domain.dto.CategoryDto
 import neuro.expenses.register.domain.repository.category.CreateCategoryRepository
-import neuro.expenses.register.entity.controller.category.GenerateCategoryId
+import neuro.expenses.register.entity.category.GenerateCategoryId
 
 class CreateCategoryUseCaseImpl(
   private val createCategoryRepository: CreateCategoryRepository,

@@ -1,7 +1,7 @@
 package neuro.expenses.register.entity.mocks
 
-import neuro.expenses.register.entity.BillItem
-import neuro.expenses.register.entity.PlaceProduct
+import neuro.expenses.register.entity.model.BillItem
+import neuro.expenses.register.entity.model.PlaceProduct
 
 fun billItemMock(
   id: Long, placeProduct: PlaceProduct = placeProductMock(id), amount: Double = 1.0

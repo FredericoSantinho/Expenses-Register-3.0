@@ -6,7 +6,7 @@ import neuro.expenses.register.domain.dto.PlaceDto
 import neuro.expenses.register.domain.mapper.toDomain
 import neuro.expenses.register.domain.mapper.toEntity
 import neuro.expenses.register.domain.repository.place.ObservePlacesRepository
-import neuro.expenses.register.entity.service.CalculateDistanceService
+import neuro.expenses.register.entity.location.CalculateDistanceService
 
 class ObserveNearestPlacesUseCaseImpl(
   private val observePlacesRepository: ObservePlacesRepository,

@@ -1,6 +1,6 @@
 package neuro.expenses.register.entity.mocks
 
-import neuro.expenses.register.entity.Product
+import neuro.expenses.register.entity.model.Product
 
 fun productMock(
   id: Long = 1L,

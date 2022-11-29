@@ -1,8 +1,8 @@
 package neuro.expenses.register.entity.mocks
 
-import neuro.expenses.register.entity.Bill
-import neuro.expenses.register.entity.BillItem
-import neuro.expenses.register.entity.Place
+import neuro.expenses.register.entity.model.Bill
+import neuro.expenses.register.entity.model.BillItem
+import neuro.expenses.register.entity.model.Place
 import java.util.*
 
 fun billMock(

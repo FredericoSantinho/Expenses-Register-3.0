@@ -1,6 +1,6 @@
 package neuro.expenses.register.entity.mocks
 
-import neuro.expenses.register.entity.Expense
+import neuro.expenses.register.entity.model.Expense
 import java.util.*
 
 fun expenseMock(

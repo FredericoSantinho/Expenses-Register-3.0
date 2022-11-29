@@ -1,7 +1,7 @@
 package neuro.expenses.register.domain.mapper
 
 import neuro.expenses.register.domain.dto.PlaceProductDto
-import neuro.expenses.register.entity.PlaceProduct
+import neuro.expenses.register.entity.model.PlaceProduct
 
 fun PlaceProduct.toDomain() =
   PlaceProductDto(

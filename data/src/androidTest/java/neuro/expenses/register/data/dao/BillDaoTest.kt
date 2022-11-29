@@ -163,7 +163,6 @@ class BillDaoTest {
     val roomBill = roomBillMock(placeId = roomPlace.placeId)
     val billId = roomBill.billId
     val roomBillItem = roomBillItemMock(placeProductId = placeProductId, billId = billId)
-    val billItemId = roomBillItem.billItemId
 
     categoryDao.insert(roomCategory).test()
     productDao.insert(roomProduct).test()

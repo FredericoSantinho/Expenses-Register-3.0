@@ -1,7 +1,7 @@
 package neuro.expenses.register.entity.mocks
 
-import neuro.expenses.register.entity.Place
-import neuro.expenses.register.entity.PlaceProduct
+import neuro.expenses.register.entity.model.Place
+import neuro.expenses.register.entity.model.PlaceProduct
 
 fun placeMock(
   id: Long = 1L,
