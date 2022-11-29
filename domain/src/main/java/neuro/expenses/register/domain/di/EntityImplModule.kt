@@ -10,7 +10,12 @@ import neuro.expenses.register.entity.controller.category.GetCategory
 import neuro.expenses.register.entity.controller.category.GetCategoryId
 import neuro.expenses.register.entity.controller.location.GetCurrentLocation
 import neuro.expenses.register.entity.controller.place.*
-import neuro.expenses.register.entity.controller.product.*
+import neuro.expenses.register.entity.controller.placeproduct.GeneratePlaceProductId
+import neuro.expenses.register.entity.controller.placeproduct.GetPlaceProduct
+import neuro.expenses.register.entity.controller.placeproduct.SavePlaceProduct
+import neuro.expenses.register.entity.controller.product.GenerateProductId
+import neuro.expenses.register.entity.controller.product.GetProduct
+import neuro.expenses.register.entity.controller.product.SaveProduct
 import org.koin.dsl.module
 
 val entityImplModule = module {

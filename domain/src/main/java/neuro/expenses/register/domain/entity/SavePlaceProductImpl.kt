@@ -4,7 +4,7 @@ import io.reactivex.rxjava3.core.Completable
 import neuro.expenses.register.domain.mapper.toDomain
 import neuro.expenses.register.domain.repository.product.SavePlaceProductRepository
 import neuro.expenses.register.entity.PlaceProduct
-import neuro.expenses.register.entity.controller.product.SavePlaceProduct
+import neuro.expenses.register.entity.controller.placeproduct.SavePlaceProduct
 
 class SavePlaceProductImpl(private val savePlaceProductRepository: SavePlaceProductRepository) :
   SavePlaceProduct {

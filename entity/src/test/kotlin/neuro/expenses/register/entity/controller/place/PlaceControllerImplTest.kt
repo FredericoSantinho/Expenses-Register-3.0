@@ -3,7 +3,7 @@ package neuro.expenses.register.entity.controller.place
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import neuro.expenses.register.entity.*
-import neuro.expenses.register.entity.controller.product.GetOrCreatePlaceProduct
+import neuro.expenses.register.entity.controller.placeproduct.GetOrCreatePlaceProduct
 import org.junit.jupiter.api.Test
 import org.mockito.AdditionalMatchers.not
 import org.mockito.kotlin.*

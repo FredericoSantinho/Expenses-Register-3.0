@@ -10,7 +10,7 @@ import neuro.expenses.register.entity.controller.expense.validator.ExpenseValida
 import neuro.expenses.register.entity.controller.expense.validator.RegisterExpenseException
 import neuro.expenses.register.entity.controller.place.GetOrCreatePlace
 import neuro.expenses.register.entity.controller.place.PlaceController
-import neuro.expenses.register.entity.controller.product.GetOrCreatePlaceProduct
+import neuro.expenses.register.entity.controller.placeproduct.GetOrCreatePlaceProduct
 import neuro.expenses.register.entity.mocks.billMock
 import neuro.expenses.register.entity.mocks.placeMock
 import neuro.expenses.register.entity.mocks.placeProductMock

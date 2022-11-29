@@ -6,7 +6,7 @@ import neuro.expenses.register.entity.BillItem
 import neuro.expenses.register.entity.Expense
 import neuro.expenses.register.entity.Place
 import neuro.expenses.register.entity.controller.place.GetOrCreatePlace
-import neuro.expenses.register.entity.controller.product.GetOrCreatePlaceProduct
+import neuro.expenses.register.entity.controller.placeproduct.GetOrCreatePlaceProduct
 import java.util.*
 
 private val defaultBillDto = Bill(0, Calendar.getInstance(), isOpen = false)

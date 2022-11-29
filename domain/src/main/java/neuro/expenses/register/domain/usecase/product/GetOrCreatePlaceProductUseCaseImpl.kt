@@ -3,7 +3,7 @@ package neuro.expenses.register.domain.usecase.product
 import io.reactivex.rxjava3.core.Single
 import neuro.expenses.register.domain.dto.PlaceProductDto
 import neuro.expenses.register.domain.mapper.toDomain
-import neuro.expenses.register.entity.controller.product.GetOrCreatePlaceProduct
+import neuro.expenses.register.entity.controller.placeproduct.GetOrCreatePlaceProduct
 
 class GetOrCreatePlaceProductUseCaseImpl(private val getOrCreatePlaceProduct: GetOrCreatePlaceProduct) :
   GetOrCreatePlaceProductUseCase {

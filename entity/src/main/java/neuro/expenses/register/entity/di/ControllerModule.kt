@@ -12,8 +12,8 @@ import neuro.expenses.register.entity.controller.place.GetOrCreatePlace
 import neuro.expenses.register.entity.controller.place.GetOrCreatePlaceImpl
 import neuro.expenses.register.entity.controller.place.PlaceController
 import neuro.expenses.register.entity.controller.place.PlaceControllerImpl
-import neuro.expenses.register.entity.controller.product.GetOrCreatePlaceProduct
-import neuro.expenses.register.entity.controller.product.GetOrCreatePlaceProductImpl
+import neuro.expenses.register.entity.controller.placeproduct.GetOrCreatePlaceProduct
+import neuro.expenses.register.entity.controller.placeproduct.GetOrCreatePlaceProductImpl
 import neuro.expenses.register.entity.controller.product.GetOrCreateProduct
 import neuro.expenses.register.entity.controller.product.GetOrCreateProductImpl
 import org.koin.dsl.module

@@ -6,7 +6,7 @@ import neuro.expenses.register.entity.controller.bill.BillController
 import neuro.expenses.register.entity.controller.expense.validator.ExpenseValidator
 import neuro.expenses.register.entity.controller.place.GetOrCreatePlace
 import neuro.expenses.register.entity.controller.place.PlaceController
-import neuro.expenses.register.entity.controller.product.GetOrCreatePlaceProduct
+import neuro.expenses.register.entity.controller.placeproduct.GetOrCreatePlaceProduct
 
 class RegisterExpenseImpl(
   private val billController: BillController,

@@ -1,8 +1,9 @@
-package neuro.expenses.register.entity.controller.product
+package neuro.expenses.register.entity.controller.placeproduct
 
 import io.reactivex.rxjava3.core.Single
 import neuro.expenses.register.entity.PlaceProduct
 import neuro.expenses.register.entity.controller.category.GetCategory
+import neuro.expenses.register.entity.controller.product.GetOrCreateProduct
 
 class GetOrCreatePlaceProductImpl(
   private val getPlaceProduct: GetPlaceProduct,
