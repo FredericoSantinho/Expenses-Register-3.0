@@ -10,7 +10,7 @@ import org.mockito.kotlin.whenever
 
 internal class GenerateBillIdImplTest : ObserveSubscriptionTest() {
   @Test
-  fun test() {
+  fun generateBillId() {
     val generateBillIdRepository = mock<GenerateBillIdRepository>()
     val generateBillId = GenerateBillIdImpl(generateBillIdRepository)
 
