@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 
 internal class PlaceProductCardModelTest {
   @Test
-  fun test() {
+  fun placeProductCardModel() {
     val id = 1L
     val description = "description"
     val categoryModel = CategoryModel(1L, "category", "")

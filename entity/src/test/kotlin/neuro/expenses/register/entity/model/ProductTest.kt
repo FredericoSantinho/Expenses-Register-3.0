@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 
 internal class ProductTest {
   @Test
-  fun test() {
+  fun product() {
     val id = 1L
     val description = "description"
     val variableAmount = true

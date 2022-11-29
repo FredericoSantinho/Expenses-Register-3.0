@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 
 internal class LatLngTest {
   @Test
-  fun test() {
+  fun latLng() {
     val latitude = 1.0
     val longitude = 2.0
 

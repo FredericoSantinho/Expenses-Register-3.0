@@ -17,7 +17,7 @@ internal class ProductCardComposableTest {
   val composeTestRule = createComposeRule()
 
   @Test
-  fun test() {
+  fun productCardComposable() {
     val description = "Tosta Mista Pâo Caseiro"
     val category = "Restau"
     val price = "4.20 €"

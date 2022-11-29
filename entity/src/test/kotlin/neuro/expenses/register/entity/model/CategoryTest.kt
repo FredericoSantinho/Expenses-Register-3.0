@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 
 internal class CategoryTest {
   @Test
-  fun test() {
+  fun category() {
     val id = 1L
     val name = "name"
     val iconUrl = "iconUrl"

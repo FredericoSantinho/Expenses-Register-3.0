@@ -6,12 +6,11 @@ import kotlin.test.assertEquals
 
 internal class GetCalendarUseCaseImplTest {
   @Test
-  fun test() {
+  fun getCalendarUseCase() {
     val calendar = Calendar.getInstance()
 
     val getCalendarUseCase = GetCalendarUseCaseImpl(calendar)
 
-    assertEquals(calendar, getCalendarUseCase.getCalendar())
     assertEquals(calendar, getCalendarUseCase.getCalendar())
   }
 }

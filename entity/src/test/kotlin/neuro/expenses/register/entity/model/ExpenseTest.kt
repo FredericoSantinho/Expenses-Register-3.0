@@ -6,7 +6,7 @@ import java.util.*
 
 internal class ExpenseTest {
   @Test
-  fun test() {
+  fun expense() {
     val description = "description"
     val category = "cat"
     val place = "place"

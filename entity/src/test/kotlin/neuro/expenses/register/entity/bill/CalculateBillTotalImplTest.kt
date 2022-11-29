@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 
 internal class CalculateBillTotalImplTest {
   @Test
-  fun test() {
+  fun calculateBillTotal() {
     val billItems = billItemsMock()
     val expectedTotal = billItems.map { it.placeProduct.price * it.amount }.sum()
 

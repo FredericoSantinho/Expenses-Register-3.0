@@ -3,17 +3,22 @@ package neuro.expenses.register.entity.place
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
-import io.reactivex.rxjava3.subjects.PublishSubject
 import neuro.expenses.register.entity.location.GetCurrentLocation
 import neuro.expenses.register.entity.mocks.latLngMock
 import neuro.expenses.register.entity.model.Place
+import neuro.test.rx.Incrementer
+import neuro.test.rx.ObserveSubscriptionTest
 import org.junit.jupiter.api.Test
-import org.mockito.kotlin.*
-import kotlin.test.assertFalse
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verifyNoInteractions
+import org.mockito.kotlin.whenever
 
-internal class GetOrCreatePlaceImplTest {
+internal class GetOrCreatePlaceImplTest : ObserveSubscriptionTest() {
   @Test
-  fun test() {
+  fun nonExistentPlace() {
+    val incrementer = Incrementer()
+    val offset = getAndIncrementOffset()
+
     val getPlace = mock<GetPlace>()
     val generatePlaceId = mock<GeneratePlaceId>()
     val savePlace = mock<SavePlace>()
@@ -25,30 +30,51 @@ internal class GetOrCreatePlaceImplTest {
     val getOrCreatePlace =
       GetOrCreatePlaceImpl(getPlace, generatePlaceId, savePlace, getCurrentLocation)
 
-    whenever(getPlace.getPlace(placeName)).thenReturn(Maybe.empty())
-    whenever(generatePlaceId.newId()).thenReturn(Single.just(placeId))
-    whenever(getCurrentLocation.getCurrentLocation()).thenReturn(Single.just(latLngMock()))
-    whenever(savePlace.savePlace(expectedPlace)).thenReturn(Completable.complete())
+    whenever(getPlace.getPlace(placeName)).thenReturn(
+      Maybe.empty<Place?>().observeSubscription(incrementer, offset)
+    )
+    whenever(generatePlaceId.newId()).thenReturn(
+      Single.just(placeId).observeSubscription(incrementer, offset)
+    )
+    whenever(getCurrentLocation.getCurrentLocation()).thenReturn(
+      Single.just(latLngMock()).observeSubscription(incrementer, offset)
+    )
+    whenever(savePlace.savePlace(expectedPlace)).thenReturn(
+      Completable.complete().observeSubscription(incrementer, offset)
+    )
 
     verifyNoInteractions(savePlace)
 
-    // Test new place
-    var testObserver = getOrCreatePlace.getOrCreatePlace(placeName).test()
-    testObserver.assertValue(expectedPlace)
+    getOrCreatePlace.getOrCreatePlace(placeName).test().assertValue(expectedPlace).assertNoErrors()
+      .assertComplete()
 
-    verify(savePlace, times(1)).savePlace(eq(expectedPlace))
-    verify(getCurrentLocation, times(1)).getCurrentLocation()
+    assertSubscriptions(incrementer.getAll(), offset)
+  }
 
-    // Test existing place
-    val generatePlaceIdSubject = PublishSubject.create<Long>()
-    whenever(getPlace.getPlace(placeName)).thenReturn(Maybe.just(expectedPlace))
-    whenever(generatePlaceId.newId()).thenReturn(generatePlaceIdSubject.firstOrError())
+  @Test
+  fun existentPlace() {
+    val incrementer = Incrementer()
+    val offset = getAndIncrementOffset()
 
-    testObserver = getOrCreatePlace.getOrCreatePlace(placeName).test()
-    testObserver.assertValue(expectedPlace)
+    val getPlace = mock<GetPlace>()
+    val generatePlaceId = mock<GeneratePlaceId>()
+    val savePlace = mock<SavePlace>()
+    val getCurrentLocation = mock<GetCurrentLocation>()
+    val placeName = "name"
+    val placeId: Long = 1
+    val expectedPlace = Place(placeId, placeName, emptyList(), latLngMock())
 
-    verify(savePlace, times(1)).savePlace(eq(expectedPlace))
-    verify(getCurrentLocation, times(1)).getCurrentLocation()
-    assertFalse { generatePlaceIdSubject.hasObservers() }
+    val getOrCreatePlace =
+      GetOrCreatePlaceImpl(getPlace, generatePlaceId, savePlace, getCurrentLocation)
+
+    whenever(getPlace.getPlace(placeName)).thenReturn(
+      Maybe.just(expectedPlace).observeSubscription(incrementer, offset)
+    )
+    whenever(generatePlaceId.newId()).thenReturn(Single.error(IllegalStateException()))
+
+    getOrCreatePlace.getOrCreatePlace(placeName).test().assertValue(expectedPlace).assertNoErrors()
+      .assertComplete()
+
+    assertSubscriptions(incrementer.getAll(), offset)
   }
 }

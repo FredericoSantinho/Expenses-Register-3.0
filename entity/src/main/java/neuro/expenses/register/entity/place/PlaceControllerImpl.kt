@@ -45,9 +45,7 @@ class PlaceControllerImpl(
         placeProduct.product.variableAmount,
         placeProduct.product.iconUrl
       ).flatMap { newPlaceProduct ->
-        addPlaceProduct(
-          newPlace, newPlaceProduct
-        )
+        addPlaceProduct(newPlace, newPlaceProduct)
       }
     }
   }

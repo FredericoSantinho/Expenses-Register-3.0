@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 
 internal class PlaceProductTest {
   @Test
-  fun test() {
+  fun placeProduct() {
     val id = 1L
     val product = productMock()
     val category = categoryMock()

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 internal class BillItemTest {
 
   @Test
-  fun test() {
+  fun billItem() {
     val id = 1L
     val placeProduct = placeProductMock()
     val amount = 1.0

@@ -8,7 +8,7 @@ import java.util.*
 
 internal class BillTest {
   @Test
-  fun test() {
+  fun bill() {
     val id = 1L
     val calendar = Calendar.getInstance()
     val place: Place = placeMock()

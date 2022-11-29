@@ -4,19 +4,23 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import neuro.expenses.register.entity.model.*
 import neuro.expenses.register.entity.placeproduct.GetOrCreatePlaceProduct
+import neuro.test.rx.Incrementer
+import neuro.test.rx.ObserveSubscriptionTest
 import org.junit.jupiter.api.Test
-import org.mockito.AdditionalMatchers.not
-import org.mockito.kotlin.*
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
+import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verifyNoInteractions
+import org.mockito.kotlin.whenever
 
-internal class PlaceControllerImplTest {
+internal class PlaceControllerImplTest : ObserveSubscriptionTest() {
   @Test
-  fun test() {
+  fun addNonExistingProduct() {
+    val incrementer = Incrementer()
+    val offset = getAndIncrementOffset()
+
     val getOrCreatePlaceProduct = mock<GetOrCreatePlaceProduct>()
     val addPlaceProduct = mock<AddPlaceProduct>()
     val removePlaceProduct = mock<RemovePlaceProduct>()
-
 
     val description = "description"
     val categoryName = "cat"
@@ -33,6 +37,195 @@ internal class PlaceControllerImplTest {
     val placeProduct = PlaceProduct(placeProductId, product, category, price)
     val place = Place(0, "", listOf(residualPlaceProduct), LatLng(0.0, 0.0))
     val newPrice = 1.2
+    val placeWithProduct =
+      Place(placeId, "", listOf(residualPlaceProduct, placeProduct), LatLng(0.0, 0.0))
+    val placeController =
+      PlaceControllerImpl(getOrCreatePlaceProduct, addPlaceProduct, removePlaceProduct)
+
+    whenever(
+      getOrCreatePlaceProduct.getOrCreatePlaceProduct(
+        description, categoryName, newPrice, variableAmount, iconUrl
+      )
+    ).doReturn(Single.error(IllegalStateException()))
+    whenever(addPlaceProduct.addPlaceProduct(placeId, placeProductId)).doReturn(
+      Completable.complete().observeSubscription(incrementer, offset)
+    )
+
+    verifyNoInteractions(addPlaceProduct)
+
+    placeController.addPlaceProduct(place, placeProduct).test().assertValue(placeWithProduct)
+      .assertNoErrors().assertComplete()
+
+    assertSubscriptions(incrementer.getAll(), offset)
+  }
+
+  @Test
+  fun addExistingProduct() {
+    val incrementer = Incrementer()
+    val offset = getAndIncrementOffset()
+
+    val getOrCreatePlaceProduct = mock<GetOrCreatePlaceProduct>()
+    val addPlaceProduct = mock<AddPlaceProduct>()
+    val removePlaceProduct = mock<RemovePlaceProduct>()
+
+    val description = "description"
+    val categoryName = "cat"
+    val price = 1.0
+    val variableAmount = false
+    val iconUrl = ""
+    val placeId: Long = 0
+    val placeProductId: Long = 1
+
+    val product = Product(0, description, variableAmount, iconUrl)
+    val category = Category(0, categoryName, "")
+
+    val residualPlaceProduct = PlaceProduct(2, product, category, 0.0)
+    val placeProduct = PlaceProduct(placeProductId, product, category, price)
+    val newPrice = 1.2
+    val newUpdatedPlaceProduct = PlaceProduct(placeProductId + 1, product, category, newPrice)
+    val placeWithProduct =
+      Place(placeId, "", listOf(residualPlaceProduct, placeProduct), LatLng(0.0, 0.0))
+    val placeController =
+      PlaceControllerImpl(getOrCreatePlaceProduct, addPlaceProduct, removePlaceProduct)
+
+    whenever(
+      getOrCreatePlaceProduct.getOrCreatePlaceProduct(
+        description, categoryName, newPrice, variableAmount, iconUrl
+      )
+    ).doReturn(
+      Single.just(newUpdatedPlaceProduct).observeSubscription(incrementer, offset)
+    )
+    whenever(
+      addPlaceProduct.addPlaceProduct(
+        placeId,
+        placeProductId
+      )
+    ).doReturn(Completable.complete().observeSubscription(incrementer, offset))
+
+    placeController.addPlaceProduct(placeWithProduct, placeProduct).test()
+      .assertValue(placeWithProduct).assertNoErrors().assertComplete()
+
+    assertSubscriptions(incrementer.getAll(), offset)
+  }
+
+  @Test
+  fun removeNonExistentProduct() {
+    val incrementer = Incrementer()
+    val offset = getAndIncrementOffset()
+
+    val getOrCreatePlaceProduct = mock<GetOrCreatePlaceProduct>()
+    val addPlaceProduct = mock<AddPlaceProduct>()
+    val removePlaceProduct = mock<RemovePlaceProduct>()
+
+    val description = "description"
+    val categoryName = "cat"
+    val price = 1.0
+    val variableAmount = false
+    val iconUrl = ""
+    val placeId: Long = 0
+    val placeProductId: Long = 1
+
+    val product = Product(0, description, variableAmount, iconUrl)
+    val category = Category(0, categoryName, "")
+
+    val residualPlaceProduct = PlaceProduct(2, product, category, 0.0)
+    val placeProduct = PlaceProduct(placeProductId, product, category, price)
+    val newPrice = 1.2
+    val placeWithProduct =
+      Place(placeId, "", listOf(residualPlaceProduct, placeProduct), LatLng(0.0, 0.0))
+    val placeController =
+      PlaceControllerImpl(getOrCreatePlaceProduct, addPlaceProduct, removePlaceProduct)
+
+    whenever(
+      getOrCreatePlaceProduct.getOrCreatePlaceProduct(
+        description, categoryName, newPrice, variableAmount, iconUrl
+      )
+    ).doReturn(Single.error(IllegalStateException()))
+    whenever(addPlaceProduct.addPlaceProduct(placeId, placeProductId)).doReturn(
+      Completable.complete().observeSubscription(incrementer, offset)
+    )
+    whenever(removePlaceProduct.removePlaceProduct(placeId, -1L)).doReturn(
+      Completable.complete().observeSubscription(incrementer, offset)
+    )
+
+    placeController.removePlaceProduct(placeWithProduct, -1L).test().assertValue(placeWithProduct)
+      .assertNoErrors().assertComplete()
+
+    assertSubscriptions(incrementer.getAll(), offset)
+  }
+
+  @Test
+  fun removeExistentProduct() {
+    val incrementer = Incrementer()
+    val offset = getAndIncrementOffset()
+
+    val getOrCreatePlaceProduct = mock<GetOrCreatePlaceProduct>()
+    val addPlaceProduct = mock<AddPlaceProduct>()
+    val removePlaceProduct = mock<RemovePlaceProduct>()
+
+    val description = "description"
+    val categoryName = "cat"
+    val price = 1.0
+    val variableAmount = false
+    val iconUrl = ""
+    val placeId: Long = 0
+    val placeProductId: Long = 1
+
+    val product = Product(0, description, variableAmount, iconUrl)
+    val category = Category(0, categoryName, "")
+
+    val residualPlaceProduct = PlaceProduct(2, product, category, 0.0)
+    val placeProduct = PlaceProduct(placeProductId, product, category, price)
+    val place = Place(0, "", listOf(residualPlaceProduct), LatLng(0.0, 0.0))
+    val newPrice = 1.2
+    val placeWithProduct =
+      Place(placeId, "", listOf(residualPlaceProduct, placeProduct), LatLng(0.0, 0.0))
+    val placeController =
+      PlaceControllerImpl(getOrCreatePlaceProduct, addPlaceProduct, removePlaceProduct)
+
+    whenever(
+      getOrCreatePlaceProduct.getOrCreatePlaceProduct(
+        description, categoryName, newPrice, variableAmount, iconUrl
+      )
+    ).doReturn(
+      Single.error(IllegalStateException())
+    )
+    whenever(addPlaceProduct.addPlaceProduct(placeId, placeProductId)).doReturn(
+      Completable.complete().observeSubscription(incrementer, offset)
+    )
+    whenever(removePlaceProduct.removePlaceProduct(placeId, placeProductId)).doReturn(
+      Completable.complete().observeSubscription(incrementer, offset)
+    )
+
+    placeController.removePlaceProduct(placeWithProduct, placeProductId).test().assertValue(place)
+      .assertNoErrors().assertComplete()
+
+    assertSubscriptions(incrementer.getAll(), offset)
+  }
+
+  @Test
+  fun updateProduct() {
+    val incrementer = Incrementer()
+    val offset = getAndIncrementOffset()
+
+    val getOrCreatePlaceProduct = mock<GetOrCreatePlaceProduct>()
+    val addPlaceProduct = mock<AddPlaceProduct>()
+    val removePlaceProduct = mock<RemovePlaceProduct>()
+
+    val description = "description"
+    val categoryName = "cat"
+    val price = 1.0
+    val variableAmount = false
+    val iconUrl = ""
+    val placeId: Long = 0
+    val placeProductId: Long = 1
+
+    val product = Product(0, description, variableAmount, iconUrl)
+    val category = Category(0, categoryName, "")
+
+    val residualPlaceProduct = PlaceProduct(2, product, category, 0.0)
+    val placeProduct = PlaceProduct(placeProductId, product, category, price)
+    val newPrice = 1.2
     val updatedPlaceProduct = PlaceProduct(placeProductId, product, category, newPrice)
     val newUpdatedPlaceProduct = PlaceProduct(placeProductId + 1, product, category, newPrice)
     val placeWithProduct =
@@ -44,87 +237,21 @@ internal class PlaceControllerImplTest {
 
     whenever(
       getOrCreatePlaceProduct.getOrCreatePlaceProduct(
-        eq(description), eq(categoryName), eq(newPrice), eq(variableAmount), eq(iconUrl)
+        description, categoryName, newPrice, variableAmount, iconUrl
       )
     ).doReturn(
-      Single.just(newUpdatedPlaceProduct)
+      Single.just(newUpdatedPlaceProduct).observeSubscription(incrementer, offset)
     )
-    whenever(addPlaceProduct.addPlaceProduct(any(), any())).doReturn(Completable.complete())
-
-    assertFalse { placeController.contains(place, placeProduct) }
-
-    //region Add a product
-    verify(getOrCreatePlaceProduct, times(0)).getOrCreatePlaceProduct(
-      any(), any(), any(), any(), any()
+    whenever(removePlaceProduct.removePlaceProduct(placeId, placeProductId)).doReturn(
+      Completable.complete().observeSubscription(incrementer, offset)
     )
-    verify(addPlaceProduct, times(0)).addPlaceProduct(any(), any())
-
-    var newPlaceObservable = placeController.addPlaceProduct(place, placeProduct).test()
-    var newPlace = newPlaceObservable.values().get(0)
-
-    verify(getOrCreatePlaceProduct, times(0)).getOrCreatePlaceProduct(
-      any(), any(), any(), any(), any()
+    whenever(addPlaceProduct.addPlaceProduct(placeId, newUpdatedPlaceProduct.id)).doReturn(
+      Completable.complete().observeSubscription(incrementer, offset)
     )
-    verify(addPlaceProduct, times(1)).addPlaceProduct(eq(placeId), eq(placeProductId))
 
-    assertTrue { placeController.contains(newPlace, placeProduct) }
-    newPlaceObservable.assertValue(placeWithProduct)
-    //endregion
+    placeController.updatePlaceProduct(placeWithProduct, updatedPlaceProduct).test()
+      .assertValue(placeWithUpdatedProduct).assertNoErrors().assertComplete()
 
-    //region Add a repeated product
-    newPlaceObservable = placeController.addPlaceProduct(placeWithProduct, placeProduct).test()
-    newPlace = newPlaceObservable.values().get(0)
-
-    assertTrue { placeController.contains(newPlace, placeProduct) }
-    newPlaceObservable.assertValue(placeWithProduct)
-    //endregion
-
-    //region Remove a product id that the place doesn't contain
-    whenever(removePlaceProduct.removePlaceProduct(any(), any())).doReturn(Completable.complete())
-    verify(removePlaceProduct, times(0)).removePlaceProduct(any(), any())
-
-    newPlaceObservable = placeController.removePlaceProduct(newPlace, -1).test()
-    newPlace = newPlaceObservable.values().get(0)
-
-    verify(getOrCreatePlaceProduct, times(0)).getOrCreatePlaceProduct(
-      any(), any(), any(), any(), any()
-    )
-    verify(addPlaceProduct, times(1)).addPlaceProduct(eq(placeId), eq(placeProductId))
-    verify(removePlaceProduct, times(1)).removePlaceProduct(eq(placeId), eq(-1))
-
-    assertTrue { placeController.contains(newPlace, placeProduct) }
-    newPlaceObservable.assertValue(placeWithProduct)
-    //endregion
-
-
-    //region Remove a product id that the place contains.
-    newPlaceObservable = placeController.removePlaceProduct(newPlace, placeProductId).test()
-    newPlace = newPlaceObservable.values().get(0)
-
-    verify(getOrCreatePlaceProduct, times(0)).getOrCreatePlaceProduct(
-      any(), any(), any(), any(), any()
-    )
-    verify(addPlaceProduct, times(1)).addPlaceProduct(eq(placeId), eq(placeProductId))
-    verify(removePlaceProduct, times(1)).removePlaceProduct(eq(placeId), eq(placeProductId))
-
-    assertFalse { placeController.contains(newPlace, placeProduct) }
-    newPlaceObservable.assertValue(place)
-    //endregion
-
-    //region Update a product
-    newPlaceObservable =
-      placeController.updatePlaceProduct(placeWithProduct, updatedPlaceProduct).test()
-    newPlace = newPlaceObservable.values().get(0)
-
-    verify(getOrCreatePlaceProduct, times(1)).getOrCreatePlaceProduct(
-      eq(description), eq(categoryName), eq(newPrice), eq(variableAmount), eq(iconUrl)
-    )
-    verify(addPlaceProduct, times(1)).addPlaceProduct(eq(placeId), not(eq(placeProductId)))
-    verify(removePlaceProduct, times(2)).removePlaceProduct(eq(placeId), eq(placeProductId))
-
-    assertFalse { placeController.contains(newPlace, placeProduct) }
-    assertTrue { placeController.contains(newPlace, newUpdatedPlaceProduct) }
-    newPlaceObservable.assertValue(placeWithUpdatedProduct)
-    //endregion
+    assertSubscriptions(incrementer.getAll(), offset)
   }
 }

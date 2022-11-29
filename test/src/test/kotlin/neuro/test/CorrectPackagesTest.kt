@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test
 
 class CorrectPackagesTest {
   @Test
-  fun test() {
+  fun CorrectPackages() {
     CorrectPackages(javaClass).checkPackages()
   }
 }

@@ -8,10 +8,11 @@ import org.junit.jupiter.api.Test
 
 internal class GetBillIconUrlImplTest {
   @Test
-  fun test() {
+  fun getBillIconUrl() {
     val getBillIconUrl = GetBillIconUrlImpl()
     val billItems = listOf(newBillItem(1), newBillItem(1), newBillItem(1))
     val expectedUrl = billItems.get(0).placeProduct.product.iconUrl
+
     assertEquals(expectedUrl, getBillIconUrl.getIconUrl(billItems))
   }
 
