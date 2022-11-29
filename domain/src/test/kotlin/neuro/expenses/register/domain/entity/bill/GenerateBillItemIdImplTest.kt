@@ -1,7 +1,6 @@
-package neuro.expenses.register.domain.entity
+package neuro.expenses.register.domain.entity.bill
 
 import io.reactivex.rxjava3.core.Single
-import neuro.expenses.register.domain.entity.bill.GenerateBillItemIdImpl
 import neuro.expenses.register.domain.repository.bill.GenerateBillItemIdRepository
 import neuro.test.rx.ObserveSubscriptionTest
 import org.junit.jupiter.api.Test

@@ -24,9 +24,6 @@ class EditViewModel(private val scaffoldViewModelState: ScaffoldViewModelState) 
   fun onPageClick(index: Int) {
     when (index) {
       0 -> _uiEvent.navigateToEditCategory()
-      1 -> _uiEvent.navigateToEditProduct()
-      2 -> _uiEvent.navigateToEditPlaceProduct()
-      3 -> _uiEvent.navigateToEditPlace()
     }
   }
 
@@ -36,9 +33,7 @@ class EditViewModel(private val scaffoldViewModelState: ScaffoldViewModelState) 
     scaffoldViewModelState.appBarViewModel.value = appBarViewModel
   }
 
-  private fun buildPages() = listOf(
-    Destination.categories, Destination.products, Destination.placeProducts, Destination.places
-  )
+  private fun buildPages() = listOf(Destination.categories)
 }
 
 object EditTitle : Title()

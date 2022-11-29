@@ -1,4 +1,4 @@
-package neuro.expenses.register.domain.usecase
+package neuro.expenses.register.domain
 
 import neuro.test.CorrectPackages
 import org.junit.jupiter.api.Test
