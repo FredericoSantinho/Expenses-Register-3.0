@@ -1,5 +1,6 @@
 package neuro.expenses.register.viewmodel.home
 
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import io.reactivex.rxjava3.core.Single
 import neuro.expenses.register.domain.dto.LatLngDto
@@ -44,10 +45,11 @@ class HomeViewModel(
   private val scaffoldViewModelState: ScaffoldViewModelState,
   schedulerProvider: SchedulerProvider,
   private val zoom: Float = 19.0f,
-  val initialCameraPosition: CameraPositionModel = lisbon,
   val title: String = "Home"
 ) : BaseViewModel(schedulerProvider), IHomeViewModel {
   val appBarViewModel: AppBarViewModel = AppBarViewModel()
+
+  val cameraPosition: MutableState<CameraPositionModel> = mutableStateOf(lisbon)
 
   private val places = mutableStateOf(emptyList<PlaceDto>())
   override val placesNames = mutableStateOf(emptyList<String>())
@@ -77,7 +79,8 @@ class HomeViewModel(
   }
 
   override fun onSelectedPlace(index: Int) {
-    onSelectedPlace(places.value.get(index))
+    val placeDto = places.value.get(index)
+    onSelectedPlace(placeDto, true)
   }
 
   fun onProductCardClick(placeProductCardModel: PlaceProductCardModel) {
@@ -139,7 +142,8 @@ class HomeViewModel(
       places.value = nearestPlaces
       placesNames.value = nearestPlaces.map { placeDto -> placeDto.name }
       if (nearestPlaces.isNotEmpty()) {
-        onSelectedPlace(nearestPlaces.get(selectedPlaceIndex.value))
+        val moveCamera = !this::placeDto.isInitialized
+        onSelectedPlace(nearestPlaces.get(selectedPlaceIndex.value), moveCamera)
         appBarViewModel.searchHint.value = searchProductsAndPlaces
         appBarViewModel.enableSearch()
         setupSearchSuggestions()
@@ -152,11 +156,7 @@ class HomeViewModel(
     })
   }
 
-  private fun onSelectedPlace(placeDto: PlaceDto) {
-    if (!this::placeDto.isInitialized || this.placeDto.latLngDto != placeDto.latLngDto) {
-      val latLngModel = placeDto.latLngDto.toViewModel()
-      _uiEvent.moveCamera(latLngModel, zoom)
-    }
+  private fun onSelectedPlace(placeDto: PlaceDto, moveCamera: Boolean) {
     this.placeDto = placeDto
     selectedPlaceName.value = placeDto.name
     sortPlaceProducts.sortPlaceProducts(placeDto.products)
@@ -164,6 +164,10 @@ class HomeViewModel(
         productsListViewModel.setProducts(placeDto, query)
         _uiState.ready()
       }
+    if (moveCamera && cameraPosition.value.latLngModel != placeDto.latLngDto.toViewModel()) {
+      val latLngModel = placeDto.latLngDto.toViewModel()
+      _uiEvent.moveCamera(latLngModel, zoom)
+    }
   }
 
   private fun setupSearchSuggestions() {
@@ -179,7 +183,7 @@ class HomeViewModel(
 
   private fun onPlaceSearchSuggestion(placeId: Long) {
     appBarViewModel.clearSearch()
-    onSelectedPlace(places.value.first { it.id == placeId })
+    onSelectedPlace(places.value.first { it.id == placeId }, true)
   }
 
   private fun onFinishEditPlaceProductAction() {

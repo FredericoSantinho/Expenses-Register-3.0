@@ -77,7 +77,11 @@ fun HomeComposable(
         linkTo(top = parent.top, bottom = billC.top)
         height = Dimension.fillToConstraints
       }) {
-        MapsComposable(homeViewModel.initialCameraPosition, Modifier.height(208.dp), moveCamera)
+        MapsComposable(
+          homeViewModel.cameraPosition,
+          moveCamera,
+          Modifier.height(208.dp)
+        )
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
           DateTimeComposable(
             fragmentActivity = fragmentActivity,
