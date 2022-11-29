@@ -1,6 +1,7 @@
 package neuro.expenses.register.data.mocks
 
 import neuro.expenses.register.data.model.bill.RoomBill
+import neuro.test.incrementer
 import java.util.*
 
 fun roomBillMock(billId: Long = incrementer.getAndIncrement(), placeId: Long): RoomBill {

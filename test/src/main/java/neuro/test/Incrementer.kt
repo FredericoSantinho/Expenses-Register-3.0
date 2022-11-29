@@ -1,16 +1,18 @@
 package neuro.test
 
-import java.util.concurrent.atomic.AtomicInteger
+import java.util.concurrent.atomic.AtomicLong
+
+val incrementer = Incrementer()
 
 class Incrementer {
-  private val counter = AtomicInteger(0)
+  private val counter = AtomicLong(0)
 
-  fun getAndIncrement(): Int {
+  fun getAndIncrement(): Long {
     return counter.incrementAndGet()
   }
 
-  fun getAll(): List<Int> {
-    val list = mutableListOf<Int>()
+  fun getAll(): List<Long> {
+    val list = mutableListOf<Long>()
     for (i in 1..counter.get()) {
       list.add(i)
     }

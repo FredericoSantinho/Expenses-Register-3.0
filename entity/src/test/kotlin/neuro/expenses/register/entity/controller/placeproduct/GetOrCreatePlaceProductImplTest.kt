@@ -143,10 +143,6 @@ internal class GetOrCreatePlaceProductImplTest : ObserveSubscriptionTest() {
     val variableAmount = false
     val iconUrl = "iconUrl"
 
-    val product = productMock()
-    val category = categoryMock(name = categoryName)
-    val placeProduct = placeProductMock(category = category)
-
     whenever(getCategory.getCategory(categoryName.lowercase())).thenReturn(
       Maybe.empty<Category>().observeSubscription(incrementer.getAndIncrement(), offset)
     )

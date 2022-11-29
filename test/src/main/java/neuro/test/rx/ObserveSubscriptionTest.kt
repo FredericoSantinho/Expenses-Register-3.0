@@ -8,29 +8,29 @@ import neuro.test.OffsetIncrementer
 import org.junit.jupiter.api.Assertions.assertTrue
 
 open class ObserveSubscriptionTest(private val offsetIncrementer: OffsetIncrementer = OffsetIncrementer()) {
-  private val map = mutableMapOf<Int, Boolean>()
+  private val map = mutableMapOf<Long, Boolean>()
 
-  fun <T : Any> Observable<T>.observeSubscription(i: Int = 0, offset: Int = 0): Observable<T> {
+  fun <T : Any> Observable<T>.observeSubscription(i: Long = 0, offset: Long = 0): Observable<T> {
     return doOnSubscribe { setSubscribed(i + offset) }
   }
 
-  fun <T : Any> Single<T>.observeSubscription(i: Int = 0, offset: Int = 0): Single<T> {
+  fun <T : Any> Single<T>.observeSubscription(i: Long = 0, offset: Long = 0): Single<T> {
     return doOnSubscribe { setSubscribed(i + offset) }
   }
 
-  fun <T : Any> Maybe<T>.observeSubscription(i: Int = 0, offset: Int = 0): Maybe<T> {
+  fun <T : Any> Maybe<T>.observeSubscription(i: Long = 0, offset: Long = 0): Maybe<T> {
     return doOnSubscribe { setSubscribed(i + offset) }
   }
 
-  fun Completable.observeSubscription(i: Int = 0, offset: Int = 0): Completable {
+  fun Completable.observeSubscription(i: Long = 0, offset: Long = 0): Completable {
     return doOnSubscribe { setSubscribed(i + offset) }
   }
 
-  private fun setSubscribed(i: Int) {
+  private fun setSubscribed(i: Long) {
     map.put(i, true)
   }
 
-  fun assertSubscription(i: Int = 0, offset: Int = 0) {
+  fun assertSubscription(i: Long = 0, offset: Long = 0) {
     if (map.contains(i + offset)) {
       assertTrue(map.get(i + offset)!!)
     } else {
@@ -38,11 +38,11 @@ open class ObserveSubscriptionTest(private val offsetIncrementer: OffsetIncremen
     }
   }
 
-  fun assertSubscriptions(list: List<Int>, offset: Int) {
+  fun assertSubscriptions(list: List<Long>, offset: Long) {
     list.forEach { assertSubscription(it, offset) }
   }
 
-  fun getAndIncrementOffset(): Int {
+  fun getAndIncrementOffset(): Long {
     return offsetIncrementer.getAndIncrement()
   }
 }

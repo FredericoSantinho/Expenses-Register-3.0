@@ -62,8 +62,9 @@ class BillDaoTest {
     billDao.getLastBillId().test().assertNoValues().assertNoErrors().assertComplete()
     billDao.getLastBillId().test().assertNoValues().assertNoErrors().assertComplete()
     for (i in 1L..3L) {
-      val lastBillId = incrementer.getAndIncrement().toLong()
-      billDao.insert(roomBillMock(lastBillId, roomPlace.placeId)).test()
+      val lastBillId = incrementer.getAndIncrement()
+      billDao.insert(roomBillMock(lastBillId, roomPlace.placeId)).test().assertValue(lastBillId)
+        .assertNoErrors().assertComplete()
       // We want to make sure repeated calls return the same result
       billDao.getLastBillId().test().assertValue(lastBillId).assertNoErrors().assertComplete()
       billDao.getLastBillId().test().assertValue(lastBillId).assertNoErrors().assertComplete()
@@ -86,13 +87,14 @@ class BillDaoTest {
     billDao.getLastBillItemId().test().assertNoValues().assertNoErrors().assertComplete()
     billDao.getLastBillItemId().test().assertNoValues().assertNoErrors().assertComplete()
     for (i in 1L..3L) {
-      val counter = incrementer.getAndIncrement().toLong()
+      val counter = incrementer.getAndIncrement()
       placeProductDao.insert(
         RoomPlaceProduct(
           counter, roomProduct.productId, roomCategory.categoryId, 1.0 + i
         )
       )
       billDao.insert(RoomBillItem(counter, 1.0, counter, roomBill.billId)).test()
+        .assertValue(counter).assertNoErrors().assertComplete()
       // We want to make sure repeated calls return the same result
       billDao.getLastBillItemId().test().assertValue(counter).assertNoErrors().assertComplete()
       billDao.getLastBillItemId().test().assertValue(counter).assertNoErrors().assertComplete()
