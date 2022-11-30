@@ -3,33 +3,12 @@ apply from: file("$rootDir/gradle/libraries.gradle")
 dependencies {
   implementation fileTree(dir: "libs", include: ["*.jar"])
 
-  api project(path: ':viewmodel')
-  api project(path: ':data')
+  api project(':presentation')
   testImplementation project(':test')
 
-  implementation "com.google.accompanist:accompanist-pager:0.27.1"
-
-  // If using indicators, also depend on
-  implementation "com.google.accompanist:accompanist-pager-indicators:0.27.1"
-
-  implementation lib.accompanist_permissions
-  implementation lib.google
-  implementation lib.google_maps
   implementation lib.koin_compose
-  implementation lib.glide
-  implementation lib.coil
-  implementation lib.compose_shimmer
-  implementation lib.rxAndroid
-  implementation lib.rxKotlin
-  implementation lib.timber
 
   testImplementation lib.slf4j_nop
-  testImplementation lib.koin_test
   testImplementation lib.junit
-  testImplementation lib.mockito
-  androidTestImplementation lib.mockito
   androidTestImplementation lib.google_test
-  androidTestImplementation lib.compose_ui_test_junit4
-  debugImplementation lib.compose_test
-  runtimeOnly lib.mockito_android
 }

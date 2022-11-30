@@ -17,7 +17,7 @@
       android:theme="@style/Theme.ExpensesRegister30"
       tools:targetApi="31">
     <activity
-        android:name=".MainActivity"
+        android:name=".presentation.MainActivity"
         android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
@@ -29,7 +29,7 @@
           android:name="android.app.lib_name"
           android:value="" />
     </activity>
-    <activity android:name=".ui.settings.SettingsActivity" />
+    <activity android:name=".presentation.ui.settings.SettingsActivity" />
 
     <meta-data
         android:name="com.google.android.geo.API_KEY"

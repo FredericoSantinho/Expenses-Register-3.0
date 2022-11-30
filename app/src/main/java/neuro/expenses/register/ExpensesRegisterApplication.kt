@@ -5,7 +5,7 @@ import neuro.expenses.register.data.di.daoModule
 import neuro.expenses.register.data.di.dataServiceModule
 import neuro.expenses.register.data.di.databaseModule
 import neuro.expenses.register.data.di.repositoryModule
-import neuro.expenses.register.di.*
+import neuro.expenses.register.presentation.di.*
 import neuro.expenses.register.viewmodel.application.ApplicationViewModel
 import neuro.expenses.register.viewmodel.di.*
 import org.koin.android.ext.android.inject
