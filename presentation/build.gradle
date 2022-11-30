@@ -9,7 +9,7 @@ plugins {
 apply from: "dependencies.gradle"
 
 android {
-  namespace 'neuro.expenses.register.data'
+  namespace 'neuro.expenses.register.presentation'
   compileSdk project.compileSdkVersion
 
   defaultConfig {
