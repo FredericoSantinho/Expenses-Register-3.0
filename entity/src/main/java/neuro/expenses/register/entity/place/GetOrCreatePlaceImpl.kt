@@ -2,6 +2,7 @@ package neuro.expenses.register.entity.place
 
 import io.reactivex.rxjava3.core.Single
 import neuro.expenses.register.entity.location.GetCurrentLocation
+import neuro.expenses.register.entity.model.LatLng
 import neuro.expenses.register.entity.model.Place
 
 class GetOrCreatePlaceImpl(
@@ -13,7 +14,8 @@ class GetOrCreatePlaceImpl(
   override fun getOrCreatePlace(name: String): Single<Place> {
     return getPlace.getPlace(name.lowercase())
       .switchIfEmpty(generatePlaceId.newId().flatMap { newId ->
-        getCurrentLocation.getCurrentLocation().map { Place(newId, name, emptyList(), it) }
+        getCurrentLocation.getCurrentLocation().onErrorReturn { LatLng(0.0, 0.0) }
+          .map { Place(newId, name, emptyList(), it) }
       }.flatMap { savePlace.savePlace(it).andThen(Single.just(it)) })
   }
 }
