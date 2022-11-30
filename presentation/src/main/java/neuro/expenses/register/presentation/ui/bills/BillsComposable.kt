@@ -22,8 +22,8 @@ import neuro.expenses.register.presentation.common.compose.rememberUnit
 import neuro.expenses.register.presentation.ui.bill.BillCardComposable
 import neuro.expenses.register.presentation.ui.theme.grey_fog_lighter
 import neuro.expenses.register.ui.home.composable.*
+import neuro.expenses.register.viewmodel.bill.BillCardViewModel
 import neuro.expenses.register.viewmodel.bill.BillDetailedViewModel
-import neuro.expenses.register.viewmodel.bill.BillViewModel
 import neuro.expenses.register.viewmodel.bills.BillsUiEvent.UiEvent
 import neuro.expenses.register.viewmodel.bills.BillsViewModel
 import org.koin.androidx.compose.get
@@ -55,7 +55,7 @@ fun BillsComposable(
       verticalArrangement = Arrangement.spacedBy(4.dp),
       reverseLayout = true
     ) {
-      items(bills.value, { listItem: BillViewModel -> listItem.id }) { item ->
+      items(bills.value, { listItem: BillCardViewModel -> listItem.id }) { item ->
         var unread by remember { mutableStateOf(false) }
         val dismissState = rememberDismissState(confirmStateChange = {
           if (it == DismissValue.DismissedToEnd) unread = !unread

@@ -5,8 +5,8 @@ import neuro.expenses.register.domain.usecase.bill.ObserveBillsUseCase
 import neuro.expenses.register.domain.usecase.bill.SortBills
 import neuro.expenses.register.viewmodel.appbar.AppBarViewModel
 import neuro.expenses.register.viewmodel.appbar.Title
+import neuro.expenses.register.viewmodel.bill.BillCardViewModel
 import neuro.expenses.register.viewmodel.bill.BillDetailedViewModel
-import neuro.expenses.register.viewmodel.bill.BillViewModel
 import neuro.expenses.register.viewmodel.bill.mapper.BillViewModelMapper
 import neuro.expenses.register.viewmodel.common.BaseViewModel
 import neuro.expenses.register.viewmodel.common.schedulers.SchedulerProvider
@@ -34,7 +34,7 @@ class BillsViewModel(
   private val _uiEvent = BillsUiEvent()
   val uiEvent = _uiEvent.uiEvent
 
-  fun onBillSwipe(item: BillViewModel) {
+  fun onBillSwipe(item: BillCardViewModel) {
     // TODO: remove bill
   }
 

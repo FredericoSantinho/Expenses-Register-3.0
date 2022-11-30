@@ -25,15 +25,15 @@ import neuro.expenses.register.presentation.common.shimmer.shimmerBackground
 import neuro.expenses.register.presentation.mocks.bill.billModelMock
 import neuro.expenses.register.presentation.ui.common.composables.image.AsyncImage
 import neuro.expenses.register.presentation.ui.theme.ExpensesRegisterTheme
+import neuro.expenses.register.viewmodel.bill.BillCardViewModel
 import neuro.expenses.register.viewmodel.bill.BillUiState.UiState
-import neuro.expenses.register.viewmodel.bill.BillViewModel
-import neuro.expenses.register.viewmodel.bill.IBillViewModel
+import neuro.expenses.register.viewmodel.bill.IBillCardViewModel
 import java.util.*
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BillCardComposable(
-  billViewModel: IBillViewModel, modifier: Modifier = Modifier
+  billViewModel: IBillCardViewModel, modifier: Modifier = Modifier
 ) {
   val roundedCornerShape = RoundedCornerShape(corner = CornerSize(8.dp))
 
@@ -42,7 +42,7 @@ fun BillCardComposable(
   val loading = remember { mutableStateOf(billViewModel.uiState.value == UiState.Loading) }
 
   Card(modifier = modifier
-    .semantics { testTag = BillTags.CARD }
+    .semantics { testTag = BillCardComposableTags.CARD }
     .clip(roundedCornerShape)
     .requiredHeight(80.dp)
     .fillMaxWidth()
@@ -72,7 +72,7 @@ fun BillCardComposable(
         .clip(roundedCornerShape)
         .shimmerBackground(loading.value), billViewModel.iconUrl.value, loading)
       Text(modifier = Modifier
-        .semantics { testTag = BillTags.PLACE }
+        .semantics { testTag = BillCardComposableTags.PLACE }
         .constrainAs(placeC) {
           start.linkTo(imageC.end)
           end.linkTo(totalC.start)
@@ -90,14 +90,14 @@ fun BillCardComposable(
         bottom.linkTo(parent.bottom)
       }) {
         Text(modifier = Modifier
-          .semantics { testTag = BillTags.TIME }
+          .semantics { testTag = BillCardComposableTags.TIME }
           .widthIn(48.dp)
           .shimmerBackground(loading.value),
           textAlign = TextAlign.Center,
           text = billViewModel.time.value,
           style = typography.body2)
         Text(modifier = Modifier
-          .semantics { testTag = BillTags.DATE }
+          .semantics { testTag = BillCardComposableTags.DATE }
           .padding(start = 8.dp)
           .widthIn(80.dp)
           .shimmerBackground(loading.value),
@@ -106,7 +106,7 @@ fun BillCardComposable(
           style = typography.body2)
       }
       Text(modifier = Modifier
-        .semantics { testTag = BillTags.TOTAL }
+        .semantics { testTag = BillCardComposableTags.TOTAL }
         .constrainAs(totalC) {
           end.linkTo(closeBillC.start)
           linkTo(top = parent.top, bottom = parent.bottom)
@@ -162,7 +162,7 @@ private fun closeBillIcon(imageConstraintModifier: Modifier) {
 
   },
     modifier = imageConstraintModifier
-      .semantics { testTag = BillTags.CLOSE_BILL_ICON }
+      .semantics { testTag = BillCardComposableTags.CLOSE_BILL_ICON }
       .padding(start = 8.dp)) {
     Icon(
       painter = painterResource(id = R.drawable.ic_close_bill_24),
@@ -177,17 +177,17 @@ private fun closeBillIcon(imageConstraintModifier: Modifier) {
 fun PreviewDateTimeComposable() {
 
   ExpensesRegisterTheme {
-    BillCardComposable(BillViewModel(billModel = billModelMock()))
+    BillCardComposable(BillCardViewModel(billModel = billModelMock()))
   }
 }
 
-class BillTags {
+class BillCardComposableTags {
   companion object {
-    const val CARD = "card"
-    const val PLACE = "place"
-    const val TIME = "time"
-    const val DATE = "date"
-    const val TOTAL = "total"
-    const val CLOSE_BILL_ICON = "closeIcon"
+    const val CARD = "billCard"
+    const val PLACE = "billPlace"
+    const val TIME = "billTime"
+    const val DATE = "billDate"
+    const val TOTAL = "billTotal"
+    const val CLOSE_BILL_ICON = "billCloseIcon"
   }
 }

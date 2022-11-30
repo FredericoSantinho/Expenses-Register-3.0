@@ -9,7 +9,7 @@ import neuro.expenses.register.viewmodel.common.schedulers.SchedulerProvider
 
 class FeedLastBillViewModelImpl(
   private val observeLastBillUseCase: ObserveLastBillUseCase,
-  private val billViewModel: BillViewModel,
+  private val billViewModel: BillCardViewModel,
   private val billModelMapper: BillModelMapper,
   private val schedulerProvider: SchedulerProvider
 ) : FeedLastBillViewModel {

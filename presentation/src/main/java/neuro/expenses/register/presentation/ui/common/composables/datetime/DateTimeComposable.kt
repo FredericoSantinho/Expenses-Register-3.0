@@ -5,11 +5,15 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentActivity
@@ -47,20 +51,23 @@ fun DateTimeComposable(
 
   calendar.value.set(yearVar, monthVar - 1, dayVar, hourVar, minuteVar, 0)
 
-  var timeText by remember { mutableStateOf(timeTextMapper.map(hourVar, minuteVar)) }
-  var dateText by remember { mutableStateOf(dateTextMapper.map(dayVar, monthVar, yearVar)) }
+  var timeText = timeTextMapper.map(hourVar, minuteVar)
+  var dateText = dateTextMapper.map(dayVar, monthVar, yearVar)
 
   Row(
     modifier = modifier,
     verticalAlignment = Alignment.CenterVertically,
     horizontalArrangement = Arrangement.Center
   ) {
-    Text(text = timeText, style = MaterialTheme.typography.subtitle1)
-    IconButton(
-      modifier = Modifier
-        .width(24.dp + 8.dp * 2)
-        .height(24.dp)
-        .padding(start = 8.dp, end = 8.dp),
+    Text(
+      modifier = Modifier.semantics { testTag = DateTimeComposableTags.TIME },
+      text = timeText,
+      style = MaterialTheme.typography.subtitle1
+    )
+    IconButton(modifier = Modifier
+      .width(24.dp + 8.dp * 2)
+      .height(24.dp)
+      .padding(start = 8.dp, end = 8.dp),
       onClick = {
         fragmentActivity?.let {
           showTimePicker.showTimePicker(it, object : OnSetTime {
@@ -79,12 +86,17 @@ fun DateTimeComposable(
         tint = MaterialTheme.colors.primary
       )
     }
-    Text(text = dateText, style = MaterialTheme.typography.subtitle1)
+    Text(
+      modifier = Modifier.semantics { testTag = DateTimeComposableTags.DATE },
+      text = dateText,
+      style = MaterialTheme.typography.subtitle1
+    )
     IconButton(
       modifier = Modifier
         .width(24.dp + 8.dp)
         .height(24.dp)
-        .padding(start = 8.dp), onClick = {
+        .padding(start = 8.dp),
+      onClick = {
         fragmentActivity?.let {
           showDatePicker.showDatePicker(it, object : OnSetDate {
             override fun onSetDate(day: Int, month: Int, year: Int) {
@@ -126,5 +138,12 @@ private fun setCalendar(calendar: MutableState<Calendar>, day: Int, month: Int, 
 fun PreviewDateTimeComposable() {
   ExpensesRegisterTheme {
     DateTimeComposable()
+  }
+}
+
+class DateTimeComposableTags {
+  companion object {
+    const val TIME = "time"
+    const val DATE = "date"
   }
 }

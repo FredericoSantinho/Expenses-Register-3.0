@@ -10,18 +10,18 @@ import neuro.expenses.register.presentation.ui.assertNotContainsColor
 import neuro.expenses.register.presentation.ui.performLongClick
 import neuro.expenses.register.presentation.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.viewmodel.bill.BillUiState.UiState
-import neuro.expenses.register.viewmodel.bill.IBillViewModel
+import neuro.expenses.register.viewmodel.bill.IBillCardViewModel
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.kotlin.*
 
-internal class BillComposableTest {
+internal class BillCardComposableTest {
   @get:Rule
   val composeTestRule = createComposeRule()
 
   @Test
   fun loadingState() {
-    val billViewModel = mock<IBillViewModel>()
+    val billViewModel = mock<IBillCardViewModel>()
 
     val iconUrl = mutableStateOf("iconUrl")
     val uiState = mutableStateOf(UiState.Loading)
@@ -35,13 +35,14 @@ internal class BillComposableTest {
 
     initComposition(billViewModel)
 
-    val onCard = composeTestRule.onNodeWithTag(BillTags.CARD)
-    val onPlace = composeTestRule.onNodeWithTag(BillTags.PLACE, true)
-    val onTime = composeTestRule.onNodeWithTag(BillTags.TIME, true)
-    val onDate = composeTestRule.onNodeWithTag(BillTags.DATE, true)
-    val onTotal = composeTestRule.onNodeWithTag(BillTags.TOTAL, true)
+    val onCard = composeTestRule.onNodeWithTag(BillCardComposableTags.CARD)
+    val onPlace = composeTestRule.onNodeWithTag(BillCardComposableTags.PLACE, true)
+    val onTime = composeTestRule.onNodeWithTag(BillCardComposableTags.TIME, true)
+    val onDate = composeTestRule.onNodeWithTag(BillCardComposableTags.DATE, true)
+    val onTotal = composeTestRule.onNodeWithTag(BillCardComposableTags.TOTAL, true)
     val onIcon = composeTestRule.onNodeWithTag(iconUrl.value, true)
-    val onCloseBillIcon = composeTestRule.onNodeWithTag(BillTags.CLOSE_BILL_ICON, true)
+    val onCloseBillIcon =
+      composeTestRule.onNodeWithTag(BillCardComposableTags.CLOSE_BILL_ICON, true)
 
     onCard.assertIsDisplayed()
     onPlace.assertIsDisplayed()
@@ -66,7 +67,8 @@ internal class BillComposableTest {
   fun billOpenState() {
     onStateReadyTest(UiState.BillOpen)
 
-    val onCloseBillIcon = composeTestRule.onNodeWithTag(BillTags.CLOSE_BILL_ICON, true)
+    val onCloseBillIcon =
+      composeTestRule.onNodeWithTag(BillCardComposableTags.CLOSE_BILL_ICON, true)
 
     onCloseBillIcon.assertIsDisplayed()
   }
@@ -75,13 +77,14 @@ internal class BillComposableTest {
   fun billClosedState() {
     onStateReadyTest(UiState.BillClosed)
 
-    val onCloseBillIcon = composeTestRule.onNodeWithTag(BillTags.CLOSE_BILL_ICON, true)
+    val onCloseBillIcon =
+      composeTestRule.onNodeWithTag(BillCardComposableTags.CLOSE_BILL_ICON, true)
 
     onCloseBillIcon.assertDoesNotExist()
   }
 
   private fun onStateReadyTest(_uiState: UiState) {
-    val billViewModel = mock<IBillViewModel>()
+    val billViewModel = mock<IBillCardViewModel>()
 
     val place = mutableStateOf("place")
     val time = mutableStateOf("time")
@@ -99,11 +102,11 @@ internal class BillComposableTest {
 
     initComposition(billViewModel)
 
-    val onCard = composeTestRule.onNodeWithTag(BillTags.CARD)
-    val onPlace = composeTestRule.onNodeWithTag(BillTags.PLACE, true)
-    val onTime = composeTestRule.onNodeWithTag(BillTags.TIME, true)
-    val onDate = composeTestRule.onNodeWithTag(BillTags.DATE, true)
-    val onTotal = composeTestRule.onNodeWithTag(BillTags.TOTAL, true)
+    val onCard = composeTestRule.onNodeWithTag(BillCardComposableTags.CARD)
+    val onPlace = composeTestRule.onNodeWithTag(BillCardComposableTags.PLACE, true)
+    val onTime = composeTestRule.onNodeWithTag(BillCardComposableTags.TIME, true)
+    val onDate = composeTestRule.onNodeWithTag(BillCardComposableTags.DATE, true)
+    val onTotal = composeTestRule.onNodeWithTag(BillCardComposableTags.TOTAL, true)
     val onIcon = composeTestRule.onNodeWithTag(iconUrl.value, true)
 
     onCard.assertHasClickAction()
@@ -139,7 +142,7 @@ internal class BillComposableTest {
     verify(billViewModel, times(1)).onCardLongClick()
   }
 
-  private fun initComposition(billViewModel: IBillViewModel) {
+  private fun initComposition(billViewModel: IBillCardViewModel) {
     composeTestRule.setContent {
       ExpensesRegisterTheme {
         BillCardComposable(billViewModel)

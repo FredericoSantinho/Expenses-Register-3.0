@@ -6,11 +6,11 @@ import java.util.*
 
 private val EMPTY = BillModel(0L, "", "", "", "", "", false, Calendar.getInstance())
 
-class BillViewModel(
+class BillCardViewModel(
   opened: Boolean = false,
   billModel: BillModel = EMPTY,
   private val onBillLongClick: (Long) -> Unit = {}
-) : IBillViewModel {
+) : IBillCardViewModel {
   override val id = mutableStateOf(billModel.id)
   override val iconUrl = mutableStateOf(billModel.iconUrl)
   override val place = mutableStateOf(billModel.place)

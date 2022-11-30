@@ -5,7 +5,7 @@ import androidx.compose.runtime.State
 import neuro.expenses.register.viewmodel.bill.BillUiState.UiState
 import neuro.expenses.register.viewmodel.bill.model.BillModel
 
-interface IBillViewModel {
+interface IBillCardViewModel {
   val id: MutableState<Long>
   val iconUrl: MutableState<String>
   val place: MutableState<String>
