@@ -43,7 +43,6 @@ import org.koin.androidx.compose.getViewModel
 @OptIn(ExperimentalPermissionsApi::class, ExperimentalMaterialApi::class)
 @Composable
 fun HomeComposable(
-  fragmentActivity: FragmentActivity,
   navController: NavHostController? = null,
   mapsEventMapper: HomeMapsUiEventMapper = get(),
   homeViewModel: HomeViewModel = getViewModel()
@@ -88,7 +87,6 @@ fun HomeComposable(
         )
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
           DateTimeComposable(
-            fragmentActivity = fragmentActivity,
             modifier = Modifier
               .align(CenterVertically)
               .padding(start = 8.dp),
@@ -227,6 +225,6 @@ fun PreviewHomeComposable() {
   val fragmentActivity = FragmentActivity()
 
   ExpensesRegisterTheme {
-    HomeComposable(fragmentActivity)
+    HomeComposable()
   }
 }

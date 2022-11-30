@@ -8,6 +8,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -28,7 +29,6 @@ import java.util.*
 
 @Composable
 fun DateTimeComposable(
-  fragmentActivity: FragmentActivity,
   modifier: Modifier = Modifier,
   showTimePicker: ShowTimePicker = DefaultShowTimePicker(),
   showDatePicker: ShowDatePicker = ShowMaterialDatePicker(),
@@ -36,6 +36,9 @@ fun DateTimeComposable(
   dateTextMapper: DateTextMapper = DateTextMapperImpl(),
   calendar: MutableState<Calendar> = mutableStateOf(Calendar.getInstance())
 ) {
+  val fragmentActivity =
+    if (LocalContext.current is FragmentActivity) LocalContext.current as FragmentActivity else null
+
   var hourVar = calendar.value.get(Calendar.HOUR_OF_DAY)
   var minuteVar = calendar.value.get(Calendar.MINUTE)
   var dayVar = calendar.value.get(Calendar.DAY_OF_MONTH)
@@ -59,14 +62,16 @@ fun DateTimeComposable(
         .height(24.dp)
         .padding(start = 8.dp, end = 8.dp),
       onClick = {
-        showTimePicker.showTimePicker(fragmentActivity, object : OnSetTime {
-          override fun onSetTime(hour: Int, minute: Int) {
-            hourVar = hour
-            minuteVar = minute
-            timeText = timeTextMapper.map(hour, minute)
-            setCalendar(calendar, hour, minute)
-          }
-        })
+        fragmentActivity?.let {
+          showTimePicker.showTimePicker(it, object : OnSetTime {
+            override fun onSetTime(hour: Int, minute: Int) {
+              hourVar = hour
+              minuteVar = minute
+              timeText = timeTextMapper.map(hour, minute)
+              setCalendar(calendar, hour, minute)
+            }
+          })
+        }
       }) {
       Icon(
         painter = painterResource(id = R.drawable.ic_change_time_24),
@@ -80,16 +85,18 @@ fun DateTimeComposable(
         .width(24.dp + 8.dp)
         .height(24.dp)
         .padding(start = 8.dp), onClick = {
-        showDatePicker.showDatePicker(fragmentActivity, object : OnSetDate {
-          override fun onSetDate(day: Int, month: Int, year: Int) {
-            dayVar = day
-            monthVar = month
-            yearVar = year
-            dateText = dateTextMapper.map(day, month, year)
-          setCalendar(calendar, day, month, year)
+        fragmentActivity?.let {
+          showDatePicker.showDatePicker(it, object : OnSetDate {
+            override fun onSetDate(day: Int, month: Int, year: Int) {
+              dayVar = day
+              monthVar = month
+              yearVar = year
+              dateText = dateTextMapper.map(day, month, year)
+              setCalendar(calendar, day, month, year)
+            }
+          })
         }
-      })
-    }) {
+      }) {
       Icon(
         painter = painterResource(R.drawable.ic_change_date_24),
         contentDescription = null,
@@ -118,6 +125,6 @@ private fun setCalendar(calendar: MutableState<Calendar>, day: Int, month: Int, 
 @Composable
 fun PreviewDateTimeComposable() {
   ExpensesRegisterTheme {
-    DateTimeComposable(FragmentActivity())
+    DateTimeComposable()
   }
 }

@@ -20,9 +20,7 @@ import neuro.expenses.register.presentation.ui.theme.ExpensesRegisterTheme
 import java.util.*
 
 @Composable
-fun BillItemFooterComposable(
-  fragmentActivity: FragmentActivity, total: String, calendar: MutableState<Calendar>
-) {
+fun BillItemFooterComposable(total: String, calendar: MutableState<Calendar>) {
   Row(
     modifier = Modifier
       .fillMaxWidth()
@@ -31,7 +29,7 @@ fun BillItemFooterComposable(
   ) {
     Column(verticalArrangement = Arrangement.Center) {
       DateTimeComposable(
-        fragmentActivity = fragmentActivity, calendar = calendar
+        calendar = calendar
       )
     }
     Column(modifier = Modifier.fillMaxHeight(), verticalArrangement = Arrangement.Center) {
@@ -63,7 +61,7 @@ fun PreviewBillItemFooterComposable() {
 
   ExpensesRegisterTheme {
     BillItemFooterComposable(
-      fragmentActivity, total, calendar
+      total, calendar
     )
   }
 }

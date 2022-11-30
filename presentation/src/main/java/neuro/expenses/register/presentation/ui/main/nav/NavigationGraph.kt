@@ -2,7 +2,6 @@ package neuro.expenses.register.presentation.ui.main.nav
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -14,18 +13,17 @@ import neuro.expenses.register.presentation.ui.manual.register.composable.Manual
 @Composable
 fun NavigationGraph(
     navController: NavHostController,
-    fragmentActivity: FragmentActivity,
     modifier: Modifier = Modifier
 ) {
     NavHost(navController, startDestination = BottomNavItem.Home.screenRoute, modifier = modifier) {
         composable(BottomNavItem.Home.screenRoute) {
-            HomeComposable(fragmentActivity, navController)
+            HomeComposable(navController)
         }
         composable(BottomNavItem.ManualRegister.screenRoute) {
-            ManualRegisterComposable(fragmentActivity)
+            ManualRegisterComposable()
         }
         composable(BottomNavItem.Bills.screenRoute) {
-            BillsComposable(fragmentActivity, navController)
+            BillsComposable(navController)
         }
         composable(BottomNavItem.Edit.screenRoute) {
             EditComposable()

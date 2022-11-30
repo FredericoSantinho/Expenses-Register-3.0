@@ -29,6 +29,6 @@ fun MainComposable(
     bottomBar = { BottomNavigation(navController) },
     floatingActionButton = { FloatingActionButtonComposable() }
   ) {
-    NavigationGraph(navController, fragmentActivity, Modifier.padding(it))
+    NavigationGraph(navController, Modifier.padding(it))
   }
 }

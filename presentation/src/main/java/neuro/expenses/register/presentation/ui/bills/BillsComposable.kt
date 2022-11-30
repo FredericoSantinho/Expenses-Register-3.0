@@ -16,7 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavHostController
 import kotlinx.coroutines.CoroutineScope
 import neuro.expenses.register.presentation.common.compose.rememberUnit
@@ -33,7 +32,6 @@ import org.koin.androidx.compose.getViewModel
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun BillsComposable(
-  fragmentActivity: FragmentActivity,
   navController: NavHostController? = null,
   billDetailedViewModel: BillDetailedViewModel = get(),
   billsViewModel: BillsViewModel = getViewModel()
@@ -48,7 +46,7 @@ fun BillsComposable(
   val bills = billsViewModel.bills.subscribeAsState(initial = emptyList())
 
   ModalBottomSheetLayout(modalBottomSheetState,
-    modalContent = { BillDetailedComposable(fragmentActivity, billDetailedViewModel) }) {
+    modalContent = { BillDetailedComposable(billDetailedViewModel) }) {
     LazyColumn(
       Modifier
         .background(color = grey_fog_lighter)

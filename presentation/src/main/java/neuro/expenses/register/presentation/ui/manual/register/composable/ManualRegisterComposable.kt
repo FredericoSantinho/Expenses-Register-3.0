@@ -47,7 +47,6 @@ import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun ManualRegisterComposable(
-  fragmentActivity: FragmentActivity,
   manualRegisterViewModel: ManualRegisterViewModel = getViewModel(),
   showTimePicker: ShowTimePicker = DefaultShowTimePicker(),
   showDatePicker: ShowDatePicker = ShowMaterialDatePicker(),
@@ -86,7 +85,6 @@ fun ManualRegisterComposable(
         .verticalScroll(rememberScrollState())
     ) {
       DateTimeComposable(
-        fragmentActivity,
         modifier = Modifier
           .fillMaxWidth()
           .padding(bottom = 8.dp),
@@ -325,6 +323,6 @@ fun PreviewManualRegisterComposable() {
   val fragmentActivity = FragmentActivity()
 
   ExpensesRegisterTheme {
-    ManualRegisterComposable(fragmentActivity)
+    ManualRegisterComposable()
   }
 }

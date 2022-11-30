@@ -23,7 +23,6 @@ import neuro.expenses.register.viewmodel.bill.model.BillItemModel
 
 @Composable
 fun BillDetailedComposable(
-  fragmentActivity: FragmentActivity,
   billDetailedViewModel: BillDetailedViewModel,
   modifier: Modifier = Modifier,
 ) {
@@ -44,12 +43,9 @@ fun BillDetailedComposable(
       BillItemHeaderComposable()
       Divider(thickness = 1.dp, color = Color.Gray)
       LazyColumn(
-        Modifier
-          .heightIn(max = 360.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        Modifier.heightIn(max = 360.dp), verticalArrangement = Arrangement.spacedBy(8.dp)
       ) {
-        items(
-          billDetailedViewModel.billItems.value,
+        items(billDetailedViewModel.billItems.value,
           { billItemModel: BillItemModel -> billItemModel.id }) { billItemViewModel ->
           BillItemComposable(billItemViewModel) { billDetailedViewModel.onBillItemsChange() }
           Divider(
@@ -60,9 +56,7 @@ fun BillDetailedComposable(
         }
       }
       BillItemFooterComposable(
-        fragmentActivity,
-        billDetailedViewModel.total.value,
-        billDetailedViewModel.calendar
+        billDetailedViewModel.total.value, billDetailedViewModel.calendar
       )
     }
     SaveDeleteComposable({}, {})
@@ -76,6 +70,6 @@ fun PreviewBillDetailedComposable() {
   val billDetailedViewModel = billDetailedViewModelMock()
 
   ExpensesRegisterTheme {
-    BillDetailedComposable(fragmentActivity, billDetailedViewModel)
+    BillDetailedComposable(billDetailedViewModel)
   }
 }
