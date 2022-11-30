@@ -11,8 +11,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.semantics.testTag
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -33,7 +32,7 @@ fun PlaceProductCardComposable(productCardViewModel: IProductCardViewModel) {
   Row {
     Card(
       modifier = Modifier
-        .semantics { testTag = ProductCardComposableTags.CARD }
+        .testTag(ProductCardComposableTags.CARD)
         .clip(roundedCornerShape)
         .height(100.dp)
         .combinedClickable(
@@ -54,7 +53,7 @@ fun PlaceProductCardComposable(productCardViewModel: IProductCardViewModel) {
         Text(
           text = productCardViewModel.description.value,
           modifier = Modifier
-            .semantics { testTag = ProductCardComposableTags.PRODUCT_DESCRIPTION }
+            .testTag(ProductCardComposableTags.PRODUCT_DESCRIPTION)
             .constrainAs(descriptionC) {
               start.linkTo(parent.start)
               top.linkTo(parent.top, margin = 4.dp)
@@ -66,7 +65,7 @@ fun PlaceProductCardComposable(productCardViewModel: IProductCardViewModel) {
           maxLines = 3,
         )
         AsyncImage(modifier = Modifier
-          .semantics { testTag = productCardViewModel.iconUrl.value }
+          .testTag(productCardViewModel.iconUrl.value)
           .constrainAs(imageC) {
             end.linkTo(parent.end)
             top.linkTo(parent.top)
@@ -77,7 +76,7 @@ fun PlaceProductCardComposable(productCardViewModel: IProductCardViewModel) {
         Text(
           text = productCardViewModel.categoryModel.value.name,
           modifier = Modifier
-            .semantics { testTag = ProductCardComposableTags.CATEGORY }
+            .testTag(ProductCardComposableTags.CATEGORY)
             .constrainAs(categoryC) {
               start.linkTo(descriptionC.start)
               bottom.linkTo(parent.bottom, margin = 4.dp)
@@ -90,7 +89,7 @@ fun PlaceProductCardComposable(productCardViewModel: IProductCardViewModel) {
         Text(
           text = productCardViewModel.price.value,
           modifier = Modifier
-            .semantics { testTag = ProductCardComposableTags.PRICE }
+            .testTag(ProductCardComposableTags.PRICE)
             .constrainAs(priceC) {
               end.linkTo(parent.end)
               bottom.linkTo(parent.bottom)

@@ -11,9 +11,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentActivity
@@ -60,7 +59,7 @@ fun DateTimeComposable(
     horizontalArrangement = Arrangement.Center
   ) {
     Text(
-      modifier = Modifier.semantics { testTag = DateTimeComposableTags.TIME },
+      modifier = Modifier.testTag(DateTimeComposableTags.TIME),
       text = timeText,
       style = MaterialTheme.typography.subtitle1
     )
@@ -87,7 +86,7 @@ fun DateTimeComposable(
       )
     }
     Text(
-      modifier = Modifier.semantics { testTag = DateTimeComposableTags.DATE },
+      modifier = Modifier.testTag(DateTimeComposableTags.DATE),
       text = dateText,
       style = MaterialTheme.typography.subtitle1
     )

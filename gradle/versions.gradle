@@ -36,6 +36,7 @@ ver.play_services_location = "21.0.1"
 
 ver.android_junit = "1.1.2"
 ver.expresso = "3.4.0"
+ver.androidx_core_testing = "2.1.0"
 ver.google_maps = "18.1.0"
 ver.google_maps_compose = "2.7.2"
 ver.google_maps_utils = "2.4.0"

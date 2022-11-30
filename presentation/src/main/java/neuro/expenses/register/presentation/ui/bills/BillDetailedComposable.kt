@@ -14,7 +14,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.fragment.app.FragmentActivity
 import neuro.expenses.register.presentation.mocks.bill.billDetailedViewModelMock
 import neuro.expenses.register.presentation.ui.common.composables.edit.SaveDeleteComposable
 import neuro.expenses.register.presentation.ui.theme.ExpensesRegisterTheme
@@ -66,7 +65,6 @@ fun BillDetailedComposable(
 @Preview
 @Composable
 fun PreviewBillDetailedComposable() {
-  val fragmentActivity = FragmentActivity()
   val billDetailedViewModel = billDetailedViewModelMock()
 
   ExpensesRegisterTheme {

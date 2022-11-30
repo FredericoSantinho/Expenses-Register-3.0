@@ -10,16 +10,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.semantics.testTag
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import androidx.fragment.app.FragmentActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import neuro.expenses.register.presentation.R
 import neuro.expenses.register.presentation.common.compose.rememberUnit
 import neuro.expenses.register.presentation.common.picker.date.ShowDatePicker
@@ -32,7 +33,6 @@ import neuro.expenses.register.presentation.ui.common.composables.datetime.mappe
 import neuro.expenses.register.presentation.ui.common.composables.datetime.mapper.DateTextMapperImpl
 import neuro.expenses.register.presentation.ui.common.composables.datetime.mapper.TimeTextMapper
 import neuro.expenses.register.presentation.ui.common.composables.datetime.mapper.TimeTextMapperImpl
-import neuro.expenses.register.presentation.ui.common.composables.snackbar.showSnackbar
 import neuro.expenses.register.presentation.ui.common.composables.text.CurrencyTextField
 import neuro.expenses.register.presentation.ui.common.composables.text.TextFieldWithDropdown
 import neuro.expenses.register.presentation.ui.common.composables.text.TextFieldWithError
@@ -63,22 +63,19 @@ fun ManualRegisterComposable(
   val descriptionIsError = remember { mutableStateOf(false) }
   val descriptionErrorMessage = remember { mutableStateOf("") }
   val categoryIsError = remember { mutableStateOf(false) }
+  val categoryErrorMessage = remember { mutableStateOf("") }
   val placeIsError = remember { mutableStateOf(false) }
   val placeErrorMessage = remember { mutableStateOf("") }
   val amountIsError = remember { mutableStateOf(false) }
   val amountErrorMessage = remember { mutableStateOf("") }
 
-  // Reset all error states on recomposition
-  descriptionIsError.value = false
-  descriptionErrorMessage.value = ""
-  categoryIsError.value = false
-  placeIsError.value = false
-  placeErrorMessage.value = ""
-  amountIsError.value = false
-  amountErrorMessage.value = ""
-
   val focusManager = LocalFocusManager.current
   val placeHasFocus = remember { mutableStateOf(false) }
+
+  val coroutineScope = rememberCoroutineScope()
+  val snackbarHostState = remember { SnackbarHostState() }
+
+  val keyboardOptionsNumericDone = keyboardOptionsNumeric.copy(imeAction = ImeAction.Done)
 
   Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.Bottom) {
     Column(
@@ -97,26 +94,35 @@ fun ManualRegisterComposable(
         calendar = manualRegisterViewModel.calendar
       )
       TextFieldWithError(
-        semantics = ManualRegisterComposableTags.DESCRIPTION,
         value = manualRegisterViewModel.description,
         label = stringResource(R.string.description),
         keyboardOptions = keyboardOptionsText,
         textStyle = ExpensesRegisterTypography.body2,
         onValueChange = { manualRegisterViewModel.onDescriptionChange() },
         isError = descriptionIsError,
-        errorMessage = descriptionErrorMessage
+        errorMessage = descriptionErrorMessage,
+        semantics = ManualRegisterComposableTags.DESCRIPTION,
+        errorTestTag = ManualRegisterComposableTags.DESCRIPTION_ERROR,
+        semanticsImeAction = keyboardOptionsText.imeAction
       )
-      TextFieldWithDropdown(semantics = ManualRegisterComposableTags.CATEGORY,
+      TextFieldWithDropdown(
         dataIn = manualRegisterViewModel.categoriesNames.subscribeAsState(
           initial = emptyList()
         ),
         label = stringResource(R.string.category),
         keyboardOptions = keyboardOptionsText,
-        onValueChange = { manualRegisterViewModel.onCategoryChange() },
+        onValueChange = {
+          manualRegisterViewModel.category.value = it
+          manualRegisterViewModel.onCategoryChange()
+        },
         value = manualRegisterViewModel.category,
         isError = categoryIsError,
+        errorMessage = categoryErrorMessage,
         textStyle = ExpensesRegisterTypography.body2,
-        onSelectOption = { focusManager.moveFocus(FocusDirection.Next) })
+        onSelectOption = { focusManager.moveFocus(FocusDirection.Next) },
+        semantics = ManualRegisterComposableTags.CATEGORY,
+        errorSemantics = ManualRegisterComposableTags.CATEGORY_ERROR
+      )
       ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
         val (place, placeAuto) = createRefs()
 
@@ -129,25 +135,30 @@ fun ManualRegisterComposable(
               width = Dimension.fillToConstraints
             }
             .onFocusEvent { placeHasFocus.value = it.isFocused },
-          semantics = ManualRegisterComposableTags.PLACE,
           keyboardOptions = keyboardOptionsText,
           textStyle = ExpensesRegisterTypography.body2,
           onValueChange = {
             manualRegisterViewModel.onPlaceChange()
           },
           isError = placeIsError,
-          errorMessage = placeErrorMessage
+          errorMessage = placeErrorMessage,
+          semantics = ManualRegisterComposableTags.PLACE,
+          errorTestTag = ManualRegisterComposableTags.PLACE_ERROR,
+          semanticsImeAction = keyboardOptionsText.imeAction
         )
         IconButton(onClick = {
           manualRegisterViewModel.onNearestPlaceButton()
           if (placeHasFocus.value) {
             focusManager.moveFocus(FocusDirection.Next)
           }
-        }, modifier = Modifier.constrainAs(placeAuto) {
-          end.linkTo(parent.end)
-          top.linkTo(place.top, margin = 8.dp)
-          bottom.linkTo(place.bottom)
-        }) {
+        },
+          modifier = Modifier
+            .testTag(ManualRegisterComposableTags.BUTTON_NEAREST_PLACE)
+            .constrainAs(placeAuto) {
+              end.linkTo(parent.end)
+              top.linkTo(place.top, margin = 8.dp)
+              bottom.linkTo(place.bottom)
+            }) {
           Icon(
             painter = painterResource(id = R.drawable.ic_edit_place_24),
             contentDescription = null,
@@ -158,18 +169,19 @@ fun ManualRegisterComposable(
       ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
         val (priceC, amountC, totalLabelC, totalC) = createRefs()
 
-        CurrencyTextField(value = manualRegisterViewModel.price,
+        CurrencyTextField(
+          value = manualRegisterViewModel.price,
           label = stringResource(R.string.price),
-          modifier = Modifier
-            .semantics { testTag = ManualRegisterComposableTags.PRICE }
-            .constrainAs(priceC) {
-              start.linkTo(parent.start)
-              width = Dimension.value(96.dp)
-            },
+          modifier = Modifier.constrainAs(priceC) {
+            start.linkTo(parent.start)
+            width = Dimension.value(96.dp)
+          },
           onValueChange = {
             manualRegisterViewModel.onPriceChange()
           },
-          textStyle = ExpensesRegisterTypography.body2
+          textStyle = ExpensesRegisterTypography.body2,
+          testTag = ManualRegisterComposableTags.PRICE,
+          errorTestTag = ManualRegisterComposableTags.PRICE_ERROR
         )
         TextFieldWithError(
           value = manualRegisterViewModel.amount,
@@ -178,15 +190,17 @@ fun ManualRegisterComposable(
             start.linkTo(priceC.end, margin = 8.dp)
             width = Dimension.value(96.dp)
           },
-          semantics = ManualRegisterComposableTags.AMOUNT,
-          keyboardOptions = keyboardOptionsNumeric,
+          keyboardOptions = keyboardOptionsNumericDone,
           textStyle = ExpensesRegisterTypography.body2.copy(textAlign = TextAlign.End),
           onValueChange = {
             manualRegisterViewModel.amount.value = it
             manualRegisterViewModel.onAmountChange()
           },
           isError = amountIsError,
-          errorMessage = amountErrorMessage
+          errorMessage = amountErrorMessage,
+          semantics = ManualRegisterComposableTags.AMOUNT,
+          errorTestTag = ManualRegisterComposableTags.AMOUNT_ERROR,
+          semanticsImeAction = keyboardOptionsNumericDone.imeAction
         )
         Text(
           text = stringResource(R.string.manual_register_total) + ':',
@@ -206,12 +220,14 @@ fun ManualRegisterComposable(
       Row(
         modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center
       ) {
-        Button(onClick = {
-          manualRegisterViewModel.onRegisterButton()
-        },
+        Button(
+          onClick = {
+            manualRegisterViewModel.onRegisterButton()
+          },
           modifier = Modifier
-            .semantics { testTag = ManualRegisterComposableTags.BUTTON_REGISTER_EXPENSE }
-            .padding(top = 8.dp, bottom = 16.dp)) {
+            .testTag(ManualRegisterComposableTags.BUTTON_REGISTER_EXPENSE)
+            .padding(top = 8.dp, bottom = 16.dp)
+        ) {
           Text(text = stringResource(R.string.manual_register_register))
         }
       }
@@ -224,19 +240,28 @@ fun ManualRegisterComposable(
     descriptionIsError,
     descriptionErrorMessage,
     categoryIsError,
+    categoryErrorMessage,
     placeIsError,
     placeErrorMessage,
     amountIsError,
     amountErrorMessage
   )
-  onUiEvent(uiEvent, manualRegisterViewModel)
+  SnackbarHost(hostState = snackbarHostState,
+    snackbar = { Snackbar(it, modifier = Modifier.testTag(ManualRegisterComposableTags.SNACKBAR)) })
+
+  onUiEvent(uiEvent, manualRegisterViewModel, coroutineScope, snackbarHostState)
 }
 
 @Composable
-private fun onUiEvent(uiEvent: UiEvent?, manualRegisterViewModel: ManualRegisterViewModel) {
+private fun onUiEvent(
+  uiEvent: UiEvent?,
+  manualRegisterViewModel: ManualRegisterViewModel,
+  coroutineScope: CoroutineScope,
+  snackbarHostState: SnackbarHostState
+) {
   when (uiEvent) {
     is UiEvent.ShowRegisterSuccess -> {
-      showSuccessSnackbar(uiEvent)
+      onRegisterSuccess(coroutineScope, snackbarHostState, uiEvent)
     }
     null -> {}
   }
@@ -244,8 +269,25 @@ private fun onUiEvent(uiEvent: UiEvent?, manualRegisterViewModel: ManualRegister
 }
 
 @Composable
-private fun showSuccessSnackbar(uiEvent: UiEvent.ShowRegisterSuccess) {
-  showSnackbar(text = uiEvent.productDescription, key = uiEvent)
+private fun onRegisterSuccess(
+  coroutineScope: CoroutineScope,
+  snackbarHostState: SnackbarHostState,
+  uiEvent: UiEvent.ShowRegisterSuccess
+) {
+  showSuccessSnackbar(
+    coroutineScope,
+    snackbarHostState,
+    stringResource(R.string.manual_register_register_success, uiEvent.productDescription)
+  )
+}
+
+private fun showSuccessSnackbar(
+  coroutineScope: CoroutineScope, snackbarHostState: SnackbarHostState, message: String
+) {
+  coroutineScope.launch {
+    snackbarHostState.showSnackbar(message)
+  }
+
 }
 
 @Composable
@@ -254,6 +296,7 @@ private fun onUiState(
   descriptionIsError: MutableState<Boolean>,
   descriptionErrorMessage: MutableState<String>,
   categoryIsError: MutableState<Boolean>,
+  categoryErrorMessage: MutableState<String>,
   placeIsError: MutableState<Boolean>,
   placeErrorMessage: MutableState<String>,
   amountIsError: MutableState<Boolean>,
@@ -266,6 +309,7 @@ private fun onUiState(
       descriptionIsError,
       descriptionErrorMessage,
       categoryIsError,
+      categoryErrorMessage,
       placeIsError,
       placeErrorMessage,
       amountIsError,
@@ -280,6 +324,7 @@ private fun onUiError(
   descriptionIsError: MutableState<Boolean>,
   descriptionErrorMessage: MutableState<String>,
   categoryIsError: MutableState<Boolean>,
+  categoryErrorMessage: MutableState<String>,
   placeIsError: MutableState<Boolean>,
   placeErrorMessage: MutableState<String>,
   amountIsError: MutableState<Boolean>,
@@ -290,7 +335,9 @@ private fun onUiError(
       is UiStateError.ShowPlaceError -> showPlaceError(
         stringResource(error.message.toPresentation()), placeIsError, placeErrorMessage
       )
-      is UiStateError.ShowCategoryError -> showCategoryError(categoryIsError)
+      is UiStateError.ShowCategoryError -> showCategoryError(
+        stringResource(error.message.toPresentation()), categoryIsError, categoryErrorMessage
+      )
       is UiStateError.ShowDescriptionError -> showDescriptionError(
         stringResource(error.message.toPresentation()), descriptionIsError, descriptionErrorMessage
       )
@@ -315,7 +362,12 @@ private fun showPlaceError(
   placeIsError.value = true
 }
 
-private fun showCategoryError(categoryIsError: MutableState<Boolean>) {
+private fun showCategoryError(
+  message: String,
+  categoryIsError: MutableState<Boolean>,
+  categoryErrorMessage: MutableState<String>
+) {
+  categoryErrorMessage.value = message
   categoryIsError.value = true
 }
 
@@ -331,8 +383,6 @@ private fun showDescriptionError(
 @Preview
 @Composable
 fun PreviewManualRegisterComposable() {
-  val fragmentActivity = FragmentActivity()
-
   ExpensesRegisterTheme {
     ManualRegisterComposable()
   }
@@ -341,10 +391,17 @@ fun PreviewManualRegisterComposable() {
 class ManualRegisterComposableTags {
   companion object {
     const val DESCRIPTION = "description"
+    const val DESCRIPTION_ERROR = "descriptionError"
     const val CATEGORY = "category"
+    const val CATEGORY_ERROR = "categoryError"
     const val PLACE = "place"
+    const val PLACE_ERROR = "placeError"
     const val PRICE = "price"
+    const val PRICE_ERROR = "priceError"
     const val AMOUNT = "amount"
+    const val AMOUNT_ERROR = "amountError"
+    const val BUTTON_NEAREST_PLACE = "buttonNearestPlace"
     const val BUTTON_REGISTER_EXPENSE = "registerButton"
+    const val SNACKBAR = "snackbar"
   }
 }

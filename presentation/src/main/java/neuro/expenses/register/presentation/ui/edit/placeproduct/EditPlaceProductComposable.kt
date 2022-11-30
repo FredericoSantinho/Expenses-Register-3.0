@@ -21,9 +21,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import neuro.expenses.register.presentation.R
@@ -60,11 +59,13 @@ fun EditPlaceProductComposable(
       style = MaterialTheme.typography.h5,
       fontWeight = FontWeight.Bold
     )
-    AsyncImage(modifier = Modifier
-      .semantics { testTag = editPlaceProductViewModel.iconUrl.value }
-      .size(128.dp)
-      .clip(RoundedCornerShape(corner = CornerSize(8.dp))),
-      editPlaceProductViewModel.iconUrl.value)
+    AsyncImage(
+      modifier = Modifier
+        .testTag(editPlaceProductViewModel.iconUrl.value)
+        .size(128.dp)
+        .clip(RoundedCornerShape(corner = CornerSize(8.dp))),
+      editPlaceProductViewModel.iconUrl.value
+    )
     TextFieldWithError(
       value = editPlaceProductViewModel.description,
       label = stringResource(R.string.description),

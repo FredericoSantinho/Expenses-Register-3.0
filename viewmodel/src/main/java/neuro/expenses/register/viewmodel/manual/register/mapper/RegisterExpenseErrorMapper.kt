@@ -7,7 +7,7 @@ import neuro.expenses.register.viewmodel.manual.register.ManualRegisterUiState.U
 fun RegisterExpenseError.toViewmodel(): UiStateError {
   return when (this) {
     RegisterExpenseError.EMPTY_DESCRIPTION -> UiStateError.ShowDescriptionError(Message.EMPTY_DESCRIPTION)
-    RegisterExpenseError.INVALID_CATEGORY -> UiStateError.ShowCategoryError
+    RegisterExpenseError.INVALID_CATEGORY -> UiStateError.ShowCategoryError(Message.CATEGORY_DOES_NOT_EXIST)
     RegisterExpenseError.EMPTY_PLACE -> UiStateError.ShowPlaceError(Message.EMPTY_PLACE)
     RegisterExpenseError.INVALID_AMOUNT -> UiStateError.ShowAmountError(Message.INVALID_AMOUNT)
   }

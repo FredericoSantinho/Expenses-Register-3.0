@@ -48,6 +48,7 @@
   <string name="manual_register_register_success">Registered %1$s</string>
   <!-- Errors -->
   <string name="manual_register_error_empty_description">Empty description!</string>
+  <string name="manual_register_error_category_does_not_exist">Category does not exist!</string>
   <string name="manual_register_error_empty_place">Empty place!</string>
   <string name="manual_register_error_invalid_amount">Invalid amount!</string>
 

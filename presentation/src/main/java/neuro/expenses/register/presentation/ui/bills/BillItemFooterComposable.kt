@@ -13,7 +13,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.fragment.app.FragmentActivity
 import neuro.expenses.register.presentation.R
 import neuro.expenses.register.presentation.ui.common.composables.datetime.DateTimeComposable
 import neuro.expenses.register.presentation.ui.theme.ExpensesRegisterTheme
@@ -55,7 +54,6 @@ fun BillItemFooterComposable(total: String, calendar: MutableState<Calendar>) {
 @Preview
 @Composable
 fun PreviewBillItemFooterComposable() {
-  val fragmentActivity = FragmentActivity()
   val total = "10.30 €"
   val calendar = remember { mutableStateOf(Calendar.getInstance()) }
 

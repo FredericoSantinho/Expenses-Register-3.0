@@ -12,7 +12,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavHostController
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.MultiplePermissionsState
@@ -71,7 +70,7 @@ fun HomeComposable(
     ConstraintLayout(
       modifier = Modifier.fillMaxSize()
     ) {
-      val (mainC, billC, permissionsDialog) = createRefs()
+      val (mainC, billC) = createRefs()
 
       BillComposableContainer(homeViewModel.billViewModel, Modifier.constrainAs(billC) {
         bottom.linkTo(parent.bottom)
@@ -222,8 +221,6 @@ private fun onUiReady(homeViewModel: IHomeViewModel, loading: MutableState<Boole
 @Preview
 @Composable
 fun PreviewHomeComposable() {
-  val fragmentActivity = FragmentActivity()
-
   ExpensesRegisterTheme {
     HomeComposable()
   }

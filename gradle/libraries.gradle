@@ -62,7 +62,8 @@ lib.play_services_location =
     "com.google.android.gms:play-services-location:$ver.play_services_location"
 
 lib.google_test = ["androidx.test.ext:junit:$ver.androidXJunit",
-                   "androidx.test.espresso:espresso-core:$ver.expresso"]
+                   "androidx.test.espresso:espresso-core:$ver.expresso",
+                   "androidx.arch.core:core-testing:$ver.androidx_core_testing"]
 
 lib.google_maps = ["com.google.android.gms:play-services-maps:$ver.google_maps",
                    "com.google.maps.android:maps-compose:$ver.google_maps_compose",

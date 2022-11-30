@@ -9,6 +9,6 @@ val memoryDatabaseModule = module {
   single {
     Room.inMemoryDatabaseBuilder(
       get(), ExpensesRegisterDatabase::class.java
-    ).addTypeConverter(Converters()).build()
+    ).addTypeConverter(Converters()).allowMainThreadQueries().build()
   }
 }

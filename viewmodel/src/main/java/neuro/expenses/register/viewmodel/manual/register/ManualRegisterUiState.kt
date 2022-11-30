@@ -20,15 +20,16 @@ class ManualRegisterUiState {
     data class Error(val errors: List<UiStateError>) : UiState()
   }
 
-  sealed class UiStateError {
-    data class ShowDescriptionError(val message: Message) : UiStateError()
-    data class ShowPlaceError(val message: Message) : UiStateError()
-    data class ShowAmountError(val message: Message) : UiStateError()
-    object ShowCategoryError : UiStateError()
+  sealed class UiStateError(val message: Message) {
+    class ShowDescriptionError(message: Message) : UiStateError(message)
+    class ShowPlaceError(message: Message) : UiStateError(message)
+    class ShowAmountError(message: Message) : UiStateError(message)
+    class ShowCategoryError(message: Message) : UiStateError(message)
   }
 
   enum class Message {
     EMPTY_DESCRIPTION,
+    CATEGORY_DOES_NOT_EXIST,
     EMPTY_PLACE,
     INVALID_AMOUNT
   }

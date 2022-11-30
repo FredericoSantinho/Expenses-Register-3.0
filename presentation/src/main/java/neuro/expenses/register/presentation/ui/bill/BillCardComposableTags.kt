@@ -11,9 +11,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,15 +40,16 @@ fun BillCardComposable(
 
   val loading = remember { mutableStateOf(billViewModel.uiState.value == UiState.Loading) }
 
-  Card(modifier = modifier
-    .semantics { testTag = BillCardComposableTags.CARD }
-    .clip(roundedCornerShape)
-    .requiredHeight(80.dp)
-    .fillMaxWidth()
-    .combinedClickable(
-      onClick = { billViewModel.onCardClick() },
-      onLongClick = { billViewModel.onCardLongClick() },
-    ),
+  Card(
+    modifier = modifier
+      .testTag(BillCardComposableTags.CARD)
+      .clip(roundedCornerShape)
+      .requiredHeight(80.dp)
+      .fillMaxWidth()
+      .combinedClickable(
+        onClick = { billViewModel.onCardClick() },
+        onLongClick = { billViewModel.onCardLongClick() },
+      ),
     elevation = 2.dp,
     backgroundColor = Color.White,
     shape = roundedCornerShape
@@ -63,7 +63,7 @@ fun BillCardComposable(
       val (imageC, placeC, dateC, totalC, closeBillC) = createRefs()
 
       AsyncImage(modifier = Modifier
-        .semantics { testTag = billViewModel.iconUrl.value }
+        .testTag(billViewModel.iconUrl.value)
         .constrainAs(imageC) {
           start.linkTo(parent.start)
           linkTo(top = parent.top, bottom = parent.bottom)
@@ -72,7 +72,7 @@ fun BillCardComposable(
         .clip(roundedCornerShape)
         .shimmerBackground(loading.value), billViewModel.iconUrl.value, loading)
       Text(modifier = Modifier
-        .semantics { testTag = BillCardComposableTags.PLACE }
+        .testTag(BillCardComposableTags.PLACE)
         .constrainAs(placeC) {
           start.linkTo(imageC.end)
           end.linkTo(totalC.start)
@@ -89,24 +89,28 @@ fun BillCardComposable(
         end.linkTo(totalC.start)
         bottom.linkTo(parent.bottom)
       }) {
-        Text(modifier = Modifier
-          .semantics { testTag = BillCardComposableTags.TIME }
-          .widthIn(48.dp)
-          .shimmerBackground(loading.value),
+        Text(
+          modifier = Modifier
+            .testTag(BillCardComposableTags.TIME)
+            .widthIn(48.dp)
+            .shimmerBackground(loading.value),
           textAlign = TextAlign.Center,
           text = billViewModel.time.value,
-          style = typography.body2)
-        Text(modifier = Modifier
-          .semantics { testTag = BillCardComposableTags.DATE }
-          .padding(start = 8.dp)
-          .widthIn(80.dp)
-          .shimmerBackground(loading.value),
+          style = typography.body2
+        )
+        Text(
+          modifier = Modifier
+            .testTag(BillCardComposableTags.DATE)
+            .padding(start = 8.dp)
+            .widthIn(80.dp)
+            .shimmerBackground(loading.value),
           textAlign = TextAlign.Center,
           text = billViewModel.date.value,
-          style = typography.body2)
+          style = typography.body2
+        )
       }
       Text(modifier = Modifier
-        .semantics { testTag = BillCardComposableTags.TOTAL }
+        .testTag(BillCardComposableTags.TOTAL)
         .constrainAs(totalC) {
           end.linkTo(closeBillC.start)
           linkTo(top = parent.top, bottom = parent.bottom)
@@ -158,12 +162,14 @@ private fun guideDivider(iconConstraintModifier: Modifier) {
 
 @Composable
 private fun closeBillIcon(imageConstraintModifier: Modifier) {
-  IconButton(onClick = {
+  IconButton(
+    onClick = {
 
-  },
+    },
     modifier = imageConstraintModifier
-      .semantics { testTag = BillCardComposableTags.CLOSE_BILL_ICON }
-      .padding(start = 8.dp)) {
+      .testTag(BillCardComposableTags.CLOSE_BILL_ICON)
+      .padding(start = 8.dp)
+  ) {
     Icon(
       painter = painterResource(id = R.drawable.ic_close_bill_24),
       contentDescription = null,

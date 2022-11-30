@@ -1,13 +1,16 @@
 package neuro.expenses.register.presentation.ui.common.composables.text
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
@@ -15,6 +18,7 @@ import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.PopupProperties
 import neuro.expenses.register.presentation.R
 import neuro.expenses.register.presentation.ui.theme.ExpensesRegisterTheme
@@ -30,8 +34,10 @@ fun TextFieldWithDropdown(
   onSelectOption: () -> Unit = { },
   value: MutableState<String> = mutableStateOf(""),
   isError: MutableState<Boolean> = mutableStateOf(false),
+  errorMessage: MutableState<String> = mutableStateOf(""),
   textStyle: TextStyle = TextStyle.Default,
-  semantics: String = ""
+  semantics: String = "",
+  errorSemantics: String = ""
 ) {
 
   val dropDownOptions = remember { mutableStateOf(listOf<String>()) }
@@ -60,8 +66,10 @@ fun TextFieldWithDropdown(
     keyboardOptions = keyboardOptions,
     value = value,
     isError = isError,
+    errorMessage = errorMessage,
     textStyle = textStyle,
-    semantics = semantics
+    testTag = semantics,
+    errorTestTag = errorSemantics
   )
 }
 
@@ -78,41 +86,55 @@ fun InternalTextFieldWithDropdown(
   keyboardOptions: KeyboardOptions,
   value: MutableState<String>,
   isError: MutableState<Boolean>,
+  errorMessage: MutableState<String> = mutableStateOf(""),
   textStyle: TextStyle,
-  semantics: String
+  testTag: String,
+  errorTestTag: String
 ) {
   var isErrorVar by rememberSaveable { isError }
 
   Box(modifier) {
-    TextField(modifier = Modifier
-      .semantics {
-        testTag = semantics
+    Column {
+      TextField(modifier = Modifier
+        .semantics {
+          this.testTag = testTag
+        }
+        .fillMaxWidth()
+        .onFocusChanged { focusState ->
+          if (!focusState.isFocused) onDismissRequest()
+        },
+        keyboardOptions = keyboardOptions,
+        value = TextFieldValue(value.value, TextRange(value.value.length)),
+        onValueChange = {
+          isErrorVar = false
+          value.value = it.text
+          setValue.invoke(it.text)
+          onValueChange.invoke(value.value)
+        },
+        label = { Text(label) },
+        colors = TextFieldDefaults.outlinedTextFieldColors(),
+        singleLine = true,
+        isError = isErrorVar,
+        textStyle = textStyle
+      )
+      if (isError.value && errorMessage.value.isNotEmpty()) {
+        Text(
+          text = errorMessage.value,
+          color = MaterialTheme.colors.error,
+          style = MaterialTheme.typography.caption,
+          modifier = Modifier
+            .testTag(errorTestTag)
+            .padding(start = 16.dp)
+        )
       }
-      .fillMaxWidth()
-      .onFocusChanged { focusState ->
-        if (!focusState.isFocused) onDismissRequest()
-      },
-      keyboardOptions = keyboardOptions,
-      value = TextFieldValue(value.value, TextRange(value.value.length)),
-      onValueChange = {
-        isErrorVar = false
-        value.value = it.text
-        setValue.invoke(it.text)
-        onValueChange.invoke(value.value)
-      },
-      label = { Text(label) },
-      colors = TextFieldDefaults.outlinedTextFieldColors(),
-      singleLine = true,
-      isError = isErrorVar,
-      textStyle = textStyle
-    )
+    }
     DropdownMenu(
       expanded = dropDownExpanded, properties = PopupProperties(
         focusable = false, dismissOnBackPress = true, dismissOnClickOutside = true
       ), onDismissRequest = onDismissRequest
     ) {
       list.forEach { text ->
-        DropdownMenuItem(onClick = {
+        DropdownMenuItem(modifier = Modifier.testTag(testTag + text), onClick = {
           value.value = text
           onValueChange.invoke(value.value)
           onSelectOption()

@@ -5,12 +5,12 @@ import neuro.expenses.register.data.di.dataServiceModule
 import neuro.expenses.register.data.di.repositoryModule
 import neuro.expenses.register.data.di.test.memoryDatabaseModule
 import neuro.expenses.register.viewmodel.di.*
+import org.koin.core.module.Module
 
 val presentationTestModules = listOf(
   registerExpensesModule,
   prePopulateModule,
   androidModule,
-  testSchedulersModule,
   viewModelModule,
   viewModelMapperModule,
   useCaseModule,
@@ -19,10 +19,19 @@ val presentationTestModules = listOf(
   serviceModule,
   repositoryModule,
   dataServiceModule,
-  memoryDatabaseModule,
   uiMapperModule,
   daoModule,
   initModule,
   contextModule,
-  populateModule
+  memoryDatabaseModule,
+  testSchedulersModule,
+  populateModule,
+  currentLocationModule
 )
+
+fun presentationTestModulesDummyLocation(): List<Module> {
+  val list = mutableListOf<Module>()
+  list.addAll(presentationTestModules)
+  list.add(dummyCurrentLocationModule)
+  return list.toList()
+}

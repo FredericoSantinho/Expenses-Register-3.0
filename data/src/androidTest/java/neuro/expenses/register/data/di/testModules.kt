@@ -12,7 +12,8 @@ val dataTestModules = listOf(
   serviceModule,
   repositoryModule,
   dataServiceModule,
-  memoryDatabaseModule,
   daoModule,
-  contextModule
+  contextModule,
+  memoryDatabaseModule,
+  currentLocationModule
 )
