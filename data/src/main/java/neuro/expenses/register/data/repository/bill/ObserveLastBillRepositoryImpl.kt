@@ -8,6 +8,6 @@ import neuro.expenses.register.domain.repository.bill.ObserveLastBillRepository
 
 class ObserveLastBillRepositoryImpl(private val billDao: BillDao) : ObserveLastBillRepository {
   override fun observeLastBill(): Observable<BillDto> {
-    return billDao.observeLastBill().map { it.toDomain() }
+    return billDao.observeLastBill().distinctUntilChanged().map { it.toDomain() }
   }
 }
