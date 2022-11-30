@@ -8,14 +8,14 @@
 
 ```./gradlew build connectedAndroidTest jacocoTestReport```
 
-*note: The module 'app' has instrumented tests, so we will end up with two separate reports, one for
-the instrumented tests and another for the unit tests.*
+*note: The module 'presentation' has instrumented tests, so we will end up with two separate
+reports, one for the instrumented tests and another for the unit tests.*
 *note: Note that on android 13 (api 33) compose instrumental tests
 fail. (https://issuetracker.google.com/issues/240993946)*
 
 Test coverage reports locations:  
-```app/build/reports/coverage/androidTest/debug/connected/index.html```  
-```app/build/jacoco/jacocoHtml/index.html```  
+```presentation/build/reports/coverage/androidTest/debug/connected/index.html```  
+```presentation/build/jacoco/jacocoHtml/index.html```  
 ```viewmodel/build/jacoco/jacocoHtml/index.html```  
 ```data/build/jacoco/jacocoHtml/index.html```  
 ```domain/build/reports/jacoco/test/html/index.html```  

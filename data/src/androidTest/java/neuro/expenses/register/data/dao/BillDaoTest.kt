@@ -1,11 +1,7 @@
 package neuro.expenses.register.data.dao
 
-import android.content.Context
-import androidx.room.Room
-import androidx.test.core.app.ApplicationProvider
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import neuro.expenses.register.data.ExpensesRegisterDatabase
-import neuro.expenses.register.data.converter.Converters
+import neuro.expenses.register.data.di.dataTestModules
 import neuro.expenses.register.data.mocks.*
 import neuro.expenses.register.data.model.RoomPlaceProduct
 import neuro.expenses.register.data.model.bill.*
@@ -17,13 +13,19 @@ import neuro.expenses.register.data.model.product.RoomPlaceProductWithProductAnd
 import neuro.test.rx.Incrementer
 import org.junit.After
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
+import org.koin.java.KoinJavaComponent.get
+import org.koin.test.KoinTestRule
 import java.io.IOException
 import java.util.*
 
-@RunWith(AndroidJUnit4::class)
 class BillDaoTest {
+  @get:Rule
+  val koinTestRule = KoinTestRule.create {
+    modules(dataTestModules)
+  }
+
   private lateinit var billDao: BillDao
   private lateinit var productDao: ProductDao
   private lateinit var placeProductDao: PlaceProductDao
@@ -35,10 +37,7 @@ class BillDaoTest {
 
   @Before
   fun createDb() {
-    val context = ApplicationProvider.getApplicationContext<Context>()
-    db = Room.inMemoryDatabaseBuilder(
-      context, ExpensesRegisterDatabase::class.java
-    ).addTypeConverter(Converters()).build()
+    db = get(ExpensesRegisterDatabase::class.java)
     billDao = db.billDao
     productDao = db.productDao
     placeProductDao = db.placeProductDao

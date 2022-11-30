@@ -33,7 +33,7 @@ fun PlaceProductCardComposable(productCardViewModel: IProductCardViewModel) {
   Row {
     Card(
       modifier = Modifier
-        .semantics { testTag = ProductCardTags.CARD }
+        .semantics { testTag = ProductCardComposableTags.CARD }
         .clip(roundedCornerShape)
         .height(100.dp)
         .combinedClickable(
@@ -54,7 +54,7 @@ fun PlaceProductCardComposable(productCardViewModel: IProductCardViewModel) {
         Text(
           text = productCardViewModel.description.value,
           modifier = Modifier
-            .semantics { testTag = ProductCardTags.PRODUCT_DESCRIPTION }
+            .semantics { testTag = ProductCardComposableTags.PRODUCT_DESCRIPTION }
             .constrainAs(descriptionC) {
               start.linkTo(parent.start)
               top.linkTo(parent.top, margin = 4.dp)
@@ -77,7 +77,7 @@ fun PlaceProductCardComposable(productCardViewModel: IProductCardViewModel) {
         Text(
           text = productCardViewModel.categoryModel.value.name,
           modifier = Modifier
-            .semantics { testTag = ProductCardTags.CATEGORY }
+            .semantics { testTag = ProductCardComposableTags.CATEGORY }
             .constrainAs(categoryC) {
               start.linkTo(descriptionC.start)
               bottom.linkTo(parent.bottom, margin = 4.dp)
@@ -90,7 +90,7 @@ fun PlaceProductCardComposable(productCardViewModel: IProductCardViewModel) {
         Text(
           text = productCardViewModel.price.value,
           modifier = Modifier
-            .semantics { testTag = ProductCardTags.PRICE }
+            .semantics { testTag = ProductCardComposableTags.PRICE }
             .constrainAs(priceC) {
               end.linkTo(parent.end)
               bottom.linkTo(parent.bottom)
@@ -117,7 +117,7 @@ fun PreviewDateTimeComposable() {
   }
 }
 
-class ProductCardTags {
+class ProductCardComposableTags {
   companion object {
     const val CARD = "card"
     const val PRODUCT_DESCRIPTION = "productDescription"

@@ -7,12 +7,7 @@ dependencies {
   api project(':data')
   testImplementation project(':test')
 
-  implementation "com.google.accompanist:accompanist-pager:0.27.1"
-
-  // If using indicators, also depend on
-  implementation "com.google.accompanist:accompanist-pager-indicators:0.27.1"
-
-  implementation lib.accompanist_permissions
+  implementation lib.accompanist
   implementation lib.google
   implementation lib.google_maps
   implementation lib.koin_compose
@@ -31,7 +26,8 @@ dependencies {
   androidTestImplementation lib.mockito
   androidTestImplementation lib.google_test
   androidTestImplementation lib.compose_ui_test_junit4
+  androidTestImplementation lib.koin_test
   debugImplementation lib.compose_test
-  runtimeOnly lib.mockito_android
+  androidTestRuntimeOnly lib.mockito_android
   testRuntimeOnly lib.junit5_engine
 }

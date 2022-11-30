@@ -9,6 +9,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
@@ -28,7 +30,8 @@ fun TextFieldWithDropdown(
   onSelectOption: () -> Unit = { },
   value: MutableState<String> = mutableStateOf(""),
   isError: MutableState<Boolean> = mutableStateOf(false),
-  textStyle: TextStyle = TextStyle.Default
+  textStyle: TextStyle = TextStyle.Default,
+  semantics: String = ""
 ) {
 
   val dropDownOptions = remember { mutableStateOf(listOf<String>()) }
@@ -54,10 +57,11 @@ fun TextFieldWithDropdown(
     dropDownExpanded = dropDownExpanded.value,
     list = dropDownOptions.value,
     label = label,
-    keyboardOptions,
-    value,
-    isError,
-    textStyle
+    keyboardOptions = keyboardOptions,
+    value = value,
+    isError = isError,
+    textStyle = textStyle,
+    semantics = semantics
   )
 }
 
@@ -74,18 +78,20 @@ fun InternalTextFieldWithDropdown(
   keyboardOptions: KeyboardOptions,
   value: MutableState<String>,
   isError: MutableState<Boolean>,
-  textStyle: TextStyle
+  textStyle: TextStyle,
+  semantics: String
 ) {
   var isErrorVar by rememberSaveable { isError }
 
   Box(modifier) {
-    TextField(
-      modifier = Modifier
-        .fillMaxWidth()
-        .onFocusChanged { focusState ->
-          if (!focusState.isFocused)
-            onDismissRequest()
-        },
+    TextField(modifier = Modifier
+      .semantics {
+        testTag = semantics
+      }
+      .fillMaxWidth()
+      .onFocusChanged { focusState ->
+        if (!focusState.isFocused) onDismissRequest()
+      },
       keyboardOptions = keyboardOptions,
       value = TextFieldValue(value.value, TextRange(value.value.length)),
       onValueChange = {
@@ -101,13 +107,9 @@ fun InternalTextFieldWithDropdown(
       textStyle = textStyle
     )
     DropdownMenu(
-      expanded = dropDownExpanded,
-      properties = PopupProperties(
-        focusable = false,
-        dismissOnBackPress = true,
-        dismissOnClickOutside = true
-      ),
-      onDismissRequest = onDismissRequest
+      expanded = dropDownExpanded, properties = PopupProperties(
+        focusable = false, dismissOnBackPress = true, dismissOnClickOutside = true
+      ), onDismissRequest = onDismissRequest
     ) {
       list.forEach { text ->
         DropdownMenuItem(onClick = {
@@ -129,8 +131,7 @@ fun PreviewTextFieldWithDropdown() {
 
   ExpensesRegisterTheme {
     TextFieldWithDropdown(
-      dataIn = dataIn,
-      label = stringResource(R.string.category)
+      dataIn = dataIn, label = stringResource(R.string.category)
     )
   }
 }

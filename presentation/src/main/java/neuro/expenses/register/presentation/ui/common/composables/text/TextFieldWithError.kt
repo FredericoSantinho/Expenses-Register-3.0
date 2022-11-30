@@ -14,6 +14,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -28,11 +30,11 @@ fun TextFieldWithError(
   textStyle: TextStyle = TextStyle.Default,
   onValueChange: (String) -> Unit = { },
   isError: MutableState<Boolean> = mutableStateOf(false),
-  errorMessage: MutableState<String> = mutableStateOf("")
+  errorMessage: MutableState<String> = mutableStateOf(""),
+  semantics: String = ""
 ) {
   Column(modifier = modifier) {
-    TextField(
-      value = value.value,
+    TextField(value = value.value,
       onValueChange = {
         value.value = it
         onValueChange.invoke(it)
@@ -45,16 +47,16 @@ fun TextFieldWithError(
       ),
       keyboardOptions = keyboardOptions,
       textStyle = textStyle,
-      modifier = Modifier.fillMaxWidth(),
-      isError = isError.value
+      modifier = Modifier
+        .semantics { testTag = semantics }
+        .fillMaxWidth(),
+      isError = isError.value)
+    if (isError.value && errorMessage.value.isNotEmpty()) Text(
+      text = errorMessage.value,
+      color = MaterialTheme.colors.error,
+      style = MaterialTheme.typography.caption,
+      modifier = Modifier.padding(start = 16.dp)
     )
-    if (isError.value && errorMessage.value.isNotEmpty())
-      Text(
-        text = errorMessage.value,
-        color = MaterialTheme.colors.error,
-        style = MaterialTheme.typography.caption,
-        modifier = Modifier.padding(start = 16.dp)
-      )
   }
 }
 

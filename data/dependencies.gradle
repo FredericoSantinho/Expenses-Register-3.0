@@ -25,4 +25,5 @@ dependencies {
   testImplementation lib.room_test
   testRuntimeOnly lib.junit5_engine
   androidTestImplementation lib.google_test
+  androidTestImplementation lib.koin_test
 }

@@ -12,6 +12,8 @@ import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -95,6 +97,7 @@ fun ManualRegisterComposable(
         calendar = manualRegisterViewModel.calendar
       )
       TextFieldWithError(
+        semantics = ManualRegisterComposableTags.DESCRIPTION,
         value = manualRegisterViewModel.description,
         label = stringResource(R.string.description),
         keyboardOptions = keyboardOptionsText,
@@ -103,9 +106,10 @@ fun ManualRegisterComposable(
         isError = descriptionIsError,
         errorMessage = descriptionErrorMessage
       )
-      TextFieldWithDropdown(dataIn = manualRegisterViewModel.categoriesNames.subscribeAsState(
-        initial = emptyList()
-      ),
+      TextFieldWithDropdown(semantics = ManualRegisterComposableTags.CATEGORY,
+        dataIn = manualRegisterViewModel.categoriesNames.subscribeAsState(
+          initial = emptyList()
+        ),
         label = stringResource(R.string.category),
         keyboardOptions = keyboardOptionsText,
         onValueChange = { manualRegisterViewModel.onCategoryChange() },
@@ -116,8 +120,7 @@ fun ManualRegisterComposable(
       ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
         val (place, placeAuto) = createRefs()
 
-        TextFieldWithError(
-          value = manualRegisterViewModel.place,
+        TextFieldWithError(value = manualRegisterViewModel.place,
           label = stringResource(R.string.place),
           modifier = Modifier
             .constrainAs(place) {
@@ -126,6 +129,7 @@ fun ManualRegisterComposable(
               width = Dimension.fillToConstraints
             }
             .onFocusEvent { placeHasFocus.value = it.isFocused },
+          semantics = ManualRegisterComposableTags.PLACE,
           keyboardOptions = keyboardOptionsText,
           textStyle = ExpensesRegisterTypography.body2,
           onValueChange = {
@@ -154,13 +158,14 @@ fun ManualRegisterComposable(
       ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
         val (priceC, amountC, totalLabelC, totalC) = createRefs()
 
-        CurrencyTextField(
-          value = manualRegisterViewModel.price,
+        CurrencyTextField(value = manualRegisterViewModel.price,
           label = stringResource(R.string.price),
-          modifier = Modifier.constrainAs(priceC) {
-            start.linkTo(parent.start)
-            width = Dimension.value(96.dp)
-          },
+          modifier = Modifier
+            .semantics { testTag = ManualRegisterComposableTags.PRICE }
+            .constrainAs(priceC) {
+              start.linkTo(parent.start)
+              width = Dimension.value(96.dp)
+            },
           onValueChange = {
             manualRegisterViewModel.onPriceChange()
           },
@@ -173,6 +178,7 @@ fun ManualRegisterComposable(
             start.linkTo(priceC.end, margin = 8.dp)
             width = Dimension.value(96.dp)
           },
+          semantics = ManualRegisterComposableTags.AMOUNT,
           keyboardOptions = keyboardOptionsNumeric,
           textStyle = ExpensesRegisterTypography.body2.copy(textAlign = TextAlign.End),
           onValueChange = {
@@ -197,10 +203,15 @@ fun ManualRegisterComposable(
           }, style = MaterialTheme.typography.h6
         )
       }
-      Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+      Row(
+        modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center
+      ) {
         Button(onClick = {
           manualRegisterViewModel.onRegisterButton()
-        }, modifier = Modifier.padding(top = 8.dp, bottom = 16.dp)) {
+        },
+          modifier = Modifier
+            .semantics { testTag = ManualRegisterComposableTags.BUTTON_REGISTER_EXPENSE }
+            .padding(top = 8.dp, bottom = 16.dp)) {
           Text(text = stringResource(R.string.manual_register_register))
         }
       }
@@ -324,5 +335,16 @@ fun PreviewManualRegisterComposable() {
 
   ExpensesRegisterTheme {
     ManualRegisterComposable()
+  }
+}
+
+class ManualRegisterComposableTags {
+  companion object {
+    const val DESCRIPTION = "description"
+    const val CATEGORY = "category"
+    const val PLACE = "place"
+    const val PRICE = "price"
+    const val AMOUNT = "amount"
+    const val BUTTON_REGISTER_EXPENSE = "registerButton"
   }
 }

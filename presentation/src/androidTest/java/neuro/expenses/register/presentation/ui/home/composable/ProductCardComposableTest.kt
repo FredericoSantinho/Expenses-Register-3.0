@@ -30,9 +30,7 @@ internal class ProductCardComposableTest {
     whenever(productCardViewModel.categoryModel).doReturn(
       mutableStateOf(
         CategoryModel(
-          1,
-          category,
-          "iconUrl"
+          1, category, "iconUrl"
         )
       )
     )
@@ -45,10 +43,11 @@ internal class ProductCardComposableTest {
       }
     }
 
-    val onCard = composeTestRule.onNodeWithTag(ProductCardTags.CARD)
-    val onDescription = composeTestRule.onNodeWithTag(ProductCardTags.PRODUCT_DESCRIPTION, true)
-    val onCategory = composeTestRule.onNodeWithTag(ProductCardTags.CATEGORY, true)
-    val onPrice = composeTestRule.onNodeWithTag(ProductCardTags.PRICE, true)
+    val onCard = composeTestRule.onNodeWithTag(ProductCardComposableTags.CARD)
+    val onDescription =
+      composeTestRule.onNodeWithTag(ProductCardComposableTags.PRODUCT_DESCRIPTION, true)
+    val onCategory = composeTestRule.onNodeWithTag(ProductCardComposableTags.CATEGORY, true)
+    val onPrice = composeTestRule.onNodeWithTag(ProductCardComposableTags.PRICE, true)
     val onIcon = composeTestRule.onNodeWithTag(productCardViewModel.iconUrl.value, true)
 
     onCard.assertHasClickAction()
