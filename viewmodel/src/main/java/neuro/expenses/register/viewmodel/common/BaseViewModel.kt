@@ -44,10 +44,10 @@ open class BaseViewModel(
   }
 
   fun <T : Any> Observable<T>.baseSubscribe(
-    subscribeOn: Scheduler = schedulerProvider.io(),
-    observeOn: Scheduler = schedulerProvider.ui(),
+    onSuccess: (T) -> Unit,
     onError: ((Throwable) -> Unit)? = null,
-    onSuccess: (T) -> Unit
+    subscribeOn: Scheduler = schedulerProvider.io(),
+    observeOn: Scheduler = schedulerProvider.ui()
   ) {
     onError?.let {
       subscribeOn(subscribeOn).observeOn(observeOn)

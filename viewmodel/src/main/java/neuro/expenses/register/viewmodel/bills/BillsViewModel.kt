@@ -1,5 +1,6 @@
 package neuro.expenses.register.viewmodel.bills
 
+import androidx.compose.runtime.mutableStateOf
 import neuro.expenses.register.domain.usecase.bill.GetBillUseCase
 import neuro.expenses.register.domain.usecase.bill.ObserveBillsUseCase
 import neuro.expenses.register.domain.usecase.bill.SortBills
@@ -23,13 +24,7 @@ class BillsViewModel(
 ) : BaseViewModel(schedulerProvider) {
   val appBarViewModel: AppBarViewModel = AppBarViewModel()
 
-  val bills = observeBillsUseCase.observeBills()
-    .map { sortBills.sortBills(it) }
-    .map { billDtos ->
-      billDtos.map { billDto ->
-        billCardViewModelMapper.map(billDto, false, false, ::onBillLongClick)
-      }
-    }
+  val bills = mutableStateOf<List<IBillCardViewModel>>(emptyList())
 
   private val _uiEvent = BillsUiEvent()
   val uiEvent = _uiEvent.uiEvent
@@ -40,6 +35,21 @@ class BillsViewModel(
 
   fun onComposition() {
     setupScaffold()
+    observeBills()
+  }
+
+  private fun observeBills() {
+    observeBillsUseCase.observeBills()
+      .map { sortBills.sortBills(it) }
+      .map { billDtos ->
+        billDtos.map { billDto ->
+          billCardViewModelMapper.map(billDto, false, false, ::onBillLongClick)
+        }
+      }.baseSubscribe({
+        bills.value = it
+      }, {
+        throw it
+      })
   }
 
   fun eventConsumed() {

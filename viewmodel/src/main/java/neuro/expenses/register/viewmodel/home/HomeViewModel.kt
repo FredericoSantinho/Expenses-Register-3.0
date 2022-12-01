@@ -71,9 +71,9 @@ class HomeViewModel(
 
     appBarViewModel.query.filter { this::placeDto.isInitialized }.flatMapSingle { query ->
       sortPlaceProducts.sortPlaceProducts(placeDto.products).map { query }
-    }.baseSubscribe { query ->
+    }.baseSubscribe({ query ->
       productsListViewModel.setProducts(placeDto, query)
-    }
+    })
     getCurrentLocationUseCase.getCurrentLocation()
       .baseSubscribe(onSuccess = {}, onError = ::handleLocationPermissionException)
   }

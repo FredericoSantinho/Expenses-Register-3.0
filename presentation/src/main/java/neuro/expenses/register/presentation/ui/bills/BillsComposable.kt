@@ -10,7 +10,6 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.*
-import androidx.compose.runtime.rxjava3.subscribeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
@@ -43,8 +42,6 @@ fun BillsComposable(
   val coroutineScope = rememberCoroutineScope()
   val modalBottomSheetState = rememberModalBottomSheetState()
 
-  val bills = billsViewModel.bills.subscribeAsState(initial = emptyList())
-
   ModalBottomSheetLayout(modalBottomSheetState,
     modalContent = { BillDetailedComposable(billDetailedViewModel) }) {
     LazyColumn(
@@ -55,7 +52,7 @@ fun BillsComposable(
       verticalArrangement = Arrangement.spacedBy(4.dp),
       reverseLayout = true
     ) {
-      items(bills.value, { listItem: IBillCardViewModel -> listItem.id }) { item ->
+      items(billsViewModel.bills.value, { listItem: IBillCardViewModel -> listItem.id }) { item ->
         var unread by remember { mutableStateOf(false) }
         val dismissState = rememberDismissState(confirmStateChange = {
           if (it == DismissValue.DismissedToEnd) unread = !unread
