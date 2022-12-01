@@ -95,7 +95,7 @@ internal class ExpenseValidatorImplTest : ObserveSubscriptionTest() {
     expenseValidator.validate(expenseMock(description = "", place = "", amount = -0.01)).test()
       .assertError {
         isError(
-          it, setOf(
+          it, listOf(
             RegisterExpenseError.EMPTY_DESCRIPTION,
             RegisterExpenseError.EMPTY_PLACE,
             RegisterExpenseError.INVALID_AMOUNT,
@@ -108,8 +108,8 @@ internal class ExpenseValidatorImplTest : ObserveSubscriptionTest() {
   }
 
   private fun isError(throwable: Throwable, registerExpenseError: RegisterExpenseError) =
-    throwable is RegisterExpenseException && throwable.errors == setOf(registerExpenseError)
+    throwable is RegisterExpenseException && throwable.errors == listOf(registerExpenseError)
 
-  private fun isError(throwable: Throwable, registerExpenseErrors: Set<RegisterExpenseError>) =
+  private fun isError(throwable: Throwable, registerExpenseErrors: List<RegisterExpenseError>) =
     throwable is RegisterExpenseException && throwable.errors == registerExpenseErrors
 }

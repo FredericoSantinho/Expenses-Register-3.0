@@ -99,7 +99,7 @@ internal class RegisterExpenseImplTest : ObserveSubscriptionTest() {
 
     val expense = Expense(description, category, placeName, price, amount, calendar)
     whenever(expenseValidator.validate(expense)).thenReturn(
-      Completable.error(RegisterExpenseException(emptySet()))
+      Completable.error(RegisterExpenseException(emptyList()))
         .observeSubscription(incrementer, offset)
     )
     whenever(billController.add(expense)).thenReturn(

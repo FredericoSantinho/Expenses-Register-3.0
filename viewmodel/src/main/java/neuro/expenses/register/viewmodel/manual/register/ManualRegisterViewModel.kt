@@ -1,6 +1,7 @@
 package neuro.expenses.register.viewmodel.manual.register
 
 import androidx.compose.runtime.mutableStateOf
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import neuro.expenses.register.domain.dto.ExpenseDto
 import neuro.expenses.register.domain.usecase.calendar.GetCalendarUseCase
@@ -30,7 +31,7 @@ class ManualRegisterViewModel(
   private val scaffoldViewModelState: ScaffoldViewModelState,
   schedulerProvider: SchedulerProvider
 ) : BaseViewModel(schedulerProvider) {
-  val appBarViewModel: AppBarViewModel = AppBarViewModel()
+  private val appBarViewModel: AppBarViewModel = AppBarViewModel()
 
   val description = mutableStateOf("")
   val category = mutableStateOf("")
@@ -40,9 +41,8 @@ class ManualRegisterViewModel(
   val total = mutableStateOf(buildTotalStr())
 
   val calendar = mutableStateOf(getCalendarUseCase.getCalendar())
-  val categories = observeCategoriesUseCase.observeCategories()
-  val categoriesNames =
-    categories.flatMapSingle { Single.just(it).flattenAsObservable { it }.map { it.name }.toList() }
+  val categoriesNames: Observable<List<String>> = observeCategoriesUseCase.observeCategories()
+    .flatMapSingle { Single.just(it).flattenAsObservable { it }.map { it.name }.toList() }
 
   private val _uiState = ManualRegisterUiState()
   val uiState = _uiState.uiState
@@ -55,17 +55,14 @@ class ManualRegisterViewModel(
   }
 
   fun onRegisterButton() {
-    val expenseDto = buildExpense()
-    registerExpenseUseCase.registerExpense(expenseDto)
-      .baseSubscribe(
-        onComplete = { publishAndReset() },
-        onError = {
-          if (it is RegisterExpenseException) {
-            _uiState.error(it.errors.toViewmodel())
-          } else {
-            throw it
-          }
-        })
+    registerExpenseUseCase.registerExpense(buildExpense())
+      .baseSubscribe(onComplete = { publishAndReset() }, onError = {
+        if (it is RegisterExpenseException) {
+          _uiState.error(it.errors.toViewmodel())
+        } else {
+          throw it
+        }
+      })
   }
 
   fun onPriceChange() {
@@ -75,9 +72,9 @@ class ManualRegisterViewModel(
   fun onAmountChange() {
     if (uiState.value is UiState.Error) {
       val previousErrors = (uiState.value as UiState.Error).errors
-      val errors = previousErrors.filter { it !is UiStateError.ShowAmountError }
+      val errors = previousErrors.filter { it !is UiStateError.ShowInvalidAmountError }
 
-      emitState(previousErrors, errors)
+      emitState(errors)
     }
 
     total.value = buildTotalStr()
@@ -86,27 +83,27 @@ class ManualRegisterViewModel(
   fun onDescriptionChange() {
     if (uiState.value is UiState.Error) {
       val previousErrors = (uiState.value as UiState.Error).errors
-      val errors = previousErrors.filter { it !is UiStateError.ShowDescriptionError }
+      val errors = previousErrors.filter { it !is UiStateError.ShowEmptyDescriptionError }
 
-      emitState(previousErrors, errors)
+      emitState(errors)
     }
   }
 
   fun onCategoryChange() {
     if (uiState.value is UiState.Error) {
       val previousErrors = (uiState.value as UiState.Error).errors
-      val errors = previousErrors.filter { it !is UiStateError.ShowCategoryError }
+      val errors = previousErrors.filter { it !is UiStateError.ShowCategoryNotExistsError }
 
-      emitState(previousErrors, errors)
+      emitState(errors)
     }
   }
 
   fun onPlaceChange() {
     if (uiState.value is UiState.Error) {
       val previousErrors = (uiState.value as UiState.Error).errors
-      val errors = previousErrors.filter { it !is UiStateError.ShowPlaceError }
+      val errors = previousErrors.filter { it !is UiStateError.ShowEmptyPlaceError }
 
-      emitState(previousErrors, errors)
+      emitState(errors)
     }
   }
 
@@ -140,16 +137,11 @@ class ManualRegisterViewModel(
     getNearestPlaceUseCase.getNearestPlace().baseSubscribe { place.value = it.name }
   }
 
-  private fun emitState(
-    previousErrors: List<UiStateError>,
-    errors: List<UiStateError>
-  ) {
+  private fun emitState(errors: List<UiStateError>) {
     if (errors.isEmpty()) {
       _uiState.ready()
     } else {
-      if (previousErrors.size != errors.size) {
-        _uiState.error(errors)
-      }
+      _uiState.error(errors)
     }
   }
 

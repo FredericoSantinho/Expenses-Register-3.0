@@ -6,7 +6,7 @@ import neuro.expenses.register.entity.model.Expense
 
 class ExpenseValidatorImpl(private val isValidCategory: IsValidCategory) : ExpenseValidator {
   override fun validate(expense: Expense): Completable {
-    return Single.fromCallable { mutableSetOf<RegisterExpenseError>() }
+    return Single.fromCallable { mutableListOf<RegisterExpenseError>() }
       .flatMapCompletable { errors ->
         if (expense.description.isBlank()) {
           errors.add(RegisterExpenseError.EMPTY_DESCRIPTION)

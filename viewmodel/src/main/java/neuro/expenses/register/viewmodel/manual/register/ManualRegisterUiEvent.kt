@@ -9,6 +9,6 @@ class ManualRegisterUiEvent : BaseUiEvent<UiEvent>() {
   }
 
   sealed class UiEvent {
-    class ShowRegisterSuccess(val productDescription: String) : UiEvent()
+    data class ShowRegisterSuccess(val productDescription: String) : UiEvent()
   }
 }

@@ -332,16 +332,16 @@ private fun onUiError(
 ) {
   errors.forEach { error ->
     when (error) {
-      is UiStateError.ShowPlaceError -> showPlaceError(
+      is UiStateError.ShowEmptyPlaceError -> showPlaceError(
         stringResource(error.message.toPresentation()), placeIsError, placeErrorMessage
       )
-      is UiStateError.ShowCategoryError -> showCategoryError(
+      is UiStateError.ShowCategoryNotExistsError -> showCategoryError(
         stringResource(error.message.toPresentation()), categoryIsError, categoryErrorMessage
       )
-      is UiStateError.ShowDescriptionError -> showDescriptionError(
+      is UiStateError.ShowEmptyDescriptionError -> showDescriptionError(
         stringResource(error.message.toPresentation()), descriptionIsError, descriptionErrorMessage
       )
-      is UiStateError.ShowAmountError -> showAmountError(
+      is UiStateError.ShowInvalidAmountError -> showAmountError(
         stringResource(error.message.toPresentation()), amountIsError, amountErrorMessage
       )
     }

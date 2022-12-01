@@ -5,5 +5,5 @@ package neuro.expenses.register.entity.expense.validator
  *
  * @param errors list of validation errors found.
  */
-data class RegisterExpenseException(val errors: Set<RegisterExpenseError>) :
+data class RegisterExpenseException(val errors: List<RegisterExpenseError>) :
   IllegalArgumentException()

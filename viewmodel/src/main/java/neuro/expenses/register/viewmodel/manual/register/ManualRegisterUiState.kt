@@ -21,10 +21,21 @@ class ManualRegisterUiState {
   }
 
   sealed class UiStateError(val message: Message) {
-    class ShowDescriptionError(message: Message) : UiStateError(message)
-    class ShowPlaceError(message: Message) : UiStateError(message)
-    class ShowAmountError(message: Message) : UiStateError(message)
-    class ShowCategoryError(message: Message) : UiStateError(message)
+    class ShowEmptyDescriptionError() : UiStateError(Message.EMPTY_DESCRIPTION)
+    class ShowCategoryNotExistsError() : UiStateError(Message.CATEGORY_DOES_NOT_EXIST)
+    class ShowEmptyPlaceError() : UiStateError(Message.EMPTY_PLACE)
+    class ShowInvalidAmountError() : UiStateError(Message.INVALID_AMOUNT)
+
+    override fun equals(other: Any?): Boolean {
+      if (this === other) return true
+      if (other !is UiStateError) return false
+
+      return message == other.message
+    }
+
+    override fun hashCode(): Int {
+      return message.hashCode()
+    }
   }
 
   enum class Message {
