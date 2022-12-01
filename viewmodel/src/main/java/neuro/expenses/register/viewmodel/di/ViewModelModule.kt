@@ -42,7 +42,7 @@ val viewModelModule = module {
     )
   }
   single<IBillCardViewModel> { BillCardViewModel() }
-  single<FeedLastBillViewModel> { FeedLastBillViewModelImpl(get(), get(), get(), get()) }
+  single<FeedLastbillCardViewModel> { FeedLastbillCardViewModelImpl(get(), get(), get(), get()) }
   single<DateTimeMapper> { DateTimeMapperImpl(get()) }
   single<NumberFormater> { NumberFormaterImpl() }
   single<DecimalFormatter> { DecimalFormatterImpl(DECIMALS) }

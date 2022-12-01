@@ -26,7 +26,7 @@ class ManualRegisterViewModel(
   private val registerExpenseUseCase: RegisterExpenseUseCase,
   private val getNearestPlaceUseCase: GetNearestPlaceUseCase,
   private val currencyFormatter: CurrencyFormatter,
-  val billViewModel: IBillCardViewModel,
+  val billCardViewModel: IBillCardViewModel,
   private val scaffoldViewModelState: ScaffoldViewModelState,
   schedulerProvider: SchedulerProvider
 ) : BaseViewModel(schedulerProvider) {

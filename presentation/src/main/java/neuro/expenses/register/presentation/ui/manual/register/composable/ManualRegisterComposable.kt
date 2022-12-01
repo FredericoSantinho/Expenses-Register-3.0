@@ -232,7 +232,7 @@ fun ManualRegisterComposable(
         }
       }
     }
-    BillComposableContainer(manualRegisterViewModel.billViewModel)
+    BillComposableContainer(manualRegisterViewModel.billCardViewModel)
   }
 
   onUiState(

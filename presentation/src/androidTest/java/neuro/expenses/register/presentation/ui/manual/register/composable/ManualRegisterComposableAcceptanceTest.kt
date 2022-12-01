@@ -10,7 +10,7 @@ import neuro.expenses.register.presentation.di.presentationTestModulesDummyLocat
 import neuro.expenses.register.presentation.ui.bill.BillCardComposableTags
 import neuro.expenses.register.presentation.ui.common.composables.datetime.DateTimeComposableTags
 import neuro.expenses.register.presentation.ui.theme.ExpensesRegisterTheme
-import neuro.expenses.register.viewmodel.bill.FeedLastBillViewModel
+import neuro.expenses.register.viewmodel.bill.FeedLastbillCardViewModel
 import neuro.expenses.register.viewmodel.manual.register.ManualRegisterViewModel
 import neuro.expenses.register.viewmodel.test.PopulatePlacesViewModel
 import neuro.expenses.register.viewmodel.test.TestSchedulerProvider
@@ -144,7 +144,8 @@ internal class ManualRegisterComposableAcceptanceTest {
     val testSchedulerProvider = get<TestSchedulerProvider>(TestSchedulerProvider::class.java)
 
     val populatePlacesViewModel = get<PopulatePlacesViewModel>(PopulatePlacesViewModel::class.java)
-    val feedLastBillViewModel = get<FeedLastBillViewModel>(FeedLastBillViewModel::class.java)
+    val feedLastbillCardViewModel =
+      get<FeedLastbillCardViewModel>(FeedLastbillCardViewModel::class.java)
     val manualRegisterViewModel = get<ManualRegisterViewModel>(ManualRegisterViewModel::class.java)
 
     composeTestRule.setContent {
@@ -171,7 +172,7 @@ internal class ManualRegisterComposableAcceptanceTest {
     val expectedFinalTotal = "3.00 €"
 
     populatePlacesViewModel.populatePlaces().subscribe()
-    feedLastBillViewModel.observe().subscribe()
+    feedLastbillCardViewModel.observe().subscribe()
     manualRegisterViewModel.calendar.value = setupCalendar()
 
     testSchedulerProvider.triggerActions()
@@ -220,7 +221,8 @@ internal class ManualRegisterComposableAcceptanceTest {
     val testSchedulerProvider = get<TestSchedulerProvider>(TestSchedulerProvider::class.java)
 
     val populatePlacesViewModel = get<PopulatePlacesViewModel>(PopulatePlacesViewModel::class.java)
-    val feedLastBillViewModel = get<FeedLastBillViewModel>(FeedLastBillViewModel::class.java)
+    val feedLastbillCardViewModel =
+      get<FeedLastbillCardViewModel>(FeedLastbillCardViewModel::class.java)
     val manualRegisterViewModel = get<ManualRegisterViewModel>(ManualRegisterViewModel::class.java)
 
     composeTestRule.setContent {
@@ -246,7 +248,7 @@ internal class ManualRegisterComposableAcceptanceTest {
     val expectedFinalTotal = "0.00 €"
 
     populatePlacesViewModel.populatePlaces().subscribe()
-    feedLastBillViewModel.observe().subscribe()
+    feedLastbillCardViewModel.observe().subscribe()
     manualRegisterViewModel.calendar.value = setupCalendar()
 
     testSchedulerProvider.triggerActions()
@@ -292,7 +294,8 @@ internal class ManualRegisterComposableAcceptanceTest {
     val testSchedulerProvider = get<TestSchedulerProvider>(TestSchedulerProvider::class.java)
 
     val populatePlacesViewModel = get<PopulatePlacesViewModel>(PopulatePlacesViewModel::class.java)
-    val feedLastBillViewModel = get<FeedLastBillViewModel>(FeedLastBillViewModel::class.java)
+    val feedLastbillCardViewModel =
+      get<FeedLastbillCardViewModel>(FeedLastbillCardViewModel::class.java)
     val manualRegisterViewModel = get<ManualRegisterViewModel>(ManualRegisterViewModel::class.java)
 
     composeTestRule.setContent {
@@ -318,7 +321,7 @@ internal class ManualRegisterComposableAcceptanceTest {
     val expectedFinalTotal = "0.00 €"
 
     populatePlacesViewModel.populatePlaces().subscribe()
-    feedLastBillViewModel.observe().subscribe()
+    feedLastbillCardViewModel.observe().subscribe()
     manualRegisterViewModel.calendar.value = setupCalendar()
 
     testSchedulerProvider.triggerActions()
@@ -364,7 +367,8 @@ internal class ManualRegisterComposableAcceptanceTest {
     val testSchedulerProvider = get<TestSchedulerProvider>(TestSchedulerProvider::class.java)
 
     val populatePlacesViewModel = get<PopulatePlacesViewModel>(PopulatePlacesViewModel::class.java)
-    val feedLastBillViewModel = get<FeedLastBillViewModel>(FeedLastBillViewModel::class.java)
+    val feedLastbillCardViewModel =
+      get<FeedLastbillCardViewModel>(FeedLastbillCardViewModel::class.java)
     val manualRegisterViewModel = get<ManualRegisterViewModel>(ManualRegisterViewModel::class.java)
 
     composeTestRule.setContent {
@@ -390,7 +394,7 @@ internal class ManualRegisterComposableAcceptanceTest {
     val expectedFinalTotal = "0.00 €"
 
     populatePlacesViewModel.populatePlaces().subscribe()
-    feedLastBillViewModel.observe().subscribe()
+    feedLastbillCardViewModel.observe().subscribe()
     manualRegisterViewModel.calendar.value = setupCalendar()
 
     testSchedulerProvider.triggerActions()
@@ -436,7 +440,8 @@ internal class ManualRegisterComposableAcceptanceTest {
     val testSchedulerProvider = get<TestSchedulerProvider>(TestSchedulerProvider::class.java)
 
     val populatePlacesViewModel = get<PopulatePlacesViewModel>(PopulatePlacesViewModel::class.java)
-    val feedLastBillViewModel = get<FeedLastBillViewModel>(FeedLastBillViewModel::class.java)
+    val feedLastbillCardViewModel =
+      get<FeedLastbillCardViewModel>(FeedLastbillCardViewModel::class.java)
     val manualRegisterViewModel = get<ManualRegisterViewModel>(ManualRegisterViewModel::class.java)
 
     composeTestRule.setContent {
@@ -462,7 +467,7 @@ internal class ManualRegisterComposableAcceptanceTest {
     val expectedFinalTotal = "0.00 €"
 
     populatePlacesViewModel.populatePlaces().subscribe()
-    feedLastBillViewModel.observe().subscribe()
+    feedLastbillCardViewModel.observe().subscribe()
     manualRegisterViewModel.calendar.value = setupCalendar()
 
     testSchedulerProvider.triggerActions()
@@ -508,7 +513,8 @@ internal class ManualRegisterComposableAcceptanceTest {
     val testSchedulerProvider = get<TestSchedulerProvider>(TestSchedulerProvider::class.java)
 
     val populatePlacesViewModel = get<PopulatePlacesViewModel>(PopulatePlacesViewModel::class.java)
-    val feedLastBillViewModel = get<FeedLastBillViewModel>(FeedLastBillViewModel::class.java)
+    val feedLastbillCardViewModel =
+      get<FeedLastbillCardViewModel>(FeedLastbillCardViewModel::class.java)
     val manualRegisterViewModel = get<ManualRegisterViewModel>(ManualRegisterViewModel::class.java)
 
     composeTestRule.setContent {
@@ -534,7 +540,7 @@ internal class ManualRegisterComposableAcceptanceTest {
     val expectedFinalTotal = "0.00 €"
 
     populatePlacesViewModel.populatePlaces().subscribe()
-    feedLastBillViewModel.observe().subscribe()
+    feedLastbillCardViewModel.observe().subscribe()
     manualRegisterViewModel.calendar.value = setupCalendar()
 
     testSchedulerProvider.triggerActions()

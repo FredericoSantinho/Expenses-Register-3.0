@@ -13,6 +13,6 @@ val viewModelMapperModule = module {
   }
   single<PlaceProductCardModelMapper> { PlaceProductCardModelMapperImpl(get()) }
   single<BillModelMapper> { BillModelMapperImpl(get(), get()) }
-  single<BillViewModelMapper> { BillViewModelMapperImpl(get()) }
+  single<billCardViewModelMapper> { billCardViewModelMapperImpl(get()) }
   single { BillItemModelMapper(get()) }
 }

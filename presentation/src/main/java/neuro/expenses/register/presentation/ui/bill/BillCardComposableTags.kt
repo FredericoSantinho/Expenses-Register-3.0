@@ -32,13 +32,13 @@ import java.util.*
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BillCardComposable(
-  billViewModel: IBillCardViewModel, modifier: Modifier = Modifier
+  billCardViewModel: IBillCardViewModel, modifier: Modifier = Modifier
 ) {
   val roundedCornerShape = RoundedCornerShape(corner = CornerSize(8.dp))
 
-  val uiState by billViewModel.uiState
+  val uiState by billCardViewModel.uiState
 
-  val loading = remember { mutableStateOf(billViewModel.uiState.value == UiState.Loading) }
+  val loading = remember { mutableStateOf(billCardViewModel.uiState.value == UiState.Loading) }
 
   Card(
     modifier = modifier
@@ -47,8 +47,8 @@ fun BillCardComposable(
       .requiredHeight(80.dp)
       .fillMaxWidth()
       .combinedClickable(
-        onClick = { billViewModel.onCardClick() },
-        onLongClick = { billViewModel.onCardLongClick() },
+        onClick = { billCardViewModel.onCardClick() },
+        onLongClick = { billCardViewModel.onCardLongClick() },
       ),
     elevation = 2.dp,
     backgroundColor = Color.White,
@@ -63,14 +63,14 @@ fun BillCardComposable(
       val (imageC, placeC, dateC, totalC, closeBillC) = createRefs()
 
       AsyncImage(modifier = Modifier
-        .testTag(billViewModel.iconUrl.value)
+        .testTag(billCardViewModel.iconUrl.value)
         .constrainAs(imageC) {
           start.linkTo(parent.start)
           linkTo(top = parent.top, bottom = parent.bottom)
         }
         .size(64.dp)
         .clip(roundedCornerShape)
-        .shimmerBackground(loading.value), billViewModel.iconUrl.value, loading)
+        .shimmerBackground(loading.value), billCardViewModel.iconUrl.value, loading)
       Text(modifier = Modifier
         .testTag(BillCardComposableTags.PLACE)
         .constrainAs(placeC) {
@@ -81,7 +81,7 @@ fun BillCardComposable(
         .widthIn(160.dp)
         .shimmerBackground(loading.value),
         textAlign = TextAlign.Center,
-        text = billViewModel.place.value,
+        text = billCardViewModel.place.value,
         style = typography.h5,
         fontWeight = FontWeight.Bold)
       Row(modifier = Modifier.constrainAs(dateC) {
@@ -95,7 +95,7 @@ fun BillCardComposable(
             .widthIn(48.dp)
             .shimmerBackground(loading.value),
           textAlign = TextAlign.Center,
-          text = billViewModel.time.value,
+          text = billCardViewModel.time.value,
           style = typography.body2
         )
         Text(
@@ -105,7 +105,7 @@ fun BillCardComposable(
             .widthIn(80.dp)
             .shimmerBackground(loading.value),
           textAlign = TextAlign.Center,
-          text = billViewModel.date.value,
+          text = billCardViewModel.date.value,
           style = typography.body2
         )
       }
@@ -118,7 +118,7 @@ fun BillCardComposable(
         .widthIn(80.dp)
         .shimmerBackground(loading.value),
         textAlign = TextAlign.End,
-        text = billViewModel.total.value,
+        text = billCardViewModel.total.value,
         style = typography.h5,
         fontWeight = FontWeight.Bold,
         color = MaterialTheme.colors.primary)

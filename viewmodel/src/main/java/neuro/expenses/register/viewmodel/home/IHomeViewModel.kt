@@ -8,7 +8,7 @@ import neuro.expenses.register.viewmodel.home.HomeUiState.UiState
 import java.util.*
 
 interface IHomeViewModel {
-  val billViewModel: IBillCardViewModel
+  val billCardViewModel: IBillCardViewModel
   val placesNames: MutableState<List<String>>
   val calendar: MutableState<Calendar>
   val productsListViewModel: ProductsListViewModel

@@ -7,12 +7,12 @@ import neuro.expenses.register.viewmodel.bill.mapper.BillModelMapper
 import neuro.expenses.register.viewmodel.common.schedulers.SchedulerProvider
 
 
-class FeedLastBillViewModelImpl(
+class FeedLastbillCardViewModelImpl(
   private val observeLastBillUseCase: ObserveLastBillUseCase,
   private val billCardViewModel: IBillCardViewModel,
   private val billModelMapper: BillModelMapper,
   private val schedulerProvider: SchedulerProvider
-) : FeedLastBillViewModel {
+) : FeedLastbillCardViewModel {
   override fun observe(): Completable {
     return observeLastBillUseCase.observeLastBill().subscribeOn(schedulerProvider.io())
       .observeOn(schedulerProvider.ui()).doOnNext { publish(it) }.ignoreElements()

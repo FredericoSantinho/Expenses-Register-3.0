@@ -21,19 +21,19 @@ internal class BillCardComposableTest {
 
   @Test
   fun loadingState() {
-    val billViewModel = mock<IBillCardViewModel>()
+    val billCardViewModel = mock<IBillCardViewModel>()
 
     val iconUrl = mutableStateOf("iconUrl")
     val uiState = mutableStateOf(UiState.Loading)
 
-    whenever(billViewModel.place).doReturn(mutableStateOf(""))
-    whenever(billViewModel.time).doReturn(mutableStateOf(""))
-    whenever(billViewModel.date).doReturn(mutableStateOf(""))
-    whenever(billViewModel.total).doReturn(mutableStateOf(""))
-    whenever(billViewModel.iconUrl).doReturn(iconUrl)
-    whenever(billViewModel.uiState).doReturn(uiState)
+    whenever(billCardViewModel.place).doReturn(mutableStateOf(""))
+    whenever(billCardViewModel.time).doReturn(mutableStateOf(""))
+    whenever(billCardViewModel.date).doReturn(mutableStateOf(""))
+    whenever(billCardViewModel.total).doReturn(mutableStateOf(""))
+    whenever(billCardViewModel.iconUrl).doReturn(iconUrl)
+    whenever(billCardViewModel.uiState).doReturn(uiState)
 
-    initComposition(billViewModel)
+    initComposition(billCardViewModel)
 
     val onCard = composeTestRule.onNodeWithTag(BillCardComposableTags.CARD)
     val onPlace = composeTestRule.onNodeWithTag(BillCardComposableTags.PLACE, true)
@@ -84,7 +84,7 @@ internal class BillCardComposableTest {
   }
 
   private fun onStateReadyTest(_uiState: UiState) {
-    val billViewModel = mock<IBillCardViewModel>()
+    val billCardViewModel = mock<IBillCardViewModel>()
 
     val place = mutableStateOf("place")
     val time = mutableStateOf("time")
@@ -93,14 +93,14 @@ internal class BillCardComposableTest {
     val iconUrl = mutableStateOf("iconUrl")
     val uiState = mutableStateOf(_uiState)
 
-    whenever(billViewModel.place).doReturn(place)
-    whenever(billViewModel.time).doReturn(time)
-    whenever(billViewModel.date).doReturn(date)
-    whenever(billViewModel.total).doReturn(total)
-    whenever(billViewModel.iconUrl).doReturn(iconUrl)
-    whenever(billViewModel.uiState).doReturn(uiState)
+    whenever(billCardViewModel.place).doReturn(place)
+    whenever(billCardViewModel.time).doReturn(time)
+    whenever(billCardViewModel.date).doReturn(date)
+    whenever(billCardViewModel.total).doReturn(total)
+    whenever(billCardViewModel.iconUrl).doReturn(iconUrl)
+    whenever(billCardViewModel.uiState).doReturn(uiState)
 
-    initComposition(billViewModel)
+    initComposition(billCardViewModel)
 
     val onCard = composeTestRule.onNodeWithTag(BillCardComposableTags.CARD)
     val onPlace = composeTestRule.onNodeWithTag(BillCardComposableTags.PLACE, true)
@@ -132,20 +132,20 @@ internal class BillCardComposableTest {
     onTotal.assertContainsColor(Color.White)
     onIcon.assertContainsColor(Color.White)
 
-    verify(billViewModel, times(0)).onCardClick()
-    verify(billViewModel, times(0)).onCardLongClick()
+    verify(billCardViewModel, times(0)).onCardClick()
+    verify(billCardViewModel, times(0)).onCardLongClick()
     onCard.performClick()
-    verify(billViewModel, times(1)).onCardClick()
-    verify(billViewModel, times(0)).onCardLongClick()
+    verify(billCardViewModel, times(1)).onCardClick()
+    verify(billCardViewModel, times(0)).onCardLongClick()
     onCard.performLongClick()
-    verify(billViewModel, times(1)).onCardClick()
-    verify(billViewModel, times(1)).onCardLongClick()
+    verify(billCardViewModel, times(1)).onCardClick()
+    verify(billCardViewModel, times(1)).onCardLongClick()
   }
 
-  private fun initComposition(billViewModel: IBillCardViewModel) {
+  private fun initComposition(billCardViewModel: IBillCardViewModel) {
     composeTestRule.setContent {
       ExpensesRegisterTheme {
-        BillCardComposable(billViewModel)
+        BillCardComposable(billCardViewModel)
       }
     }
   }

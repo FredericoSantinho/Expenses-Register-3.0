@@ -72,7 +72,7 @@ fun HomeComposable(
     ) {
       val (mainC, billC) = createRefs()
 
-      BillComposableContainer(homeViewModel.billViewModel, Modifier.constrainAs(billC) {
+      BillComposableContainer(homeViewModel.billCardViewModel, Modifier.constrainAs(billC) {
         bottom.linkTo(parent.bottom)
       })
       Column(modifier = Modifier.constrainAs(mainC) {

@@ -7,7 +7,7 @@ import neuro.expenses.register.viewmodel.appbar.AppBarViewModel
 import neuro.expenses.register.viewmodel.appbar.Title
 import neuro.expenses.register.viewmodel.bill.BillDetailedViewModel
 import neuro.expenses.register.viewmodel.bill.IBillCardViewModel
-import neuro.expenses.register.viewmodel.bill.mapper.BillViewModelMapper
+import neuro.expenses.register.viewmodel.bill.mapper.billCardViewModelMapper
 import neuro.expenses.register.viewmodel.common.BaseViewModel
 import neuro.expenses.register.viewmodel.common.schedulers.SchedulerProvider
 import neuro.expenses.register.viewmodel.scaffold.ScaffoldViewModelState
@@ -16,7 +16,7 @@ class BillsViewModel(
   private val observeBillsUseCase: ObserveBillsUseCase,
   private val getBillUseCase: GetBillUseCase,
   private val sortBills: SortBills,
-  private val billViewModelMapper: BillViewModelMapper,
+  private val billCardViewModelMapper: billCardViewModelMapper,
   private val billDetailedViewModel: BillDetailedViewModel,
   private val scaffoldViewModelState: ScaffoldViewModelState,
   schedulerProvider: SchedulerProvider
@@ -27,7 +27,7 @@ class BillsViewModel(
     .map { sortBills.sortBills(it) }
     .map { billDtos ->
       billDtos.map { billDto ->
-        billViewModelMapper.map(billDto, false, false, ::onBillLongClick)
+        billCardViewModelMapper.map(billDto, false, false, ::onBillLongClick)
       }
     }
 

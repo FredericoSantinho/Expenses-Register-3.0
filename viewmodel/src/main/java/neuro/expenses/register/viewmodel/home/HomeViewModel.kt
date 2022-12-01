@@ -40,7 +40,7 @@ class HomeViewModel(
   private val sortPlaceProducts: SortPlaceProducts,
   private val placeProductCardModelMapper: PlaceProductCardModelMapper,
   private val searchSuggestionModelMapper: SearchSuggestionModelMapper,
-  override val billViewModel: IBillCardViewModel,
+  override val billCardViewModel: IBillCardViewModel,
   override val editPlaceProductViewModel: EditPlaceProductViewModel,
   private val scaffoldViewModelState: ScaffoldViewModelState,
   schedulerProvider: SchedulerProvider,
