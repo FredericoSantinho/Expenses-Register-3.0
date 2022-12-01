@@ -7,13 +7,13 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.unit.dp
 import neuro.expenses.register.presentation.R
 import neuro.expenses.register.presentation.di.presentationTestModulesDummyLocation
-import neuro.expenses.register.presentation.test.TestSchedulerProvider
 import neuro.expenses.register.presentation.ui.bill.BillCardComposableTags
 import neuro.expenses.register.presentation.ui.common.composables.datetime.DateTimeComposableTags
 import neuro.expenses.register.presentation.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.viewmodel.bill.FeedLastBillViewModel
 import neuro.expenses.register.viewmodel.manual.register.ManualRegisterViewModel
 import neuro.expenses.register.viewmodel.test.PopulatePlacesViewModel
+import neuro.expenses.register.viewmodel.test.TestSchedulerProvider
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -142,8 +142,6 @@ internal class ManualRegisterComposableAcceptanceTest {
   @Test
   fun registerValidExpense() {
     val testSchedulerProvider = get<TestSchedulerProvider>(TestSchedulerProvider::class.java)
-    val ioScheduler = testSchedulerProvider.io()
-    val uiScheduler = testSchedulerProvider.ui()
 
     val populatePlacesViewModel = get<PopulatePlacesViewModel>(PopulatePlacesViewModel::class.java)
     val feedLastBillViewModel = get<FeedLastBillViewModel>(FeedLastBillViewModel::class.java)
@@ -176,8 +174,7 @@ internal class ManualRegisterComposableAcceptanceTest {
     feedLastBillViewModel.observe().subscribe()
     manualRegisterViewModel.calendar.value = setupCalendar()
 
-    ioScheduler.triggerActions()
-    uiScheduler.triggerActions()
+    testSchedulerProvider.triggerActions()
 
     val onBillIcon = composeTestRule.onNodeWithTag(iconUrl, true)
 
@@ -194,8 +191,7 @@ internal class ManualRegisterComposableAcceptanceTest {
     onRegisterExpenseButton.performClick()
     onSnackbar.assertDoesNotExist()
 
-    ioScheduler.triggerActions()
-    uiScheduler.triggerActions()
+    testSchedulerProvider.triggerActions()
 
     assertEverythingIsDisplayed()
     assertNoErrorsShown()
@@ -222,8 +218,6 @@ internal class ManualRegisterComposableAcceptanceTest {
   @Test
   fun registerEmptyDescription() {
     val testSchedulerProvider = get<TestSchedulerProvider>(TestSchedulerProvider::class.java)
-    val ioScheduler = testSchedulerProvider.io()
-    val uiScheduler = testSchedulerProvider.ui()
 
     val populatePlacesViewModel = get<PopulatePlacesViewModel>(PopulatePlacesViewModel::class.java)
     val feedLastBillViewModel = get<FeedLastBillViewModel>(FeedLastBillViewModel::class.java)
@@ -255,8 +249,7 @@ internal class ManualRegisterComposableAcceptanceTest {
     feedLastBillViewModel.observe().subscribe()
     manualRegisterViewModel.calendar.value = setupCalendar()
 
-    ioScheduler.triggerActions()
-    uiScheduler.triggerActions()
+    testSchedulerProvider.triggerActions()
 
     onSnackbar.assertDoesNotExist()
     onBillPlace.assertTextEquals(expectedInicialPlace)
@@ -271,8 +264,7 @@ internal class ManualRegisterComposableAcceptanceTest {
     onAmount.performTextInput(amount)
     onRegisterExpenseButton.performClick()
 
-    ioScheduler.triggerActions()
-    uiScheduler.triggerActions()
+    testSchedulerProvider.triggerActions()
 
     assertEverythingIsDisplayed()
     onDescriptionError.assertIsDisplayed()
@@ -298,8 +290,6 @@ internal class ManualRegisterComposableAcceptanceTest {
   @Test
   fun registerInvalidCategory() {
     val testSchedulerProvider = get<TestSchedulerProvider>(TestSchedulerProvider::class.java)
-    val ioScheduler = testSchedulerProvider.io()
-    val uiScheduler = testSchedulerProvider.ui()
 
     val populatePlacesViewModel = get<PopulatePlacesViewModel>(PopulatePlacesViewModel::class.java)
     val feedLastBillViewModel = get<FeedLastBillViewModel>(FeedLastBillViewModel::class.java)
@@ -331,8 +321,7 @@ internal class ManualRegisterComposableAcceptanceTest {
     feedLastBillViewModel.observe().subscribe()
     manualRegisterViewModel.calendar.value = setupCalendar()
 
-    ioScheduler.triggerActions()
-    uiScheduler.triggerActions()
+    testSchedulerProvider.triggerActions()
 
     onSnackbar.assertDoesNotExist()
     onBillPlace.assertTextEquals(expectedInicialPlace)
@@ -347,8 +336,7 @@ internal class ManualRegisterComposableAcceptanceTest {
     onAmount.performTextInput(amount)
     onRegisterExpenseButton.performClick()
 
-    ioScheduler.triggerActions()
-    uiScheduler.triggerActions()
+    testSchedulerProvider.triggerActions()
 
     assertEverythingIsDisplayed()
     onDescriptionError.assertDoesNotExist()
@@ -374,8 +362,6 @@ internal class ManualRegisterComposableAcceptanceTest {
   @Test
   fun registerEmptyPlace() {
     val testSchedulerProvider = get<TestSchedulerProvider>(TestSchedulerProvider::class.java)
-    val ioScheduler = testSchedulerProvider.io()
-    val uiScheduler = testSchedulerProvider.ui()
 
     val populatePlacesViewModel = get<PopulatePlacesViewModel>(PopulatePlacesViewModel::class.java)
     val feedLastBillViewModel = get<FeedLastBillViewModel>(FeedLastBillViewModel::class.java)
@@ -407,8 +393,7 @@ internal class ManualRegisterComposableAcceptanceTest {
     feedLastBillViewModel.observe().subscribe()
     manualRegisterViewModel.calendar.value = setupCalendar()
 
-    ioScheduler.triggerActions()
-    uiScheduler.triggerActions()
+    testSchedulerProvider.triggerActions()
 
     onSnackbar.assertDoesNotExist()
     onBillPlace.assertTextEquals(expectedInicialPlace)
@@ -423,8 +408,7 @@ internal class ManualRegisterComposableAcceptanceTest {
     onAmount.performTextInput(amount)
     onRegisterExpenseButton.performClick()
 
-    ioScheduler.triggerActions()
-    uiScheduler.triggerActions()
+    testSchedulerProvider.triggerActions()
 
     assertEverythingIsDisplayed()
     onDescriptionError.assertDoesNotExist()
@@ -450,8 +434,6 @@ internal class ManualRegisterComposableAcceptanceTest {
   @Test
   fun registerInvalidAmount() {
     val testSchedulerProvider = get<TestSchedulerProvider>(TestSchedulerProvider::class.java)
-    val ioScheduler = testSchedulerProvider.io()
-    val uiScheduler = testSchedulerProvider.ui()
 
     val populatePlacesViewModel = get<PopulatePlacesViewModel>(PopulatePlacesViewModel::class.java)
     val feedLastBillViewModel = get<FeedLastBillViewModel>(FeedLastBillViewModel::class.java)
@@ -483,8 +465,7 @@ internal class ManualRegisterComposableAcceptanceTest {
     feedLastBillViewModel.observe().subscribe()
     manualRegisterViewModel.calendar.value = setupCalendar()
 
-    ioScheduler.triggerActions()
-    uiScheduler.triggerActions()
+    testSchedulerProvider.triggerActions()
 
     onSnackbar.assertDoesNotExist()
     onBillPlace.assertTextEquals(expectedInicialPlace)
@@ -499,8 +480,7 @@ internal class ManualRegisterComposableAcceptanceTest {
     onAmount.performTextInput(amount)
     onRegisterExpenseButton.performClick()
 
-    ioScheduler.triggerActions()
-    uiScheduler.triggerActions()
+    testSchedulerProvider.triggerActions()
 
     assertEverythingIsDisplayed()
     onDescriptionError.assertDoesNotExist()
@@ -526,8 +506,6 @@ internal class ManualRegisterComposableAcceptanceTest {
   @Test
   fun registerMultipleInvalidFields() {
     val testSchedulerProvider = get<TestSchedulerProvider>(TestSchedulerProvider::class.java)
-    val ioScheduler = testSchedulerProvider.io()
-    val uiScheduler = testSchedulerProvider.ui()
 
     val populatePlacesViewModel = get<PopulatePlacesViewModel>(PopulatePlacesViewModel::class.java)
     val feedLastBillViewModel = get<FeedLastBillViewModel>(FeedLastBillViewModel::class.java)
@@ -559,8 +537,7 @@ internal class ManualRegisterComposableAcceptanceTest {
     feedLastBillViewModel.observe().subscribe()
     manualRegisterViewModel.calendar.value = setupCalendar()
 
-    ioScheduler.triggerActions()
-    uiScheduler.triggerActions()
+    testSchedulerProvider.triggerActions()
 
     onSnackbar.assertDoesNotExist()
     onBillPlace.assertTextEquals(expectedInicialPlace)
@@ -575,8 +552,7 @@ internal class ManualRegisterComposableAcceptanceTest {
     onAmount.performTextInput(amount)
     onRegisterExpenseButton.performClick()
 
-    ioScheduler.triggerActions()
-    uiScheduler.triggerActions()
+    testSchedulerProvider.triggerActions()
 
     assertEverythingIsDisplayed()
     onDescriptionError.assertIsDisplayed()
@@ -644,8 +620,6 @@ internal class ManualRegisterComposableAcceptanceTest {
   @Test
   fun onCategorySelect() {
     val testSchedulerProvider = get<TestSchedulerProvider>(TestSchedulerProvider::class.java)
-    val ioScheduler = testSchedulerProvider.io()
-    val uiScheduler = testSchedulerProvider.ui()
 
     val populatePlacesViewModel = get<PopulatePlacesViewModel>(PopulatePlacesViewModel::class.java)
     val manualRegisterViewModel = get<ManualRegisterViewModel>(ManualRegisterViewModel::class.java)
@@ -661,8 +635,7 @@ internal class ManualRegisterComposableAcceptanceTest {
 
     populatePlacesViewModel.populatePlaces().subscribe()
 
-    ioScheduler.triggerActions()
-    uiScheduler.triggerActions()
+    testSchedulerProvider.triggerActions()
 
     onSnackbar.assertDoesNotExist()
 
@@ -681,8 +654,6 @@ internal class ManualRegisterComposableAcceptanceTest {
   @Test
   fun onNearestPlaceButton() {
     val testSchedulerProvider = get<TestSchedulerProvider>(TestSchedulerProvider::class.java)
-    val ioScheduler = testSchedulerProvider.io()
-    val uiScheduler = testSchedulerProvider.ui()
 
     val populatePlacesViewModel = get<PopulatePlacesViewModel>(PopulatePlacesViewModel::class.java)
     val manualRegisterViewModel = get<ManualRegisterViewModel>(ManualRegisterViewModel::class.java)
@@ -703,8 +674,7 @@ internal class ManualRegisterComposableAcceptanceTest {
 
     onNearestPlaceButton.performClick()
 
-    ioScheduler.triggerActions()
-    uiScheduler.triggerActions()
+    testSchedulerProvider.triggerActions()
 
     onPlace.assertTextEquals(context.getString(R.string.place), place)
 
@@ -717,8 +687,6 @@ internal class ManualRegisterComposableAcceptanceTest {
   @Test
   fun onNearestPlaceButtonEmptyPlaces() {
     val testSchedulerProvider = get<TestSchedulerProvider>(TestSchedulerProvider::class.java)
-    val ioScheduler = testSchedulerProvider.io()
-    val uiScheduler = testSchedulerProvider.ui()
 
     val manualRegisterViewModel = get<ManualRegisterViewModel>(ManualRegisterViewModel::class.java)
 
@@ -734,8 +702,7 @@ internal class ManualRegisterComposableAcceptanceTest {
 
     onNearestPlaceButton.performClick()
 
-    ioScheduler.triggerActions()
-    uiScheduler.triggerActions()
+    testSchedulerProvider.triggerActions()
 
     onPlace.assertTextEquals(context.getString(R.string.place), "")
 
