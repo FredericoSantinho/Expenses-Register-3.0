@@ -10,7 +10,7 @@ import neuro.expenses.register.domain.usecase.expense.RegisterExpenseUseCase
 import neuro.expenses.register.domain.usecase.near.GetNearestPlaceUseCase
 import neuro.expenses.register.viewmodel.appbar.AppBarViewModel
 import neuro.expenses.register.viewmodel.appbar.Title
-import neuro.expenses.register.viewmodel.bill.BillCardViewModel
+import neuro.expenses.register.viewmodel.bill.IBillCardViewModel
 import neuro.expenses.register.viewmodel.common.BaseViewModel
 import neuro.expenses.register.viewmodel.common.formatter.CurrencyFormatter
 import neuro.expenses.register.viewmodel.common.schedulers.SchedulerProvider
@@ -26,7 +26,7 @@ class ManualRegisterViewModel(
   private val registerExpenseUseCase: RegisterExpenseUseCase,
   private val getNearestPlaceUseCase: GetNearestPlaceUseCase,
   private val currencyFormatter: CurrencyFormatter,
-  val billViewModel: BillCardViewModel,
+  val billViewModel: IBillCardViewModel,
   private val scaffoldViewModelState: ScaffoldViewModelState,
   schedulerProvider: SchedulerProvider
 ) : BaseViewModel(schedulerProvider) {

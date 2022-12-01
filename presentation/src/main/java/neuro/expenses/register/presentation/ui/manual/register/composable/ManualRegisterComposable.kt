@@ -274,14 +274,14 @@ private fun onRegisterSuccess(
   snackbarHostState: SnackbarHostState,
   uiEvent: UiEvent.ShowRegisterSuccess
 ) {
-  showSuccessSnackbar(
+  showSnackbar(
     coroutineScope,
     snackbarHostState,
     stringResource(R.string.manual_register_register_success, uiEvent.productDescription)
   )
 }
 
-private fun showSuccessSnackbar(
+private fun showSnackbar(
   coroutineScope: CoroutineScope, snackbarHostState: SnackbarHostState, message: String
 ) {
   coroutineScope.launch {

@@ -16,7 +16,7 @@ import neuro.expenses.register.domain.usecase.place.SortPlaceProducts
 import neuro.expenses.register.viewmodel.appbar.AppBarViewModel
 import neuro.expenses.register.viewmodel.appbar.SearchHint
 import neuro.expenses.register.viewmodel.appbar.Title
-import neuro.expenses.register.viewmodel.bill.BillCardViewModel
+import neuro.expenses.register.viewmodel.bill.IBillCardViewModel
 import neuro.expenses.register.viewmodel.common.BaseViewModel
 import neuro.expenses.register.viewmodel.common.schedulers.SchedulerProvider
 import neuro.expenses.register.viewmodel.edit.placeproduct.EditPlaceProductViewModel
@@ -40,7 +40,7 @@ class HomeViewModel(
   private val sortPlaceProducts: SortPlaceProducts,
   private val placeProductCardModelMapper: PlaceProductCardModelMapper,
   private val searchSuggestionModelMapper: SearchSuggestionModelMapper,
-  override val billViewModel: BillCardViewModel,
+  override val billViewModel: IBillCardViewModel,
   override val editPlaceProductViewModel: EditPlaceProductViewModel,
   private val scaffoldViewModelState: ScaffoldViewModelState,
   schedulerProvider: SchedulerProvider,

@@ -2,10 +2,7 @@ package neuro.expenses.register.viewmodel.di
 
 import neuro.expenses.register.viewmodel.appbar.AppBarViewModel
 import neuro.expenses.register.viewmodel.application.ApplicationViewModel
-import neuro.expenses.register.viewmodel.bill.BillCardViewModel
-import neuro.expenses.register.viewmodel.bill.BillDetailedViewModel
-import neuro.expenses.register.viewmodel.bill.FeedLastBillViewModel
-import neuro.expenses.register.viewmodel.bill.FeedLastBillViewModelImpl
+import neuro.expenses.register.viewmodel.bill.*
 import neuro.expenses.register.viewmodel.bill.mapper.DateTimeMapper
 import neuro.expenses.register.viewmodel.bill.mapper.DateTimeMapperImpl
 import neuro.expenses.register.viewmodel.bills.BillsViewModel
@@ -44,7 +41,7 @@ val viewModelModule = module {
       get(), get(), get(), get(), get(), get(), get(), get()
     )
   }
-  single { BillCardViewModel() }
+  single<IBillCardViewModel> { BillCardViewModel() }
   single<FeedLastBillViewModel> { FeedLastBillViewModelImpl(get(), get(), get(), get()) }
   single<DateTimeMapper> { DateTimeMapperImpl(get()) }
   single<NumberFormater> { NumberFormaterImpl() }

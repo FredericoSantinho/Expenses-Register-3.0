@@ -6,10 +6,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import neuro.expenses.register.viewmodel.bill.BillCardViewModel
+import neuro.expenses.register.viewmodel.bill.IBillCardViewModel
 
 @Composable
-fun BillComposableContainer(billViewModel: BillCardViewModel, modifier: Modifier = Modifier) {
+fun BillComposableContainer(billViewModel: IBillCardViewModel, modifier: Modifier = Modifier) {
   Column(modifier = modifier) {
     Divider(thickness = 2.dp, color = Color.LightGray)
     BillCardComposable(billViewModel = billViewModel)

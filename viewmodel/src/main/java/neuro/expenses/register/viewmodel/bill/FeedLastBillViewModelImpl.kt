@@ -9,7 +9,7 @@ import neuro.expenses.register.viewmodel.common.schedulers.SchedulerProvider
 
 class FeedLastBillViewModelImpl(
   private val observeLastBillUseCase: ObserveLastBillUseCase,
-  private val billViewModel: BillCardViewModel,
+  private val billCardViewModel: IBillCardViewModel,
   private val billModelMapper: BillModelMapper,
   private val schedulerProvider: SchedulerProvider
 ) : FeedLastBillViewModel {
@@ -20,6 +20,6 @@ class FeedLastBillViewModelImpl(
 
   private fun publish(billDto: BillDto) {
     val billModel = billModelMapper.map(billDto)
-    billViewModel.setBillModel(billModel)
+    billCardViewModel.setBillModel(billModel)
   }
 }

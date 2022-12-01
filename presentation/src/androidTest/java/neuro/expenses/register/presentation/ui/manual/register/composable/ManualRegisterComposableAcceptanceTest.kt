@@ -215,6 +215,7 @@ internal class ManualRegisterComposableAcceptanceTest {
     onAmount.assertTextEquals(context.getString(R.string.amount), "")
 
     // For some strange reason, assertIsDisplayed() fails in spite of the snackbar being visible on the screen.
+    // Tested with a static Snackbar always visible on the screen but still no luck.
     onSnackbar.assertExists()
   }
 
