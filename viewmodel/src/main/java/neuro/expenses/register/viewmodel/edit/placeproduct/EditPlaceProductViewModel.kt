@@ -42,12 +42,12 @@ class EditPlaceProductViewModel(
   fun onSaveButton() {
     buildProductDto().flatMapCompletable { productDto ->
       updatePlaceProductUseCase.updatePlaceProduct(placeDto.value, productDto)
-    }.baseSubscribe { onFinishEditAction.value() }
+    }.baseSubscribe({ onFinishEditAction.value() }, { throw it })
   }
 
   fun onDeleteButton() {
     removePlaceProductUseCase.removePlaceProduct(placeDto.value, placeProductId.value)
-      .baseSubscribe { onFinishEditAction.value() }
+      .baseSubscribe({ onFinishEditAction.value() }, { throw it })
   }
 
   fun set(placeDto: PlaceDto, placeProductDto: PlaceProductDto, onFinishEditAction: () -> Unit) {

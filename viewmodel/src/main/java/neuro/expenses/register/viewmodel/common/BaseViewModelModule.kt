@@ -16,10 +16,10 @@ open class BaseViewModelModule(
   }
 
   fun <T> Maybe<T>.baseSubscribe(
-    subscribeOn: Scheduler = schedulerProvider.io(),
-    observeOn: Scheduler = schedulerProvider.ui(),
+    onSuccess: (T) -> Unit,
     onError: ((Throwable) -> Unit)? = null,
-    onSuccess: (T) -> Unit
+    subscribeOn: Scheduler = schedulerProvider.io(),
+    observeOn: Scheduler = schedulerProvider.ui()
   ) {
     onError?.let {
       subscribeOn(subscribeOn).observeOn(observeOn)
@@ -29,10 +29,10 @@ open class BaseViewModelModule(
   }
 
   fun <T : Any> Single<T>.baseSubscribe(
-    subscribeOn: Scheduler = schedulerProvider.io(),
-    observeOn: Scheduler = schedulerProvider.ui(),
+    onSuccess: (T) -> Unit,
     onError: ((Throwable) -> Unit)? = null,
-    onSuccess: (T) -> Unit
+    subscribeOn: Scheduler = schedulerProvider.io(),
+    observeOn: Scheduler = schedulerProvider.ui()
   ) {
     onError?.let {
       subscribeOn(subscribeOn).observeOn(observeOn).subscribe(onSuccess, onError)
@@ -42,10 +42,10 @@ open class BaseViewModelModule(
   }
 
   fun <T : Any> Observable<T>.baseSubscribe(
-    subscribeOn: Scheduler = schedulerProvider.io(),
-    observeOn: Scheduler = schedulerProvider.ui(),
+    onSuccess: (T) -> Unit,
     onError: ((Throwable) -> Unit)? = null,
-    onSuccess: (T) -> Unit
+    subscribeOn: Scheduler = schedulerProvider.io(),
+    observeOn: Scheduler = schedulerProvider.ui()
   ) {
     onError?.let {
       subscribeOn(subscribeOn).observeOn(observeOn)
@@ -55,10 +55,10 @@ open class BaseViewModelModule(
   }
 
   fun Completable.baseSubscribe(
-    subscribeOn: Scheduler = schedulerProvider.io(),
-    observeOn: Scheduler = schedulerProvider.ui(),
+    onComplete: () -> Unit,
     onError: ((Throwable) -> Unit)? = null,
-    onComplete: () -> Unit
+    subscribeOn: Scheduler = schedulerProvider.io(),
+    observeOn: Scheduler = schedulerProvider.ui()
   ) {
     onError?.let {
       subscribeOn(subscribeOn).observeOn(observeOn)
