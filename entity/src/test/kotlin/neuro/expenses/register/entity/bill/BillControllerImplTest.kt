@@ -43,11 +43,13 @@ internal class BillControllerImplTest : ObserveSubscriptionTest() {
     val placeName = "placeName"
     val place = placeMock(placeName = placeName)
     val amount = 2.0
+    val iconUrl = "iconUrlValid"
     val lastBill = billMock(calendar = calendar, place = place)
     val billItems = billItemsMock()
     val billItemId = 4L
     billItems.add(billItemMock(billItemId, amount = amount))
-    val bill = billMock(calendar = calendar, place = place, billItems = billItems)
+    val bill =
+      billMock(calendar = calendar, place = place, billItems = billItems, iconUrl = iconUrl)
 
     val description = "description"
     val category = "category"
@@ -74,7 +76,7 @@ internal class BillControllerImplTest : ObserveSubscriptionTest() {
       Single.just(billItemId).observeSubscription(incrementer, offset)
     )
     whenever(calculateBillTotal.getTotal(billItems)).thenReturn(1.0)
-    whenever(selectBillIconUrl.selectIconUrl(any())).thenReturn("")
+    whenever(selectBillIconUrl.selectIconUrl(billItems)).thenReturn(iconUrl)
 
     billController.add(expense).test().assertValue(bill).assertNoErrors().assertComplete()
 
@@ -109,12 +111,14 @@ internal class BillControllerImplTest : ObserveSubscriptionTest() {
     val calendar = Calendar.getInstance()
     val description = "description 1"
     val placeName = "placeName"
+    val iconUrl = "iconUrlValid"
     val place = placeMock(placeName = placeName)
     val lastBill = billMock(calendar = calendar, place = place)
     val placeProduct = placeProductMock(product = productMock(description = description))
     val billItems =
       mutableListOf(billItemMock(1, placeProduct, 3.0), billItemMock(2), billItemMock(3))
-    val bill = billMock(calendar = calendar, place = place, billItems = billItems)
+    val bill =
+      billMock(calendar = calendar, place = place, billItems = billItems, iconUrl = iconUrl)
 
     val category = "category"
     val price = 1.0
@@ -137,7 +141,7 @@ internal class BillControllerImplTest : ObserveSubscriptionTest() {
       Maybe.just(lastBill).observeSubscription(incrementer, offset)
     )
     whenever(calculateBillTotal.getTotal(billItems)).thenReturn(1.0)
-    whenever(selectBillIconUrl.selectIconUrl(any())).thenReturn("")
+    whenever(selectBillIconUrl.selectIconUrl(any())).thenReturn(iconUrl)
 
     billController.add(expense).test().assertValue(bill).assertNoErrors().assertComplete()
 

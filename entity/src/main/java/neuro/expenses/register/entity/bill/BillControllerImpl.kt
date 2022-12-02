@@ -9,7 +9,7 @@ import neuro.expenses.register.entity.place.GetOrCreatePlace
 import neuro.expenses.register.entity.placeproduct.GetOrCreatePlaceProduct
 import java.util.*
 
-private val defaultBillDto = Bill(0, Calendar.getInstance(), isOpen = false)
+private val defaultBill = Bill(0, Calendar.getInstance(), isOpen = false)
 
 class BillControllerImpl(
   private val calculateBillTotal: CalculateBillTotal,
@@ -34,18 +34,17 @@ class BillControllerImpl(
           if (contains(bill, placeProduct.id)) {
             Single.fromCallable {
               val billItem = getBillItem(bill, placeProduct.id)!!
-              val billId = bill.id
               val billItemId = billItem.id
               val product = billItem.placeProduct
               val oldAmount = billItem.amount
               val newAmount = oldAmount + expense.amount
-              val newBillItem =
-                BillItem(billItemId, product, newAmount, newAmount * product.price)
+              val billItemTotal = newAmount * product.price
+              val newBillItem = billItem.copy(amount = newAmount, total = billItemTotal)
 
               val billItems = buildList(bill, newBillItem)
               val total = calculateBillTotal.getTotal(billItems)
               val iconUrl = selectBillIconUrl.selectIconUrl(billItems)
-              Bill(billId, bill.calendar, bill.place, total, billItems, iconUrl)
+              bill.copy(total = total, billItems = billItems, iconUrl = iconUrl)
             }
           } else {
             generateBillItemId.newId().map { billItemId ->
@@ -58,7 +57,7 @@ class BillControllerImpl(
             }.map { billItems ->
               val total = calculateBillTotal.getTotal(billItems)
               val iconUrl = selectBillIconUrl.selectIconUrl(billItems)
-              Bill(bill.id, bill.calendar, bill.place, total, billItems, iconUrl)
+              bill.copy(total = total, billItems = billItems, iconUrl = iconUrl)
             }
           }
         }
@@ -106,7 +105,7 @@ class BillControllerImpl(
   }
 
   private fun getLastBill(expense: Expense, place: Place): Single<Bill> {
-    return getLastBill.getLastBill().defaultIfEmpty(defaultBillDto).flatMap { lastStoredBill ->
+    return getLastBill.getLastBill().defaultIfEmpty(defaultBill).flatMap { lastStoredBill ->
       val calendar = expense.calendar
       if (!lastStoredBill.isOpen || lastStoredBill.place.id != place.id) {
         newBill(calendar, place)

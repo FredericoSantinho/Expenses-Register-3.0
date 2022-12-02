@@ -20,7 +20,7 @@ class PlaceControllerImpl(
         val placeProducts = mutableListOf<PlaceProduct>()
         placeProducts.addAll(place.placeProducts)
         placeProducts.add(placeProduct)
-        val newPlace = Place(place.id, place.name, placeProducts, place.latLng)
+        val newPlace = place.copy(placeProducts = placeProducts)
         addPlaceProduct.addPlaceProduct(place.id, placeProduct.id).toSingle { newPlace }
       } else {
         Single.just(place)
@@ -30,9 +30,7 @@ class PlaceControllerImpl(
 
   override fun removePlaceProduct(place: Place, placeProductId: Long): Single<Place> {
     return removePlaceProduct.removePlaceProduct(place.id, placeProductId).toSingle {
-      Place(
-        place.id, place.name, removeProduct(place.placeProducts, placeProductId), place.latLng
-      )
+      place.copy(placeProducts = removeProduct(place.placeProducts, placeProductId))
     }
   }
 

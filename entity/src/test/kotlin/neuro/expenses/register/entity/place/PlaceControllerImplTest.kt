@@ -7,7 +7,6 @@ import neuro.expenses.register.entity.placeproduct.GetOrCreatePlaceProduct
 import neuro.test.rx.Incrementer
 import neuro.test.rx.ObserveSubscriptionTest
 import org.junit.jupiter.api.Test
-import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verifyNoInteractions
 import org.mockito.kotlin.whenever
@@ -48,8 +47,8 @@ internal class PlaceControllerImplTest : ObserveSubscriptionTest() {
       getOrCreatePlaceProduct.getOrCreatePlaceProduct(
         description, categoryName, newPrice, variableAmount, iconUrl
       )
-    ).doReturn(Single.error(IllegalStateException()))
-    whenever(addPlaceProduct.addPlaceProduct(placeId, placeProductId)).doReturn(
+    ).thenReturn(Single.error(IllegalStateException()))
+    whenever(addPlaceProduct.addPlaceProduct(placeId, placeProductId)).thenReturn(
       Completable.complete().observeSubscription(incrementer, offset)
     )
 
@@ -94,7 +93,7 @@ internal class PlaceControllerImplTest : ObserveSubscriptionTest() {
       getOrCreatePlaceProduct.getOrCreatePlaceProduct(
         description, categoryName, newPrice, variableAmount, iconUrl
       )
-    ).doReturn(
+    ).thenReturn(
       Single.just(newUpdatedPlaceProduct).observeSubscription(incrementer, offset)
     )
     whenever(
@@ -102,7 +101,7 @@ internal class PlaceControllerImplTest : ObserveSubscriptionTest() {
         placeId,
         placeProductId
       )
-    ).doReturn(Completable.complete().observeSubscription(incrementer, offset))
+    ).thenReturn(Completable.complete().observeSubscription(incrementer, offset))
 
     placeController.addPlaceProduct(placeWithProduct, placeProduct).test()
       .assertValue(placeWithProduct).assertNoErrors().assertComplete()
@@ -142,11 +141,11 @@ internal class PlaceControllerImplTest : ObserveSubscriptionTest() {
       getOrCreatePlaceProduct.getOrCreatePlaceProduct(
         description, categoryName, newPrice, variableAmount, iconUrl
       )
-    ).doReturn(Single.error(IllegalStateException()))
-    whenever(addPlaceProduct.addPlaceProduct(placeId, placeProductId)).doReturn(
+    ).thenReturn(Single.error(IllegalStateException()))
+    whenever(addPlaceProduct.addPlaceProduct(placeId, placeProductId)).thenReturn(
       Completable.complete().observeSubscription(incrementer, offset)
     )
-    whenever(removePlaceProduct.removePlaceProduct(placeId, -1L)).doReturn(
+    whenever(removePlaceProduct.removePlaceProduct(placeId, -1L)).thenReturn(
       Completable.complete().observeSubscription(incrementer, offset)
     )
 
@@ -189,13 +188,13 @@ internal class PlaceControllerImplTest : ObserveSubscriptionTest() {
       getOrCreatePlaceProduct.getOrCreatePlaceProduct(
         description, categoryName, newPrice, variableAmount, iconUrl
       )
-    ).doReturn(
+    ).thenReturn(
       Single.error(IllegalStateException())
     )
-    whenever(addPlaceProduct.addPlaceProduct(placeId, placeProductId)).doReturn(
+    whenever(addPlaceProduct.addPlaceProduct(placeId, placeProductId)).thenReturn(
       Completable.complete().observeSubscription(incrementer, offset)
     )
-    whenever(removePlaceProduct.removePlaceProduct(placeId, placeProductId)).doReturn(
+    whenever(removePlaceProduct.removePlaceProduct(placeId, placeProductId)).thenReturn(
       Completable.complete().observeSubscription(incrementer, offset)
     )
 
@@ -241,13 +240,13 @@ internal class PlaceControllerImplTest : ObserveSubscriptionTest() {
       getOrCreatePlaceProduct.getOrCreatePlaceProduct(
         description, categoryName, newPrice, variableAmount, iconUrl
       )
-    ).doReturn(
+    ).thenReturn(
       Single.just(newUpdatedPlaceProduct).observeSubscription(incrementer, offset)
     )
-    whenever(removePlaceProduct.removePlaceProduct(placeId, placeProductId)).doReturn(
+    whenever(removePlaceProduct.removePlaceProduct(placeId, placeProductId)).thenReturn(
       Completable.complete().observeSubscription(incrementer, offset)
     )
-    whenever(addPlaceProduct.addPlaceProduct(placeId, newUpdatedPlaceProduct.id)).doReturn(
+    whenever(addPlaceProduct.addPlaceProduct(placeId, newUpdatedPlaceProduct.id)).thenReturn(
       Completable.complete().observeSubscription(incrementer, offset)
     )
 

@@ -19,8 +19,8 @@ import androidx.navigation.NavHostController
 import kotlinx.coroutines.CoroutineScope
 import neuro.expenses.register.presentation.common.compose.rememberUnit
 import neuro.expenses.register.presentation.ui.bill.BillCardComposable
+import neuro.expenses.register.presentation.ui.common.composables.modal.*
 import neuro.expenses.register.presentation.ui.theme.grey_fog_lighter
-import neuro.expenses.register.ui.home.composable.*
 import neuro.expenses.register.viewmodel.bill.BillDetailedViewModel
 import neuro.expenses.register.viewmodel.bill.IBillCardViewModel
 import neuro.expenses.register.viewmodel.bills.BillsUiEvent.UiEvent

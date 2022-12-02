@@ -1,4 +1,4 @@
-package neuro.expenses.register.data.di.test
+package neuro.expenses.register.data.di
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider

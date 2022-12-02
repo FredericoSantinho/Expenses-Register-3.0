@@ -26,12 +26,10 @@ import neuro.expenses.register.presentation.ui.common.composables.datetime.DateT
 import neuro.expenses.register.presentation.ui.common.composables.dropdown.DropDownTextField
 import neuro.expenses.register.presentation.ui.common.composables.maps.MapsComposable
 import neuro.expenses.register.presentation.ui.common.composables.maps.MapsMoveCameraEvent
+import neuro.expenses.register.presentation.ui.common.composables.modal.*
 import neuro.expenses.register.presentation.ui.edit.placeproduct.EditPlaceProductComposable
 import neuro.expenses.register.presentation.ui.home.mapper.HomeMapsUiEventMapper
 import neuro.expenses.register.presentation.ui.theme.ExpensesRegisterTheme
-import neuro.expenses.register.ui.home.composable.addBackHandler
-import neuro.expenses.register.ui.home.composable.hideModalBottomSheet
-import neuro.expenses.register.ui.home.composable.showModalBottomSheet
 import neuro.expenses.register.viewmodel.home.HomeUiEvent.UiEvent
 import neuro.expenses.register.viewmodel.home.HomeUiState.UiState
 import neuro.expenses.register.viewmodel.home.HomeViewModel
@@ -55,8 +53,7 @@ fun HomeComposable(
   val moveCamera = remember { mutableStateOf<MapsMoveCameraEvent?>(null) }
 
   val coroutineScope = rememberCoroutineScope()
-  val modalBottomSheetState =
-    neuro.expenses.register.ui.home.composable.rememberModalBottomSheetState()
+  val modalBottomSheetState = rememberModalBottomSheetState()
 
   val locationPermissionsState = rememberMultiplePermissionsState(
     listOf(
@@ -65,7 +62,8 @@ fun HomeComposable(
     )
   )
 
-  neuro.expenses.register.ui.home.composable.ModalBottomSheetLayout(modalBottomSheetState,
+  ModalBottomSheetLayout(
+    modalBottomSheetState,
     modalContent = { EditPlaceProductComposable(homeViewModel.editPlaceProductViewModel) }) {
     ConstraintLayout(
       modifier = Modifier.fillMaxSize()

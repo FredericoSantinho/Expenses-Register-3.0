@@ -1,4 +1,4 @@
-package neuro.expenses.register.ui.home.composable
+package neuro.expenses.register.presentation.ui.common.composables.modal
 
 import android.app.Activity
 import androidx.compose.foundation.shape.RoundedCornerShape

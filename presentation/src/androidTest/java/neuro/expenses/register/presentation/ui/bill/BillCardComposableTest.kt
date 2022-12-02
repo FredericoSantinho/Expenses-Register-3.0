@@ -13,7 +13,10 @@ import neuro.expenses.register.viewmodel.bill.BillUiState.UiState
 import neuro.expenses.register.viewmodel.bill.IBillCardViewModel
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.kotlin.*
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.times
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 
 internal class BillCardComposableTest {
   @get:Rule
@@ -26,12 +29,12 @@ internal class BillCardComposableTest {
     val iconUrl = mutableStateOf("iconUrl")
     val uiState = mutableStateOf(UiState.Loading)
 
-    whenever(billCardViewModel.place).doReturn(mutableStateOf(""))
-    whenever(billCardViewModel.time).doReturn(mutableStateOf(""))
-    whenever(billCardViewModel.date).doReturn(mutableStateOf(""))
-    whenever(billCardViewModel.total).doReturn(mutableStateOf(""))
-    whenever(billCardViewModel.iconUrl).doReturn(iconUrl)
-    whenever(billCardViewModel.uiState).doReturn(uiState)
+    whenever(billCardViewModel.place).thenReturn(mutableStateOf(""))
+    whenever(billCardViewModel.time).thenReturn(mutableStateOf(""))
+    whenever(billCardViewModel.date).thenReturn(mutableStateOf(""))
+    whenever(billCardViewModel.total).thenReturn(mutableStateOf(""))
+    whenever(billCardViewModel.iconUrl).thenReturn(iconUrl)
+    whenever(billCardViewModel.uiState).thenReturn(uiState)
 
     initComposition(billCardViewModel)
 
@@ -93,12 +96,12 @@ internal class BillCardComposableTest {
     val iconUrl = mutableStateOf("iconUrl")
     val uiState = mutableStateOf(_uiState)
 
-    whenever(billCardViewModel.place).doReturn(place)
-    whenever(billCardViewModel.time).doReturn(time)
-    whenever(billCardViewModel.date).doReturn(date)
-    whenever(billCardViewModel.total).doReturn(total)
-    whenever(billCardViewModel.iconUrl).doReturn(iconUrl)
-    whenever(billCardViewModel.uiState).doReturn(uiState)
+    whenever(billCardViewModel.place).thenReturn(place)
+    whenever(billCardViewModel.time).thenReturn(time)
+    whenever(billCardViewModel.date).thenReturn(date)
+    whenever(billCardViewModel.total).thenReturn(total)
+    whenever(billCardViewModel.iconUrl).thenReturn(iconUrl)
+    whenever(billCardViewModel.uiState).thenReturn(uiState)
 
     initComposition(billCardViewModel)
 

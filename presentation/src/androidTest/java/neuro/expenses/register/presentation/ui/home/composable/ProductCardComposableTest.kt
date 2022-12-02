@@ -10,7 +10,10 @@ import neuro.expenses.register.viewmodel.home.IProductCardViewModel
 import neuro.expenses.register.viewmodel.model.CategoryModel
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.kotlin.*
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.times
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 
 internal class ProductCardComposableTest {
   @get:Rule
@@ -26,16 +29,16 @@ internal class ProductCardComposableTest {
 
     val productCardViewModel = mock<IProductCardViewModel>()
 
-    whenever(productCardViewModel.description).doReturn(mutableStateOf(description))
-    whenever(productCardViewModel.categoryModel).doReturn(
+    whenever(productCardViewModel.description).thenReturn(mutableStateOf(description))
+    whenever(productCardViewModel.categoryModel).thenReturn(
       mutableStateOf(
         CategoryModel(
           1, category, "iconUrl"
         )
       )
     )
-    whenever(productCardViewModel.price).doReturn(mutableStateOf(price))
-    whenever(productCardViewModel.iconUrl).doReturn(mutableStateOf(iconUrl))
+    whenever(productCardViewModel.price).thenReturn(mutableStateOf(price))
+    whenever(productCardViewModel.iconUrl).thenReturn(mutableStateOf(iconUrl))
 
     composeTestRule.setContent {
       ExpensesRegisterTheme {

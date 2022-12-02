@@ -15,9 +15,12 @@ import androidx.navigation.NavHostController
 import kotlinx.coroutines.CoroutineScope
 import neuro.expenses.register.presentation.common.compose.rememberUnit
 import neuro.expenses.register.presentation.mocks.category.EditCategoriesViewModelMock
+import neuro.expenses.register.presentation.ui.common.composables.modal.ModalBottomSheetLayout
+import neuro.expenses.register.presentation.ui.common.composables.modal.addBackHandler
+import neuro.expenses.register.presentation.ui.common.composables.modal.hideModalBottomSheet
+import neuro.expenses.register.presentation.ui.common.composables.modal.showModalBottomSheet
 import neuro.expenses.register.presentation.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.presentation.ui.theme.grey_fog_lighter
-import neuro.expenses.register.ui.home.composable.*
 import neuro.expenses.register.viewmodel.edit.category.EditCategoriesUiEvent.UiEvent
 import neuro.expenses.register.viewmodel.edit.category.EditCategoriesViewModel
 import neuro.expenses.register.viewmodel.edit.category.IEditCategoriesViewModel
