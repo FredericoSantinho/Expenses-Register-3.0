@@ -6,6 +6,8 @@ ext {
 
 lib.reflections = "org.reflections:reflections:$ver.reflections"
 lib.kotlin = "org.jetbrains.kotlin:kotlin-stdlib:$ver.kotlin"
+lib.kotlinPoet = "com.squareup:kotlinpoet:$ver.kotlinPoet"
+lib.reflections = "org.reflections:reflections:$ver.reflections"
 
 lib.koin_core = "io.insert-koin:koin-core:$ver.koin"
 lib.koin_android = "io.insert-koin:koin-android:$ver.koin_android"
