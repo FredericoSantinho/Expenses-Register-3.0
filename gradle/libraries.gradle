@@ -9,21 +9,21 @@ lib.kotlin = "org.jetbrains.kotlin:kotlin-stdlib:$ver.kotlin"
 lib.kotlinPoet = "com.squareup:kotlinpoet:$ver.kotlinPoet"
 lib.reflections = "org.reflections:reflections:$ver.reflections"
 
-lib.koin_core = "io.insert-koin:koin-core:$ver.koin"
-lib.koin_android = "io.insert-koin:koin-android:$ver.koin_android"
-lib.koin_compose = "io.insert-koin:koin-androidx-compose:$ver.koin_android"
-lib.koin_test = "io.insert-koin:koin-test-junit4:$ver.koin_test"
+lib.koinCore = "io.insert-koin:koin-core:$ver.koin"
+lib.koinAndroid = "io.insert-koin:koin-android:$ver.koinAndroid"
+lib.koinCompose = "io.insert-koin:koin-androidx-compose:$ver.koinAndroid"
+lib.koinTest = "io.insert-koin:koin-test-junit4:$ver.koinTest"
 
-lib.slf4j_nop = "org.slf4j:slf4j-nop:$ver.slf4j_nop"
+lib.slf4jNop = "org.slf4j:slf4j-nop:$ver.slf4jNop"
 lib.junit = "junit:junit:$ver.junit"
 lib.junit5 = ["org.junit.jupiter:junit-jupiter-api:$ver.junit5",
               "org.junit.jupiter:junit-jupiter-params:$ver.junit5"]
-lib.junit5_engine = "org.junit.jupiter:junit-jupiter-engine:$ver.junit5"
+lib.junit5Engine = "org.junit.jupiter:junit-jupiter-engine:$ver.junit5"
 
 lib.mockito = ["org.mockito:mockito-core:$ver.mockito",
                "org.mockito.kotlin:mockito-kotlin:$ver.mockito_kotlin"]
 
-lib.mockito_android = "org.mockito:mockito-android:$ver.mockito"
+lib.mockitoAndroid = "org.mockito:mockito-android:$ver.mockito"
 
 lib.timber = "com.jakewharton.timber:timber:$ver.timber"
 
@@ -31,7 +31,7 @@ lib.rxAndroid = "io.reactivex.rxjava3:rxandroid:$ver.rxAndroid"
 lib.rxKotlin = ["io.reactivex.rxjava3:rxkotlin:$ver.rxKotlin",
                 "com.jakewharton.rxrelay3:rxrelay:$ver.rxRelay3"]
 
-lib.compose_runtime = "androidx.compose.runtime:runtime:$ver.compose"
+lib.composeRuntime = "androidx.compose.runtime:runtime:$ver.compose"
 lib.google = ["androidx.core:core-ktx:$ver.ktx",
               "androidx.preference:preference:$ver.preference",
               "androidx.security:security-crypto:$ver.androidXSecurity",
@@ -43,7 +43,7 @@ lib.google = ["androidx.core:core-ktx:$ver.ktx",
               "androidx.lifecycle:lifecycle-viewmodel-ktx:$ver.lifecycle",
               "androidx.navigation:navigation-fragment-ktx:$ver.navigation",
               "androidx.navigation:navigation-ui-ktx:$ver.navigation",
-              "$lib.compose_runtime",
+              "$lib.composeRuntime",
               "androidx.compose.runtime:runtime-livedata:$ver.compose",
               "androidx.compose.runtime:runtime-rxjava3:$ver.compose",
               "androidx.navigation:navigation-compose:$ver.composeNavigation",
@@ -55,27 +55,26 @@ lib.accompanist = ["com.google.accompanist:accompanist-permissions:$ver.accompan
                    "com.google.accompanist:accompanist-pager:$ver.accompanist",
                    "com.google.accompanist:accompanist-pager-indicators:$ver.accompanist"]
 
-lib.compose_ui_test_junit4 = "androidx.compose.ui:ui-test-junit4:$ver.compose"
-lib.compose_test = "androidx.compose.ui:ui-test-manifest:$ver.compose"
+lib.composeUiTestJunit4 = "androidx.compose.ui:ui-test-junit4:$ver.compose"
+lib.composeTest = "androidx.compose.ui:ui-test-manifest:$ver.compose"
 
-lib.compose_shimmer = "com.valentinilk.shimmer:compose-shimmer:$ver.compose_shimmer"
+lib.composeShimmer = "com.valentinilk.shimmer:compose-shimmer:$ver.composeShimmer"
 
-lib.play_services_location =
-    "com.google.android.gms:play-services-location:$ver.play_services_location"
+lib.playServicesLocation = "com.google.android.gms:play-services-location:$ver.playServicesLocation"
 
-lib.google_test = ["androidx.test.ext:junit:$ver.androidXJunit",
-                   "androidx.test.espresso:espresso-core:$ver.expresso",
-                   "androidx.arch.core:core-testing:$ver.androidx_core_testing"]
+lib.googleTest = ["androidx.test.ext:junit:$ver.androidXJunit",
+                  "androidx.test.espresso:espresso-core:$ver.expresso",
+                  "androidx.arch.core:core-testing:$ver.androidx_core_testing"]
 
-lib.google_maps = ["com.google.android.gms:play-services-maps:$ver.google_maps",
-                   "com.google.maps.android:maps-compose:$ver.google_maps_compose",
-                   "com.google.maps.android:maps-utils-ktx:$ver.maps_utils_ktx",
-                   "com.google.maps.android:android-maps-utils:$ver.google_maps_utils"]
+lib.googleMaps = ["com.google.android.gms:play-services-maps:$ver.googleMaps",
+                  "com.google.maps.android:maps-compose:$ver.googleMaps_compose",
+                  "com.google.maps.android:maps-utils-ktx:$ver.maps_utils_ktx",
+                  "com.google.maps.android:android-maps-utils:$ver.googleMaps_utils"]
 
 lib.glide = "com.github.bumptech.glide:glide:$ver.glide"
 lib.coil = "io.coil-kt:coil-compose:$ver.coil"
 
 lib.room = "androidx.room:room-runtime:$ver.room"
-lib.room_rx3 = "androidx.room:room-rxjava3:$ver.room"
-lib.room_compiler = "androidx.room:room-compiler:$ver.room"
-lib.room_test = "androidx.room:room-testing:$ver.room"
+lib.roomRx3 = "androidx.room:room-rxjava3:$ver.room"
+lib.roomCompiler = "androidx.room:room-compiler:$ver.room"
+lib.roomTest = "androidx.room:room-testing:$ver.room"

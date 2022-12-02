@@ -8,22 +8,22 @@ dependencies {
   androidTestImplementation project(':test')
 
   implementation lib.kotlin
-  implementation lib.koin_core
+  implementation lib.koinCore
   implementation lib.rxAndroid
   implementation lib.rxKotlin
   implementation lib.room
-  implementation lib.play_services_location
+  implementation lib.playServicesLocation
   implementation lib.timber
 
-  api lib.room_rx3
-  kapt lib.room_compiler
+  api lib.roomRx3
+  kapt lib.roomCompiler
 
-  testImplementation lib.slf4j_nop
+  testImplementation lib.slf4jNop
   testImplementation lib.junit5
-  testImplementation lib.koin_test
+  testImplementation lib.koinTest
   testImplementation lib.mockito
-  testImplementation lib.room_test
-  testRuntimeOnly lib.junit5_engine
-  androidTestImplementation lib.google_test
-  androidTestImplementation lib.koin_test
+  testImplementation lib.roomTest
+  testRuntimeOnly lib.junit5Engine
+  androidTestImplementation lib.googleTest
+  androidTestImplementation lib.koinTest
 }

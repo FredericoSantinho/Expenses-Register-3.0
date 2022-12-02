@@ -6,12 +6,12 @@ dependencies {
   testImplementation project(':test')
 
   implementation lib.kotlin
-  implementation lib.koin_core
+  implementation lib.koinCore
   implementation lib.rxKotlin
 
-  testImplementation lib.slf4j_nop
+  testImplementation lib.slf4jNop
   testImplementation lib.junit5
-  testImplementation lib.junit5_engine
+  testImplementation lib.junit5Engine
   testImplementation lib.mockito
-  testImplementation lib.koin_test
+  testImplementation lib.koinTest
 }

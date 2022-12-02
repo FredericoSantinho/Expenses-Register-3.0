@@ -9,25 +9,25 @@ dependencies {
 
   implementation lib.accompanist
   implementation lib.google
-  implementation lib.google_maps
-  implementation lib.koin_compose
+  implementation lib.googleMaps
+  implementation lib.koinCompose
   implementation lib.glide
   implementation lib.coil
-  implementation lib.compose_shimmer
+  implementation lib.composeShimmer
   implementation lib.rxAndroid
   implementation lib.rxKotlin
   implementation lib.timber
 
-  testImplementation lib.slf4j_nop
+  testImplementation lib.slf4jNop
   testImplementation lib.junit5
-  testImplementation lib.koin_test
+  testImplementation lib.koinTest
   testImplementation lib.mockito
-  testImplementation lib.room_test
+  testImplementation lib.roomTest
   androidTestImplementation lib.mockito
-  androidTestImplementation lib.google_test
-  androidTestImplementation lib.compose_ui_test_junit4
-  androidTestImplementation lib.koin_test
-  debugImplementation lib.compose_test
-  androidTestRuntimeOnly lib.mockito_android
-  testRuntimeOnly lib.junit5_engine
+  androidTestImplementation lib.googleTest
+  androidTestImplementation lib.composeUiTestJunit4
+  androidTestImplementation lib.koinTest
+  debugImplementation lib.composeTest
+  androidTestRuntimeOnly lib.mockitoAndroid
+  testRuntimeOnly lib.junit5Engine
 }
