@@ -8,7 +8,7 @@ import neuro.expenses.register.domain.usecase.calendar.GetCalendarUseCase
 import neuro.expenses.register.domain.usecase.category.ObserveCategoriesUseCase
 import neuro.expenses.register.domain.usecase.expense.RegisterExpenseException
 import neuro.expenses.register.domain.usecase.expense.RegisterExpenseUseCase
-import neuro.expenses.register.domain.usecase.near.GetNearestPlaceUseCase
+import neuro.expenses.register.domain.usecase.place.GetNearestPlaceUseCase
 import neuro.expenses.register.viewmodel.appbar.AppBarViewModel
 import neuro.expenses.register.viewmodel.appbar.Title
 import neuro.expenses.register.viewmodel.bill.IBillCardViewModel

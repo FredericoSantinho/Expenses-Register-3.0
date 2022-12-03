@@ -9,7 +9,7 @@ import neuro.expenses.register.domain.usecase.category.ObserveCategoriesUseCase
 import neuro.expenses.register.domain.usecase.expense.RegisterExpenseError
 import neuro.expenses.register.domain.usecase.expense.RegisterExpenseException
 import neuro.expenses.register.domain.usecase.expense.RegisterExpenseUseCase
-import neuro.expenses.register.domain.usecase.near.GetNearestPlaceUseCase
+import neuro.expenses.register.domain.usecase.place.GetNearestPlaceUseCase
 import neuro.expenses.register.entity.mocks.categoryDtoMock
 import neuro.expenses.register.entity.mocks.expenseDtoMock
 import neuro.expenses.register.entity.mocks.placeDtoMock

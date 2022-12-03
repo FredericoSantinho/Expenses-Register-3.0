@@ -6,8 +6,6 @@ import neuro.expenses.register.domain.usecase.calendar.GetCalendarUseCaseImpl
 import neuro.expenses.register.domain.usecase.category.*
 import neuro.expenses.register.domain.usecase.expense.RegisterExpenseUseCase
 import neuro.expenses.register.domain.usecase.expense.RegisterExpenseUseCaseImpl
-import neuro.expenses.register.domain.usecase.near.GetNearestPlaceUseCase
-import neuro.expenses.register.domain.usecase.near.GetNearestPlaceUseCaseImpl
 import neuro.expenses.register.domain.usecase.place.*
 import neuro.expenses.register.domain.usecase.product.GetOrCreatePlaceProductUseCase
 import neuro.expenses.register.domain.usecase.product.GetOrCreatePlaceProductUseCaseImpl
