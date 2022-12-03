@@ -7,13 +7,19 @@ import neuro.expenses.register.entity.placeproduct.GetOrCreatePlaceProduct
 
 class GetOrCreatePlaceProductUseCaseImpl(private val getOrCreatePlaceProduct: GetOrCreatePlaceProduct) :
   GetOrCreatePlaceProductUseCase {
-  override fun getOrCreatePlaceProduct(placeProductDto: PlaceProductDto): Single<PlaceProductDto> {
+  override fun getOrCreatePlaceProduct(
+    description: String,
+    category: String,
+    price: Double,
+    variableAmount: Boolean,
+    iconUrl: String
+  ): Single<PlaceProductDto> {
     return getOrCreatePlaceProduct.getOrCreatePlaceProduct(
-      placeProductDto.productDto.description,
-      placeProductDto.category.name,
-      placeProductDto.price,
-      placeProductDto.productDto.variableAmount,
-      placeProductDto.productDto.iconUrl
+      description,
+      category,
+      price,
+      variableAmount,
+      iconUrl
     ).map { it.toDomain() }
   }
 }

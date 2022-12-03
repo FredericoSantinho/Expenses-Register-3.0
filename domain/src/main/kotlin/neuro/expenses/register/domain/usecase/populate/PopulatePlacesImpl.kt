@@ -48,7 +48,7 @@ class PopulatePlacesImpl(
           borga,
           price11,
         )
-        getOrCreatePlaceProductUseCase.getOrCreatePlaceProduct(sagresMedia).flatMapCompletable {
+        getOrCreatePlaceProduct(sagresMedia).flatMapCompletable {
           val vizinha =
             PlaceDto(
               placeCounter.incrementAndGet(),
@@ -66,7 +66,7 @@ class PopulatePlacesImpl(
             LatLngDto(37.091495, -8.2475677)
           )
           Observable.fromIterable(products)
-            .flatMapSingle { getOrCreatePlaceProductUseCase.getOrCreatePlaceProduct(it) }.toList()
+            .flatMapSingle { getOrCreatePlaceProduct(it) }.toList()
             .flatMapCompletable { savePlaceUseCase.savePlace(bitoque) }
         }).andThen(Completable.defer {
           val caneca50 = PlaceProductDto(
@@ -87,12 +87,21 @@ class PopulatePlacesImpl(
               listOf(caneca50),
               LatLngDto(37.0975346, -8.2283147)
             )
-          getOrCreatePlaceProductUseCase.getOrCreatePlaceProduct(caneca50)
+          getOrCreatePlaceProduct(caneca50)
             .flatMapCompletable { savePlaceUseCase.savePlace(longoBar) }
         })
       })
     }
   }
+
+  private fun getOrCreatePlaceProduct(sagresMedia: PlaceProductDto) =
+    getOrCreatePlaceProductUseCase.getOrCreatePlaceProduct(
+      sagresMedia.productDto.description,
+      sagresMedia.category.name,
+      sagresMedia.price,
+      sagresMedia.productDto.variableAmount,
+      sagresMedia.productDto.iconUrl
+    )
 }
 
 private fun buildBitoqueProducts(

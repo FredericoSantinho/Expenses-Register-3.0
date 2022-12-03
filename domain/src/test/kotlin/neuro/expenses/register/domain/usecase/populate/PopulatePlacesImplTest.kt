@@ -30,7 +30,9 @@ internal class PopulatePlacesImplTest() : ObserveSubscriptionTest() {
     whenever(saveCategoryUseCase.saveCategories(any())).thenReturn(
       Completable.complete().observeSubscription(incrementer, offset)
     )
-    whenever(getOrCreatePlaceProductUseCase.getOrCreatePlaceProduct(any())).thenReturn(
+    whenever(
+      getOrCreatePlaceProductUseCase.getOrCreatePlaceProduct(any(), any(), any(), any(), any())
+    ).thenReturn(
       Single.just(
         placeProductDtoMock()
       ).observeSubscription(incrementer, offset)
