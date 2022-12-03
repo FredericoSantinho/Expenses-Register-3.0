@@ -61,7 +61,7 @@ class BillControllerImpl(
           }
         }
       }.doOnSuccess { bill ->
-        saveBill.save(bill)
+        saveBill.saveBill(bill)
       }
     }
   }

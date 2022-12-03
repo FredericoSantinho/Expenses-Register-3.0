@@ -8,5 +8,5 @@ interface SaveBill {
    *
    * @param Bill to save.
    */
-  fun save(bill: Bill)
+  fun saveBill(bill: Bill)
 }

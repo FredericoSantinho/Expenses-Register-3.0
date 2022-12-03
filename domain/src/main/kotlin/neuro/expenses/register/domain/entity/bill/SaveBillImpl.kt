@@ -6,7 +6,7 @@ import neuro.expenses.register.entity.bill.SaveBill
 import neuro.expenses.register.entity.model.Bill
 
 class SaveBillImpl(private val saveBillRepository: SaveBillRepository) : SaveBill {
-  override fun save(bill: Bill) {
+  override fun saveBill(bill: Bill) {
     saveBillRepository.saveBill(bill.toDomain())
   }
 }
