@@ -45,8 +45,8 @@ open class ObserveSubscriptionTest(private val offsetIncrementer: OffsetIncremen
     }
   }
 
-  fun assertSubscriptions(list: List<Long>, offset: Long) {
-    list.forEach { assertSubscription(it, offset) }
+  fun assertSubscriptions(incrementer: Incrementer, offset: Long) {
+    incrementer.getAll().forEach { assertSubscription(it, offset) }
   }
 
   fun getAndIncrementOffset(): Long {

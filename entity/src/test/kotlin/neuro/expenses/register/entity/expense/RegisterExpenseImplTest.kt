@@ -71,7 +71,7 @@ internal class RegisterExpenseImplTest : ObserveSubscriptionTest() {
 
     registerExpense.registerExpense(expense).test().assertNoErrors().assertComplete()
 
-    assertSubscriptions(incrementer.getAll(), offset)
+    assertSubscriptions(incrementer, offset)
   }
 
   @Test
@@ -113,7 +113,7 @@ internal class RegisterExpenseImplTest : ObserveSubscriptionTest() {
     verifyNoInteractions(getOrCreatePlace)
     verifyNoInteractions(placeController)
 
-    assertSubscriptions(incrementer.getAll(), offset)
+    assertSubscriptions(incrementer, offset)
   }
 
   @Test
@@ -167,6 +167,6 @@ internal class RegisterExpenseImplTest : ObserveSubscriptionTest() {
 
     registerExpense.registerExpense(expense).test().assertNoErrors().assertComplete()
 
-    assertSubscriptions(incrementer.getAll(), offset)
+    assertSubscriptions(incrementer, offset)
   }
 }

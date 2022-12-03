@@ -3,7 +3,7 @@ package neuro.expenses.register.data.model.place
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
-import neuro.expenses.register.data.model.RoomPlaceProduct
+import neuro.expenses.register.data.model.placeproduct.RoomPlaceProduct
 
 @Entity(
   primaryKeys = ["placeId", "placeProductId"],

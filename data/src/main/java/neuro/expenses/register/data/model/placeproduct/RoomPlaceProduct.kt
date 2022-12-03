@@ -1,9 +1,11 @@
-package neuro.expenses.register.data.model
+package neuro.expenses.register.data.model.placeproduct
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import neuro.expenses.register.data.model.category.RoomCategory
+import neuro.expenses.register.data.model.product.RoomProduct
 
 @Entity(
   tableName = "place_product_table",

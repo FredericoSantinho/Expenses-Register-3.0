@@ -3,10 +3,10 @@ package neuro.expenses.register.data.dao
 import androidx.room.*
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Maybe
-import neuro.expenses.register.data.model.RoomPlaceProduct
-import neuro.expenses.register.data.model.product.PlaceProductCategoryCrossRef
-import neuro.expenses.register.data.model.product.PlaceProductProductCrossRef
-import neuro.expenses.register.data.model.product.RoomPlaceProductWithProductAndCategory
+import neuro.expenses.register.data.model.placeproduct.PlaceProductCategoryCrossRef
+import neuro.expenses.register.data.model.placeproduct.PlaceProductProductCrossRef
+import neuro.expenses.register.data.model.placeproduct.RoomPlaceProduct
+import neuro.expenses.register.data.model.placeproduct.RoomPlaceProductWithProductAndCategory
 
 @Dao
 interface PlaceProductDao {

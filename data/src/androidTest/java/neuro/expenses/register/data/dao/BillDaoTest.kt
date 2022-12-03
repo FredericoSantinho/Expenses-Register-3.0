@@ -3,13 +3,13 @@ package neuro.expenses.register.data.dao
 import neuro.expenses.register.data.ExpensesRegisterDatabase
 import neuro.expenses.register.data.di.dataTestModules
 import neuro.expenses.register.data.mocks.*
-import neuro.expenses.register.data.model.RoomPlaceProduct
 import neuro.expenses.register.data.model.bill.*
 import neuro.expenses.register.data.model.place.PlacePlaceProductCrossRef
 import neuro.expenses.register.data.model.place.RoomPlaceWithPlaceProducts
-import neuro.expenses.register.data.model.product.PlaceProductCategoryCrossRef
-import neuro.expenses.register.data.model.product.PlaceProductProductCrossRef
-import neuro.expenses.register.data.model.product.RoomPlaceProductWithProductAndCategory
+import neuro.expenses.register.data.model.placeproduct.PlaceProductCategoryCrossRef
+import neuro.expenses.register.data.model.placeproduct.PlaceProductProductCrossRef
+import neuro.expenses.register.data.model.placeproduct.RoomPlaceProduct
+import neuro.expenses.register.data.model.placeproduct.RoomPlaceProductWithProductAndCategory
 import neuro.test.rx.Incrementer
 import org.junit.After
 import org.junit.Before

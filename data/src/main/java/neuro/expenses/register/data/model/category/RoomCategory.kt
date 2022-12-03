@@ -1,4 +1,4 @@
-package neuro.expenses.register.data.model
+package neuro.expenses.register.data.model.category
 
 import androidx.room.Entity
 import androidx.room.Index

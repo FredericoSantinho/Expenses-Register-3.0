@@ -1,11 +1,10 @@
-package neuro.expenses.register.data.model.product
+package neuro.expenses.register.data.model.placeproduct
 
 import androidx.room.Embedded
 import androidx.room.Junction
 import androidx.room.Relation
-import neuro.expenses.register.data.model.RoomCategory
-import neuro.expenses.register.data.model.RoomPlaceProduct
-import neuro.expenses.register.data.model.RoomProduct
+import neuro.expenses.register.data.model.category.RoomCategory
+import neuro.expenses.register.data.model.product.RoomProduct
 
 data class RoomPlaceProductWithProductAndCategory(
   @Embedded val roomPlaceProduct: RoomPlaceProduct,

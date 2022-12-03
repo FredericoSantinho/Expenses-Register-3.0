@@ -49,7 +49,7 @@ internal class GetOrCreatePlaceImplTest : ObserveSubscriptionTest() {
     getOrCreatePlace.getOrCreatePlace(placeName).test().assertValue(expectedPlace).assertNoErrors()
       .assertComplete()
 
-    assertSubscriptions(incrementer.getAll(), offset)
+    assertSubscriptions(incrementer, offset)
   }
 
   @Test
@@ -76,7 +76,7 @@ internal class GetOrCreatePlaceImplTest : ObserveSubscriptionTest() {
     getOrCreatePlace.getOrCreatePlace(placeName).test().assertValue(expectedPlace).assertNoErrors()
       .assertComplete()
 
-    assertSubscriptions(incrementer.getAll(), offset)
+    assertSubscriptions(incrementer, offset)
   }
 
   @Test
@@ -113,6 +113,6 @@ internal class GetOrCreatePlaceImplTest : ObserveSubscriptionTest() {
     getOrCreatePlace.getOrCreatePlace(placeName).test().assertValue(expectedPlace).assertNoErrors()
       .assertComplete()
 
-    assertSubscriptions(incrementer.getAll(), offset)
+    assertSubscriptions(incrementer, offset)
   }
 }

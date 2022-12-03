@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import neuro.expenses.register.data.model.latlng.LatLngModel
 
 @Entity(
   tableName = "place_table",

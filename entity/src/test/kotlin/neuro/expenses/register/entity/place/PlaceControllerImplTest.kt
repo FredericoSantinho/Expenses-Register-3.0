@@ -57,7 +57,7 @@ internal class PlaceControllerImplTest : ObserveSubscriptionTest() {
     placeController.addPlaceProduct(place, placeProduct).test().assertValue(placeWithProduct)
       .assertNoErrors().assertComplete()
 
-    assertSubscriptions(incrementer.getAll(), offset)
+    assertSubscriptions(incrementer, offset)
   }
 
   @Test
@@ -106,7 +106,7 @@ internal class PlaceControllerImplTest : ObserveSubscriptionTest() {
     placeController.addPlaceProduct(placeWithProduct, placeProduct).test()
       .assertValue(placeWithProduct).assertNoErrors().assertComplete()
 
-    assertSubscriptions(incrementer.getAll(), offset)
+    assertSubscriptions(incrementer, offset)
   }
 
   @Test
@@ -152,7 +152,7 @@ internal class PlaceControllerImplTest : ObserveSubscriptionTest() {
     placeController.removePlaceProduct(placeWithProduct, -1L).test().assertValue(placeWithProduct)
       .assertNoErrors().assertComplete()
 
-    assertSubscriptions(incrementer.getAll(), offset)
+    assertSubscriptions(incrementer, offset)
   }
 
   @Test
@@ -201,7 +201,7 @@ internal class PlaceControllerImplTest : ObserveSubscriptionTest() {
     placeController.removePlaceProduct(placeWithProduct, placeProductId).test().assertValue(place)
       .assertNoErrors().assertComplete()
 
-    assertSubscriptions(incrementer.getAll(), offset)
+    assertSubscriptions(incrementer, offset)
   }
 
   @Test
@@ -253,7 +253,7 @@ internal class PlaceControllerImplTest : ObserveSubscriptionTest() {
     placeController.updatePlaceProduct(placeWithProduct, updatedPlaceProduct).test()
       .assertValue(placeWithUpdatedProduct).assertNoErrors().assertComplete()
 
-    assertSubscriptions(incrementer.getAll(), offset)
+    assertSubscriptions(incrementer, offset)
   }
 
   @Test

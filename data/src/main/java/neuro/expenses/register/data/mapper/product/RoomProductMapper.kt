@@ -1,6 +1,6 @@
 package neuro.expenses.register.data.mapper.product
 
-import neuro.expenses.register.data.model.RoomProduct
+import neuro.expenses.register.data.model.product.RoomProduct
 import neuro.expenses.register.domain.dto.ProductDto
 
 fun RoomProduct.toDomain(): ProductDto {

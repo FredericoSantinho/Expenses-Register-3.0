@@ -60,7 +60,7 @@ internal class GetOrCreatePlaceProductImplTest : ObserveSubscriptionTest() {
       description, categoryName, price, variableAmount, iconUrl
     ).test().assertValue(placeProduct).assertNoErrors().assertComplete()
 
-    assertSubscriptions(incrementer.getAll(), offset)
+    assertSubscriptions(incrementer, offset)
   }
 
   @Test
@@ -112,7 +112,7 @@ internal class GetOrCreatePlaceProductImplTest : ObserveSubscriptionTest() {
       description, categoryName, price, variableAmount, iconUrl
     ).test().assertValue(placeProduct).assertNoErrors().assertComplete()
 
-    assertSubscriptions(incrementer.getAll(), offset)
+    assertSubscriptions(incrementer, offset)
   }
 
   /**
@@ -147,6 +147,6 @@ internal class GetOrCreatePlaceProductImplTest : ObserveSubscriptionTest() {
       description, categoryName, price, variableAmount, iconUrl
     ).test().assertNoValues().assertError(NoSuchElementException::class.java).assertNotComplete()
 
-    assertSubscriptions(incrementer.getAll(), offset)
+    assertSubscriptions(incrementer, offset)
   }
 }

@@ -5,17 +5,17 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import neuro.expenses.register.data.converter.Converters
 import neuro.expenses.register.data.dao.*
-import neuro.expenses.register.data.model.RoomCategory
-import neuro.expenses.register.data.model.RoomPlaceProduct
-import neuro.expenses.register.data.model.RoomProduct
 import neuro.expenses.register.data.model.bill.BillItemPlaceProductCrossRef
 import neuro.expenses.register.data.model.bill.BillPlaceCrossRef
 import neuro.expenses.register.data.model.bill.RoomBill
 import neuro.expenses.register.data.model.bill.RoomBillItem
+import neuro.expenses.register.data.model.category.RoomCategory
 import neuro.expenses.register.data.model.place.PlacePlaceProductCrossRef
 import neuro.expenses.register.data.model.place.RoomPlace
-import neuro.expenses.register.data.model.product.PlaceProductCategoryCrossRef
-import neuro.expenses.register.data.model.product.PlaceProductProductCrossRef
+import neuro.expenses.register.data.model.placeproduct.PlaceProductCategoryCrossRef
+import neuro.expenses.register.data.model.placeproduct.PlaceProductProductCrossRef
+import neuro.expenses.register.data.model.placeproduct.RoomPlaceProduct
+import neuro.expenses.register.data.model.product.RoomProduct
 
 @Database(
   entities = [RoomProduct::class, RoomPlaceProduct::class, RoomCategory::class, RoomBill::class,

@@ -43,6 +43,6 @@ internal class PopulatePlacesImplTest() : ObserveSubscriptionTest() {
 
     populatePlaces.populatePlaces().test().assertComplete().assertNoErrors()
 
-    assertSubscriptions(incrementer.getAll(), offset)
+    assertSubscriptions(incrementer, offset)
   }
 }

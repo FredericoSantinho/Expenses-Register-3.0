@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import neuro.expenses.register.data.model.RoomPlaceProduct
+import neuro.expenses.register.data.model.placeproduct.RoomPlaceProduct
 
 @Entity(
   tableName = "bill_item_table", foreignKeys = [ForeignKey(

@@ -1,10 +1,9 @@
-package neuro.expenses.register.data.model.product
+package neuro.expenses.register.data.model.placeproduct
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
-import neuro.expenses.register.data.model.RoomCategory
-import neuro.expenses.register.data.model.RoomPlaceProduct
+import neuro.expenses.register.data.model.category.RoomCategory
 
 @Entity(
   primaryKeys = ["placeProductId", "categoryId"],

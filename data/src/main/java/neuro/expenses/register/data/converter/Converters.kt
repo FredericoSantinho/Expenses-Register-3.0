@@ -2,7 +2,7 @@ package neuro.expenses.register.data.converter
 
 import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
-import neuro.expenses.register.data.model.place.LatLngModel
+import neuro.expenses.register.data.model.latlng.LatLngModel
 import java.util.*
 
 @ProvidedTypeConverter

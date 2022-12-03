@@ -41,7 +41,7 @@ internal class GetOrCreateProductImplTest : ObserveSubscriptionTest() {
     getOrCreateProduct.getOrCreateProduct(description, variableAmount, iconUrl).test()
       .assertValue(product).assertNoErrors().assertComplete()
 
-    assertSubscriptions(incrementer.getAll(), offset)
+    assertSubscriptions(incrementer, offset)
   }
 
   @Test
@@ -68,6 +68,6 @@ internal class GetOrCreateProductImplTest : ObserveSubscriptionTest() {
     getOrCreateProduct.getOrCreateProduct(description, variableAmount, iconUrl).test()
       .assertValue(product).assertNoErrors().assertComplete()
 
-    assertSubscriptions(incrementer.getAll(), offset)
+    assertSubscriptions(incrementer, offset)
   }
 }

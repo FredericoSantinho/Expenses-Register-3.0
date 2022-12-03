@@ -1,6 +1,6 @@
 package neuro.expenses.register.data.mapper.category
 
-import neuro.expenses.register.data.model.RoomCategory
+import neuro.expenses.register.data.model.category.RoomCategory
 import neuro.expenses.register.domain.dto.CategoryDto
 
 fun RoomCategory.toDomain(): CategoryDto = CategoryDto(categoryId, name, iconUrl)

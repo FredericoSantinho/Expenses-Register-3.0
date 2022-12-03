@@ -31,6 +31,6 @@ internal class PrePopulateImplTest() : ObserveSubscriptionTest() {
       .assertComplete()
       .assertNoErrors()
 
-    assertSubscriptions(incrementer.getAll(), offset)
+    assertSubscriptions(incrementer, offset)
   }
 }

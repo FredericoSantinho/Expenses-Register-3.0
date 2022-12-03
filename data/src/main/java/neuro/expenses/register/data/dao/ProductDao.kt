@@ -4,7 +4,7 @@ import androidx.room.*
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
-import neuro.expenses.register.data.model.RoomProduct
+import neuro.expenses.register.data.model.product.RoomProduct
 
 @Dao
 interface ProductDao {

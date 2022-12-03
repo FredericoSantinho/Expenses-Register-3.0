@@ -79,7 +79,7 @@ internal class BillControllerImplTest : ObserveSubscriptionTest() {
 
     billController.add(expense).test().assertValue(bill).assertNoErrors().assertComplete()
 
-    assertSubscriptions(incrementer.getAll(), offset)
+    assertSubscriptions(incrementer, offset)
   }
 
   @Test
@@ -143,7 +143,7 @@ internal class BillControllerImplTest : ObserveSubscriptionTest() {
 
     billController.add(expense).test().assertValue(bill).assertNoErrors().assertComplete()
 
-    assertSubscriptions(incrementer.getAll(), offset)
+    assertSubscriptions(incrementer, offset)
   }
 
   @Test
@@ -209,7 +209,7 @@ internal class BillControllerImplTest : ObserveSubscriptionTest() {
 
     billController.add(expense).test().assertValue(bill).assertNoErrors().assertComplete()
 
-    assertSubscriptions(incrementer.getAll(), offset)
+    assertSubscriptions(incrementer, offset)
   }
 
   @Test
@@ -280,7 +280,7 @@ internal class BillControllerImplTest : ObserveSubscriptionTest() {
 
     billController.add(expense).test().assertValue(bill).assertNoErrors().assertComplete()
 
-    assertSubscriptions(incrementer.getAll(), offset)
+    assertSubscriptions(incrementer, offset)
   }
 
   @Test
@@ -351,6 +351,6 @@ internal class BillControllerImplTest : ObserveSubscriptionTest() {
 
     billController.add(expense).test().assertValue(bill).assertNoErrors().assertComplete()
 
-    assertSubscriptions(incrementer.getAll(), offset)
+    assertSubscriptions(incrementer, offset)
   }
 }

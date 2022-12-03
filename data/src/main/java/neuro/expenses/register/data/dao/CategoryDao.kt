@@ -5,7 +5,7 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
-import neuro.expenses.register.data.model.RoomCategory
+import neuro.expenses.register.data.model.category.RoomCategory
 
 @Dao
 interface CategoryDao {
