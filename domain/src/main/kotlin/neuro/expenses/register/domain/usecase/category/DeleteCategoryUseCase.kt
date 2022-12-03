@@ -11,4 +11,12 @@ interface DeleteCategoryUseCase {
   fun deleteCategory(categoryId: Long): Completable
 }
 
-class DeleteCategoryError : java.lang.IllegalArgumentException()
+class DeleteCategoryError : java.lang.IllegalArgumentException() {
+  override fun equals(other: Any?): Boolean {
+    return other is DeleteCategoryError
+  }
+
+  override fun hashCode(): Int {
+    return DeleteCategoryError::class.toString().hashCode()
+  }
+}
