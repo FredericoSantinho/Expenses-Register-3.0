@@ -26,7 +26,7 @@ internal class GetOrCreateProductImplTest : ObserveSubscriptionTest() {
     val description = "description"
     val variableAmount = false
     val iconUrl = "iconUrl"
-    val product = productMock(1L, description, iconUrl)
+    val product = productMock(1L, description, iconUrl = iconUrl)
 
     whenever(getProduct.getProduct(description)).thenReturn(
       Maybe.empty<Product>().observeSubscription(incrementer, offset)
@@ -58,7 +58,7 @@ internal class GetOrCreateProductImplTest : ObserveSubscriptionTest() {
     val description = "description"
     val variableAmount = false
     val iconUrl = "iconUrl"
-    val product = productMock(1L, description, iconUrl)
+    val product = productMock(1L, description, iconUrl = iconUrl)
 
     whenever(getProduct.getProduct(description)).thenReturn(
       Maybe.just(product).observeSubscription(incrementer, offset)

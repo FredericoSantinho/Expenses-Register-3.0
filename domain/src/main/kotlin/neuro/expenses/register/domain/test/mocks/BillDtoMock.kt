@@ -13,7 +13,7 @@ fun billDtoMock(
   isOpen: Boolean = true,
   iconUrl: String = ""
 ): BillDto {
-  return BillDto(id, placeDto, calendar, 1.0, billItemsDtos, iconUrl = iconUrl, isOpen = isOpen)
+  return BillDto(id, placeDto, calendar, 1.0, billItemsDtos, isOpen = isOpen, iconUrl = iconUrl)
 }
 
 private fun buildCalendar(): Calendar {
