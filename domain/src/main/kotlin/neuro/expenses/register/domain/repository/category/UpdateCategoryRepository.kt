@@ -12,4 +12,12 @@ interface UpdateCategoryRepository {
   fun updateCategory(categoryDto: CategoryDto): Completable
 }
 
-class UpdateCategoryError : java.lang.IllegalArgumentException()
+class UpdateCategoryError : java.lang.IllegalArgumentException() {
+  override fun equals(other: Any?): Boolean {
+    return other is UpdateCategoryError
+  }
+
+  override fun hashCode(): Int {
+    return UpdateCategoryError::class.toString().hashCode()
+  }
+}

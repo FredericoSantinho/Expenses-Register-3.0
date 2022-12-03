@@ -7,4 +7,12 @@ interface SaveCategoryRepository {
   fun saveCategory(categoryDto: CategoryDto): Completable
 }
 
-class SaveCategoryError : java.lang.IllegalArgumentException()
+class SaveCategoryError : java.lang.IllegalArgumentException() {
+  override fun equals(other: Any?): Boolean {
+    return other is SaveCategoryError
+  }
+
+  override fun hashCode(): Int {
+    return SaveCategoryError::class.toString().hashCode()
+  }
+}

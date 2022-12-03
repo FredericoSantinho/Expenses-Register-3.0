@@ -12,4 +12,12 @@ interface CreateCategoryRepository {
   fun createCategory(categoryDto: CategoryDto): Completable
 }
 
-class CreateCategoryError : java.lang.IllegalArgumentException()
+class CreateCategoryError : java.lang.IllegalArgumentException() {
+  override fun equals(other: Any?): Boolean {
+    return other is CreateCategoryError
+  }
+
+  override fun hashCode(): Int {
+    return CreateCategoryError::class.toString().hashCode()
+  }
+}
