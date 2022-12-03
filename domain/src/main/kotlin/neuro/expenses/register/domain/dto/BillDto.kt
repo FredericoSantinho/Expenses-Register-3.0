@@ -4,10 +4,10 @@ import java.util.*
 
 data class BillDto(
   val id: Long,
-  val place: PlaceDto,
+  val placeDto: PlaceDto,
   val calendar: Calendar,
   val total: Double,
-  val billItems: List<BillItemDto> = emptyList(),
+  val billItemsDtos: List<BillItemDto> = emptyList(),
   val isOpen: Boolean = true,
   val iconUrl: String = ""
 )

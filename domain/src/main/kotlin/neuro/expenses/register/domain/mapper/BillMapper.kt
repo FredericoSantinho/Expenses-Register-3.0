@@ -8,5 +8,5 @@ fun Bill.toDomain() = BillDto(
 )
 
 fun BillDto.toEntity() = Bill(
-  id, calendar, place.toEntity(), total, billItems.toEntity(), iconUrl, isOpen
+  id, placeDto.toEntity(), calendar, total, billItemsDtos.toEntity(), iconUrl, isOpen
 )

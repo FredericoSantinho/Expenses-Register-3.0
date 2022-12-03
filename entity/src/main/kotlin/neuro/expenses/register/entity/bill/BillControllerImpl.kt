@@ -9,7 +9,7 @@ import neuro.expenses.register.entity.place.GetOrCreatePlace
 import neuro.expenses.register.entity.placeproduct.GetOrCreatePlaceProduct
 import java.util.*
 
-private val defaultBill = Bill(0, Calendar.getInstance(), isOpen = false)
+private val defaultBill = Bill(0, calendar = Calendar.getInstance(), isOpen = false)
 
 class BillControllerImpl(
   private val calculateBillTotal: CalculateBillTotal,
@@ -34,7 +34,6 @@ class BillControllerImpl(
           if (contains(bill, placeProduct.id)) {
             Single.fromCallable {
               val billItem = getBillItem(bill, placeProduct.id)!!
-              val billItemId = billItem.id
               val product = billItem.placeProduct
               val oldAmount = billItem.amount
               val newAmount = oldAmount + expense.amount
@@ -119,6 +118,6 @@ class BillControllerImpl(
     calendar: Calendar,
     place: Place
   ): Single<Bill> {
-    return generateBillId.newId().map { billId -> Bill(billId, calendar, place) }
+    return generateBillId.newId().map { billId -> Bill(billId, place, calendar) }
   }
 }

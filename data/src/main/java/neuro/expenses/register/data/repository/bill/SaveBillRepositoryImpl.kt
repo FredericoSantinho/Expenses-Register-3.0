@@ -8,7 +8,7 @@ import neuro.expenses.register.domain.repository.bill.SaveBillRepository
 class SaveBillRepositoryImpl(private val billDao: BillDao) : SaveBillRepository {
   override fun saveBill(billDto: BillDto) {
     val roomBill = billDto.toData()
-    val roomBillItems = billDto.billItems.toData(billDto.id)
+    val roomBillItems = billDto.billItemsDtos.toData(billDto.id)
 
     billDao.insert(roomBill, roomBillItems)
   }

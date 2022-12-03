@@ -15,7 +15,7 @@ class BillModelMapperImpl(
     return BillModel(
       billDto.id,
       billDto.iconUrl,
-      billDto.place.name,
+      billDto.placeDto.name,
       time,
       date,
       total,

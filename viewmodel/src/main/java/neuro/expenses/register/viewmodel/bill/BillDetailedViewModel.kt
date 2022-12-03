@@ -28,9 +28,9 @@ class BillDetailedViewModel(
   }
 
   fun setBillDetailedViewModel(billDto: BillDto) {
-    placeName.value = billDto.place.name
+    placeName.value = billDto.placeDto.name
     calendar.value = billDto.calendar
-    billItems.value = billDto.billItems.map(billItemModelMapper::map)
+    billItems.value = billDto.billItemsDtos.map(billItemModelMapper::map)
     total.value = computeTotal()
   }
 

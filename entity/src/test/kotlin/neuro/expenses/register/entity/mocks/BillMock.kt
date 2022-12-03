@@ -13,5 +13,5 @@ fun billMock(
   isOpen: Boolean = true,
   iconUrl: String = ""
 ): Bill {
-  return Bill(id, calendar, place, 1.0, billItems, isOpen = isOpen, iconUrl = iconUrl)
+  return Bill(id, place, calendar, 1.0, billItems, iconUrl = iconUrl, isOpen = isOpen)
 }
