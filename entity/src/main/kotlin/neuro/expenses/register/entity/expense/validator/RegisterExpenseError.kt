@@ -5,7 +5,7 @@ package neuro.expenses.register.entity.expense.validator
  */
 enum class RegisterExpenseError {
   EMPTY_DESCRIPTION,
-  INVALID_CATEGORY,
+  CATEGORY_NOT_EXISTS,
   EMPTY_PLACE,
   INVALID_AMOUNT
 }

@@ -78,7 +78,7 @@ internal class ExpenseValidatorImplTest : ObserveSubscriptionTest() {
     )
 
     expenseValidator.validate(expenseMock()).test()
-      .assertError { isError(it, RegisterExpenseError.INVALID_CATEGORY) }.assertNotComplete()
+      .assertError { isError(it, RegisterExpenseError.CATEGORY_NOT_EXISTS) }.assertNotComplete()
 
     assertSubscription()
   }
@@ -99,7 +99,7 @@ internal class ExpenseValidatorImplTest : ObserveSubscriptionTest() {
             RegisterExpenseError.EMPTY_DESCRIPTION,
             RegisterExpenseError.EMPTY_PLACE,
             RegisterExpenseError.INVALID_AMOUNT,
-            RegisterExpenseError.INVALID_CATEGORY
+            RegisterExpenseError.CATEGORY_NOT_EXISTS
           )
         )
       }.assertNotComplete()

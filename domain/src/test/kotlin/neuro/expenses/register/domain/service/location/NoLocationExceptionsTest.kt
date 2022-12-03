@@ -3,7 +3,7 @@ package neuro.expenses.register.domain.service.location
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
-internal class NoLocationErrorsTest {
+internal class NoLocationExceptionsTest {
   @Test
   fun test() {
     assertEquals(NoLocationException(), NoLocationException())

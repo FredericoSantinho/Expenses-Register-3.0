@@ -3,7 +3,7 @@ package neuro.expenses.register.domain.repository.category
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
-class CategoryErrorsTest {
+class CategoryExceptionsTest {
   @Test
   fun test() {
     assertEquals(CreateCategoryError(), CreateCategoryError())

@@ -19,7 +19,7 @@ class ExpenseValidatorImpl(private val isValidCategory: IsValidCategory) : Expen
         }
         isValidCategory.isValidCategory(expense.category).doOnSuccess { isValidCategory ->
           if (!isValidCategory) {
-            errors.add(RegisterExpenseError.INVALID_CATEGORY)
+            errors.add(RegisterExpenseError.CATEGORY_NOT_EXISTS)
           }
         }.filter { errors.isNotEmpty() }
           .flatMapCompletable { Completable.error(RegisterExpenseException(errors)) }
