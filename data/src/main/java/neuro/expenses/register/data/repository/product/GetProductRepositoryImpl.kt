@@ -10,9 +10,6 @@ import neuro.expenses.register.domain.repository.product.GetProductRepository
 class GetProductRepositoryImpl(
   private val productDao: ProductDao
 ) : GetProductRepository {
-  override fun getProduct(productId: Long): Maybe<ProductDto> {
-    return productDao.getProduct(productId).map { roomProduct -> roomProduct.toDomain() }
-  }
 
   override fun getProduct(description: String): Maybe<ProductDto> {
     return productDao.getProduct(description.lowercase()).map(RoomProduct::toDomain)

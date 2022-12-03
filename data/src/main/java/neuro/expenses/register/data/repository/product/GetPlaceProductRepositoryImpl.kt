@@ -13,10 +13,6 @@ class GetPlaceProductRepositoryImpl(
   private val placeProductDao: PlaceProductDao,
   private val getCategoryRepository: GetCategoryRepository
 ) : GetPlaceProductRepository {
-  override fun getPlaceProduct(productId: Long): Maybe<PlaceProductDto> {
-    return placeProductDao.getPlaceProduct(productId)
-      .map { roomPlaceProductWithProductAndCategory -> roomPlaceProductWithProductAndCategory.toDomain() }
-  }
 
   override fun getPlaceProduct(
     description: String,

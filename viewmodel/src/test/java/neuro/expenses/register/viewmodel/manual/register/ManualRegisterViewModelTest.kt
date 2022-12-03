@@ -735,14 +735,6 @@ internal class ManualRegisterViewModelTest {
     val price = priceDouble.toString()
     val amountDouble = 1.0
     val amount = amountDouble.toString()
-    val expenseDto = expenseMockDto(
-      description = description,
-      category = category,
-      place = place,
-      price = priceDouble,
-      amount = amountDouble,
-      calendar = calendar
-    )
 
     manualRegisterViewModel.description.value = description
     manualRegisterViewModel.category.value = category
