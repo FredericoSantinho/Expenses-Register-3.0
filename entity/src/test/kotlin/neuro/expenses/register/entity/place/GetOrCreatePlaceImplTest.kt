@@ -4,9 +4,9 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 import neuro.expenses.register.entity.location.GetCurrentLocation
-import neuro.expenses.register.entity.mocks.latLngMock
 import neuro.expenses.register.entity.model.LatLng
 import neuro.expenses.register.entity.model.Place
+import neuro.expenses.register.entity.test.mocks.latLngMock
 import neuro.test.rx.Incrementer
 import neuro.test.rx.ObserveSubscriptionTest
 import org.junit.jupiter.api.Test

@@ -1,7 +1,7 @@
 package neuro.expenses.register.entity.model
 
-import neuro.expenses.register.entity.mocks.latLngMock
-import neuro.expenses.register.entity.mocks.placeProductsMock
+import neuro.expenses.register.entity.test.mocks.latLngMock
+import neuro.expenses.register.entity.test.mocks.placeProductsMock
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 

@@ -1,7 +1,7 @@
 package neuro.expenses.register.entity.expense.validator
 
 import io.reactivex.rxjava3.core.Single
-import neuro.expenses.register.entity.mocks.expenseMock
+import neuro.expenses.register.entity.test.mocks.expenseMock
 import neuro.test.rx.ObserveSubscriptionTest
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.any

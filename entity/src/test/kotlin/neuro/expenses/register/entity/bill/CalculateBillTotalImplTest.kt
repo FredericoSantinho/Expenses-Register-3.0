@@ -1,6 +1,6 @@
 package neuro.expenses.register.entity.bill
 
-import neuro.expenses.register.entity.mocks.billItemsMock
+import neuro.expenses.register.entity.test.mocks.billItemsMock
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 

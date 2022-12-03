@@ -1,4 +1,4 @@
-package neuro.expenses.register.entity.mocks
+package neuro.expenses.register.entity.test.mocks
 
 import neuro.expenses.register.entity.model.BillItem
 import neuro.expenses.register.entity.model.PlaceProduct

@@ -4,12 +4,12 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 import neuro.expenses.register.entity.category.GetCategory
-import neuro.expenses.register.entity.mocks.categoryMock
-import neuro.expenses.register.entity.mocks.placeProductMock
-import neuro.expenses.register.entity.mocks.productMock
 import neuro.expenses.register.entity.model.Category
 import neuro.expenses.register.entity.model.PlaceProduct
 import neuro.expenses.register.entity.product.GetOrCreateProduct
+import neuro.expenses.register.entity.test.mocks.categoryMock
+import neuro.expenses.register.entity.test.mocks.placeProductMock
+import neuro.expenses.register.entity.test.mocks.productMock
 import neuro.test.rx.Incrementer
 import neuro.test.rx.ObserveSubscriptionTest
 import org.junit.jupiter.api.Test

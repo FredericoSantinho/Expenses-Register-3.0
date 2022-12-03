@@ -2,9 +2,9 @@ package neuro.expenses.register.entity.bill
 
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
-import neuro.expenses.register.entity.mocks.*
 import neuro.expenses.register.entity.place.GetOrCreatePlace
 import neuro.expenses.register.entity.placeproduct.GetOrCreatePlaceProduct
+import neuro.expenses.register.entity.test.mocks.*
 import neuro.test.rx.Incrementer
 import neuro.test.rx.ObserveSubscriptionTest
 import org.junit.jupiter.api.Test

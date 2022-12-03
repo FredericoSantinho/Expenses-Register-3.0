@@ -1,7 +1,7 @@
 package neuro.expenses.register.entity.model
 
-import neuro.expenses.register.entity.mocks.categoryMock
-import neuro.expenses.register.entity.mocks.productMock
+import neuro.expenses.register.entity.test.mocks.categoryMock
+import neuro.expenses.register.entity.test.mocks.productMock
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 

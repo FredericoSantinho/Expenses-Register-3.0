@@ -6,14 +6,14 @@ import io.reactivex.rxjava3.core.Single
 import neuro.expenses.register.entity.bill.BillController
 import neuro.expenses.register.entity.expense.validator.ExpenseValidator
 import neuro.expenses.register.entity.expense.validator.RegisterExpenseException
-import neuro.expenses.register.entity.mocks.billMock
-import neuro.expenses.register.entity.mocks.placeMock
-import neuro.expenses.register.entity.mocks.placeProductMock
 import neuro.expenses.register.entity.model.Bill
 import neuro.expenses.register.entity.model.Expense
 import neuro.expenses.register.entity.place.GetOrCreatePlace
 import neuro.expenses.register.entity.place.PlaceController
 import neuro.expenses.register.entity.placeproduct.GetOrCreatePlaceProduct
+import neuro.expenses.register.entity.test.mocks.billMock
+import neuro.expenses.register.entity.test.mocks.placeMock
+import neuro.expenses.register.entity.test.mocks.placeProductMock
 import neuro.test.rx.Incrementer
 import neuro.test.rx.ObserveSubscriptionTest
 import org.junit.jupiter.api.Test
