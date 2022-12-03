@@ -7,11 +7,17 @@ import java.util.*
 
 fun billDtoMock(
   id: Long = 1L,
-  calendar: Calendar = Calendar.getInstance(),
+  calendar: Calendar = buildCalendar(),
   placeDto: PlaceDto = placeDtoMock(),
   billItemsDtos: List<BillItemDto> = billItemsDtoMock(),
   isOpen: Boolean = true,
   iconUrl: String = ""
 ): BillDto {
   return BillDto(id, placeDto, calendar, 1.0, billItemsDtos, iconUrl = iconUrl, isOpen = isOpen)
+}
+
+private fun buildCalendar(): Calendar {
+  val calendar = Calendar.getInstance()
+  calendar.time = Date(0)
+  return calendar
 }

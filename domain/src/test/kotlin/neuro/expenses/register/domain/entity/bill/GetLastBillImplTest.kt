@@ -8,7 +8,6 @@ import neuro.test.rx.ObserveSubscriptionTest
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
-import java.util.*
 
 internal class GetLastBillImplTest() : ObserveSubscriptionTest() {
   @Test
@@ -17,9 +16,8 @@ internal class GetLastBillImplTest() : ObserveSubscriptionTest() {
 
     val getLastBillImpl = GetLastBillImpl(getLastBillUseCase)
 
-    val calendar = Calendar.getInstance()
-    val billDto = billDtoMock(calendar = calendar)
-    val expectedBill = billMock(calendar = calendar)
+    val billDto = billDtoMock()
+    val expectedBill = billMock()
 
     whenever(getLastBillUseCase.getLastBill()).thenReturn(
       Maybe.just(billDto)

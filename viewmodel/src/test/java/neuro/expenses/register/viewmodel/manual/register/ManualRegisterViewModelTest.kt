@@ -10,15 +10,15 @@ import neuro.expenses.register.domain.usecase.expense.RegisterExpenseError
 import neuro.expenses.register.domain.usecase.expense.RegisterExpenseException
 import neuro.expenses.register.domain.usecase.expense.RegisterExpenseUseCase
 import neuro.expenses.register.domain.usecase.near.GetNearestPlaceUseCase
+import neuro.expenses.register.entity.mocks.categoryDtoMock
+import neuro.expenses.register.entity.mocks.expenseDtoMock
+import neuro.expenses.register.entity.mocks.placeDtoMock
 import neuro.expenses.register.viewmodel.appbar.AppBarViewModel
 import neuro.expenses.register.viewmodel.bill.IBillCardViewModel
 import neuro.expenses.register.viewmodel.common.formatter.CurrencyFormatter
 import neuro.expenses.register.viewmodel.manual.register.ManualRegisterUiEvent.UiEvent
 import neuro.expenses.register.viewmodel.manual.register.ManualRegisterUiState.UiState
 import neuro.expenses.register.viewmodel.manual.register.ManualRegisterUiState.UiStateError
-import neuro.expenses.register.viewmodel.mock.categoryDtoMock
-import neuro.expenses.register.viewmodel.mock.expenseMockDto
-import neuro.expenses.register.viewmodel.mock.placeDtoMock
 import neuro.expenses.register.viewmodel.scaffold.ScaffoldViewModelState
 import neuro.expenses.register.viewmodel.test.TestSchedulerProvider
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -99,7 +99,7 @@ internal class ManualRegisterViewModelTest {
     val price = priceDouble.toString()
     val amountDouble = 1.0
     val amount = amountDouble.toString()
-    val expenseDto = expenseMockDto(
+    val expenseDto = expenseDtoMock(
       description = description,
       category = category,
       place = place,
@@ -174,7 +174,7 @@ internal class ManualRegisterViewModelTest {
     val price = priceDouble.toString()
     val amountDouble = 1.0
     val amount = amountDouble.toString()
-    val expenseDto = expenseMockDto(
+    val expenseDto = expenseDtoMock(
       description = description,
       category = category,
       place = place,
@@ -256,7 +256,7 @@ internal class ManualRegisterViewModelTest {
     val price = priceDouble.toString()
     val amountDouble = 1.0
     val amount = amountDouble.toString()
-    val expenseDto = expenseMockDto(
+    val expenseDto = expenseDtoMock(
       description = description,
       category = category,
       place = place,
@@ -338,7 +338,7 @@ internal class ManualRegisterViewModelTest {
     val price = priceDouble.toString()
     val amountDouble = 1.0
     val amount = amountDouble.toString()
-    val expenseDto = expenseMockDto(
+    val expenseDto = expenseDtoMock(
       description = description,
       category = category,
       place = place,
@@ -420,7 +420,7 @@ internal class ManualRegisterViewModelTest {
     val price = priceDouble.toString()
     val amountDouble = -0.01
     val amount = amountDouble.toString()
-    val expenseDto = expenseMockDto(
+    val expenseDto = expenseDtoMock(
       description = description,
       category = category,
       place = place,
@@ -502,7 +502,7 @@ internal class ManualRegisterViewModelTest {
     val price = ""
     val amountDouble = 0.0
     val amount = ""
-    val expenseDto = expenseMockDto(
+    val expenseDto = expenseDtoMock(
       description = description,
       category = category,
       place = place,
@@ -567,7 +567,7 @@ internal class ManualRegisterViewModelTest {
     val price = priceDouble.toString()
     val amountDouble = -0.01
     val amount = amountDouble.toString()
-    val expenseDto = expenseMockDto(
+    val expenseDto = expenseDtoMock(
       description = description,
       category = category,
       place = place,

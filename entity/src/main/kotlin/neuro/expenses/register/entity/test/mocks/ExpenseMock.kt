@@ -10,7 +10,13 @@ fun expenseMock(
   place: String = "place",
   price: Double = 1.0,
   amount: Double = 2.0,
-  calendar: Calendar = Calendar.getInstance()
+  calendar: Calendar = buildCalendar()
 ): Expense {
   return Expense(description, category, place, price, amount, calendar)
+}
+
+private fun buildCalendar(): Calendar {
+  val calendar = Calendar.getInstance()
+  calendar.time = Date(0)
+  return calendar
 }

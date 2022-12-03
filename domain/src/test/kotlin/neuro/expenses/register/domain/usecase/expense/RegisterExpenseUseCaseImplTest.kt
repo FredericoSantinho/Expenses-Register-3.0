@@ -8,7 +8,6 @@ import neuro.test.rx.ObserveSubscriptionTest
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
-import java.util.*
 
 internal class RegisterExpenseUseCaseImplTest() : ObserveSubscriptionTest() {
   @Test
@@ -17,10 +16,9 @@ internal class RegisterExpenseUseCaseImplTest() : ObserveSubscriptionTest() {
 
     val registerExpenseUseCase = RegisterExpenseUseCaseImpl(registerExpense)
 
-    val calendar = Calendar.getInstance()
-    val expense = expenseMock(calendar = calendar)
+    val expense = expenseMock()
 
-    val expenseDto = expenseDtoMock(calendar = calendar)
+    val expenseDto = expenseDtoMock()
 
     whenever(registerExpense.registerExpense(expense)).thenReturn(
       Completable.complete().observeSubscription()

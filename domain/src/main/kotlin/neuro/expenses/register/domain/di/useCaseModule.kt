@@ -12,6 +12,7 @@ import neuro.expenses.register.domain.usecase.place.*
 import neuro.expenses.register.domain.usecase.product.GetOrCreatePlaceProductUseCase
 import neuro.expenses.register.domain.usecase.product.GetOrCreatePlaceProductUseCaseImpl
 import org.koin.dsl.module
+import java.util.*
 
 val useCaseModule = module {
   single<RegisterExpenseUseCase> { RegisterExpenseUseCaseImpl(get()) }
@@ -24,7 +25,7 @@ val useCaseModule = module {
   single<SaveCategoryUseCase> { SaveCategoryUseCaseImpl(get()) }
   single<DeleteCategoryUseCase> { DeleteCategoryUseCaseImpl(get()) }
   single<UpdateCategoryUseCase> { UpdateCategoryUseCaseImpl(get()) }
-  single<GetCalendarUseCase> { GetCalendarUseCaseImpl() }
+  single<GetCalendarUseCase> { GetCalendarUseCaseImpl(Calendar.getInstance()) }
   single<GetNearestPlaceUseCase> { GetNearestPlaceUseCaseImpl(get(), get()) }
   single<GetNearestPlacesUseCase> { GetNearestPlacesUseCaseImpl(get()) }
   single<ObserveNearestPlacesUseCase> { ObserveNearestPlacesUseCaseImpl(get(), get()) }
