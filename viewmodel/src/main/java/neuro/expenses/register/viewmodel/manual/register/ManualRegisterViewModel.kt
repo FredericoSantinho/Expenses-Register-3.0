@@ -1,5 +1,7 @@
 package neuro.expenses.register.viewmodel.manual.register
 
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
@@ -19,7 +21,33 @@ import neuro.expenses.register.viewmodel.manual.register.ManualRegisterUiState.U
 import neuro.expenses.register.viewmodel.manual.register.ManualRegisterUiState.UiStateError
 import neuro.expenses.register.viewmodel.manual.register.mapper.toViewmodel
 import neuro.expenses.register.viewmodel.scaffold.ScaffoldViewModelState
+import java.util.*
 
+
+interface IManualRegisterViewModel {
+  val billCardViewModel: IBillCardViewModel
+  val description: MutableState<String>
+  val category: MutableState<String>
+  val place: MutableState<String>
+  val price: MutableState<String>
+  val amount: MutableState<String>
+  val total: MutableState<String>
+  val calendar: MutableState<Calendar>
+  val categoriesNames: Observable<List<String>>
+
+  val uiState: State<UiState>
+  val uiEvent: State<ManualRegisterUiEvent.UiEvent?>
+
+  fun onNearestPlaceButton()
+  fun onRegisterButton()
+  fun onPriceChange()
+  fun onAmountChange()
+  fun onDescriptionChange()
+  fun onCategoryChange()
+  fun onPlaceChange()
+  fun eventConsumed()
+  fun onComposition()
+}
 
 class ManualRegisterViewModel(
   private val getCalendarUseCase: GetCalendarUseCase,
@@ -27,34 +55,35 @@ class ManualRegisterViewModel(
   private val registerExpenseUseCase: RegisterExpenseUseCase,
   private val getNearestPlaceUseCase: GetNearestPlaceUseCase,
   private val currencyFormatter: CurrencyFormatter,
-  val billCardViewModel: IBillCardViewModel,
+  override val billCardViewModel: IBillCardViewModel,
   private val scaffoldViewModelState: ScaffoldViewModelState,
   schedulerProvider: SchedulerProvider
-) : BaseViewModel(schedulerProvider) {
+) : BaseViewModel(schedulerProvider), IManualRegisterViewModel {
   private val appBarViewModel: AppBarViewModel = AppBarViewModel()
 
-  val description = mutableStateOf("")
-  val category = mutableStateOf("")
-  val place = mutableStateOf("")
-  val price = mutableStateOf("")
-  val amount = mutableStateOf("")
-  val total = mutableStateOf(buildTotalStr())
+  override val description = mutableStateOf("")
+  override val category = mutableStateOf("")
+  override val place = mutableStateOf("")
+  override val price = mutableStateOf("")
+  override val amount = mutableStateOf("")
+  override val total = mutableStateOf(buildTotalStr())
 
-  val calendar = mutableStateOf(getCalendarUseCase.getCalendar())
-  val categoriesNames: Observable<List<String>> = observeCategoriesUseCase.observeCategories()
-    .flatMapSingle { Single.just(it).flattenAsObservable { it }.map { it.name }.toList() }
+  override val calendar = mutableStateOf(getCalendarUseCase.getCalendar())
+  override val categoriesNames: Observable<List<String>> =
+    observeCategoriesUseCase.observeCategories()
+      .flatMapSingle { Single.just(it).flattenAsObservable { it }.map { it.name }.toList() }
 
   private val _uiState = ManualRegisterUiState()
-  val uiState = _uiState.uiState
+  override val uiState = _uiState.uiState
   private val _uiEvent = ManualRegisterUiEvent()
-  val uiEvent = _uiEvent.uiEvent
+  override val uiEvent = _uiEvent.uiEvent
 
-  fun onNearestPlaceButton() {
+  override fun onNearestPlaceButton() {
     setNearestPlace()
     onPlaceChange()
   }
 
-  fun onRegisterButton() {
+  override fun onRegisterButton() {
     registerExpenseUseCase.registerExpense(buildExpense())
       .baseSubscribe(onComplete = { publishAndReset() }, onError = {
         if (it is RegisterExpenseException) {
@@ -65,11 +94,11 @@ class ManualRegisterViewModel(
       })
   }
 
-  fun onPriceChange() {
+  override fun onPriceChange() {
     total.value = buildTotalStr()
   }
 
-  fun onAmountChange() {
+  override fun onAmountChange() {
     if (uiState.value is UiState.Error) {
       val previousErrors = (uiState.value as UiState.Error).errors
       val errors = previousErrors.filter { it !is UiStateError.ShowInvalidAmountError }
@@ -80,7 +109,7 @@ class ManualRegisterViewModel(
     total.value = buildTotalStr()
   }
 
-  fun onDescriptionChange() {
+  override fun onDescriptionChange() {
     if (uiState.value is UiState.Error) {
       val previousErrors = (uiState.value as UiState.Error).errors
       val errors = previousErrors.filter { it !is UiStateError.ShowEmptyDescriptionError }
@@ -89,7 +118,7 @@ class ManualRegisterViewModel(
     }
   }
 
-  fun onCategoryChange() {
+  override fun onCategoryChange() {
     if (uiState.value is UiState.Error) {
       val previousErrors = (uiState.value as UiState.Error).errors
       val errors = previousErrors.filter { it !is UiStateError.ShowCategoryNotExistsError }
@@ -98,7 +127,7 @@ class ManualRegisterViewModel(
     }
   }
 
-  fun onPlaceChange() {
+  override fun onPlaceChange() {
     if (uiState.value is UiState.Error) {
       val previousErrors = (uiState.value as UiState.Error).errors
       val errors = previousErrors.filter { it !is UiStateError.ShowEmptyPlaceError }
@@ -145,11 +174,11 @@ class ManualRegisterViewModel(
     }
   }
 
-  fun eventConsumed() {
+  override fun eventConsumed() {
     _uiEvent.eventConsumed()
   }
 
-  fun onComposition() {
+  override fun onComposition() {
     setupScaffold()
   }
 

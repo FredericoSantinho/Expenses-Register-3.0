@@ -15,6 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -38,18 +39,24 @@ import neuro.expenses.register.presentation.ui.common.composables.text.TextField
 import neuro.expenses.register.presentation.ui.common.composables.text.TextFieldWithError
 import neuro.expenses.register.presentation.ui.common.keyboard.keyboardOptionsNumeric
 import neuro.expenses.register.presentation.ui.common.keyboard.keyboardOptionsText
+import neuro.expenses.register.presentation.ui.manual.register.dummy.DummyManualRegisterViewModel
 import neuro.expenses.register.presentation.ui.manual.register.mapper.toPresentation
 import neuro.expenses.register.presentation.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.presentation.ui.theme.ExpensesRegisterTypography
+import neuro.expenses.register.viewmodel.di.CURRENCY
+import neuro.expenses.register.viewmodel.manual.register.IManualRegisterViewModel
 import neuro.expenses.register.viewmodel.manual.register.ManualRegisterUiEvent.UiEvent
 import neuro.expenses.register.viewmodel.manual.register.ManualRegisterUiState.UiState
 import neuro.expenses.register.viewmodel.manual.register.ManualRegisterUiState.UiStateError
 import neuro.expenses.register.viewmodel.manual.register.ManualRegisterViewModel
+import org.koin.androidx.compose.get
 import org.koin.androidx.compose.getViewModel
+import org.koin.core.qualifier.named
 
 @Composable
 fun ManualRegisterComposable(
-  manualRegisterViewModel: ManualRegisterViewModel = getViewModel(),
+  manualRegisterViewModel: IManualRegisterViewModel = getViewModel<ManualRegisterViewModel>(),
+  currency: String = get(named(CURRENCY)),
   showTimePicker: ShowTimePicker = DefaultShowTimePicker(),
   showDatePicker: ShowDatePicker = ShowMaterialDatePicker(),
   timeTextMapper: TimeTextMapper = TimeTextMapperImpl(),
@@ -172,9 +179,10 @@ fun ManualRegisterComposable(
         CurrencyTextField(
           value = manualRegisterViewModel.price,
           label = stringResource(R.string.price),
+          symbol = currency,
           modifier = Modifier.constrainAs(priceC) {
             start.linkTo(parent.start)
-            width = Dimension.value(96.dp)
+            width = Dimension.value(90.dp)
           },
           onValueChange = {
             manualRegisterViewModel.onPriceChange()
@@ -188,7 +196,7 @@ fun ManualRegisterComposable(
           label = stringResource(R.string.amount),
           modifier = Modifier.constrainAs(amountC) {
             start.linkTo(priceC.end, margin = 8.dp)
-            width = Dimension.value(96.dp)
+            width = Dimension.value(90.dp)
           },
           keyboardOptions = keyboardOptionsNumericDone,
           textStyle = ExpensesRegisterTypography.body2.copy(textAlign = TextAlign.End),
@@ -211,10 +219,14 @@ fun ManualRegisterComposable(
           style = MaterialTheme.typography.h6,
         )
         Text(
-          text = manualRegisterViewModel.total.value, modifier = Modifier.constrainAs(totalC) {
-            end.linkTo(parent.end, margin = 8.dp)
-            bottom.linkTo(amountC.bottom, margin = 4.dp)
-          }, style = MaterialTheme.typography.h6
+          text = manualRegisterViewModel.total.value, modifier = Modifier
+            .constrainAs(totalC) {
+              end.linkTo(parent.end, margin = 8.dp)
+              bottom.linkTo(amountC.bottom, margin = 4.dp)
+            }
+            .widthIn(max = 112.dp), style = MaterialTheme.typography.h6,
+          maxLines = 1,
+          overflow = TextOverflow.Clip
         )
       }
       Row(
@@ -255,7 +267,7 @@ fun ManualRegisterComposable(
 @Composable
 private fun onUiEvent(
   uiEvent: UiEvent?,
-  manualRegisterViewModel: ManualRegisterViewModel,
+  manualRegisterViewModel: IManualRegisterViewModel,
   coroutineScope: CoroutineScope,
   snackbarHostState: SnackbarHostState
 ) {
@@ -384,7 +396,7 @@ private fun showDescriptionError(
 @Composable
 fun PreviewManualRegisterComposable() {
   ExpensesRegisterTheme {
-    ManualRegisterComposable()
+    ManualRegisterComposable(DummyManualRegisterViewModel(), "€")
   }
 }
 
