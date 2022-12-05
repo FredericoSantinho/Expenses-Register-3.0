@@ -17,6 +17,5 @@ dependencies {
   testImplementation lib.slf4jNop
   testImplementation lib.junit5
   testImplementation lib.mockito
-  androidTestImplementation lib.googleTest
   testRuntimeOnly lib.junit5Engine
 }

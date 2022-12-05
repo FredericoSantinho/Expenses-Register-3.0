@@ -1,13 +1,15 @@
-package neuro.expenses.register.presentation.ui.bill
+package neuro.expenses.register.acceptance.tests.ui.bill
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.unit.dp
-import neuro.expenses.register.presentation.ui.assertContainsColor
-import neuro.expenses.register.presentation.ui.assertNotContainsColor
-import neuro.expenses.register.presentation.ui.performLongClick
+import neuro.expenses.register.acceptance.tests.ui.assertContainsColor
+import neuro.expenses.register.acceptance.tests.ui.assertNotContainsColor
+import neuro.expenses.register.acceptance.tests.ui.performLongClick
+import neuro.expenses.register.presentation.ui.bill.BillCardComposable
+import neuro.expenses.register.presentation.ui.bill.BillCardComposableTags
 import neuro.expenses.register.presentation.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.viewmodel.bill.BillUiState.UiState
 import neuro.expenses.register.viewmodel.bill.IBillCardViewModel

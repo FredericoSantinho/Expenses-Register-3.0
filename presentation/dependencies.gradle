@@ -4,7 +4,6 @@ dependencies {
   implementation fileTree(dir: 'libs', include: ['*.jar'])
 
   api project(':viewmodel')
-  api project(':data')
   testImplementation project(':test')
 
   implementation lib.accompanist
@@ -23,11 +22,4 @@ dependencies {
   testImplementation lib.koinTest
   testImplementation lib.mockito
   testImplementation lib.roomTest
-  androidTestImplementation lib.mockito
-  androidTestImplementation lib.googleTest
-  androidTestImplementation lib.composeUiTestJunit4
-  androidTestImplementation lib.koinTest
-  debugImplementation lib.composeTest
-  androidTestRuntimeOnly lib.mockitoAndroid
-  testRuntimeOnly lib.junit5Engine
 }

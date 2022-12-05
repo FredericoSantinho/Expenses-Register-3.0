@@ -1,4 +1,4 @@
-package neuro.expenses.register.presentation
+package neuro.expenses.register.acceptance.tests
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
@@ -17,6 +17,6 @@ class ExampleInstrumentedTest {
   fun useAppContext() {
     // Context of the app under test.
     val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-    assertEquals("neuro.expenses.register.presentation.test", appContext.packageName)
+    assertEquals("neuro.expenses.register.acceptance.tests.test", appContext.packageName)
   }
 }

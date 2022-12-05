@@ -1,4 +1,4 @@
-package neuro.expenses.register.presentation.ui
+package neuro.expenses.register.acceptance.tests.ui
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.colorspace.ColorSpaces

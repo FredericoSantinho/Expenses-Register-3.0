@@ -1,10 +1,12 @@
-package neuro.expenses.register.presentation.ui.home.composable
+package neuro.expenses.register.acceptance.tests.ui.composable
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.unit.dp
-import neuro.expenses.register.presentation.ui.performLongClick
+import neuro.expenses.register.acceptance.tests.ui.performLongClick
+import neuro.expenses.register.presentation.ui.home.composable.PlaceProductCardComposable
+import neuro.expenses.register.presentation.ui.home.composable.ProductCardComposableTags
 import neuro.expenses.register.presentation.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.viewmodel.home.IProductCardViewModel
 import neuro.expenses.register.viewmodel.model.CategoryModel

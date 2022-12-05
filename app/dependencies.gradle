@@ -1,14 +1,10 @@
 apply from: file("$rootDir/gradle/libraries.gradle")
 
 dependencies {
-  implementation fileTree(dir: "libs", include: ["*.jar"])
+  implementation fileTree(dir: 'libs' + '', include: ["*.jar"])
 
-  api project(':presentation')
-  testImplementation project(':test')
+  implementation project(':presentation')
+  implementation project(':data')
 
   implementation lib.koinCompose
-
-  testImplementation lib.slf4jNop
-  testImplementation lib.junit
-  androidTestImplementation lib.googleTest
 }

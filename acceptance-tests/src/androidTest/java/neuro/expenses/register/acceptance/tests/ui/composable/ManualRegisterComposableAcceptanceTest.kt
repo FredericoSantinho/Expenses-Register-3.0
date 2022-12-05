@@ -1,4 +1,4 @@
-package neuro.expenses.register.presentation.ui.manual.register.composable
+package neuro.expenses.register.acceptance.tests.ui.composable
 
 import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
@@ -9,6 +9,8 @@ import neuro.expenses.register.presentation.R
 import neuro.expenses.register.presentation.di.presentationTestModulesDummyLocation
 import neuro.expenses.register.presentation.ui.bill.BillCardComposableTags
 import neuro.expenses.register.presentation.ui.common.composables.datetime.DateTimeComposableTags
+import neuro.expenses.register.presentation.ui.manual.register.composable.ManualRegisterComposable
+import neuro.expenses.register.presentation.ui.manual.register.composable.ManualRegisterComposableTags
 import neuro.expenses.register.presentation.ui.theme.ExpensesRegisterTheme
 import neuro.expenses.register.viewmodel.bill.FeedLastbillCardViewModel
 import neuro.expenses.register.viewmodel.manual.register.ManualRegisterViewModel
