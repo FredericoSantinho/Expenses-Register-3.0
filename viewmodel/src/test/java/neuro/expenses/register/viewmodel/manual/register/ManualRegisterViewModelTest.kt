@@ -713,7 +713,6 @@ internal class ManualRegisterViewModelTest {
     val billCardViewModel = mock<IBillCardViewModel>()
     val scaffoldViewModelState = mock<ScaffoldViewModelState>()
 
-    val calendar = Calendar.getInstance()
     whenever(getCalendarUseCase.getCalendar()).thenReturn(Calendar.getInstance())
     whenever(observeCategoriesUseCase.observeCategories()).thenReturn(Observable.just(emptyList()))
 

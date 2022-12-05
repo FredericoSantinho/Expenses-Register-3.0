@@ -11,7 +11,7 @@ import androidx.compose.ui.text.style.TextAlign
 import com.google.accompanist.pager.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import neuro.expenses.register.presentation.common.compose.rememberUnit
+import neuro.expenses.register.presentation.common.compose.rememberSaveableUnit
 import neuro.expenses.register.presentation.ui.edit.mapper.toPresentation
 import neuro.expenses.register.viewmodel.edit.EditUiEvent.UiEvent
 import neuro.expenses.register.viewmodel.edit.EditViewModel
@@ -20,7 +20,7 @@ import org.koin.androidx.compose.getViewModel
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun EditComposable(editViewModel: EditViewModel = getViewModel()) {
-  rememberUnit { editViewModel.onComposition() }
+  rememberSaveableUnit { editViewModel.onComposition() }
 
   val uiEvent by editViewModel.uiEvent
 

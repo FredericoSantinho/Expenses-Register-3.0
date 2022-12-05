@@ -17,6 +17,6 @@ class ExampleInstrumentedTest {
   fun useAppContext() {
     // Context of the app under test.
     val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-    assertEquals("neuro.expenses.register.acceptance.tests.test", appContext.packageName)
+    assertEquals("neuro.expenses.register.acceptance.test", appContext.packageName)
   }
 }

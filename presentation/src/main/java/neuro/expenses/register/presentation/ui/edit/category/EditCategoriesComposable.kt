@@ -13,7 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import kotlinx.coroutines.CoroutineScope
-import neuro.expenses.register.presentation.common.compose.rememberUnit
+import neuro.expenses.register.presentation.common.compose.rememberSaveableUnit
 import neuro.expenses.register.presentation.mocks.category.EditCategoriesViewModelMock
 import neuro.expenses.register.presentation.ui.common.composables.modal.ModalBottomSheetLayout
 import neuro.expenses.register.presentation.ui.common.composables.modal.addBackHandler
@@ -32,7 +32,7 @@ fun EditCategoriesComposable(
   editCategoriesViewModel: IEditCategoriesViewModel = getViewModel<EditCategoriesViewModel>(),
   navController: NavHostController? = null
 ) {
-  rememberUnit { editCategoriesViewModel.onComposition() }
+  rememberSaveableUnit { editCategoriesViewModel.onComposition() }
 
   val uiEvent = editCategoriesViewModel.uiEvent
 

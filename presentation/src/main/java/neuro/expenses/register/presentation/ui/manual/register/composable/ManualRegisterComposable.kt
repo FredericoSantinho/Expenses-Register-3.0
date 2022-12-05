@@ -22,7 +22,7 @@ import androidx.constraintlayout.compose.Dimension
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import neuro.expenses.register.presentation.R
-import neuro.expenses.register.presentation.common.compose.rememberUnit
+import neuro.expenses.register.presentation.common.compose.rememberSaveableUnit
 import neuro.expenses.register.presentation.common.picker.date.ShowDatePicker
 import neuro.expenses.register.presentation.common.picker.date.ShowMaterialDatePicker
 import neuro.expenses.register.presentation.common.picker.time.DefaultShowTimePicker
@@ -55,7 +55,7 @@ fun ManualRegisterComposable(
   timeTextMapper: TimeTextMapper = TimeTextMapperImpl(),
   dateTextMapper: DateTextMapper = DateTextMapperImpl()
 ) {
-  rememberUnit { manualRegisterViewModel.onComposition() }
+  rememberSaveableUnit { manualRegisterViewModel.onComposition() }
 
   val uiEvent by manualRegisterViewModel.uiEvent
   val uiState by manualRegisterViewModel.uiState

@@ -7,7 +7,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.compose.rememberNavController
-import neuro.expenses.register.presentation.common.compose.rememberUnit
+import neuro.expenses.register.presentation.common.compose.rememberSaveableUnit
 import neuro.expenses.register.presentation.ui.common.composables.appbar.SearchAppBar
 import neuro.expenses.register.presentation.ui.common.composables.fab.FloatingActionButtonComposable
 import neuro.expenses.register.presentation.ui.main.nav.BottomNavigation
@@ -21,7 +21,7 @@ fun MainComposable(
   fragmentActivity: FragmentActivity,
   mainViewModel: MainViewModel = getViewModel()
 ) {
-  rememberUnit { mainViewModel.onComposition() }
+  rememberSaveableUnit { mainViewModel.onComposition() }
 
   val navController = rememberNavController()
   Scaffold(

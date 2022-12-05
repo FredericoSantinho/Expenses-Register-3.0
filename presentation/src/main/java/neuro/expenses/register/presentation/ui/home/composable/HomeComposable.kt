@@ -20,7 +20,7 @@ import kotlinx.coroutines.CoroutineScope
 import neuro.expenses.register.*
 import neuro.expenses.register.presentation.R
 import neuro.expenses.register.presentation.common.alert.AlertDialog
-import neuro.expenses.register.presentation.common.compose.rememberUnit
+import neuro.expenses.register.presentation.common.compose.rememberSaveableUnit
 import neuro.expenses.register.presentation.ui.bill.BillComposableContainer
 import neuro.expenses.register.presentation.ui.common.composables.datetime.DateTimeComposable
 import neuro.expenses.register.presentation.ui.common.composables.dropdown.DropDownTextField
@@ -44,7 +44,7 @@ fun HomeComposable(
   mapsEventMapper: HomeMapsUiEventMapper = get(),
   homeViewModel: HomeViewModel = getViewModel()
 ) {
-  rememberUnit { homeViewModel.onComposition() }
+  rememberSaveableUnit { homeViewModel.onComposition() }
 
   val uiState by homeViewModel.uiState
   val uiEvent = homeViewModel.uiEvent
@@ -127,7 +127,7 @@ private fun handleLocationPermissions(
   locationPermissionsState: MultiplePermissionsState, homeViewModel: HomeViewModel
 ) {
   if (locationPermissionsState.allPermissionsGranted) {
-    rememberUnit {
+    rememberSaveableUnit {
       homeViewModel.onPermissionsGranted()
     }
   }

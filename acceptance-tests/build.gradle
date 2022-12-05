@@ -9,7 +9,7 @@ plugins {
 apply from: "dependencies.gradle"
 
 android {
-  namespace 'neuro.expenses.register.acceptance.tests'
+  namespace 'neuro.expenses.register.acceptance'
   compileSdk project.compileSdkVersion
 
   defaultConfig {

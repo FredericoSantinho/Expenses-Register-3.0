@@ -17,7 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import kotlinx.coroutines.CoroutineScope
-import neuro.expenses.register.presentation.common.compose.rememberUnit
+import neuro.expenses.register.presentation.common.compose.rememberSaveableUnit
 import neuro.expenses.register.presentation.ui.bill.BillCardComposable
 import neuro.expenses.register.presentation.ui.common.composables.modal.*
 import neuro.expenses.register.presentation.ui.theme.grey_fog_lighter
@@ -35,7 +35,7 @@ fun BillsComposable(
   billDetailedViewModel: BillDetailedViewModel = get(),
   billsViewModel: BillsViewModel = getViewModel()
 ) {
-  rememberUnit { billsViewModel.onComposition() }
+  rememberSaveableUnit { billsViewModel.onComposition() }
 
   val uiEvent = billsViewModel.uiEvent
 
