@@ -21,7 +21,7 @@ import neuro.expenses.register.*
 import neuro.expenses.register.presentation.R
 import neuro.expenses.register.presentation.common.alert.AlertDialog
 import neuro.expenses.register.presentation.common.compose.rememberSaveableUnit
-import neuro.expenses.register.presentation.ui.bill.BillComposableContainer
+import neuro.expenses.register.presentation.ui.bill.BillCardComposableContainer
 import neuro.expenses.register.presentation.ui.common.composables.datetime.DateTimeComposable
 import neuro.expenses.register.presentation.ui.common.composables.dropdown.DropDownTextField
 import neuro.expenses.register.presentation.ui.common.composables.maps.MapsComposable
@@ -70,7 +70,7 @@ fun HomeComposable(
     ) {
       val (mainC, billC) = createRefs()
 
-      BillComposableContainer(homeViewModel.billCardViewModel, Modifier.constrainAs(billC) {
+      BillCardComposableContainer(homeViewModel.billCardViewModel, Modifier.constrainAs(billC) {
         bottom.linkTo(parent.bottom)
       })
       Column(modifier = Modifier.constrainAs(mainC) {

@@ -9,7 +9,7 @@ private val EMPTY = BillModel(0L, "", "", "", "", "", false, Calendar.getInstanc
 class BillCardViewModel(
   opened: Boolean = false,
   billModel: BillModel = EMPTY,
-  private val onBillLongClick: (Long) -> Unit = {}
+  private val onBillClick: (Long) -> Unit = {}
 ) : IBillCardViewModel {
   override val id = mutableStateOf(billModel.id)
   override val iconUrl = mutableStateOf(billModel.iconUrl)
@@ -44,11 +44,10 @@ class BillCardViewModel(
   }
 
   override fun onCardClick() {
-
+    onBillClick(id.value)
   }
 
   override fun onCardLongClick() {
-    onBillLongClick(id.value)
   }
 
   override fun onEditClick() {

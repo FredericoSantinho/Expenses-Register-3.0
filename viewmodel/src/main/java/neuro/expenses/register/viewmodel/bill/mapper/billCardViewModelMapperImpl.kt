@@ -7,8 +7,8 @@ import neuro.expenses.register.viewmodel.bill.IBillCardViewModel
 class billCardViewModelMapperImpl(private val billModelMapper: BillModelMapper) :
   billCardViewModelMapper {
   override fun map(
-    billDto: BillDto, editable: Boolean, opened: Boolean, onBillLongClick: (Long) -> Unit
+    billDto: BillDto, editable: Boolean, opened: Boolean, onBillClick: (Long) -> Unit
   ): IBillCardViewModel {
-    return BillCardViewModel(opened, billModelMapper.map(billDto), onBillLongClick)
+    return BillCardViewModel(opened, billModelMapper.map(billDto), onBillClick)
   }
 }

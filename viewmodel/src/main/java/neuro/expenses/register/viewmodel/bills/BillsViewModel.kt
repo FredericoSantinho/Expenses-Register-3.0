@@ -43,7 +43,7 @@ class BillsViewModel(
       .map { sortBills.sortBills(it) }
       .map { billDtos ->
         billDtos.map { billDto ->
-          billCardViewModelMapper.map(billDto, false, false, ::onBillLongClick)
+          billCardViewModelMapper.map(billDto, false, false, ::onBillClick)
         }
       }.baseSubscribe({
         bills.value = it
@@ -63,7 +63,7 @@ class BillsViewModel(
     scaffoldViewModelState.appBarViewModel.value = appBarViewModel
   }
 
-  private fun onBillLongClick(billId: Long) {
+  private fun onBillClick(billId: Long) {
     getBillUseCase.getBill(billId).baseSubscribe { billDto ->
       billDetailedViewModel.setBillDetailedViewModel(billDto)
       _uiEvent.openBillDetailed()

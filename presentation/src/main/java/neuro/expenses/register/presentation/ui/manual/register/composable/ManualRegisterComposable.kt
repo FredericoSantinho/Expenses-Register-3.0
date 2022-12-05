@@ -27,7 +27,7 @@ import neuro.expenses.register.presentation.common.picker.date.ShowDatePicker
 import neuro.expenses.register.presentation.common.picker.date.ShowMaterialDatePicker
 import neuro.expenses.register.presentation.common.picker.time.DefaultShowTimePicker
 import neuro.expenses.register.presentation.common.picker.time.ShowTimePicker
-import neuro.expenses.register.presentation.ui.bill.BillComposableContainer
+import neuro.expenses.register.presentation.ui.bill.BillCardComposableContainer
 import neuro.expenses.register.presentation.ui.common.composables.datetime.DateTimeComposable
 import neuro.expenses.register.presentation.ui.common.composables.datetime.mapper.DateTextMapper
 import neuro.expenses.register.presentation.ui.common.composables.datetime.mapper.DateTextMapperImpl
@@ -232,7 +232,7 @@ fun ManualRegisterComposable(
         }
       }
     }
-    BillComposableContainer(manualRegisterViewModel.billCardViewModel)
+    BillCardComposableContainer(manualRegisterViewModel.billCardViewModel)
   }
 
   onUiState(
