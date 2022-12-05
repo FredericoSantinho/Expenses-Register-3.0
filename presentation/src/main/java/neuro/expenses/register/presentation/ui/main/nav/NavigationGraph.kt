@@ -17,13 +17,13 @@ fun NavigationGraph(
 ) {
     NavHost(navController, startDestination = BottomNavItem.Home.screenRoute, modifier = modifier) {
         composable(BottomNavItem.Home.screenRoute) {
-            HomeComposable(navController)
+            HomeComposable(navController = navController)
         }
         composable(BottomNavItem.ManualRegister.screenRoute) {
             ManualRegisterComposable()
         }
         composable(BottomNavItem.Bills.screenRoute) {
-            BillsComposable(navController)
+            BillsComposable(navController = navController)
         }
         composable(BottomNavItem.Edit.screenRoute) {
             EditComposable()

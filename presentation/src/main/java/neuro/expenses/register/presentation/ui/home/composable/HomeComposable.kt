@@ -40,9 +40,9 @@ import org.koin.androidx.compose.getViewModel
 @OptIn(ExperimentalPermissionsApi::class, ExperimentalMaterialApi::class)
 @Composable
 fun HomeComposable(
-  navController: NavHostController? = null,
+  homeViewModel: HomeViewModel = getViewModel(),
   mapsEventMapper: HomeMapsUiEventMapper = get(),
-  homeViewModel: HomeViewModel = getViewModel()
+  navController: NavHostController? = null
 ) {
   rememberSaveableUnit { homeViewModel.onComposition() }
 

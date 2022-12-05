@@ -31,9 +31,9 @@ import org.koin.androidx.compose.getViewModel
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun BillsComposable(
-  navController: NavHostController? = null,
   billDetailedViewModel: BillDetailedViewModel = get(),
-  billsViewModel: BillsViewModel = getViewModel()
+  billsViewModel: BillsViewModel = getViewModel(),
+  navController: NavHostController? = null
 ) {
   rememberSaveableUnit { billsViewModel.onComposition() }
 
