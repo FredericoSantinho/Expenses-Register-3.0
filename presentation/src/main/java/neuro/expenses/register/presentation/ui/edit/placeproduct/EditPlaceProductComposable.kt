@@ -1,14 +1,12 @@
 package neuro.expenses.register.presentation.ui.edit.placeproduct
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -67,6 +65,7 @@ fun EditPlaceProductComposable(
       editPlaceProductViewModel.iconUrl.value
     )
     TextFieldWithError(
+      modifier = Modifier.fillMaxWidth(),
       value = editPlaceProductViewModel.description,
       label = stringResource(R.string.description),
       keyboardOptions = keyboardOptionsText,
@@ -75,26 +74,30 @@ fun EditPlaceProductComposable(
       isError = descriptionIsError,
       errorMessage = descriptionErrorMessage
     )
-    TextFieldWithDropdown(
-      dataIn = editPlaceProductViewModel.categoriesNames.subscribeAsState(initial = emptyList()),
-      label = stringResource(R.string.category),
-      keyboardOptions = keyboardOptionsText,
-      onValueChange = { editPlaceProductViewModel.onCategoryChange() },
-      value = editPlaceProductViewModel.category,
-      isError = categoryIsError,
-      textStyle = ExpensesRegisterTypography.body2,
-      onSelectOption = { focusManager.moveFocus(FocusDirection.Next) }
-    )
+    Row {
+      TextFieldWithDropdown(
+        modifier = Modifier.weight(1f),
+        dataIn = editPlaceProductViewModel.categoriesNames.subscribeAsState(initial = emptyList()),
+        label = stringResource(R.string.category),
+        keyboardOptions = keyboardOptionsText,
+        onValueChange = { editPlaceProductViewModel.onCategoryChange() },
+        value = editPlaceProductViewModel.category,
+        isError = categoryIsError,
+        textStyle = ExpensesRegisterTypography.body2,
+        onSelectOption = { focusManager.moveFocus(FocusDirection.Next) }
+      )
+      Divider(modifier = Modifier.weight(0.05f))
+      CurrencyTextField(
+        value = editPlaceProductViewModel.price,
+        label = stringResource(R.string.price),
+        modifier = Modifier.widthIn(max = 96.dp),
+        textStyle = ExpensesRegisterTypography.body2
+      )
+    }
     TextFieldWithError(
       value = editPlaceProductViewModel.iconUrl,
       label = stringResource(R.string.icon_url),
       keyboardOptions = keyboardOptionsText,
-      textStyle = ExpensesRegisterTypography.body2
-    )
-    CurrencyTextField(
-      value = editPlaceProductViewModel.price,
-      label = stringResource(R.string.price),
-      modifier = Modifier.width(96.dp),
       textStyle = ExpensesRegisterTypography.body2
     )
     SaveDeleteComposable(
