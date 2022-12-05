@@ -26,7 +26,7 @@ const val DECIMALS = 2
 
 val viewModelModule = module {
   single { ApplicationViewModel(get(), get(), get()) }
-  single { MainViewModel(get(), get(), get(), get()) }
+  viewModel { MainViewModel(get(), get(), get(), get()) }
   single { AppBarViewModel() }
   single<ScaffoldViewModelState> { ScaffoldViewModelStateImpl() }
   viewModel { SettingsViewModel() }

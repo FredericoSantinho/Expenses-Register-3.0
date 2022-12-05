@@ -1,7 +1,5 @@
 package neuro.expenses.register.viewmodel.manual.register
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
@@ -21,33 +19,6 @@ import neuro.expenses.register.viewmodel.manual.register.ManualRegisterUiState.U
 import neuro.expenses.register.viewmodel.manual.register.ManualRegisterUiState.UiStateError
 import neuro.expenses.register.viewmodel.manual.register.mapper.toViewmodel
 import neuro.expenses.register.viewmodel.scaffold.ScaffoldViewModelState
-import java.util.*
-
-
-interface IManualRegisterViewModel {
-  val billCardViewModel: IBillCardViewModel
-  val description: MutableState<String>
-  val category: MutableState<String>
-  val place: MutableState<String>
-  val price: MutableState<String>
-  val amount: MutableState<String>
-  val total: MutableState<String>
-  val calendar: MutableState<Calendar>
-  val categoriesNames: Observable<List<String>>
-
-  val uiState: State<UiState>
-  val uiEvent: State<ManualRegisterUiEvent.UiEvent?>
-
-  fun onNearestPlaceButton()
-  fun onRegisterButton()
-  fun onPriceChange()
-  fun onAmountChange()
-  fun onDescriptionChange()
-  fun onCategoryChange()
-  fun onPlaceChange()
-  fun eventConsumed()
-  fun onComposition()
-}
 
 class ManualRegisterViewModel(
   private val getCalendarUseCase: GetCalendarUseCase,
