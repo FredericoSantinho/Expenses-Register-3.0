@@ -6,7 +6,7 @@ interface SaveBill {
   /**
    * Save a Bill.
    *
-   * @param Bill to save.
+   * @param bill Bill to save.
    */
   fun saveBill(bill: Bill)
 }

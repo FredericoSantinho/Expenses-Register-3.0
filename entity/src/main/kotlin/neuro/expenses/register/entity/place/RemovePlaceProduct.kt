@@ -4,7 +4,7 @@ import io.reactivex.rxjava3.core.Completable
 
 interface RemovePlaceProduct {
   /**
-   * Remove PlaceProduct from Place.
+   * Remove Place Product from Place.
    *
    * @param placeId Place id.
    * @param placeProductId PlaceProduct id.

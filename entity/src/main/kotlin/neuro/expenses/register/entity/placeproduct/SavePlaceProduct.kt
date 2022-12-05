@@ -5,9 +5,9 @@ import neuro.expenses.register.entity.model.PlaceProduct
 
 interface SavePlaceProduct {
   /**
-   * Save PlaceProduct.
+   * Save Place Product.
    *
-   * @param placeProduct PlaceProduct to save.
+   * @param placeProduct Place Product to save.
    * @return Completable that completes if operation succeeds.
    */
   fun savePlaceProduct(placeProduct: PlaceProduct): Completable

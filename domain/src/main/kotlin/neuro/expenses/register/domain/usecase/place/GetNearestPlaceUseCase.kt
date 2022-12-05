@@ -5,7 +5,9 @@ import neuro.expenses.register.domain.dto.PlaceDto
 
 interface GetNearestPlaceUseCase {
   /**
-   * @return the nearest Place available based on current location.
+   * Get nearest Place.
+   *
+   * @return Maybe with the nearest Place available based on current location.
    */
   fun getNearestPlace(): Maybe<PlaceDto>
 }

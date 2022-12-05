@@ -7,17 +7,9 @@ interface CreateCategoryRepository {
   /**
    * Create a category.
    *
-   * @throws CreateCategoryError in case there's already a category with the same name.
+   * @param categoryDto Category to create.
+   * @return Completable that completes in case of success or emits an error with a
+   * CreateCategoryError in case there's already a category with the same name.
    */
   fun createCategory(categoryDto: CategoryDto): Completable
-}
-
-class CreateCategoryError : java.lang.IllegalArgumentException() {
-  override fun equals(other: Any?): Boolean {
-    return other is CreateCategoryError
-  }
-
-  override fun hashCode(): Int {
-    return CreateCategoryError::class.toString().hashCode()
-  }
 }

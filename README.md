@@ -115,7 +115,7 @@ Test coverage reports:
 
 ## Documentation
 
-entity and domain modules are documented with KDoc on all public methods.  
+entity and domain modules are documented with KDoc on all public interfaces.  
 Remaining modules have no strict documentation rules. Documentation shall de provided as the
 developer sees fit.
 

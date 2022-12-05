@@ -7,7 +7,12 @@ import neuro.expenses.register.data.repository.product.*
 import neuro.expenses.register.domain.repository.bill.*
 import neuro.expenses.register.domain.repository.category.*
 import neuro.expenses.register.domain.repository.place.*
-import neuro.expenses.register.domain.repository.product.*
+import neuro.expenses.register.domain.repository.placeproduct.GeneratePlaceProductIdRepository
+import neuro.expenses.register.domain.repository.placeproduct.GetPlaceProductRepository
+import neuro.expenses.register.domain.repository.placeproduct.SavePlaceProductRepository
+import neuro.expenses.register.domain.repository.product.GenerateProductIdRepository
+import neuro.expenses.register.domain.repository.product.GetProductRepository
+import neuro.expenses.register.domain.repository.product.SaveProductRepository
 import org.koin.dsl.module
 
 val repositoryModule = module {
@@ -33,7 +38,6 @@ val repositoryModule = module {
   single<GenerateProductIdRepository> { GenerateProductIdRepositoryImpl(get()) }
   single<GeneratePlaceIdRepository> { GeneratePlaceIdRepositoryImpl(get()) }
   single<SavePlaceRepository> { SavePlaceRepositoryImpl(get()) }
-  single<GetPlacesRepository> { GetPlacesRepositoryImpl(get()) }
   single<ObservePlacesRepository> { ObservePlacesRepositoryImpl(get()) }
   single<GetPlaceRepository> { GetPlaceRepositoryImpl(get()) }
   single<AddPlaceProductRepository> { AddPlaceProductRepositoryImpl(get()) }

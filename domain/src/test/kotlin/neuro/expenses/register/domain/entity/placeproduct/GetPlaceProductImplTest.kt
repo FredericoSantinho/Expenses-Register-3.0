@@ -1,7 +1,7 @@
 package neuro.expenses.register.domain.entity.placeproduct
 
 import io.reactivex.rxjava3.core.Maybe
-import neuro.expenses.register.domain.repository.product.GetPlaceProductRepository
+import neuro.expenses.register.domain.repository.placeproduct.GetPlaceProductRepository
 import neuro.expenses.register.entity.mocks.placeProductDtoMock
 import neuro.expenses.register.entity.test.mocks.placeProductMock
 import neuro.test.rx.ObserveSubscriptionTest

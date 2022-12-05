@@ -4,7 +4,7 @@ import io.reactivex.rxjava3.core.Completable
 
 interface AddPlaceProduct {
   /**
-   * Add a PlaceProduct to a Place.
+   * Add a Place Product to a Place.
    *
    * @param placeId place id.
    * @param placeProductId placeProductId id.

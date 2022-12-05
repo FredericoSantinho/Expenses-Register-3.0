@@ -2,7 +2,7 @@ package neuro.expenses.register.data.repository.product
 
 import io.reactivex.rxjava3.core.Single
 import neuro.expenses.register.data.dao.PlaceProductDao
-import neuro.expenses.register.domain.repository.product.GeneratePlaceProductIdRepository
+import neuro.expenses.register.domain.repository.placeproduct.GeneratePlaceProductIdRepository
 
 class GeneratePlaceProductIdRepositoryImpl(private val placeProductDao: PlaceProductDao) :
   GeneratePlaceProductIdRepository {

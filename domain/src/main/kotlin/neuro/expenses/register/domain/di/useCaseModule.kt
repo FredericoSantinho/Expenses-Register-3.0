@@ -7,8 +7,8 @@ import neuro.expenses.register.domain.usecase.category.*
 import neuro.expenses.register.domain.usecase.expense.RegisterExpenseUseCase
 import neuro.expenses.register.domain.usecase.expense.RegisterExpenseUseCaseImpl
 import neuro.expenses.register.domain.usecase.place.*
-import neuro.expenses.register.domain.usecase.product.GetOrCreatePlaceProductUseCase
-import neuro.expenses.register.domain.usecase.product.GetOrCreatePlaceProductUseCaseImpl
+import neuro.expenses.register.domain.usecase.placeproduct.GetOrCreatePlaceProductUseCase
+import neuro.expenses.register.domain.usecase.placeproduct.GetOrCreatePlaceProductUseCaseImpl
 import org.koin.dsl.module
 import java.util.*
 

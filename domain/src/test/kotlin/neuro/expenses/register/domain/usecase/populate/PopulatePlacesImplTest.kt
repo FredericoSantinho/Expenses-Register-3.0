@@ -4,7 +4,7 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import neuro.expenses.register.domain.usecase.category.SaveCategoryUseCase
 import neuro.expenses.register.domain.usecase.place.SavePlaceUseCase
-import neuro.expenses.register.domain.usecase.product.GetOrCreatePlaceProductUseCase
+import neuro.expenses.register.domain.usecase.placeproduct.GetOrCreatePlaceProductUseCase
 import neuro.expenses.register.entity.mocks.placeProductDtoMock
 import neuro.test.rx.Incrementer
 import neuro.test.rx.ObserveSubscriptionTest

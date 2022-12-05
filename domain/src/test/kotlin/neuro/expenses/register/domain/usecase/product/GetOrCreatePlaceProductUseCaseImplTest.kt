@@ -1,6 +1,7 @@
 package neuro.expenses.register.domain.usecase.product
 
 import io.reactivex.rxjava3.core.Single
+import neuro.expenses.register.domain.usecase.placeproduct.GetOrCreatePlaceProductUseCaseImpl
 import neuro.expenses.register.entity.mocks.placeProductDtoMock
 import neuro.expenses.register.entity.placeproduct.GetOrCreatePlaceProduct
 import neuro.expenses.register.entity.test.mocks.placeProductMock

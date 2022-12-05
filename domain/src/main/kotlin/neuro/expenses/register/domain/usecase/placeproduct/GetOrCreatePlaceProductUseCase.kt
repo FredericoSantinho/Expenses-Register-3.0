@@ -1,9 +1,9 @@
-package neuro.expenses.register.entity.placeproduct
+package neuro.expenses.register.domain.usecase.placeproduct
 
 import io.reactivex.rxjava3.core.Single
-import neuro.expenses.register.entity.model.PlaceProduct
+import neuro.expenses.register.domain.dto.PlaceProductDto
 
-interface GetOrCreatePlaceProduct {
+interface GetOrCreatePlaceProductUseCase {
   /**
    * Get or create Place Product (and Product if needed) if it doesn't exist based on its
    * description, category and price.
@@ -19,6 +19,10 @@ interface GetOrCreatePlaceProduct {
    * @return Single with the Place Product.
    */
   fun getOrCreatePlaceProduct(
-    description: String, category: String, price: Double, variableAmount: Boolean, iconUrl: String
-  ): Single<PlaceProduct>
+    description: String,
+    category: String,
+    price: Double,
+    variableAmount: Boolean,
+    iconUrl: String
+  ): Single<PlaceProductDto>
 }

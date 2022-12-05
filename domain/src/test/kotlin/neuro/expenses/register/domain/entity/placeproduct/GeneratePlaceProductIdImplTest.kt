@@ -1,7 +1,7 @@
 package neuro.expenses.register.domain.entity.placeproduct
 
 import io.reactivex.rxjava3.core.Single
-import neuro.expenses.register.domain.repository.product.GeneratePlaceProductIdRepository
+import neuro.expenses.register.domain.repository.placeproduct.GeneratePlaceProductIdRepository
 import neuro.test.rx.ObserveSubscriptionTest
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock

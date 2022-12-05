@@ -1,4 +1,4 @@
-package neuro.expenses.register.domain.usecase.product
+package neuro.expenses.register.domain.usecase.placeproduct
 
 import io.reactivex.rxjava3.core.Single
 import neuro.expenses.register.domain.dto.PlaceProductDto

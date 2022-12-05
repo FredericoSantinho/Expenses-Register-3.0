@@ -2,12 +2,7 @@ package neuro.expenses.register.viewmodel.edit.category
 
 import androidx.compose.runtime.mutableStateOf
 import neuro.expenses.register.domain.dto.CategoryDto
-import neuro.expenses.register.domain.repository.category.CreateCategoryError
-import neuro.expenses.register.domain.repository.category.UpdateCategoryError
-import neuro.expenses.register.domain.usecase.category.CreateCategoryUseCase
-import neuro.expenses.register.domain.usecase.category.DeleteCategoryError
-import neuro.expenses.register.domain.usecase.category.DeleteCategoryUseCase
-import neuro.expenses.register.domain.usecase.category.UpdateCategoryUseCase
+import neuro.expenses.register.domain.usecase.category.*
 import neuro.expenses.register.viewmodel.common.BaseViewModelModule
 import neuro.expenses.register.viewmodel.common.schedulers.SchedulerProvider
 import neuro.expenses.register.viewmodel.model.CategoryModel

@@ -4,9 +4,11 @@ import io.reactivex.rxjava3.core.Completable
 import neuro.expenses.register.domain.dto.ProductDto
 
 interface SaveProductRepository {
-
   /**
-   * Save a product in database.
+   * Save Product.
+   *
+   * @param productDto Product to save.
+   * @return Completable that completes if operation succeeds.
    */
   fun saveProduct(productDto: ProductDto): Completable
 }

@@ -6,7 +6,7 @@ import neuro.expenses.register.data.mapper.product.toData
 import neuro.expenses.register.data.model.placeproduct.PlaceProductCategoryCrossRef
 import neuro.expenses.register.data.model.placeproduct.PlaceProductProductCrossRef
 import neuro.expenses.register.domain.dto.PlaceProductDto
-import neuro.expenses.register.domain.repository.product.SavePlaceProductRepository
+import neuro.expenses.register.domain.repository.placeproduct.SavePlaceProductRepository
 
 class SavePlaceProductRepositoryImpl(
   private val placeProductDao: PlaceProductDao

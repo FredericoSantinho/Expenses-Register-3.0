@@ -6,7 +6,7 @@ import neuro.expenses.register.data.dao.ProductDao
 import neuro.expenses.register.data.mapper.product.toDomain
 import neuro.expenses.register.domain.dto.PlaceProductDto
 import neuro.expenses.register.domain.repository.category.GetCategoryRepository
-import neuro.expenses.register.domain.repository.product.GetPlaceProductRepository
+import neuro.expenses.register.domain.repository.placeproduct.GetPlaceProductRepository
 
 class GetPlaceProductRepositoryImpl(
   private val productDao: ProductDao,

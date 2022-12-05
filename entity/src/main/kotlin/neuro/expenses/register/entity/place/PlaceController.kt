@@ -6,16 +6,17 @@ import neuro.expenses.register.entity.model.PlaceProduct
 
 interface PlaceController {
   /**
-   * Check if a Place contains a PlaceProduct.
+   * Check if a Place contains a Place Product.
    *
    * @param place Place.
    * @param placeProduct PlaceProduct.
-   * @return true if Place contains the given PlaceProduct, false otherwise.
+   * @return true if Place contains the given Place Product, false otherwise.
    */
   fun contains(place: Place, placeProduct: PlaceProduct): Boolean
 
   /**
-   * Add PlaceProduct to a Place.
+   * Add a Place Product to a Place.
+   *
    * @param place Place.
    * @param placeProduct PlaceProduct.
    * @return Single with the updated Place.
@@ -23,7 +24,8 @@ interface PlaceController {
   fun addPlaceProduct(place: Place, placeProduct: PlaceProduct): Single<Place>
 
   /**
-   * Remove PlaceProduct from a Place.
+   * Remove a Place Product from a Place.
+   *
    * @param place Place.
    * @param placeProductId PlaceProduct id.
    * @return Single with the updated Place.
@@ -31,7 +33,8 @@ interface PlaceController {
   fun removePlaceProduct(place: Place, placeProductId: Long): Single<Place>
 
   /**
-   * Update PlaceProduct in a Place.
+   * Update a Place Product in a Place.
+   *
    * @param place Place.
    * @param placeProduct PlaceProduct.
    * @return Single with the updated Place.

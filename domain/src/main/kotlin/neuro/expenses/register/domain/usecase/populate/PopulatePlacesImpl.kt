@@ -5,7 +5,7 @@ import io.reactivex.rxjava3.core.Observable
 import neuro.expenses.register.domain.dto.*
 import neuro.expenses.register.domain.usecase.category.SaveCategoryUseCase
 import neuro.expenses.register.domain.usecase.place.SavePlaceUseCase
-import neuro.expenses.register.domain.usecase.product.GetOrCreatePlaceProductUseCase
+import neuro.expenses.register.domain.usecase.placeproduct.GetOrCreatePlaceProductUseCase
 import java.util.concurrent.atomic.AtomicLong
 
 class PopulatePlacesImpl(

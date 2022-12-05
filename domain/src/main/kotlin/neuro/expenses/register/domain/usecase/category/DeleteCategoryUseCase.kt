@@ -6,7 +6,9 @@ interface DeleteCategoryUseCase {
   /**
    * Delete a category.
    *
-   * @throws DeleteCategoryError in case there's active relations with the category to be deleted.
+   * @param categoryId Category id.
+   * @return Completable that completes in case of success or emits an error with a
+   * DeleteCategoryError in case there's active relations with the category to be deleted.
    */
   fun deleteCategory(categoryId: Long): Completable
 }

@@ -1,8 +1,8 @@
-package neuro.expenses.register.entity.placeproduct
+package neuro.expenses.register.domain.repository.placeproduct
 
 import io.reactivex.rxjava3.core.Single
 
-interface GeneratePlaceProductId {
+interface GeneratePlaceProductIdRepository {
   /**
    * Generate a new Place Product id.
    *

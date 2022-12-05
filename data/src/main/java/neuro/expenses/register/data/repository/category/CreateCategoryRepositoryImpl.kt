@@ -5,8 +5,8 @@ import io.reactivex.rxjava3.core.Completable
 import neuro.expenses.register.data.dao.CategoryDao
 import neuro.expenses.register.data.mapper.category.toData
 import neuro.expenses.register.domain.dto.CategoryDto
-import neuro.expenses.register.domain.repository.category.CreateCategoryError
 import neuro.expenses.register.domain.repository.category.CreateCategoryRepository
+import neuro.expenses.register.domain.usecase.category.CreateCategoryError
 
 class CreateCategoryRepositoryImpl(private val categoryDao: CategoryDao) :
   CreateCategoryRepository {

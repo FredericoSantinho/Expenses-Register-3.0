@@ -4,7 +4,9 @@ import java.util.*
 
 interface GetCalendarUseCase {
   /**
-   * @return the current calendar.
+   * Get global Calendar.
+   *
+   * @return the global calendar.
    */
   fun getCalendar(): Calendar
 }
